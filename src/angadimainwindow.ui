@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AngadiMainWindow</class>
+ <widget class="QMainWindow" name="AngadiMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Angadi</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="mainTab">
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="home">
+       <property name="styleSheet">
+        <string notr="true">background-color:qlineargradient(spread:pad, x1:0.542105, y1:0, x2:0.552632, y2:1, stop:0 rgba(87, 239, 30, 255), stop:1 rgba(39, 188, 75, 255)); </string>
+       </property>
+       <attribute name="title">
+        <string>Home</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCreate">
+    <property name="title">
+     <string>Create</string>
+    </property>
+    <addaction name="actionCreateItem"/>
+    <addaction name="actionCreateCategory"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreateCustomer"/>
+   </widget>
+   <widget class="QMenu" name="menuTransactions">
+    <property name="title">
+     <string>Bill</string>
+    </property>
+    <addaction name="actionBillEntry"/>
+    <addaction name="actionDueBill"/>
+    <addaction name="actionViewBills"/>
+   </widget>
+   <widget class="QMenu" name="menuExit">
+    <property name="title">
+     <string>Exit</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuReports">
+    <property name="title">
+     <string>Reports</string>
+    </property>
+    <addaction name="actionPeriod_Wise"/>
+   </widget>
+   <widget class="QMenu" name="menuUpdate">
+    <property name="title">
+     <string>Update</string>
+    </property>
+    <addaction name="actionUpdateItem"/>
+    <addaction name="actionUpdateCategory"/>
+    <addaction name="actionUpdateCustomer"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_Angadi"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionPreferences"/>
+    <addaction name="actionBill_Settings"/>
+    <addaction name="actionHome_Page_Settings"/>
+   </widget>
+   <addaction name="menuCreate"/>
+   <addaction name="menuUpdate"/>
+   <addaction name="menuTransactions"/>
+   <addaction name="menuReports"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuAbout"/>
+   <addaction name="menuExit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QDockWidget" name="rightDock">
+   <property name="minimumSize">
+    <size>
+     <width>350</width>
+     <height>36</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>350</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="actionCreateItem">
+   <property name="text">
+    <string>Item</string>
+   </property>
+  </action>
+  <action name="actionCreateCategory">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Category</string>
+   </property>
+  </action>
+  <action name="actionBillEntry">
+   <property name="text">
+    <string>Bill Entry</string>
+   </property>
+  </action>
+  <action name="actionCreateCustomer">
+   <property name="text">
+    <string>Customer</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionDueBill">
+   <property name="text">
+    <string>Due Bills</string>
+   </property>
+  </action>
+  <action name="actionUpdateItem">
+   <property name="text">
+    <string>Item</string>
+   </property>
+  </action>
+  <action name="actionUpdateCategory">
+   <property name="text">
+    <string>Category</string>
+   </property>
+  </action>
+  <action name="actionUpdateCustomer">
+   <property name="text">
+    <string>Customer</string>
+   </property>
+  </action>
+  <action name="actionAbout_Angadi">
+   <property name="text">
+    <string>About Angadi</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionBill_Settings">
+   <property name="text">
+    <string>Bill Settings</string>
+   </property>
+  </action>
+  <action name="actionHome_Page_Settings">
+   <property name="text">
+    <string>Home Page Settings</string>
+   </property>
+  </action>
+  <action name="actionPeriod_Wise">
+   <property name="text">
+    <string>Period Wise</string>
+   </property>
+  </action>
+  <action name="actionViewBills">
+   <property name="text">
+    <string>View Bills</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
