@@ -15,12 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         login.cpp \
     angadiapp.cpp \
-    angadimainwindow.cpp
+    angadimainwindow.cpp \
+    models/category.cpp
 
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
-    logindialog.h
+    logindialog.h \
+    models/category.h
 
 FORMS    += \
     angadimainwindow.ui \
