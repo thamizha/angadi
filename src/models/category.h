@@ -26,19 +26,6 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
-#include <QDateTime>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QSqlQuery>
-#include <QVariant>
-#include <QObject>
-#include <QHash>
-#include <QDateTime>
-#include <QList>
-#include <QMetaObject>
-#include <QMetaProperty>
-#include <QDebug>
-#include <QSqlError>
 #include <connection.h>
 
 class Category : public QObject

@@ -27,7 +27,20 @@
 #define CONNECTION_H
 
 #include <QObject>
+#include <QDateTime>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QSqlQuery>
+#include <QVariant>
+#include <QObject>
+#include <QHash>
+#include <QDateTime>
+#include <QList>
+#include <QMetaObject>
+#include <QMetaProperty>
+#include <QDebug>
+#include <QSqlError>
+
 
 class Connection : public QObject
 {

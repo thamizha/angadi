@@ -14,14 +14,19 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     //Hide rightdock widget on start
     ui->rightDock->setVisible(false);
 
-    connect(ui->actionCreateCategory, SIGNAL(triggered()), this, SLOT(openCatagoryTab()));
-    connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openCustomerTab()));
-    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitMainwindow()));
+    setupConnections();
 }
 
 AngadiMainWindow::~AngadiMainWindow()
 {
     delete ui;
+}
+
+void AngadiMainWindow::setupConnections()
+{
+    connect(ui->actionCreateCategory, SIGNAL(triggered()), this, SLOT(openCatagoryTab()));
+    connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openCustomerTab()));
+    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitMainwindow()));
 }
 
 void AngadiMainWindow::exitMainwindow()

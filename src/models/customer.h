@@ -26,8 +26,7 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include <QObject>
-#include <QDateTime>
+#include <connection.h>
 
 class Customer : public QObject
 {

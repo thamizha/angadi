@@ -27,6 +27,7 @@
 #define CUSTOMERFORM_H
 
 #include <QWidget>
+#include <connection.h>
 #include <models/customer.h>
 
 namespace Ui {
