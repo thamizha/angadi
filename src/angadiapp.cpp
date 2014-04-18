@@ -14,6 +14,7 @@ void AngadiApp::start()
 {
     //login->show();
     //connect(login,SIGNAL(loggedIn()),this,SLOT(onLoggedIn()));
+    connect(angadiMainWindow,SIGNAL(exit()),this,SLOT(exitApp()));
     angadiMainWindow->showMaximized();
 }
 
@@ -26,6 +27,7 @@ void AngadiApp::onLoggedIn()
 
 void AngadiApp::exitApp()
 {
+    qDebug() << "Exit App called";
     this->quit();
 }
 

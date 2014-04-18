@@ -18,8 +18,8 @@ public:
     explicit AngadiMainWindow(QWidget *parent = 0);
     ~AngadiMainWindow();
 
-private slots:
-    void on_mainTab_tabCloseRequested(int index);
+signals:
+    void exit();
 
 private:
     bool tabLoadedStatus(QString tabName);
@@ -27,14 +27,22 @@ private:
     CategoryForm *categoryForm;
     CustomerForm *customerForm;
     ProductForm *productForm;
+    void openCustomerTab();
+    void openProductTab();
+    void openCategoryTab();
+
+    void onCustomerTabClosed();
+    void onProductTabClosed();
+    void onCategoryTabClosed();
+
+    void showRightDock(bool);
 
 private slots:
     void setupConnections();
-    void exitMainwindow();
-    void openCatagoryTab();
-    void openCustomerTab();
-    void openProductTab();
-
+    void exitApp();
+    void openTab();
+    void onCloseTab(int);
+    void onTabChanged(int);
 };
 
 #endif // ANGADIMAINWINDOW_H

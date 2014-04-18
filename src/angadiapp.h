@@ -15,11 +15,12 @@ public:
 signals:
 
 public slots:
+    void exitApp();
 
 private :
     LoginDialog *login;
     AngadiMainWindow *angadiMainWindow;
-    void exitApp();
+
 
 private slots:
     void onLoggedIn();
