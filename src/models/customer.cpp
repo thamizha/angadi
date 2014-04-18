@@ -275,9 +275,40 @@ void Customer::deleteAllByAttributes(){}*/
 
 bool Customer::save()
 {
+    Connection dbcn;
+    QSqlQuery query;
     bool status = false;
 
-    QString query = "Insert into customers ";
+    query.prepare("INSERT INTO customers (code, name, type, creditLimit, contactPerson, address1, address2, city, state, "
+                  "country, pincode, phone1, phone2, mobile1, mobile2, email, website, notes) "
+                  "VALUES (:code, :name, :type, :creditLimit, :contactPerson, :address1, :address2, :city, :state, "
+                  ":country, :pincode, :phone1, :phone2, :mobile1, :mobile2, :email, :website, :notes)");
+    query.bindValue(":code",m_code);
+    query.bindValue(":name",m_name);
+    query.bindValue(":type",m_type);
+    query.bindValue(":creditLimit",m_creditLimit);
+    query.bindValue(":contactPerson",m_contactPerson);
+    query.bindValue(":address1",m_address1);
+    query.bindValue(":address2",m_address2);
+    query.bindValue(":city",m_city);
+    query.bindValue(":state",m_state);
+    query.bindValue(":country",m_country);
+    query.bindValue(":pincode",m_pincode);
+    query.bindValue(":phone1",m_phone1);
+    query.bindValue(":phone2",m_phone2);
+    query.bindValue(":mobile1",m_mobile1);
+    query.bindValue(":mobile2",m_mobile2);
+    query.bindValue(":email",m_email);
+    query.bindValue(":website",m_website);
+    query.bindValue(":notes",m_notes);
+
+    if(query.exec())
+        status=true ;
+    else
+        status=false;
+
+    qDebug() << query.lastError();
+
     return status;
 }
 

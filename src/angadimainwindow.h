@@ -29,6 +29,7 @@ private:
     ProductForm *productForm;
 
 private slots:
+    void setupConnections();
     void exitMainwindow();
     void openCatagoryTab();
     void openCustomerTab();
