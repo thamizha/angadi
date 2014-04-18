@@ -26,6 +26,9 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
+#include <QDateTime>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlDatabase>
 #include <QObject>
 
 class Category : public QObject
@@ -51,15 +54,15 @@ public:
     QDateTime modifiedDate();
     quint16 modifiedBy();
 
-    void setId(quint);
-    void setCode(QString);
-    void setName(QString);
-    void setStatus(QChar);
-    void setCreatedDate(QDateTime);
-    void setModifiedDate(QDateTime);
-    void setModifiedBy(quint16);
+    void setId(quint16 id);
+    void setCode(QString code);
+    void setName(QString name);
+    void setStatus(QChar status);
+    void setCreatedDate(QDateTime createdDate);
+    void setModifiedDate(QDateTime modifiedDate);
+    void setModifiedBy(quint16 modifiedBy);
 
-    Category findById();
+    QList<QString> findById();
     Category findByCode();
     Category findByAttributes();
 
@@ -84,6 +87,8 @@ public:
     QHash<QString,QString> validate();
     QHash<QString,QString> errors();
 
+    QString tableName();
+
 signals:
 
 public slots:
@@ -97,7 +102,7 @@ private:
     QDateTime m_modifiedDate;
     quint16 m_modifiedBy;
 
-    QHash<QString,QString> errors;
+    QHash<QString,QString> m_errors;
 };
 
 

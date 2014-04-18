@@ -11,7 +11,7 @@
 *.dylib
 
 # Qt-es
-
+build-angadi-Desktop_Qt_5_2_1_GCC_32bit-Debug
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -22,6 +22,7 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *-build-*
+.directory
 
 build/
 
