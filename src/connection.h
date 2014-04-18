@@ -1,7 +1,7 @@
 /*****************************************************************************
- * catagoryform.cpp
+ * connection.h
  *
- * Created: 18/04/2014 by gvijaydhanasekaran
+ * Created: 18/04/2014 by selvam
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,28 +20,29 @@
  * this file belongs to.
  *
  * Authors :
- * gvijaydhanasekaran <vijay.kuruntham@gmail.com>
+ *
  *****************************************************************************/
 
-#include "catagoryform.h"
-#include "ui_catagoryform.h"
-#include <QDebug>
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
-CatagoryForm::CatagoryForm(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CatagoryForm)
-{
-    ui->setupUi(this);
-    ui->cat_form_name->addItem("vijay @ Dhanasekaran");
-}
+#include <QObject>
+#include <QtSql/QSqlDatabase>
 
-CatagoryForm::~CatagoryForm()
+class Connection : public QObject
 {
-    delete ui;
-}
+    Q_OBJECT
 
-void CatagoryForm::on_cat_save_button_clicked()
-{
-    //qDebug() << ui->cat_form_name->data;
-    //qDebug() << ui->cat_form_code->data;
-}
+public:
+    explicit Connection(QObject *parent = 0);
+    QSqlDatabase db;
+    ~Connection();
+signals:
+
+public slots:
+
+private:
+
+};
+
+#endif // CONNECTION_H

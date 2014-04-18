@@ -92,7 +92,7 @@ void Category::setModifiedBy(quint16 modifiedBy)
 }
 QList<QString> Category::findById()
 {
-    QSqlQuery query;
+    /*QSqlQuery query;
     QList record;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QMYSQL");
@@ -108,9 +108,10 @@ QList<QString> Category::findById()
         record << query.value(0).toString() << query.value(1).toString() << query.value(2).toString() << query.value(3).toString() << query.value(4).toString() << query.value(5).toString();
     }
     db.close();
-    return record;
+    return record;*/
 }
-Category Category::findByCode()
+
+/*Category Category::findByCode()
 {
 
 }
@@ -150,7 +151,7 @@ QList<Category> Category::findAllBySql()
 QList<Category> Category::findAllByAttributes()
 {
 
-}
+}*/
 void Category::deleteAll()
 {
 
@@ -170,16 +171,10 @@ void Category::deleteAllByAttributes()
 
 bool Category::save()
 {
+    Connection dbcn;
     bool status;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
     QSqlQuery query;
-    query.prepare("UPDATE SET categories code=:code, name=:name, status=:status where id = :id ");
+    /*query.prepare("UPDATE SET categories code=:code, name=:name, status=:status where id = :id ");
     query.bindValue(":id",m_id);
     query.bindValue(":code",m_code);
     query.bindValue(":name",m_name);
@@ -187,8 +182,8 @@ bool Category::save()
     if(query.exec())
         status=true ;
     else
-    {
-        query.prepare("INSERT INTO categories (code, name, status) "
+    {*/
+        query.prepare("INSERT INTO categories (code, name) "
                            "VALUES (:code,:name)");
         query.bindValue(":code",m_code);
         query.bindValue(":name",m_name);
@@ -197,8 +192,9 @@ bool Category::save()
             status=true ;
         else
             status=false;
-    }
-    db.close();
+    //}
+        qDebug() << query.lastError();
+
     return status;
 }
 
@@ -227,6 +223,7 @@ QList<Category> Category::search()
 {
 
 }
+
 QList<QString> Category::getAllProducts()
 {
 

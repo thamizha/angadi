@@ -14,6 +14,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     //Hide rightdock widget on start
     ui->rightDock->setVisible(false);
 
+    connect(ui->actionCreateCategory, SIGNAL(triggered()), this, SLOT(openCatagoryTab()));
     connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openCustomerTab()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitMainwindow()));
 }
@@ -48,20 +49,20 @@ void AngadiMainWindow::openCustomerTab()
 
 void AngadiMainWindow::openCatagoryTab()
 {
-    QString tabName = "Catagory";
+    QString tabName = "Category";
     if(ui->mainTab->count() > 1){
         bool found = tabLoadedStatus(tabName);
         if(found == false){
-            obj_CatagoryForm = new CatagoryForm();
-            obj_CatagoryForm->setProperty("name", tabName);
-            ui->mainTab->addTab(obj_CatagoryForm, tabName);
+            categoryForm = new CategoryForm();
+            categoryForm->setProperty("name", tabName);
+            ui->mainTab->addTab(categoryForm, tabName);
         }
     }else{
-        obj_CatagoryForm = new CatagoryForm();
-        obj_CatagoryForm->setProperty("name", tabName);
-        ui->mainTab->addTab(obj_CatagoryForm, tabName);
+        categoryForm = new CategoryForm();
+        categoryForm->setProperty("name", tabName);
+        ui->mainTab->addTab(categoryForm, tabName);
     }
-    ui->mainTab->setCurrentWidget (obj_CatagoryForm);
+    ui->mainTab->setCurrentWidget (categoryForm);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)

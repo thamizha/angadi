@@ -27,22 +27,31 @@
 #define CATEGORY_H
 
 #include <QDateTime>
-#include <QtSql/QSqlQuery>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QSqlQuery>
+#include <QVariant>
 #include <QObject>
-#include<QHash>
-#include<QDateTime>
+#include <QHash>
+#include <QDateTime>
+#include <QList>
+#include <QMetaObject>
+#include <QMetaProperty>
+#include <QDebug>
+#include <QSqlError>
+#include <connection.h>
+
 class Category : public QObject
 {
    Q_OBJECT
 
-    /*Q_PROPERTY(quint16 id READ id WRITE setId)
+    Q_PROPERTY(quint16 id READ id WRITE setId)
     Q_PROPERTY(QString code READ code WRITE setCode)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QChar status READ status WRITE setStatus)
     Q_PROPERTY(QDateTime createdDate READ createdDate WRITE setCreatedDate)
     Q_PROPERTY(quint16 modifiedBy READ modifiedBy WRITE setModifiedBy)
-    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)*/
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
 
 public:
     explicit Category(QObject *parent = 0);
@@ -55,7 +64,6 @@ public:
     QDateTime modifiedDate();
     quint16 modifiedBy();
 
-
     void setId(quint16 id);
     void setCode(QString code);
     void setName(QString name);
@@ -65,12 +73,12 @@ public:
     void setModifiedBy(quint16 modifiedBy);
 
     QList<QString> findById();
-    Category findByCode();
+    /*Category findByCode();
     Category findByAttributes();
 
     QList<Category> findAll();
     QList<Category> findAllBySql();
-    QList<Category> findAllByAttributes();
+    QList<Category> findAllByAttributes();*/
 
     void deleteAll();
     void deleteByCode();
@@ -96,7 +104,7 @@ signals:
 public slots:
 
 private:
-    /*quint16 m_id;
+    quint16 m_id;
     QString m_code;
     QString m_name;
     QChar m_status;
@@ -104,7 +112,7 @@ private:
     QDateTime m_modifiedDate;
     quint16 m_modifiedBy;
 
-    QHash<QString,QString> errors;*/
+    //QHash<QString,QString> errors;
 };
 
 

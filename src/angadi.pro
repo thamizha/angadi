@@ -18,8 +18,9 @@ SOURCES += main.cpp\
     angadimainwindow.cpp \
     models/category.cpp \
     customerform.cpp \
-    models/customer.cpp
-    catagoryform.cpp
+    models/customer.cpp \
+    categoryform.cpp \
+    connection.cpp
 
 HEADERS  += \
     angadiapp.h \
@@ -27,13 +28,14 @@ HEADERS  += \
     logindialog.h \
     models/category.h \
     customerform.h \
-    models/customer.h
-    catagoryform.h
+    models/customer.h \
+    categoryform.h \
+    connection.h
 
 FORMS    += \
     angadimainwindow.ui \
     logindialog.ui \
-    customerform.ui
-    catagoryform.ui
+    customerform.ui \
+    categoryform.ui
 
 RESOURCES +=
