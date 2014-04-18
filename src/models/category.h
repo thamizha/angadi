@@ -32,18 +32,18 @@ class Category : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(quint16 id READ id WRITE setId)
+    /*Q_PROPERTY(quint16 id READ id WRITE setId)
     Q_PROPERTY(QString code READ code WRITE setCode)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QChar status READ status WRITE setStatus)
     Q_PROPERTY(QDateTime createdDate READ createdDate WRITE setCreatedDate)
     Q_PROPERTY(quint16 modifiedBy READ modifiedBy WRITE setModifiedBy)
-    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)*/
 
 public:
     explicit Category(QObject *parent = 0);
 
-    quint16 id();
+    /*quint16 id();
     QString code();
     QString name();
     QChar status();
@@ -82,14 +82,14 @@ public:
     QList<QString> getAllTransactions();
 
     QHash<QString,QString> validate();
-    QHash<QString,QString> errors();
+    QHash<QString,QString> errors();*/
 
 signals:
 
 public slots:
 
 private:
-    quint16 m_id;
+    /*quint16 m_id;
     QString m_code;
     QString m_name;
     QChar m_status;
@@ -97,7 +97,7 @@ private:
     QDateTime m_modifiedDate;
     quint16 m_modifiedBy;
 
-    QHash<QString,QString> errors;
+    QHash<QString,QString> errors;*/
 };
 
 

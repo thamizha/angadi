@@ -2,6 +2,7 @@
 #define ANGADIMAINWINDOW_H
 
 #include <QMainWindow>
+#include "customerform.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -17,6 +18,13 @@ public:
 
 private:
     Ui::AngadiMainWindow *ui;
+    CustomerForm *customerForm;
+    bool tabLoadedStatus(QString tabName);
+
+private slots:
+    void exitMainwindow();
+    void openCustomerTab();
+
 };
 
 #endif // ANGADIMAINWINDOW_H

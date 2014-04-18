@@ -12,8 +12,9 @@ AngadiApp::AngadiApp(int argc,char *argv[]) :
 
 void AngadiApp::start()
 {
-    login->show();
-    connect(login,SIGNAL(loggedIn()),this,SLOT(onLoggedIn()));
+    //login->show();
+    //connect(login,SIGNAL(loggedIn()),this,SLOT(onLoggedIn()));
+    angadiMainWindow->showMaximized();
 }
 
 
