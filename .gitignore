@@ -28,3 +28,10 @@ build/
 # QtCreator
 
 *.autosave
+
+build-angadi-Desktop_Qt_5_2_1_GCC_32bit-Debug
+build-angadi-Desktop_Qt_5_2_1_GCC_32bit-Release
+
+.directory
+!.gitignore
+.gitignore
