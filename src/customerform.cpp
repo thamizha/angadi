@@ -39,6 +39,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
     // populate gender combo box
     ui->comboBoxGender->addItem("Male");
     ui->comboBoxGender->addItem("Female");
+    ui->comboBoxGender->addItem("Transgender");
 
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
 }
