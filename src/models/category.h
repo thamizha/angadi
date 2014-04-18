@@ -26,11 +26,15 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
+#include <QDateTime>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlDatabase>
 #include <QObject>
-
+#include<QHash>
+#include<QDateTime>
 class Category : public QObject
 {
-    Q_OBJECT
+   Q_OBJECT
 
     /*Q_PROPERTY(quint16 id READ id WRITE setId)
     Q_PROPERTY(QString code READ code WRITE setCode)
@@ -43,7 +47,7 @@ class Category : public QObject
 public:
     explicit Category(QObject *parent = 0);
 
-    /*quint16 id();
+    quint16 id();
     QString code();
     QString name();
     QChar status();
@@ -51,15 +55,16 @@ public:
     QDateTime modifiedDate();
     quint16 modifiedBy();
 
-    void setId(quint);
-    void setCode(QString);
-    void setName(QString);
-    void setStatus(QChar);
-    void setCreatedDate(QDateTime);
-    void setModifiedDate(QDateTime);
-    void setModifiedBy(quint16);
 
-    Category findById();
+    void setId(quint16 id);
+    void setCode(QString code);
+    void setName(QString name);
+    void setStatus(QChar status);
+    void setCreatedDate(QDateTime createdDate);
+    void setModifiedDate(QDateTime modifiedDate);
+    void setModifiedBy(quint16 modifiedBy);
+
+    QList<QString> findById();
     Category findByCode();
     Category findByAttributes();
 
@@ -82,7 +87,9 @@ public:
     QList<QString> getAllTransactions();
 
     QHash<QString,QString> validate();
-    QHash<QString,QString> errors();*/
+    QHash<QString,QString> errors();
+
+    QString tableName();
 
 signals:
 
