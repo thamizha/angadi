@@ -17,6 +17,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     connect(ui->actionCreateCategory, SIGNAL(triggered()), this, SLOT(openCatagoryTab()));
     connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openCustomerTab()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitMainwindow()));
+    connect(ui->actionProduct,SIGNAL(triggered()),this,SLOT(openProductTab()));
 }
 
 AngadiMainWindow::~AngadiMainWindow()
@@ -65,6 +66,25 @@ void AngadiMainWindow::openCatagoryTab()
     ui->mainTab->setCurrentWidget (categoryForm);
 }
 
+void AngadiMainWindow::openProductTab()
+{
+    QString tabName = "Product";
+    if(ui->mainTab->count() > 1){
+        bool found = tabLoadedStatus(tabName);
+        if(found == false){
+            productForm = new ProductForm();
+            productForm->setProperty("name", tabName);
+            ui->mainTab->addTab(productForm, tabName);
+        }
+    }else{
+        productForm = new ProductForm();
+        productForm->setProperty("name", tabName);
+        ui->mainTab->addTab(productForm, tabName);
+    }
+    ui->mainTab->setCurrentWidget (productForm);
+
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;
@@ -76,6 +96,7 @@ bool AngadiMainWindow::tabLoadedStatus(QString tabName)
     }
     return status;
 }
+
 
 void AngadiMainWindow::on_mainTab_tabCloseRequested(int index)
 {

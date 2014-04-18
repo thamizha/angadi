@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "customerform.h"
 #include "categoryform.h"
+#include "productform.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -25,11 +26,13 @@ private:
     Ui::AngadiMainWindow *ui;
     CategoryForm *categoryForm;
     CustomerForm *customerForm;
+    ProductForm *productForm;
 
 private slots:
     void exitMainwindow();
     void openCatagoryTab();
     void openCustomerTab();
+    void openProductTab();
 
 };
 
