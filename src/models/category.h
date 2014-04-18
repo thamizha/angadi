@@ -30,10 +30,11 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlDatabase>
 #include <QObject>
-
+#include<QHash>
+#include<QDateTime>
 class Category : public QObject
 {
-    Q_OBJECT
+   Q_OBJECT
 
     Q_PROPERTY(quint16 id READ id WRITE setId)
     Q_PROPERTY(QString code READ code WRITE setCode)
@@ -46,6 +47,7 @@ class Category : public QObject
 public:
     explicit Category(QObject *parent = 0);
 
+
     quint16 id();
     QString code();
     QString name();
@@ -53,6 +55,7 @@ public:
     QDateTime createdDate();
     QDateTime modifiedDate();
     quint16 modifiedBy();
+
 
     void setId(quint16 id);
     void setCode(QString code);
@@ -102,7 +105,9 @@ private:
     QDateTime m_modifiedDate;
     quint16 m_modifiedBy;
 
+
     QHash<QString,QString> m_errors;
+
 };
 
 

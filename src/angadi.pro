@@ -16,16 +16,19 @@ SOURCES += main.cpp\
         login.cpp \
     angadiapp.cpp \
     angadimainwindow.cpp \
-    models/category.cpp
+    models/category.cpp \
+    catagoryform.cpp
 
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
     logindialog.h \
-    models/category.h
+    models/category.h \
+    catagoryform.h
 
 FORMS    += \
     angadimainwindow.ui \
-    logindialog.ui
+    logindialog.ui \
+    catagoryform.ui
 
 RESOURCES +=
