@@ -266,11 +266,39 @@ Customer Customer::findByAttributes(){}
 
 QList<Customer> Customer::findAll(){}
 QList<Customer> Customer::findAllBySql(){}
-QList<Customer> Customer::findAllByAttributes(){}
+QList<Customer> Customer::findAllByAttributes(){}*/
 
-void Customer::deleteAll(){}
-void Customer::deleteByCode(){}
-void Customer::deleteBySql(){}
+void Customer::deleteAll()
+{
+    Connection dbcn;
+    QSqlQuery query;
+
+    query.exec("SELECT id FROM customers");
+    while (query.next()) {
+        quint16 id = query.value("id").toDouble();
+
+        QSqlQuery query1;
+        query1.prepare("UPDATE customers SET status=:status where id = :id");
+        query1.bindValue(":status", "D");
+        query1.bindValue(":id", id);
+        query1.exec();
+    }
+}
+
+void Customer::deleteByCode()
+{
+    Connection dbcn;
+    QSqlQuery query;
+
+    query.prepare("UPDATE customers SET status=:status where code = :code");
+    query.bindValue(":status", "D");
+    query.bindValue(":code", m_code);
+    query.exec();
+
+    qDebug() << query.lastError();
+}
+
+/*void Customer::deleteBySql(){}
 void Customer::deleteAllByAttributes(){}*/
 
 bool Customer::save()

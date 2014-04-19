@@ -37,3 +37,8 @@ ProductForm::~ProductForm()
 {
     delete ui;
 }
+
+void ProductForm::setCodeFocus()
+{
+    ui->lineEditCode->setFocus();
+}

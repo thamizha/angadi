@@ -591,6 +591,29 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>comboBoxType</tabstop>
+  <tabstop>lineEditCreditLimit</tabstop>
+  <tabstop>lineEditContactPerson</tabstop>
+  <tabstop>comboBoxGender</tabstop>
+  <tabstop>lineEditAddress1</tabstop>
+  <tabstop>lineEditAddress2</tabstop>
+  <tabstop>lineEditCity</tabstop>
+  <tabstop>lineEditState</tabstop>
+  <tabstop>lineEditCountry</tabstop>
+  <tabstop>lineEditPincode</tabstop>
+  <tabstop>lineEditPhone1</tabstop>
+  <tabstop>lineEditPhone2</tabstop>
+  <tabstop>lineEditMobile1</tabstop>
+  <tabstop>lineEditMobile2</tabstop>
+  <tabstop>lineEditEmail</tabstop>
+  <tabstop>lineEditWebsite</tabstop>
+  <tabstop>textEditNote</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonDelete</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -1,7 +1,7 @@
 /*****************************************************************************
- * connection.h
+ * lssbar.h
  *
- * Created: 18/04/2014 by selvam
+ * Created: 19/04/2014 by selvam
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,41 +23,32 @@
  *
  *****************************************************************************/
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef LSSBAR_H
+#define LSSBAR_H
 
-#include <QObject>
-#include <QDateTime>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QSqlQuery>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QVariant>
-#include <QObject>
-#include <QHash>
-#include <QDateTime>
-#include <QList>
-#include <QMetaObject>
-#include <QMetaProperty>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QTableWidget>
 #include <QDebug>
-#include <QSqlError>
+#include <models/category.h>
 
-
-class Connection : public QObject
+class Lssbar : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit Connection(QObject *parent = 0);
-    QSqlDatabase db;
-    ~Connection();
+    explicit Lssbar(QWidget *parent = 0);
+
 signals:
 
 public slots:
+    void populate();
 
 private:
+    QTableWidget *tableWidget;
+
+private slots:
+    void setupUi();
 
 };
 
-#endif // CONNECTION_H
+#endif // LSSBAR_H

@@ -113,11 +113,11 @@ public:
 
     QList<Customer> findAll();
     QList<Customer> findAllBySql();
-    QList<Customer> findAllByAttributes();
+    QList<Customer> findAllByAttributes();*/
 
     void deleteAll();
     void deleteByCode();
-    void deleteBySql();
+    /*void deleteBySql();
     void deleteAllByAttributes();*/
 
     bool save();

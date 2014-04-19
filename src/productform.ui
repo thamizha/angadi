@@ -224,6 +224,18 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>comboBoxCategory</tabstop>
+  <tabstop>comboBoxManufacturer</tabstop>
+  <tabstop>comboBoxUnit</tabstop>
+  <tabstop>lineEditCode_2</tabstop>
+  <tabstop>lineEditCode_3</tabstop>
+  <tabstop>lineEditCode_4</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonDelete</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

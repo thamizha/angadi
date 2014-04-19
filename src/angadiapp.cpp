@@ -27,7 +27,7 @@ void AngadiApp::onLoggedIn()
 
 void AngadiApp::exitApp()
 {
-    qDebug() << "Exit App called";
+    //qDebug() << "Exit App called";
     this->quit();
 }
 

@@ -5,6 +5,7 @@
 #include "customerform.h"
 #include "categoryform.h"
 #include "productform.h"
+#include "lssbar.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -36,6 +37,7 @@ private:
     void onCategoryTabClosed();
 
     void showRightDock(bool);
+    Lssbar *lssbar;
 
 private slots:
     void setupConnections();

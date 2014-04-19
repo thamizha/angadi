@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     models/customer.cpp \
     categoryform.cpp \
     connection.cpp \
-    productform.cpp
+    productform.cpp \
+    lssbar.cpp
 
 HEADERS  += \
     angadiapp.h \
@@ -32,7 +33,8 @@ HEADERS  += \
     models/customer.h \
     categoryform.h \
     connection.h \
-    productform.h
+    productform.h \
+    lssbar.h
 
 FORMS    += \
     angadimainwindow.ui \

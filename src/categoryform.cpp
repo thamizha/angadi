@@ -47,4 +47,10 @@ void CategoryForm::save()
     category.setCode(ui->lineEditCode->text());
     category.setName(ui->lineEditName->text());
     bool status = category.save();
+    qDebug() << status;
+}
+
+void CategoryForm::setCodeFocus()
+{
+    ui->lineEditCode->setFocus();
 }

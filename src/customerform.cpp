@@ -42,11 +42,17 @@ CustomerForm::CustomerForm(QWidget *parent) :
     ui->comboBoxGender->addItem("Transgender");
 
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
+    connect(ui->pushButtonDelete, SIGNAL(clicked()), this, SLOT(deleteAll()));
 }
 
 CustomerForm::~CustomerForm()
 {
     delete ui;
+}
+
+void CustomerForm::setCodeFocus()
+{
+    ui->lineEditCode->setFocus();
 }
 
 void CustomerForm::save()
@@ -72,4 +78,11 @@ void CustomerForm::save()
     customer.setNotes(ui->textEditNote->toPlainText());
     bool status = customer.save();
     qDebug() << status;
+}
+
+void CustomerForm::deleteAll()
+{
+    Customer customer;
+    customer.setCode("2");
+    customer.deleteByCode();
 }

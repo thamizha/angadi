@@ -25,6 +25,7 @@
 
 #include "angadimainwindow.h"
 #include "ui_angadimainwindow.h"
+#include "lssbar.h"
 
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -37,8 +38,12 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    lssbar = new Lssbar;
+
     //Hide rightdock widget on start
     showRightDock(false);
+
+    ui->rightDock->setWidget(lssbar);
 
     //Set dynamic properties
     //TODO : Move the properties as ENUM insted of string
@@ -74,9 +79,8 @@ void AngadiMainWindow::exitApp()
 
 void AngadiMainWindow::openTab()
 {
-
     QString tabName = sender()->property("tabName").toString();
-    qDebug() << "Open Tab Triggered  ::::> " << tabName;
+    //qDebug() << "Open Tab Triggered  ::::> " << tabName;
 
     if(tabName == "customer" ||
        tabName == "category" ||
@@ -95,24 +99,6 @@ void AngadiMainWindow::openTab()
     }
 }
 
-void AngadiMainWindow::openCustomerTab()
-{
-    QString tabName = "customer";
-    if(ui->mainTab->count() > 1){
-        bool found = tabLoadedStatus(tabName);
-        if(found == false){
-            customerForm = new CustomerForm();
-            customerForm->setProperty("name", tabName);
-            ui->mainTab->addTab(customerForm, "Customer");
-        }
-    }else{
-        customerForm = new CustomerForm();
-        customerForm->setProperty("name", tabName);
-        ui->mainTab->addTab(customerForm, "Customer");
-    }
-    ui->mainTab->setCurrentWidget (customerForm);
-}
-
 void AngadiMainWindow::openCategoryTab()
 {
     QString tabName = "category";
@@ -129,6 +115,9 @@ void AngadiMainWindow::openCategoryTab()
         ui->mainTab->addTab(categoryForm, "Category");
     }
     ui->mainTab->setCurrentWidget (categoryForm);
+    categoryForm->setCodeFocus();
+
+    lssbar->populate();
 }
 
 void AngadiMainWindow::openProductTab()
@@ -147,7 +136,26 @@ void AngadiMainWindow::openProductTab()
         ui->mainTab->addTab(productForm, "Product");
     }
     ui->mainTab->setCurrentWidget (productForm);
+    productForm->setCodeFocus();
+}
 
+void AngadiMainWindow::openCustomerTab()
+{
+    QString tabName = "customer";
+    if(ui->mainTab->count() > 1){
+        bool found = tabLoadedStatus(tabName);
+        if(found == false){
+            customerForm = new CustomerForm();
+            customerForm->setProperty("name", tabName);
+            ui->mainTab->addTab(customerForm, "Customer");
+        }
+    }else{
+        customerForm = new CustomerForm();
+        customerForm->setProperty("name", tabName);
+        ui->mainTab->addTab(customerForm, "Customer");
+    }
+    ui->mainTab->setCurrentWidget (customerForm);
+    customerForm->setCodeFocus();
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -165,10 +173,9 @@ bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 
 void AngadiMainWindow::onCloseTab(int index)
 {
-
     QWidget *widget = ui->mainTab->widget(index);
     QString tabName = widget->property("name").toString();
-    qDebug() << "close tab requested :::> " << tabName;
+    //qDebug() << "close tab requested :::> " << tabName;
 
     if(ui->mainTab->count() == 1){
         QMessageBox::StandardButton reply;
@@ -177,7 +184,6 @@ void AngadiMainWindow::onCloseTab(int index)
             exitApp();
         }
     }else{
-
         ui->mainTab->removeTab(index);
         if(tabName == "category"){
             onCategoryTabClosed();
@@ -187,23 +193,21 @@ void AngadiMainWindow::onCloseTab(int index)
             onProductTabClosed();
         }
     }
-
-
 }
 
 void AngadiMainWindow::onCustomerTabClosed()
 {
-    qDebug() << "On Customer Tab closed called ";
+    //qDebug() << "On Customer Tab closed called ";
 }
 
 void AngadiMainWindow::onCategoryTabClosed()
 {
-    qDebug() << "On Category Tab closed called ";
+    //qDebug() << "On Category Tab closed called ";
 }
 
 void AngadiMainWindow::onProductTabClosed()
 {
-    qDebug() << "On Product Tab closed called ";
+    //qDebug() << "On Product Tab closed called ";
 }
 
 void AngadiMainWindow::showRightDock(bool state)
@@ -215,7 +219,7 @@ void AngadiMainWindow::onTabChanged(int index){
     QWidget *widget = ui->mainTab->widget(index);
     QString tabName = widget->property("name").toString();
 
-    qDebug() << "Current Active Tab ::::> " << tabName;
+    //qDebug() << "Current Active Tab ::::> " << tabName;
 
     if(tabName == "customer" ||
        tabName == "category" ||

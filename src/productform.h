@@ -39,9 +39,11 @@ class ProductForm : public QWidget
 public:
     explicit ProductForm(QWidget *parent = 0);
     ~ProductForm();
+    void setCodeFocus();
 
 private:
     Ui::ProductForm *ui;
+
 };
 
 #endif // PRODUCTFORM_H

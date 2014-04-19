@@ -61,10 +61,10 @@ public:
 
     QList<QString> findById();
     /*Category findByCode();
-    Category findByAttributes();
+    Category findByAttributes();*/
 
-    QList<Category> findAll();
-    QList<Category> findAllBySql();
+    QSqlTableModel *findAll();
+    /*QList<Category> findAllBySql();
     QList<Category> findAllByAttributes();*/
 
     void deleteAll();
