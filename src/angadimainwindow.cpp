@@ -170,7 +170,8 @@ void AngadiMainWindow::onCloseTab(int index)
     QString tabName = widget->property("name").toString();
     qDebug() << "close tab requested :::> " << tabName;
 
-    if(ui->mainTab->count() == 1){
+    //if(ui->mainTab->count() == 1){
+    if(index == 0){
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this,"Angadi","Are you sure you want to quit?",QMessageBox::Yes|QMessageBox::No);
         if(reply == QMessageBox::Yes){
