@@ -25,12 +25,27 @@
 
 #include "productform.h"
 #include "ui_productform.h"
+#include <QMessageBox>
+#include "models/product.h"
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProductForm)
 {
     ui->setupUi(this);
+    ui->comboBoxcategoryId->addItem("121");
+    ui->comboBoxcategoryId->addItem("122");
+    ui->comboBoxcategoryId->addItem("123");
+
+    ui->comboBoxManufacturer->addItem("test1");
+    ui->comboBoxManufacturer->addItem("test2");
+    ui->comboBoxManufacturer->addItem("test3");
+
+    ui->comboBoxUnit->addItem("100");
+    ui->comboBoxUnit->addItem("101");
+    ui->comboBoxUnit->addItem("102");
+
+    connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 }
 
 ProductForm::~ProductForm()
@@ -41,4 +56,36 @@ ProductForm::~ProductForm()
 void ProductForm::setCodeFocus()
 {
     ui->lineEditCode->setFocus();
+}
+
+void ProductForm::save()
+{
+    Product product;
+    product.setCode(ui->lineEditCode->text());
+    product.setName(ui->lineEditName->text());
+    //QMessageBox::information(this,"title",ui->comboBoxcategoryId->property("currentText").toString());
+
+
+    /*product.setCategoryId(25);
+    product.setManufacturer("Vijay");
+    product.setUnit("72kg");
+    product.setMrp(250);
+    product.setSprice(300);
+    product.setWholeSalePrice(350);*/
+
+
+    product.setCategoryId(ui->comboBoxcategoryId->property("currentText").toDouble(0));
+    product.setManufacturer(ui->comboBoxManufacturer->property("currentText").toString());
+    product.setUnit(ui->comboBoxUnit->property("currentText").toString());
+    product.setMrp(ui->lineEditMrp->text().toDouble(0));
+    product.setSprice(ui->lineEditSalePrice->text().toDouble());
+    product.setWholeSalePrice(ui->lineEditWholeSalePrice->text().toDouble());
+
+    bool status=product.save();
+    qDebug()<<status;
+    if(status==true)
+        QMessageBox::information(this,"title","Product Saved succesfully");
+    else
+        QMessageBox::information(this,"title","<b>Product NOT Saved succesfully</b>");
+
 }

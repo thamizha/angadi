@@ -23,6 +23,7 @@ SOURCES += main.cpp\
     connection.cpp \
     productform.cpp \
     lssbar.cpp
+    models/product.cpp
 
 HEADERS  += \
     angadiapp.h \
@@ -35,6 +36,7 @@ HEADERS  += \
     connection.h \
     productform.h \
     lssbar.h
+    models/product.h
 
 FORMS    += \
     angadimainwindow.ui \

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QComboBox" name="comboBoxCategory">
+  <widget class="QComboBox" name="comboBoxcategoryId">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -49,7 +49,7 @@
     <string>Unit</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditCode_3">
+  <widget class="QLineEdit" name="lineEditSalePrice">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -102,7 +102,7 @@
     <string>MRP</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditCode_2">
+  <widget class="QLineEdit" name="lineEditMrp">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -161,7 +161,7 @@
     <string>Sale Price</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditCode_4">
+  <widget class="QLineEdit" name="lineEditWholeSalePrice">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -227,12 +227,12 @@
  <tabstops>
   <tabstop>lineEditCode</tabstop>
   <tabstop>lineEditName</tabstop>
-  <tabstop>comboBoxCategory</tabstop>
+  <tabstop>comboBoxcategoryId</tabstop>
   <tabstop>comboBoxManufacturer</tabstop>
   <tabstop>comboBoxUnit</tabstop>
-  <tabstop>lineEditCode_2</tabstop>
-  <tabstop>lineEditCode_3</tabstop>
-  <tabstop>lineEditCode_4</tabstop>
+  <tabstop>lineEditMrp</tabstop>
+  <tabstop>lineEditSalePrice</tabstop>
+  <tabstop>lineEditWholeSalePrice</tabstop>
   <tabstop>pushButtonSave</tabstop>
   <tabstop>pushButtonDelete</tabstop>
  </tabstops>

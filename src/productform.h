@@ -38,12 +38,16 @@ class ProductForm : public QWidget
 
 public:
     explicit ProductForm(QWidget *parent = 0);
+
     ~ProductForm();
     void setCodeFocus();
 
 private:
     Ui::ProductForm *ui;
 
+private slots:
+    void save();
+	
 };
 
 #endif // PRODUCTFORM_H
