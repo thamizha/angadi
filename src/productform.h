@@ -1,7 +1,7 @@
 /*****************************************************************************
- * connection.h
+ * productform.h
  *
- * Created: 18/04/2014 by selvam
+ * Created: 18/04/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,41 +23,31 @@
  *
  *****************************************************************************/
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef PRODUCTFORM_H
+#define PRODUCTFORM_H
 
-#include <QObject>
-#include <QDateTime>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QSqlQuery>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QVariant>
-#include <QObject>
-#include <QHash>
-#include <QDateTime>
-#include <QList>
-#include <QMetaObject>
-#include <QMetaProperty>
-#include <QDebug>
-#include <QSqlError>
+#include <QWidget>
 
+namespace Ui {
+class ProductForm;
+}
 
-class Connection : public QObject
+class ProductForm : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Connection(QObject *parent = 0);
-    QSqlDatabase db;
-    ~Connection();
-signals:
+    explicit ProductForm(QWidget *parent = 0);
 
-public slots:
+    ~ProductForm();
+    void setCodeFocus();
 
 private:
+    Ui::ProductForm *ui;
 
+private slots:
+    void save();
+	
 };
 
-#endif // CONNECTION_H
+#endif // PRODUCTFORM_H

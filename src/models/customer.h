@@ -26,8 +26,7 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include <QObject>
-#include <QDateTime>
+#include <connection.h>
 
 class Customer : public QObject
 {
@@ -114,11 +113,11 @@ public:
 
     QList<Customer> findAll();
     QList<Customer> findAllBySql();
-    QList<Customer> findAllByAttributes();
+    QList<Customer> findAllByAttributes();*/
 
     void deleteAll();
     void deleteByCode();
-    void deleteBySql();
+    /*void deleteBySql();
     void deleteAllByAttributes();*/
 
     bool save();

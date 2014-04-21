@@ -1,7 +1,7 @@
 /*****************************************************************************
- * category.h
+ * product.h
  *
- * Created: 17/04/2014 by Manikk
+ * Created: 19/04/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,32 +20,53 @@
  * this file belongs to.
  *
  * Authors :
- * Manikk <manikk.h@gmail.com>
+ *
  *****************************************************************************/
 
-#ifndef CATEGORY_H
-#define CATEGORY_H
+#ifndef PRODUCT_H
+#define PRODUCT_H
 
-#include <connection.h>
+#include <QObject>
+#include <QDateTime>
 
-class Category : public QObject
+#include "connection.h"
+
+class Product : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
+
 
     Q_PROPERTY(quint16 id READ id WRITE setId)
     Q_PROPERTY(QString code READ code WRITE setCode)
     Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(quint16 categoryId READ categoryId WRITE setCategoryId)
+    Q_PROPERTY(QString manufacturer READ manufacturer WRITE setManufacturer)
+    Q_PROPERTY(QString unit READ unit WRITE setUnit)
+    Q_PROPERTY(quint16 mrp READ mrp WRITE setMrp)
+    Q_PROPERTY(quint16 sprice READ sprice WRITE setSprice)
+    Q_PROPERTY(quint16 wholeSalePrice READ wholeSalePrice WRITE setWholeSalePrice)
+
     Q_PROPERTY(QChar status READ status WRITE setStatus)
     Q_PROPERTY(QDateTime createdDate READ createdDate WRITE setCreatedDate)
     Q_PROPERTY(quint16 modifiedBy READ modifiedBy WRITE setModifiedBy)
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
 
-public:
-    explicit Category(QObject *parent = 0);
 
+public:
+    explicit Product(QObject *parent = 0);
+
+    QString tableName();
     quint16 id();
+    //Form data
     QString code();
     QString name();
+    quint16 categoryId();
+    QString manufacturer();\
+    QString unit();
+    quint16 mrp();
+    quint16 sprice();
+    quint16 wholeSalePrice();
+    //--
     QChar status();
     QDateTime createdDate();
     QDateTime modifiedDate();
@@ -54,53 +75,40 @@ public:
     void setId(quint16 id);
     void setCode(QString code);
     void setName(QString name);
+    void setCategoryId(quint16 categoryId);
+    void setManufacturer(QString manufacturer);
+    void setUnit(QString unit);
+    void setMrp(quint16 mrp);
+    void setSprice(quint16 sprice);
+    void setWholeSalePrice(quint16 wholeSalePrice);
+
     void setStatus(QChar status);
     void setCreatedDate(QDateTime createdDate);
     void setModifiedDate(QDateTime modifiedDate);
     void setModifiedBy(quint16 modifiedBy);
 
-    QList<QString> findById();
-    /*Category findByCode();
-    Category findByAttributes();*/
-
-    QSqlTableModel *findAll();
-    /*QList<Category> findAllBySql();
-    QList<Category> findAllByAttributes();*/
-
-    void deleteAll();
-    void deleteByCode();
-    void deleteBySql();
-    void deleteAllByAttributes();
-
     bool save();
-    bool destroy();
-
-    QList<Category> search();
-
-    QList<QString> getAllProducts();
-    QList<QString> getAllBills();
-    QList<QString> getAllTransactions();
-
-    QHash<QString,QString> validate();
-    QHash<QString,QString> errors();
-
-    QString tableName();
-
-signals:
-
-public slots:
 
 private:
     quint16 m_id;
     QString m_code;
     QString m_name;
+    quint16 m_categoryId;
+    QString m_manufacturer;
+    QString m_unit;
+    quint16 m_mrp;
+    quint16 m_sprice;
+    quint16 m_wholeSalePrice;
+
     QChar m_status;
     QDateTime m_createdDate;
     QDateTime m_modifiedDate;
     quint16 m_modifiedBy;
 
-    //QHash<QString,QString> errors;
+signals:
+
+public slots:
+
 };
 
-
-#endif // CATEGORY_H
+#endif // PRODUCT_H

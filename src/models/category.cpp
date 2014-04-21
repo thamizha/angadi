@@ -118,33 +118,18 @@ QList<QString> Category::findById()
 Category Category::findByAttributes()
 {
 
-}
-Category Category::findAll()
+}*/
+
+QSqlTableModel *Category::findAll()
 {
-    QSqlQuery query;
-    QSqlDatabase db;
-    //Category activeRecord;
-    //QList<Category> records;
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
-    query.prepare("SELECT * FROM categories");
-    query.bindValue(":id",m_code);
-    while(query.next())
-    {
-        QString id = query.value(0).toString();
-        QString code = query.value(1).toString();
-        QString name = query.value(2).toString();
-        QString status = query.value(3).toString();
-        QString modifiedDate = query.value(4).toString();
-        QString modifiedBy = query.value(5).toString();
-    }
-    db.close();
+    Connection dbcn;
+    QSqlTableModel *model=new QSqlTableModel;
+    model->setTable("categories");
+    model->select();
+    return model;
 }
-QList<Category> Category::findAllBySql()
+
+/*QList<Category> Category::findAllBySql()
 {
 
 }
@@ -154,8 +139,8 @@ QList<Category> Category::findAllByAttributes()
 }*/
 void Category::deleteAll()
 {
-
 }
+
 void Category::deleteByCode()
 {
 
@@ -200,22 +185,17 @@ bool Category::save()
 
 bool Category::destroy()
 {
+    Connection dbcn;
     bool status;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
     QSqlQuery query;
-    query.prepare("UPDATE SET categories status=:status where id = :id ");
+    query.prepare("UPDATE categories SET status=:status where id = :id");
     query.bindValue(":status",m_status);
+    query.bindValue(":id",m_id);
     if(query.exec())
         status=true ;
     else
         status=false;
-    db.close();
+
     return status;
 }
 

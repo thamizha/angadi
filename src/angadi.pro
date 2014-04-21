@@ -20,7 +20,10 @@ SOURCES += main.cpp\
     customerform.cpp \
     models/customer.cpp \
     categoryform.cpp \
-    connection.cpp
+    connection.cpp \
+    productform.cpp \
+    lssbar.cpp
+    models/product.cpp
 
 HEADERS  += \
     angadiapp.h \
@@ -30,12 +33,18 @@ HEADERS  += \
     customerform.h \
     models/customer.h \
     categoryform.h \
-    connection.h
+    connection.h \
+    productform.h \
+    lssbar.h
+    models/product.h
 
 FORMS    += \
     angadimainwindow.ui \
     logindialog.ui \
     customerform.ui \
-    categoryform.ui
+    categoryform.ui \
+    productform.ui
 
 RESOURCES +=
+
+CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT

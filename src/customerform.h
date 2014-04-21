@@ -27,6 +27,7 @@
 #define CUSTOMERFORM_H
 
 #include <QWidget>
+#include <connection.h>
 #include <models/customer.h>
 
 namespace Ui {
@@ -40,12 +41,14 @@ class CustomerForm : public QWidget
 public:
     explicit CustomerForm(QWidget *parent = 0);
     ~CustomerForm();
+    void setCodeFocus();
 
 private:
     Ui::CustomerForm *ui;
 
 private slots:
     void save();
+    void deleteAll();
 };
 
 #endif // CUSTOMERFORM_H

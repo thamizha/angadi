@@ -95,7 +95,7 @@
     <rect>
      <x>130</x>
      <y>90</y>
-     <width>81</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -103,8 +103,8 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>90</y>
+     <x>281</x>
+     <y>93</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -122,7 +122,7 @@
   <widget class="QLineEdit" name="lineEditCreditLimit">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>360</x>
      <y>90</y>
      <width>71</width>
      <height>23</height>
@@ -182,7 +182,7 @@
     <rect>
      <x>130</x>
      <y>160</y>
-     <width>111</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -192,7 +192,7 @@
     <rect>
      <x>129</x>
      <y>195</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -219,7 +219,7 @@
   <widget class="QLineEdit" name="lineEditCity">
    <property name="geometry">
     <rect>
-     <x>349</x>
+     <x>359</x>
      <y>196</y>
      <width>113</width>
      <height>23</height>
@@ -267,7 +267,7 @@
   <widget class="QLineEdit" name="lineEditState">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>231</y>
      <width>113</width>
      <height>23</height>
@@ -298,7 +298,7 @@
     <rect>
      <x>130</x>
      <y>230</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -306,7 +306,7 @@
   <widget class="QLineEdit" name="lineEditPincode">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>261</y>
      <width>113</width>
      <height>23</height>
@@ -356,7 +356,7 @@
     <rect>
      <x>130</x>
      <y>260</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -383,7 +383,7 @@
   <widget class="QLineEdit" name="lineEditPhone2">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>291</y>
      <width>113</width>
      <height>23</height>
@@ -414,7 +414,7 @@
     <rect>
      <x>130</x>
      <y>290</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -441,7 +441,7 @@
   <widget class="QLineEdit" name="lineEditMobile2">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>321</y>
      <width>113</width>
      <height>23</height>
@@ -472,7 +472,7 @@
     <rect>
      <x>130</x>
      <y>320</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -499,7 +499,7 @@
   <widget class="QLineEdit" name="lineEditWebsite">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>351</y>
      <width>113</width>
      <height>23</height>
@@ -530,7 +530,7 @@
     <rect>
      <x>130</x>
      <y>350</y>
-     <width>113</width>
+     <width>130</width>
      <height>23</height>
     </rect>
    </property>
@@ -559,7 +559,7 @@
     <rect>
      <x>130</x>
      <y>380</y>
-     <width>331</width>
+     <width>341</width>
      <height>51</height>
     </rect>
    </property>
@@ -591,6 +591,29 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>comboBoxType</tabstop>
+  <tabstop>lineEditCreditLimit</tabstop>
+  <tabstop>lineEditContactPerson</tabstop>
+  <tabstop>comboBoxGender</tabstop>
+  <tabstop>lineEditAddress1</tabstop>
+  <tabstop>lineEditAddress2</tabstop>
+  <tabstop>lineEditCity</tabstop>
+  <tabstop>lineEditState</tabstop>
+  <tabstop>lineEditCountry</tabstop>
+  <tabstop>lineEditPincode</tabstop>
+  <tabstop>lineEditPhone1</tabstop>
+  <tabstop>lineEditPhone2</tabstop>
+  <tabstop>lineEditMobile1</tabstop>
+  <tabstop>lineEditMobile2</tabstop>
+  <tabstop>lineEditEmail</tabstop>
+  <tabstop>lineEditWebsite</tabstop>
+  <tabstop>textEditNote</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonDelete</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

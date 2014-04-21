@@ -102,6 +102,12 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonDelete</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

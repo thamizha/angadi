@@ -56,15 +56,15 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCreate">
     <property name="title">
      <string>Create</string>
     </property>
-    <addaction name="actionCreateItem"/>
     <addaction name="actionCreateCategory"/>
+    <addaction name="actionCreateProduct"/>
     <addaction name="separator"/>
     <addaction name="actionCreateCustomer"/>
    </widget>
@@ -219,6 +219,11 @@
   <action name="actionViewBills">
    <property name="text">
     <string>View Bills</string>
+   </property>
+  </action>
+  <action name="actionCreateProduct">
+   <property name="text">
+    <string>Product</string>
    </property>
   </action>
  </widget>

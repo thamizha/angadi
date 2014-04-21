@@ -32,7 +32,17 @@ CustomerForm::CustomerForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // populate customer type combo box
+    ui->comboBoxType->addItem("Retailer");
+    ui->comboBoxType->addItem("Whole Saler");
+
+    // populate gender combo box
+    ui->comboBoxGender->addItem("Male");
+    ui->comboBoxGender->addItem("Female");
+    ui->comboBoxGender->addItem("Transgender");
+
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
+    connect(ui->pushButtonDelete, SIGNAL(clicked()), this, SLOT(deleteAll()));
 }
 
 CustomerForm::~CustomerForm()
@@ -40,11 +50,39 @@ CustomerForm::~CustomerForm()
     delete ui;
 }
 
+void CustomerForm::setCodeFocus()
+{
+    ui->lineEditCode->setFocus();
+}
+
 void CustomerForm::save()
 {
     Customer customer;
     customer.setCode(ui->lineEditCode->text());
     customer.setName(ui->lineEditName->text());
+    customer.setType(ui->comboBoxType->currentText());
+    customer.setCreditLimit(ui->lineEditCreditLimit->text().toDouble());
+    customer.setContactPerson(ui->lineEditContactPerson->text());
+    customer.setAddress1(ui->lineEditAddress1->text());
+    customer.setAddress2(ui->lineEditAddress2->text());
+    customer.setCity(ui->lineEditCity->text());
+    customer.setState(ui->lineEditState->text());
+    customer.setCountry(ui->lineEditCountry->text());
+    customer.setPincode(ui->lineEditPincode->text());
+    customer.setPhone1(ui->lineEditPhone1->text());
+    customer.setPhone2(ui->lineEditPhone2->text());
+    customer.setMobile1(ui->lineEditMobile1->text());
+    customer.setMobile2(ui->lineEditMobile2->text());
+    customer.setEmail(ui->lineEditEmail->text());
+    customer.setWebsite(ui->lineEditWebsite->text());
+    customer.setNotes(ui->textEditNote->toPlainText());
+    bool status = customer.save();
+    qDebug() << status;
+}
 
-    customer.save();
+void CustomerForm::deleteAll()
+{
+    Customer customer;
+    customer.setCode("2");
+    customer.deleteByCode();
 }

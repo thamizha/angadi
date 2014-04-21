@@ -63,3 +63,8 @@ void CategoryForm::enableSave(QString value)
     else
         ui->pushButtonSave->setEnabled(false);
 }
+void CategoryForm::setCodeFocus()
+{
+    ui->lineEditCode->setFocus();
+
+}
