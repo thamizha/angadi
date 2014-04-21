@@ -46,6 +46,16 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->comboBoxUnit->addItem("102");
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+
+    // Enter key to focus next control
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->comboBoxcategoryId,SLOT(setFocus()));
+    //connect(ui->comboBoxcategoryId->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxManufacturer,SLOT(setFocus()));
+    //connect(ui->comboBoxManufacturer->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxUnit,SLOT(setFocus()));
+    //connect(ui->comboBoxUnit->lineEdit(),SIGNAL(returnPressed()),ui->lineEditMrp,SLOT(setFocus()));
+    connect(ui->lineEditMrp,SIGNAL(returnPressed()),ui->lineEditSalePrice,SLOT(setFocus()));
+    connect(ui->lineEditSalePrice,SIGNAL(returnPressed()),ui->lineEditWholeSalePrice,SLOT(setFocus()));
+    connect(ui->lineEditWholeSalePrice,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
 }
 
 ProductForm::~ProductForm()
@@ -87,5 +97,5 @@ void ProductForm::save()
         QMessageBox::information(this,"title","Product Saved succesfully");
     else
         QMessageBox::information(this,"title","<b>Product NOT Saved succesfully</b>");
-
+    setCodeFocus();
 }

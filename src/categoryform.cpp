@@ -35,8 +35,12 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->setupUi(this);
     ui->pushButtonSave->setEnabled(false);
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
-    connect(ui->lineEditCode,SIGNAL(textChanged(QString)),this,SLOT(enableSave(QString)));
 
+    // Enter key to focus next control
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
+	
+    connect(ui->lineEditCode,SIGNAL(textChanged(QString)),this,SLOT(enableSave(QString)));
 }
 
 CategoryForm::~CategoryForm()
@@ -51,6 +55,8 @@ void CategoryForm::save()
     category.setName(ui->lineEditName->text());
     bool status = category.save();
     qDebug() << status;
+    clear();
+    setCodeFocus();
 }
 
 void CategoryForm::enableSave(QString value)
@@ -67,4 +73,11 @@ void CategoryForm::setCodeFocus()
 {
     ui->lineEditCode->setFocus();
 
+}
+
+void CategoryForm::clear()
+{
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->clear();
+    }
 }
