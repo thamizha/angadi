@@ -26,18 +26,21 @@
 #include "categoryform.h"
 #include "ui_categoryform.h"
 #include <QDebug>
+#include <QIntValidator>
 
 CategoryForm::CategoryForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CategoryForm)
 {
     ui->setupUi(this);
-
+    ui->pushButtonSave->setEnabled(false);
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
+	
+    connect(ui->lineEditCode,SIGNAL(textChanged(QString)),this,SLOT(enableSave(QString)));
 }
 
 CategoryForm::~CategoryForm()
@@ -56,9 +59,20 @@ void CategoryForm::save()
     setCodeFocus();
 }
 
+void CategoryForm::enableSave(QString value)
+{
+    int pos=0;
+    QIntValidator v(1,100,this);
+    qint8 vState= v.validate(value,pos);
+    if(vState==2)
+        ui->pushButtonSave->setEnabled(true);
+    else
+        ui->pushButtonSave->setEnabled(false);
+}
 void CategoryForm::setCodeFocus()
 {
     ui->lineEditCode->setFocus();
+
 }
 
 void CategoryForm::clear()

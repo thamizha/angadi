@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     productform.cpp \
     lssbar.cpp \
     models/product.cpp
-
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
