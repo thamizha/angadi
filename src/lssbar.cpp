@@ -45,7 +45,7 @@ void Lssbar::setupUi()
     this->setLayout(vBox);
 }
 
-void Lssbar::populate()
+/*void Lssbar::populate()
 {
     Category *category = new Category;
     QSqlTableModel *model = category->findAll();
@@ -63,4 +63,57 @@ void Lssbar::populate()
         tableWidget->setItem(i,0,code);
         tableWidget->setItem(i,1,name);
     }
+}*/
+
+
+void Lssbar::populate(QString data)
+{
+
+    qDebug() << data<<endl;
+    QStringList list = data.split("|");
+    tableWidget = new QTableWidget(0,10);
+    for (int i = 0; i < list.size(); i++)
+    {
+       qDebug() << list[i]<< endl;
+       QStringList datas = list[i].split("~");
+
+       //tableWidget->setHorizontalHeaderLabels(QStringList() << tr("X") << tr("Y"));
+           for (int j=0;j<datas.size();j++)
+           {
+
+               //tableWidget->item(j,i)->setText(datas[j]);
+               //tableWidget->item(j, i)->setText(QString::number(point.y()));
+
+               QTableWidgetItem *code = new QTableWidgetItem(datas[j]);
+               tableWidget->setRowCount(datas[i].size());
+               tableWidget->setColumnCount(list.size());
+               tableWidget->setItem(j,i,code);
+               qDebug() << datas[j];
+           }
+            qDebug() << "***************************************************************************";
+    }
+
+
+
+
+
+    /*Category *category = new Category;
+    QSqlTableModel *model = category->findAll();
+
+    tableWidget->setRowCount(model->rowCount());
+
+    for(int i=0; i<model->rowCount(); i++){
+        QSqlRecord record = model->record(i);
+
+        QTableWidgetItem *code = new QTableWidgetItem(record.value("code").toString());
+        QTableWidgetItem *name = new QTableWidgetItem(record.value("name").toString());
+
+        qDebug() << record.value("name").toString();
+
+        tableWidget->setItem(i,0,code);
+        tableWidget->setItem(i,1,name);
+    }*/
 }
+
+
+

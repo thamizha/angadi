@@ -117,7 +117,45 @@ void AngadiMainWindow::openCategoryTab()
     ui->mainTab->setCurrentWidget (categoryForm);
     categoryForm->setCodeFocus();
 
-    lssbar->populate();
+
+    /*Category *category = new Category;
+    QSqlTableModel *model = category->findAll();
+    quint16 totalRecords = model->rowCount();
+    QString column1[totalRecords];
+    QString column2[totalRecords];
+
+
+    for(int i=0; i<totalRecords; i++){
+        QSqlRecord record = model->record(i);
+        column1[i]=record.value("code").toString();
+        column2[i]=record.value("name").toString();
+    }*/
+
+
+
+    Category *category = new Category;
+    QSqlTableModel *model = category->findAll();
+    quint16 totalRecords = model->rowCount();
+    QStringList column1;
+    QStringList column2;
+
+
+    for(int i=0; i<totalRecords; i++){
+        QSqlRecord record = model->record(i);
+        column1 << record.value("code").toString();
+        column2 << record.value("name").toString();
+    }
+
+     QString col1 = column1.join("~");
+     QString col2 = column2.join("~");
+     QString data = col1+"|"+col2;
+       qDebug() << data<< endl;
+    for (int i = 0; i < totalRecords; ++i)
+             qDebug() << column1[i]<< endl;
+
+
+
+    lssbar->populate(data);
 }
 
 void AngadiMainWindow::openProductTab()

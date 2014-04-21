@@ -41,7 +41,7 @@ public:
 signals:
 
 public slots:
-    void populate();
+    void populate(QString column1);
 
 private:
     QTableWidget *tableWidget;
