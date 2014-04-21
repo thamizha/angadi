@@ -16,6 +16,7 @@ public:
     explicit CategoryForm(QWidget *parent = 0);
     ~CategoryForm();
     void setCodeFocus();
+    void clear();
 
 public slots:
 

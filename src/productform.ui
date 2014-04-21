@@ -35,6 +35,9 @@
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">

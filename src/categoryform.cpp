@@ -34,6 +34,10 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+
+    // Enter key to focus next control
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
 }
 
 CategoryForm::~CategoryForm()
@@ -48,9 +52,18 @@ void CategoryForm::save()
     category.setName(ui->lineEditName->text());
     bool status = category.save();
     qDebug() << status;
+    clear();
+    setCodeFocus();
 }
 
 void CategoryForm::setCodeFocus()
 {
     ui->lineEditCode->setFocus();
+}
+
+void CategoryForm::clear()
+{
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->clear();
+    }
 }
