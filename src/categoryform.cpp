@@ -26,14 +26,17 @@
 #include "categoryform.h"
 #include "ui_categoryform.h"
 #include <QDebug>
+#include <QIntValidator>
 
 CategoryForm::CategoryForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CategoryForm)
 {
     ui->setupUi(this);
-
+    ui->pushButtonSave->setEnabled(false);
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+    connect(ui->lineEditCode,SIGNAL(textChanged(QString)),this,SLOT(enableSave(QString)));
+
 }
 
 CategoryForm::~CategoryForm()
@@ -48,4 +51,15 @@ void CategoryForm::save()
     category.setName(ui->lineEditName->text());
     bool status = category.save();
     qDebug() << status;
+}
+
+void CategoryForm::enableSave(QString value)
+{
+    int pos=0;
+    QIntValidator v(1,100,this);
+    qint8 vState= v.validate(value,pos);
+    if(vState==2)
+        ui->pushButtonSave->setEnabled(true);
+    else
+        ui->pushButtonSave->setEnabled(false);
 }

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <models/category.h>
+#include <QValidator>
+#include <QIntValidator>
 
 namespace Ui {
 class CategoryForm;
@@ -22,6 +24,7 @@ private:
     Ui::CategoryForm *ui;
 
 private slots:
+    void enableSave(QString value);
     void save();
 };
 
