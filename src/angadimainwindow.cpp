@@ -87,7 +87,6 @@ void AngadiMainWindow::exitApp()
 void AngadiMainWindow::openTab()
 {
     QString tabName = sender()->property("tabName").toString();
-    //qDebug() << "Open Tab Triggered  ::::> " << tabName;
 
     if(tabName == "customer" ||
        tabName == "category" ||
@@ -124,8 +123,7 @@ void AngadiMainWindow::openCategoryTab()
     ui->mainTab->setCurrentWidget (categoryForm);
     categoryForm->setCodeFocus();    
     categoryForm->setModel(categoriesModel);
-    //CategoriesModel cat;
-    //categoriesModel->select();
+
     lssbar->setModel(categoriesModel);
 }
 

@@ -38,7 +38,6 @@ void Lssbar::setupUi()
     QVBoxLayout *vBox = new QVBoxLayout;
     tableView = new QTableView;
     tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-   /* tableView->setColumnCount(2);*/
     tableView->horizontalHeader()->setStretchLastSection(true);
     tableView->verticalHeader()->setVisible(false);
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -46,46 +45,6 @@ void Lssbar::setupUi()
     vBox->addWidget(tableView);
     this->setLayout(vBox);
 }
-
-/*void Lssbar::populate()
-{
-    Category *category = new Category;
-    QSqlTableModel *model = category->findAll();
-
-    tableWidget->setRowCount(model->rowCount());
-
-    for(int i=0; i<model->rowCount(); i++){
-        QSqlRecord record = model->record(i);
-
-        QTableWidgetItem *code = new QTableWidgetItem(record.value("code").toString());
-        QTableWidgetItem *name = new QTableWidgetItem(record.value("name").toString());
-
-        qDebug() << record.value("name").toString();
-
-        tableWidget->setItem(i,0,code);
-        tableWidget->setItem(i,1,name);
-    }
-}*/
-
-
-/*void Lssbar::populate(QString data,quint16 totalRecords)
-{
-    tableView->setRowCount(totalRecords);
-    qDebug() << data<<endl;
-    QStringList list = data.split("|");
-    qDebug() << list.size();
-    for (int i = 0; i < list.size(); i++)
-    {
-       qDebug() << list[i]<< endl;
-       QStringList datas = list[i].split("~");
-           for (int j=0;j<datas.size();j++)
-           {
-               QTableWidgetItem *code = new QTableWidgetItem(datas[j]);
-               tableView->setItem(j,i,code);
-               qDebug() << datas[j];
-           }
-    }
-}*/
 
 void Lssbar::setModel(QSqlTableModel *tableModel){
 
@@ -110,5 +69,3 @@ void Lssbar::setModel(QSqlTableModel *tableModel){
 
     }
 }
-
-

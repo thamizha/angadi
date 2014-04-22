@@ -50,7 +50,6 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::save()
 {
-
     int rowIndex = categoriesModel->rowCount();
     qDebug() << "rowIndex :::>" << rowIndex;
     categoriesModel->insertRow(rowIndex);
@@ -59,13 +58,7 @@ void CategoryForm::save()
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
     categoriesModel->submit();
 
-    /*Category category;
-    category.setCode(ui->lineEditCode->text());
-    category.setName(ui->lineEditName->text());
-    bool status = category.save();
-    qDebug() << status;
-    clear();*/
-
+    clear();
     setCodeFocus();
 }
 

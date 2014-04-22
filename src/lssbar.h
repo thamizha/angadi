@@ -42,7 +42,6 @@ public:
 signals:
 
 public slots:
-    //void populate(QString column1,quint16 totalRecords);
     void setModel(QSqlTableModel *tableModel);
 
 private:
