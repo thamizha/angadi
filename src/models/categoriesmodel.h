@@ -1,7 +1,7 @@
 /*****************************************************************************
- * lssbar.h
+ * categoriesmodel.h
  *
- * Created: 19/04/2014 by selvam
+ * Created: 22/04/2014 by manikk
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,34 +23,21 @@
  *
  *****************************************************************************/
 
-#ifndef LSSBAR_H
-#define LSSBAR_H
+#ifndef CATEGORIESMODEL_H
+#define CATEGORIESMODEL_H
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QTableView>
 #include <QSqlTableModel>
-#include <QDebug>
-#include <models/category.h>
 
-class Lssbar : public QWidget
+class CategoriesModel : public QSqlTableModel
 {
     Q_OBJECT
 public:
-    explicit Lssbar(QWidget *parent = 0);
+    explicit CategoriesModel(QObject *parent = 0);
 
 signals:
 
 public slots:
-    //void populate(QString column1,quint16 totalRecords);
-    void setModel(QSqlTableModel *tableModel);
-
-private:
-    QTableView *tableView;
-
-private slots:
-    void setupUi();
 
 };
 
-#endif // LSSBAR_H
+#endif // CATEGORIESMODEL_H

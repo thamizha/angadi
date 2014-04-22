@@ -26,6 +26,7 @@
 #include "angadimainwindow.h"
 #include "ui_angadimainwindow.h"
 #include "lssbar.h"
+#include "models/categoriesmodel.h"
 
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -52,6 +53,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui->actionCreateProduct->setProperty("tabName","product");
 
     setupConnections();
+    setupModels();
 }
 
 AngadiMainWindow::~AngadiMainWindow()
@@ -70,6 +72,11 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
 
+}
+
+void AngadiMainWindow::setupModels()
+{
+    categoriesModel = new CategoriesModel;
 }
 
 void AngadiMainWindow::exitApp()
@@ -115,47 +122,11 @@ void AngadiMainWindow::openCategoryTab()
         ui->mainTab->addTab(categoryForm, "Category");
     }
     ui->mainTab->setCurrentWidget (categoryForm);
-    categoryForm->setCodeFocus();
-
-
-    /*Category *category = new Category;
-    QSqlTableModel *model = category->findAll();
-    quint16 totalRecords = model->rowCount();
-    QString column1[totalRecords];
-    QString column2[totalRecords];
-
-
-    for(int i=0; i<totalRecords; i++){
-        QSqlRecord record = model->record(i);
-        column1[i]=record.value("code").toString();
-        column2[i]=record.value("name").toString();
-    }*/
-
-
-
-    Category *category = new Category;
-    QSqlTableModel *model = category->findAll();
-    quint16 totalRecords = model->rowCount();
-    QStringList column1;
-    QStringList column2;
-    QStringList column3;
-
-
-    for(int i=0; i<totalRecords; i++){
-        QSqlRecord record = model->record(i);
-        column1 << record.value("code").toString();
-        column2 << record.value("name").toString();
-
-    }
-
-     QString col1 = column1.join("~");
-     QString col2 = column2.join("~");
-
-     QString data = col1+"|"+col2;
-       qDebug() << data<< endl;
-    //for (int i = 0; i < totalRecords; ++i)
-             //qDebug() << column1[i]<< endl;
-    lssbar->populate(data,totalRecords);
+    categoryForm->setCodeFocus();    
+    categoryForm->setModel(categoriesModel);
+    //CategoriesModel cat;
+    //categoriesModel->select();
+    lssbar->setModel(categoriesModel);
 }
 
 void AngadiMainWindow::openProductTab()
@@ -215,8 +186,7 @@ void AngadiMainWindow::onCloseTab(int index)
     QString tabName = widget->property("name").toString();
     //qDebug() << "close tab requested :::> " << tabName;
 
-    //if(ui->mainTab->count() == 1){
-    if(index == 0){
+    if(ui->mainTab->count() == 1){
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this,"Angadi","Are you sure you want to quit?",QMessageBox::Yes|QMessageBox::No);
         if(reply == QMessageBox::Yes){
@@ -268,3 +238,4 @@ void AngadiMainWindow::onTabChanged(int index){
         showRightDock(false);
     }
 }
+

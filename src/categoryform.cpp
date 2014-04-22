@@ -50,12 +50,22 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::save()
 {
-    Category category;
+
+    int rowIndex = categoriesModel->rowCount();
+    qDebug() << "rowIndex :::>" << rowIndex;
+    categoriesModel->insertRow(rowIndex);
+    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
+    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
+    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+    categoriesModel->submit();
+
+    /*Category category;
     category.setCode(ui->lineEditCode->text());
     category.setName(ui->lineEditName->text());
     bool status = category.save();
     qDebug() << status;
-    clear();
+    clear();*/
+
     setCodeFocus();
 }
 
@@ -80,4 +90,8 @@ void CategoryForm::clear()
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->clear();
     }
+}
+
+void CategoryForm::setModel(CategoriesModel *model){
+    categoriesModel = model;
 }

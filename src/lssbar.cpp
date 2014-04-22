@@ -24,6 +24,7 @@
  *****************************************************************************/
 
 #include "lssbar.h"
+#include "connection.h"
 #include <QHeaderView>
 
 Lssbar::Lssbar(QWidget *parent) :
@@ -35,13 +36,14 @@ Lssbar::Lssbar(QWidget *parent) :
 void Lssbar::setupUi()
 {
     QVBoxLayout *vBox = new QVBoxLayout;
-    tableWidget = new QTableWidget;
-    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tableWidget->setColumnCount(2);
-    tableWidget->horizontalHeader()->setStretchLastSection(true);
-    tableWidget->verticalHeader()->setVisible(false);
+    tableView = new QTableView;
+    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+   /* tableView->setColumnCount(2);*/
+    tableView->horizontalHeader()->setStretchLastSection(true);
+    tableView->verticalHeader()->setVisible(false);
+    tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    vBox->addWidget(tableWidget);
+    vBox->addWidget(tableView);
     this->setLayout(vBox);
 }
 
@@ -66,9 +68,9 @@ void Lssbar::setupUi()
 }*/
 
 
-void Lssbar::populate(QString data,quint16 totalRecords)
+/*void Lssbar::populate(QString data,quint16 totalRecords)
 {
-    tableWidget->setRowCount(totalRecords);
+    tableView->setRowCount(totalRecords);
     qDebug() << data<<endl;
     QStringList list = data.split("|");
     qDebug() << list.size();
@@ -79,11 +81,34 @@ void Lssbar::populate(QString data,quint16 totalRecords)
            for (int j=0;j<datas.size();j++)
            {
                QTableWidgetItem *code = new QTableWidgetItem(datas[j]);
-               tableWidget->setItem(j,i,code);
+               tableView->setItem(j,i,code);
                qDebug() << datas[j];
            }
     }
-}
+}*/
 
+void Lssbar::setModel(QSqlTableModel *tableModel){
+
+    tableModel->select();
+    tableView->setModel(tableModel);
+
+    //set all columns hidden
+    for(int i=0;i<tableModel->columnCount();i++){
+        tableView->setColumnHidden(i,true);
+    }
+
+    if(tableModel->tableName() == "categories"){
+        int codeIndex = tableModel->fieldIndex("code");
+        int nameIndex = tableModel->fieldIndex("name");
+        tableView->setColumnHidden(codeIndex,false);
+        tableView->setColumnHidden(nameIndex,false);
+
+    }else if(tableModel->tableName() == "products"){
+        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
+        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+    }else if(tableModel->tableName() == "customers"){
+
+    }
+}
 
 

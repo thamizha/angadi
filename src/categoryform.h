@@ -3,8 +3,10 @@
 
 #include <QWidget>
 #include <models/category.h>
+#include <models/categoriesmodel.h>
 #include <QValidator>
 #include <QIntValidator>
+
 
 namespace Ui {
 class CategoryForm;
@@ -19,11 +21,16 @@ public:
     ~CategoryForm();
     void setCodeFocus();
     void clear();
+    void setModel(CategoriesModel *model);
 
 public slots:
 
 private:
     Ui::CategoryForm *ui;
+    CategoriesModel *categoriesModel;
+
+
+
 
 private slots:
     void enableSave(QString value);
