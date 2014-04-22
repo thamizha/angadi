@@ -41,7 +41,7 @@ public:
 signals:
 
 public slots:
-    void populate(QString column1);
+    void populate(QString column1,quint16 totalRecords);
 
 private:
     QTableWidget *tableWidget;
