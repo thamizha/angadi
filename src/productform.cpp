@@ -27,6 +27,7 @@
 #include "ui_productform.h"
 #include <QMessageBox>
 #include "models/product.h"
+#include "models/productsmodel.h"
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -63,25 +64,28 @@ ProductForm::~ProductForm()
     delete ui;
 }
 
-void ProductForm::setCodeFocus()
+void ProductForm::save()
 {
-    ui->lineEditCode->setFocus();
+
+    int rowIndex = productsModel->rowCount();
+    qDebug() << "rowIndex :::>" << rowIndex;
+    productsModel->insertRow(rowIndex);
+    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("code")),ui->lineEditCode->text());
+    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("name")),ui->lineEditName->text());
+    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+    productsModel->submit();
+
+    clear();
+    setCodeFocus();
 }
 
-void ProductForm::save()
+
+/*void ProductForm::save()
 {
     Product product;
     product.setCode(ui->lineEditCode->text());
     product.setName(ui->lineEditName->text());
     //QMessageBox::information(this,"title",ui->comboBoxcategoryId->property("currentText").toString());
-
-
-    /*product.setCategoryId(25);
-    product.setManufacturer("Vijay");
-    product.setUnit("72kg");
-    product.setMrp(250);
-    product.setSprice(300);
-    product.setWholeSalePrice(350);*/
 
 
     product.setCategoryId(ui->comboBoxcategoryId->property("currentText").toDouble(0));
@@ -98,4 +102,20 @@ void ProductForm::save()
     else
         QMessageBox::information(this,"title","<b>Product NOT Saved succesfully</b>");
     setCodeFocus();
+}*/
+
+void ProductForm::clear(){
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->clear();
+    }
 }
+
+void ProductForm::setCodeFocus(){
+    ui->lineEditCode->setFocus();
+}
+
+
+void ProductForm::setModel(ProductsModel *model){
+    productsModel = model;
+}
+

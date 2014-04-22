@@ -7,6 +7,7 @@
 #include "productform.h"
 #include "lssbar.h"
 #include <models/categoriesmodel.h>
+#include "models/productsmodel.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -31,6 +32,7 @@ private:
     ProductForm *productForm;
 
     CategoriesModel *categoriesModel;
+    ProductsModel *productsModel;
 
     void openCustomerTab();
     void openProductTab();
