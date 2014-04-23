@@ -1,7 +1,7 @@
 /*****************************************************************************
- * productform.h
+ * productsmodel.h
  *
- * Created: 18/04/2014 by vijay
+ * Created: 22/04/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,39 +20,24 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * gvijaydhanasekaran <vijay.kuruntham@gmail.com>
  *****************************************************************************/
 
-#ifndef PRODUCTFORM_H
-#define PRODUCTFORM_H
+#ifndef PRODUCTSMODEL_H
+#define PRODUCTSMODEL_H
 
-#include <QWidget>
-#include "models/productsmodel.h"
+#include <QSqlTableModel>
 
-
-namespace Ui {
-class ProductForm;
-}
-
-class ProductForm : public QWidget
+class ProductsModel : public QSqlTableModel
 {
     Q_OBJECT
-
 public:
-    explicit ProductForm(QWidget *parent = 0);
+    explicit ProductsModel(QObject *parent = 0);
 
-    ~ProductForm();
-    void setCodeFocus();
-    void clear();
-    void setModel(ProductsModel *model);
+signals:
 
-private:
-    Ui::ProductForm *ui;
-    ProductsModel *productsModel;
+public slots:
 
-private slots:
-    void save();
-	
 };
 
-#endif // PRODUCTFORM_H
+#endif // PRODUCTSMODEL_H

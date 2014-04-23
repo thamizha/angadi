@@ -27,6 +27,7 @@
 #include "ui_angadimainwindow.h"
 #include "lssbar.h"
 #include "models/categoriesmodel.h"
+#include "models/productsmodel.h"
 
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -76,6 +77,7 @@ void AngadiMainWindow::setupConnections()
 void AngadiMainWindow::setupModels()
 {
     categoriesModel = new CategoriesModel;
+    productsModel = new ProductsModel;
 }
 
 void AngadiMainWindow::exitApp()
@@ -143,6 +145,9 @@ void AngadiMainWindow::openProductTab()
     }
     ui->mainTab->setCurrentWidget (productForm);
     productForm->setCodeFocus();
+    productForm->setModel(productsModel);
+    lssbar->setModel(productsModel);
+
 }
 
 void AngadiMainWindow::openCustomerTab()

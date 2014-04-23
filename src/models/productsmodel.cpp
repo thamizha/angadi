@@ -1,7 +1,7 @@
 /*****************************************************************************
- * productform.h
+ * productsmodel.cpp
  *
- * Created: 18/04/2014 by vijay
+ * Created: 22/04/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,39 +20,16 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * gvijaydhanasekaran <vijay.kuruntham@gmail.com>
  *****************************************************************************/
 
-#ifndef PRODUCTFORM_H
-#define PRODUCTFORM_H
+#include "productsmodel.h"
 
-#include <QWidget>
-#include "models/productsmodel.h"
-
-
-namespace Ui {
-class ProductForm;
-}
-
-class ProductForm : public QWidget
+ProductsModel::ProductsModel(QObject *parent) :
+    QSqlTableModel(parent)
 {
-    Q_OBJECT
-
-public:
-    explicit ProductForm(QWidget *parent = 0);
-
-    ~ProductForm();
-    void setCodeFocus();
-    void clear();
-    void setModel(ProductsModel *model);
-
-private:
-    Ui::ProductForm *ui;
-    ProductsModel *productsModel;
-
-private slots:
-    void save();
-	
-};
-
-#endif // PRODUCTFORM_H
+    setTable("products");
+    setHeaderData(fieldIndex("code"), Qt::Horizontal,QObject::tr("code"));
+    setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
+    setFilter("status = 'A'");
+}
