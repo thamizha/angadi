@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     lssbar.cpp \
     models/product.cpp \
     models/categoriesmodel.cpp \
-    models/productsmodel.cpp
+    models/productsmodel.cpp \
+    models/formvalidation.cpp
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
@@ -39,7 +40,8 @@ HEADERS  += \
     lssbar.h \
     models/product.h \
     models/categoriesmodel.h \
-    models/productsmodel.h
+    models/productsmodel.h \
+    models/formvalidation.h
 
 FORMS    += \
     angadimainwindow.ui \

@@ -2,6 +2,7 @@
 #define CATEGORYFORM_H
 
 #include <QWidget>
+#include <models/formvalidation.h>
 #include <models/category.h>
 #include <models/categoriesmodel.h>
 #include <QValidator>
@@ -30,8 +31,9 @@ private:
     CategoriesModel *categoriesModel;
 
 private slots:
-    void enableSave(QString value);
     void save();
+    void codeValid();
+    void nameValid();
 };
 
 #endif // CategoryForm_H
