@@ -36,16 +36,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
-    QDataWidgetMapper *dataMapper = new QDataWidgetMapper(this);
-    categoriesModel = new CategoriesModel;
-    //categoriesModel->select();
-
-    dataMapper->setModel(categoriesModel);
-    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    dataMapper->setItemDelegate(new QSqlRelationalDelegate(dataMapper));
-    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
-    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
-    dataMapper->toLast();
+    dataMapper = new QDataWidgetMapper(this);
 
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
@@ -69,10 +60,22 @@ void CategoryForm::save()
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
     categoriesModel->submit();*/
 
-    dataMapper->submit();
+    bool status;
 
-    clear();
-    setCodeFocus();
+    qDebug() << dataMapper->currentIndex();
+    dataMapper->toLast();
+    status = dataMapper->submit();
+
+    if(status == true)
+    {
+        dataMapper->toLast();
+        qDebug() << categoriesModel->data(categoriesModel->index(dataMapper->currentIndex(),categoriesModel->fieldIndex("code")));
+        categoriesModel->submitAll();
+        qDebug() << categoriesModel->lastError().text();
+    }
+
+    //clear();
+    //setCodeFocus();
 }
 
 void CategoryForm::setCodeFocus()
@@ -90,6 +93,10 @@ void CategoryForm::clear()
 
 void CategoryForm::setModel(CategoriesModel *model){
     categoriesModel = model;
+    dataMapper->setModel(categoriesModel);
+    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
+    dataMapper->toLast();
 }
 
 void CategoryForm::codeValid(){
