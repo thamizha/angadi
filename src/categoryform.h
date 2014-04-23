@@ -7,6 +7,7 @@
 #include <models/categoriesmodel.h>
 #include <QValidator>
 #include <QIntValidator>
+#include "lssbar.h"
 
 
 namespace Ui {

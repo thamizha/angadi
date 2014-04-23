@@ -104,6 +104,57 @@
     </property>
    </widget>
   </widget>
+  <widget class="QLabel" name="labelValidHead">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>50</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Validation Errors</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelCodeError">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>85</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Code may be empty or contains text or greater than 10000</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelNameError">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>125</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Name may be empty or exceeds 20 characters</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditCode</tabstop>
