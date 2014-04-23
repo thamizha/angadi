@@ -36,11 +36,22 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
+    QDataWidgetMapper *dataMapper = new QDataWidgetMapper(this);
+    categoriesModel = new CategoriesModel;
+    //categoriesModel->select();
+
+    dataMapper->setModel(categoriesModel);
+    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    dataMapper->setItemDelegate(new QSqlRelationalDelegate(dataMapper));
+    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
+    dataMapper->toLast();
+
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));	
-    connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
-    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+    //connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
+    //connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
 
 CategoryForm::~CategoryForm()
@@ -50,13 +61,15 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::save()
 {
-    int rowIndex = categoriesModel->rowCount();
+    /*int rowIndex = categoriesModel->rowCount();
     qDebug() << "rowIndex :::>" << rowIndex;
     categoriesModel->insertRow(rowIndex);
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-    categoriesModel->submit();
+    categoriesModel->submit();*/
+
+    dataMapper->submit();
 
     clear();
     setCodeFocus();

@@ -7,7 +7,8 @@
 #include <models/categoriesmodel.h>
 #include <QValidator>
 #include <QIntValidator>
-
+#include <QDataWidgetMapper>
+#include <QSqlRelationalDelegate>
 
 namespace Ui {
 class CategoryForm;
@@ -29,6 +30,7 @@ public slots:
 private:
     Ui::CategoryForm *ui;
     CategoriesModel *categoriesModel;
+    QDataWidgetMapper *dataMapper;
 
 private slots:
     void save();
