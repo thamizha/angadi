@@ -34,6 +34,9 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui(new Ui::CategoryForm)
 {
     ui->setupUi(this);
+    ui->labelCodeError->hide();
+    ui->labelNameError->hide();
+
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
     dataMapper = new QDataWidgetMapper(this);
@@ -41,8 +44,8 @@ CategoryForm::CategoryForm(QWidget *parent) :
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));	
-    //connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
-    //connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+    connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
+    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
 
 CategoryForm::~CategoryForm()
@@ -52,6 +55,60 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::save()
 {
+    FormValidation formValidation;
+    int validError = 0;
+    QString errors = "";
+    QMessageBox msgBox;
+    msgBox.setText("Validation Error in this forms");
+    msgBox.setInformativeText("");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+
+    if(formValidation.intValid(ui->lineEditCode->text()))
+    {
+
+    }
+    else
+    {
+        validError=1;
+        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
+    }
+    if(formValidation.textValid(ui->lineEditName->text(),20))
+    {
+
+    }
+    else
+    {
+        validError=1;
+        errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters");
+    }
+    if(validError==0)
+    {
+        int rowIndex = categoriesModel->rowCount();
+        qDebug() << "rowIndex :::>" << rowIndex;
+        categoriesModel->insertRow(rowIndex);
+        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
+        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
+        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+        categoriesModel->submit();
+
+        clear();
+        setCodeFocus();
+    }
+    else
+    {
+        msgBox.setInformativeText(errors);
+        int ret = msgBox.exec();
+        switch (ret) {
+           case QMessageBox::Ok:
+               ui->lineEditCode->setFocus();
+               ui->lineEditCode->selectAll();
+               break;
+           default:
+               // should never be reached
+               break;
+         }
+    }
     /*int rowIndex = categoriesModel->rowCount();
     qDebug() << "rowIndex :::>" << rowIndex;
     categoriesModel->insertRow(rowIndex);
@@ -104,26 +161,11 @@ void CategoryForm::codeValid(){
     FormValidation formValidation;
     if(formValidation.intValid(ui->lineEditCode->text()))
     {
-
+        ui->labelCodeError->hide();
     }
     else
     {
-        QMessageBox msgBox;
-        msgBox.setText("Validation Error in the Category code Field");
-        msgBox.setInformativeText("The Category Code field may be empty nor greater than 10000");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        int ret = msgBox.exec();
-        switch (ret) {
-           case QMessageBox::Ok:
-               ui->lineEditCode->setFocus();
-               ui->lineEditCode->selectAll();
-               break;
-           default:
-               // should never be reached
-               break;
-         }
-        //ui->lineEditName->blockSignals(false);
+        ui->labelCodeError->show();
     }
 }
 
@@ -131,24 +173,10 @@ void CategoryForm::nameValid(){
     FormValidation formValidation;
     if(formValidation.textValid(ui->lineEditName->text(),20))
     {
-
+        ui->labelNameError->hide();
     }
     else
     {
-        QMessageBox msgBox;
-        msgBox.setText("Validation Error in the Category Name Field");
-        msgBox.setInformativeText("The Category Name field may be empty nor exceeds 20 characters limit");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        //msgBox.setDefaultButton(QMessageBox::Ok);
-        int ret = msgBox.exec();
-        switch (ret) {
-           case QMessageBox::Ok:
-               ui->lineEditName->setFocus();
-               ui->lineEditName->selectAll();
-               break;
-           default:
-               // should never be reached
-               break;
-         }
+        ui->labelNameError->show();
     }
 }
