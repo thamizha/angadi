@@ -20,6 +20,8 @@ public:
     explicit AngadiMainWindow(QWidget *parent = 0);
     ~AngadiMainWindow();
 
+public slots:
+
 signals:
     void exit();
 
@@ -53,6 +55,7 @@ private slots:
     void openTab();
     void onCloseTab(int);
     void onTabChanged(int);
+
 };
 
 #endif // ANGADIMAINWINDOW_H

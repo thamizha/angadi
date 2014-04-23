@@ -38,6 +38,7 @@ class Lssbar : public QWidget
     Q_OBJECT
 public:
     explicit Lssbar(QWidget *parent = 0);
+    QTableView *tableView;
 
 signals:
 
@@ -45,7 +46,6 @@ public slots:
     void setModel(QSqlTableModel *tableModel);
 
 private:
-    QTableView *tableView;
 
 private slots:
     void setupUi();

@@ -71,7 +71,6 @@ void AngadiMainWindow::setupConnections()
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
-
 }
 
 void AngadiMainWindow::setupModels()

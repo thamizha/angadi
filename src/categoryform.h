@@ -29,9 +29,6 @@ private:
     Ui::CategoryForm *ui;
     CategoriesModel *categoriesModel;
 
-
-
-
 private slots:
     void enableSave(QString value);
     void save();
