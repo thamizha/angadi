@@ -7,13 +7,10 @@
 #include <models/categoriesmodel.h>
 #include <QValidator>
 #include <QIntValidator>
-<<<<<<< HEAD
 #include "lssbar.h"
 
-=======
 #include <QDataWidgetMapper>
 #include <QSqlRelationalDelegate>
->>>>>>> fe9b07a7ad6260433eb4bcb756b7fddad7b7d09c
 
 namespace Ui {
 class CategoryForm;
