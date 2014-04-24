@@ -83,14 +83,17 @@ void CategoryForm::save()
     // save the form if there is no errors
     if(validError==0)
     {
-        int rowIndex = categoriesModel->rowCount();
+        /*int rowIndex = categoriesModel->rowCount();
         qDebug() << "rowIndex :::>" << rowIndex;
         categoriesModel->insertRow(rowIndex);
         categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
         categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
         categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-        categoriesModel->submit();
-
+        if(categoriesModel->submit())
+            qDebug() << "Success";
+        else
+            qDebug() << "failed";
+        */
         clear();
         setCodeFocus();
         bool status;
