@@ -56,7 +56,7 @@ void Lssbar::setModel(QSqlTableModel *tableModel){
         tableView->setColumnHidden(i,true);
     }
 
-    if(tableModel->tableName() == "categories"){
+    if(tableModel->tableName() == "categories" || tableModel->tableName() == "test"){
         int codeIndex = tableModel->fieldIndex("code");
         int nameIndex = tableModel->fieldIndex("name");
         tableView->setColumnHidden(codeIndex,false);

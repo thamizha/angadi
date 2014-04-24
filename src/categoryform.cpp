@@ -39,7 +39,11 @@ CategoryForm::CategoryForm(QWidget *parent) :
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
-    dataMapper = new QDataWidgetMapper(this);
+    dataMapper = new QDataWidgetMapper;
+    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    //dataMapper->setModel(categoriesModel);
+
+    //addRecord();
 
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
@@ -51,6 +55,16 @@ CategoryForm::CategoryForm(QWidget *parent) :
 CategoryForm::~CategoryForm()
 {
     delete ui;
+}
+
+void CategoryForm::addRecord()
+{
+    int row = 0;
+    categoriesModel->insertRows(row, 1);
+
+    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
+    dataMapper->toFirst();
 }
 
 void CategoryForm::save()
@@ -94,19 +108,20 @@ void CategoryForm::save()
         else
             qDebug() << "failed";
         */
-        clear();
-        setCodeFocus();
         bool status;
+        dataMapper->toFirst();
 
-        qDebug() << dataMapper->currentIndex();
-        dataMapper->toLast();
         status = dataMapper->submit();
+
+        qDebug() << status;
+        qDebug() << categoriesModel->lastError().text();
 
         if(status == true)
         {
-            dataMapper->toLast();
-            qDebug() << categoriesModel->data(categoriesModel->index(dataMapper->currentIndex(),categoriesModel->fieldIndex("code")));
-            categoriesModel->submitAll();
+            qDebug() << categoriesModel->submitAll();
+
+            addRecord();
+
             qDebug() << categoriesModel->lastError().text();
         }
     }
@@ -134,8 +149,8 @@ void CategoryForm::save()
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
     categoriesModel->submit();*/
-    //clear();
-    //setCodeFocus();
+    clear();
+    setCodeFocus();
 }
 
 void CategoryForm::setCodeFocus()
@@ -152,11 +167,10 @@ void CategoryForm::clear()
 }
 
 void CategoryForm::setModel(CategoriesModel *model){
+    qDebug() << "setModel Called";
     categoriesModel = model;
     dataMapper->setModel(categoriesModel);
-    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
-    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
-    dataMapper->toLast();
+    addRecord();
 }
 
 // function to validate code field

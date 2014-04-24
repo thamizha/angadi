@@ -36,6 +36,7 @@ private:
     Lssbar *lssbar;
 
 private slots:
+    void addRecord();
     void save();
     bool codeValid();
     bool nameValid();
