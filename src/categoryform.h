@@ -33,6 +33,7 @@ private:
     Ui::CategoryForm *ui;
     CategoriesModel *categoriesModel;
     QDataWidgetMapper *dataMapper;
+    Lssbar *lssbar;
 
 private slots:
     void save();

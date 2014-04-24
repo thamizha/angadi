@@ -94,6 +94,19 @@ void CategoryForm::save()
 
         clear();
         setCodeFocus();
+        bool status;
+
+        qDebug() << dataMapper->currentIndex();
+        dataMapper->toLast();
+        status = dataMapper->submit();
+
+        if(status == true)
+        {
+            dataMapper->toLast();
+            qDebug() << categoriesModel->data(categoriesModel->index(dataMapper->currentIndex(),categoriesModel->fieldIndex("code")));
+            categoriesModel->submitAll();
+            qDebug() << categoriesModel->lastError().text();
+        }
     }
     else
     {
@@ -116,21 +129,6 @@ void CategoryForm::save()
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
     categoriesModel->submit();*/
-
-    bool status;
-
-    qDebug() << dataMapper->currentIndex();
-    dataMapper->toLast();
-    status = dataMapper->submit();
-
-    if(status == true)
-    {
-        dataMapper->toLast();
-        qDebug() << categoriesModel->data(categoriesModel->index(dataMapper->currentIndex(),categoriesModel->fieldIndex("code")));
-        categoriesModel->submitAll();
-        qDebug() << categoriesModel->lastError().text();
-    }
-
     //clear();
     //setCodeFocus();
 }
