@@ -37,8 +37,8 @@ private:
 
 private slots:
     void save();
-    void codeValid();
-    void nameValid();
+    bool codeValid();
+    bool nameValid();
 };
 
 #endif // CategoryForm_H

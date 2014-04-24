@@ -34,8 +34,8 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui(new Ui::CategoryForm)
 {
     ui->setupUi(this);
-    ui->labelCodeError->hide();
-    ui->labelNameError->hide();
+    ui->labelCodeValid->hide();
+    ui->labelNameValid->hide();
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
@@ -55,33 +55,32 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::save()
 {
-    FormValidation formValidation;
+    // Initialization of local variables
     int validError = 0;
     QString errors = "";
+
+    // Initialization of message box
     QMessageBox msgBox;
     msgBox.setText("Validation Error in this forms. Please correct the form and resubmit it");
     msgBox.setInformativeText("");
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
 
-    if(formValidation.intValid(ui->lineEditCode->text()))
-    {
-
-    }
-    else
+    // validate code field
+    if(!CategoryForm::codeValid())
     {
         validError=1;
         errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
     }
-    if(formValidation.textValid(ui->lineEditName->text(),20))
-    {
 
-    }
-    else
+    // validate name field
+    if(!CategoryForm::nameValid())
     {
         validError=1;
         errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters");
     }
+
+    // save the form if there is no errors
     if(validError==0)
     {
         int rowIndex = categoriesModel->rowCount();
@@ -108,6 +107,8 @@ void CategoryForm::save()
             qDebug() << categoriesModel->lastError().text();
         }
     }
+
+    // display the error message if there is any errors
     else
     {
         msgBox.setInformativeText(errors);
@@ -122,6 +123,7 @@ void CategoryForm::save()
                break;
          }
     }
+
     /*int rowIndex = categoriesModel->rowCount();
     qDebug() << "rowIndex :::>" << rowIndex;
     categoriesModel->insertRow(rowIndex);
@@ -154,27 +156,36 @@ void CategoryForm::setModel(CategoriesModel *model){
     dataMapper->toLast();
 }
 
-void CategoryForm::codeValid(){
-    //ui->lineEditName->blockSignals(true);
+// function to validate code field
+bool CategoryForm::codeValid(){
+    bool status =false;
     FormValidation formValidation;
     if(formValidation.intValid(ui->lineEditCode->text()))
     {
-        ui->labelCodeError->hide();
+        ui->labelCodeValid->hide();
+        status = true;
     }
     else
     {
-        ui->labelCodeError->show();
+        ui->labelCodeValid->show();
+        status= false;
     }
+    return status;
 }
 
-void CategoryForm::nameValid(){
+//function to validate name field
+bool CategoryForm::nameValid(){
+    bool status = false;
     FormValidation formValidation;
     if(formValidation.textValid(ui->lineEditName->text(),20))
     {
-        ui->labelNameError->hide();
+        status = true;
+        ui->labelNameValid->hide();
     }
     else
     {
-        ui->labelNameError->show();
+        status = false;
+        ui->labelNameValid->show();
     }
+    return status;
 }
