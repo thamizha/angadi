@@ -59,7 +59,7 @@ void CategoryForm::save()
     int validError = 0;
     QString errors = "";
     QMessageBox msgBox;
-    msgBox.setText("Validation Error in this forms");
+    msgBox.setText("Validation Error in this forms. Please correct the form and resubmit it");
     msgBox.setInformativeText("");
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);

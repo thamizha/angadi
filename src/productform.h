@@ -28,6 +28,7 @@
 
 #include <QWidget>
 #include "models/productsmodel.h"
+#include "models/formvalidation.h"
 
 
 namespace Ui {
@@ -52,6 +53,11 @@ private:
 
 private slots:
     void save();
+    bool codeValid();
+    bool nameValid();
+    bool mrpValid();
+    bool salePriceValid();
+    bool wholeSalePriceValid();
 	
 };
 

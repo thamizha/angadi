@@ -34,6 +34,14 @@ ProductForm::ProductForm(QWidget *parent) :
     ui(new Ui::ProductForm)
 {
     ui->setupUi(this);
+
+    // Hide the errors labels at the start
+    ui->labelCodeValid->hide();
+    ui->labelMrpValid->hide();
+    ui->labelNameValid->hide();
+    ui->labelSalePriceValid->hide();
+    ui->labelWholeSalePriceValid->hide();
+
     ui->comboBoxcategoryId->addItem("121");
     ui->comboBoxcategoryId->addItem("122");
     ui->comboBoxcategoryId->addItem("123");
@@ -57,6 +65,12 @@ ProductForm::ProductForm(QWidget *parent) :
     connect(ui->lineEditMrp,SIGNAL(returnPressed()),ui->lineEditSalePrice,SLOT(setFocus()));
     connect(ui->lineEditSalePrice,SIGNAL(returnPressed()),ui->lineEditWholeSalePrice,SLOT(setFocus()));
     connect(ui->lineEditWholeSalePrice,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
+
+    connect(ui->lineEditCode,SIGNAL(editingFinished()),SLOT(codeValid()));
+    connect(ui->lineEditName,SIGNAL(editingFinished()),SLOT(nameValid()));
+    connect(ui->lineEditMrp,SIGNAL(editingFinished()),SLOT(mrpValid()));
+    connect(ui->lineEditSalePrice,SIGNAL(editingFinished()),SLOT(salePriceValid()));
+    connect(ui->lineEditWholeSalePrice,SIGNAL(editingFinished()),SLOT(wholeSalePriceValid()));
 }
 
 ProductForm::~ProductForm()
@@ -64,19 +78,84 @@ ProductForm::~ProductForm()
     delete ui;
 }
 
+//save the product form
 void ProductForm::save()
 {
+    int valid = 0; // key for valid
+    QString errors = ""; // string to display errors
 
-    int rowIndex = productsModel->rowCount();
-    qDebug() << "rowIndex :::>" << rowIndex;
-    productsModel->insertRow(rowIndex);
-    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("code")),ui->lineEditCode->text());
-    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("name")),ui->lineEditName->text());
-    productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-    productsModel->submit();
+    // message box initialization
+    QMessageBox msgBox;
+    msgBox.setText("Validation Error in this forms. Please correct the form and resubmit it");
+    msgBox.setInformativeText("");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
 
-    clear();
-    setCodeFocus();
+    // validate code field
+    if(!ProductForm::codeValid())
+    {
+        valid =1;
+        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
+    }
+
+    // Validate Name field
+    if(!ProductForm::nameValid())
+    {
+        valid = 1;
+        errors.append("\nThe Name field may be empty or exceed the 20 characters limit");
+    }
+
+    //Validate Mrp field
+    if(!ProductForm::mrpValid())
+    {
+        valid=1;
+        errors.append("\nThe MRP field may be empty or contains text or greater than 10000");
+    }
+
+    //Validate Sale Price field
+    if(!ProductForm::salePriceValid())
+    {
+        valid=1;
+        errors.append("\nThe Sale Price field may be empty or contains text or greater than 10000");
+    }
+
+    //Validate Whole Sale Price field
+    if(!ProductForm::wholeSalePriceValid())
+    {
+        valid=1;
+        errors.append("\nThe Whole Sale Price field may be empty or contains text or greater than 10000");
+    }
+
+    // save the form if there is no errors
+    if(valid==0)
+    {
+        int rowIndex = productsModel->rowCount();
+        qDebug() << "rowIndex :::>" << rowIndex;
+        productsModel->insertRow(rowIndex);
+        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("code")),ui->lineEditCode->text());
+        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("name")),ui->lineEditName->text());
+        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+        productsModel->submit();
+
+        clear();
+        setCodeFocus();
+    }
+
+    // display the message box if there is any errors
+    else
+    {
+        msgBox.setInformativeText(errors);
+        int ret = msgBox.exec();
+        switch (ret) {
+           case QMessageBox::Ok:
+               ui->lineEditCode->setFocus();
+               ui->lineEditCode->selectAll();
+               break;
+           default:
+               // should never be reached
+               break;
+         }
+    }
 }
 
 
@@ -119,3 +198,87 @@ void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
 }
 
+// validate the code field
+bool ProductForm::codeValid(){
+    FormValidation formValidation;
+    bool status = false;
+    if(formValidation.intValid(ui->lineEditCode->text()))
+    {
+        ui->labelCodeValid->hide();
+        status = true;
+    }
+    else
+    {
+        ui->labelCodeValid->show();
+        status = false;
+    }
+    return status;
+}
+
+// validate the name field
+bool ProductForm::nameValid(){
+    FormValidation formValidation;
+    bool status= false;
+    if(formValidation.textValid(ui->lineEditName->text(),20))
+    {
+        ui->labelNameValid->hide();
+        status= true;
+    }
+    else
+    {
+        ui->labelNameValid->show();
+        status= false;
+    }
+    return status;
+}
+
+//validate the mrp field
+bool ProductForm::mrpValid(){
+    FormValidation formValidation;
+    bool status = false;
+    if(formValidation.intValid(ui->lineEditMrp->text()))
+    {
+        ui->labelMrpValid->hide();
+        status = true;
+    }
+    else
+    {
+        ui->labelMrpValid->show();
+        status = false;
+    }
+    return status;
+}
+
+//validate the sale price field
+bool ProductForm::salePriceValid(){
+    FormValidation formValidation;
+    bool status = false;
+    if(formValidation.intValid(ui->lineEditSalePrice->text()))
+    {
+        ui->labelSalePriceValid->hide();
+        status = true;
+    }
+    else
+    {
+        ui->labelSalePriceValid->show();
+        status = false;
+    }
+    return status;
+}
+
+//validate the whole sale price field
+bool ProductForm::wholeSalePriceValid(){
+    FormValidation formValidation;
+    bool status = false;
+    if(formValidation.intValid(ui->lineEditSalePrice->text()))
+    {
+        ui->labelWholeSalePriceValid->hide();
+        status = true;
+    }
+    else
+    {
+        ui->labelWholeSalePriceValid->show();
+        status = false;
+    }
+    return status;
+}
