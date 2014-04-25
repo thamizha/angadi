@@ -42,6 +42,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 
     lssbar = new Lssbar;
 
+    connect(lssbar,SIGNAL(signalEdit(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     //Hide rightdock widget on start
     showRightDock(false);
 
@@ -241,3 +242,7 @@ void AngadiMainWindow::onTabChanged(int index){
     }
 }
 
+void AngadiMainWindow::doubleClicked(QModelIndex index)
+{
+    categoryForm->setMapperIndex(index);
+}

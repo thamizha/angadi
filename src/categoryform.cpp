@@ -39,7 +39,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
-    dataMapper = new QDataWidgetMapper;
+    dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     // Enter key to focus next control
@@ -56,8 +56,8 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::addRecord()
 {
-    int row = 0;
-    categoriesModel->insertRows(row, 1);
+    //int row = categoriesModel->rowCount();
+    //categoriesModel->insertRows(row, 1);
 
     dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
@@ -66,74 +66,87 @@ void CategoryForm::addRecord()
 
 void CategoryForm::save()
 {
+    bool status;
+
+    status = dataMapper->submit();
+
+    qDebug() << status;
+
+    if(status == true)
+    {
+        categoriesModel->submit();
+    }
+
     // Initialization of local variables
-    int validError = 0;
-    QString errors = "";
+    /*int validError = 0;
+    QString errors = "";*/
 
     // Initialization of message box
-    QMessageBox msgBox;
+    /*QMessageBox msgBox;
     msgBox.setText("Validation Error in this forms. Please correct the form and resubmit it");
     msgBox.setInformativeText("");
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);*/
 
     // validate code field
-    if(!CategoryForm::codeValid())
+    /*if(!CategoryForm::codeValid())
     {
         validError=1;
         errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
-    }
+    }*/
 
     // validate name field
-    if(!CategoryForm::nameValid())
+    /*if(!CategoryForm::nameValid())
     {
         validError=1;
         errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters");
-    }
+    }*/
 
     // save the form if there is no errors
-    if(validError==0)
-    {
-        /*int rowIndex = categoriesModel->rowCount();
-        qDebug() << "rowIndex :::>" << rowIndex;
-        categoriesModel->insertRow(rowIndex);
-        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
-        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
-        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-        if(categoriesModel->submit())
-            qDebug() << "Success";
-        else
-            qDebug() << "failed";
-        */
+//    if(validError==0)
+//    {
+//        /*int rowIndex = categoriesModel->rowCount();
+//        qDebug() << "rowIndex :::>" << rowIndex;
+//        categoriesModel->insertRow(rowIndex);
+//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
+//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
+//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+//        if(categoriesModel->submit())
+//            qDebug() << "Success";
+//        else
+//            qDebug() << "failed";
+//        */
 
-        bool status;
-        //dataMapper->toFirst();
+//        bool status;
+//        //dataMapper->toFirst();
 
-        status = dataMapper->submit();
+//        status = dataMapper->submit();
 
-        if(status == true)
-        {
-            categoriesModel->submitAll();
-            addRecord();
-            //qDebug() << categoriesModel->lastError().text();
-        }
-    }
+//        qDebug() << status;
 
-    // display the error message if there is any errors
-    else
-    {
-        msgBox.setInformativeText(errors);
-        int ret = msgBox.exec();
-        switch (ret) {
-           case QMessageBox::Ok:
-               ui->lineEditCode->setFocus();
-               ui->lineEditCode->selectAll();
-               break;
-           default:
-               // should never be reached
-               break;
-         }
-    }
+//        if(status == true)
+//        {
+//            categoriesModel->submit();
+//            //addRecord();
+//            //qDebug() << categoriesModel->lastError().text();
+//        }
+//    }
+
+//    // display the error message if there is any errors
+//    else
+//    {
+//        msgBox.setInformativeText(errors);
+//        int ret = msgBox.exec();
+//        switch (ret) {
+//           case QMessageBox::Ok:
+//               ui->lineEditCode->setFocus();
+//               ui->lineEditCode->selectAll();
+//               break;
+//           default:
+//               // should never be reached
+//               break;
+//         }
+//    }
 
     /*int rowIndex = categoriesModel->rowCount();
     qDebug() << "rowIndex :::>" << rowIndex;
@@ -142,8 +155,8 @@ void CategoryForm::save()
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
     categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
     categoriesModel->submit();*/
-    clear();
-    setCodeFocus();
+//    clear();
+//    setCodeFocus();
 }
 
 void CategoryForm::setCodeFocus()
@@ -197,4 +210,9 @@ bool CategoryForm::nameValid(){
         ui->labelNameValid->show();
     }
     return status;
+}
+
+void CategoryForm::setMapperIndex(QModelIndex index)
+{
+    dataMapper->setCurrentIndex(index.row());
 }

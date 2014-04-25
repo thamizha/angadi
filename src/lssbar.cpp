@@ -25,6 +25,7 @@
 
 #include "lssbar.h"
 #include "connection.h"
+#include "categoryform.h"
 #include <QHeaderView>
 
 Lssbar::Lssbar(QWidget *parent) :
@@ -45,11 +46,11 @@ void Lssbar::setupUi()
     vBox->addWidget(tableView);
     this->setLayout(vBox);
 
-    connect(this->tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(edit(QModelIndex)));
+    connect(tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
 }
 
-void Lssbar::setModel(QSqlTableModel *tableModel){
-
+void Lssbar::setModel(QSqlTableModel *tableModel)
+{
     //tableModel->select();
     tableView->setModel(tableModel);
 
@@ -72,7 +73,7 @@ void Lssbar::setModel(QSqlTableModel *tableModel){
     }
 }
 
-void Lssbar::edit(QModelIndex a)
+void Lssbar::doubleClicked(QModelIndex index)
 {
-    qDebug() << a;
+    emit signalEdit(index);
 }

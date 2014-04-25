@@ -8,7 +8,6 @@
 #include <QValidator>
 #include <QIntValidator>
 #include "lssbar.h"
-
 #include <QDataWidgetMapper>
 #include <QSqlRelationalDelegate>
 
@@ -26,6 +25,9 @@ public:
     void setCodeFocus();
     void clear();
     void setModel(CategoriesModel *model);
+    void setMapperIndex(QModelIndex index);
+
+signals:
 
 public slots:
 

@@ -41,6 +41,7 @@ public:
     QTableView *tableView;
 
 signals:
+    void signalEdit(QModelIndex);
 
 public slots:
     void setModel(QSqlTableModel *tableModel);
@@ -49,7 +50,7 @@ private:
 
 private slots:
     void setupUi();
-    void edit(QModelIndex a);
+    void doubleClicked(QModelIndex index);
 };
 
 #endif // LSSBAR_H

@@ -57,6 +57,7 @@ private slots:
     void openTab();
     void onCloseTab(int);
     void onTabChanged(int);
+    void doubleClicked(QModelIndex index);
 };
 
 #endif // ANGADIMAINWINDOW_H
