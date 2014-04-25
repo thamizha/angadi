@@ -49,7 +49,7 @@ private:
 
 private slots:
     void setupUi();
-
+    void edit(QModelIndex a);
 };
 
 #endif // LSSBAR_H

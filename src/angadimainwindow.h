@@ -57,7 +57,6 @@ private slots:
     void openTab();
     void onCloseTab(int);
     void onTabChanged(int);
-
 };
 
 #endif // ANGADIMAINWINDOW_H

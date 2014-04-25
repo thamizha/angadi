@@ -41,9 +41,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
 
     dataMapper = new QDataWidgetMapper;
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    //dataMapper->setModel(categoriesModel);
-
-    //addRecord();
 
     // Enter key to focus next control
     connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
@@ -108,21 +105,17 @@ void CategoryForm::save()
         else
             qDebug() << "failed";
         */
+
         bool status;
-        dataMapper->toFirst();
+        //dataMapper->toFirst();
 
         status = dataMapper->submit();
 
-        qDebug() << status;
-        qDebug() << categoriesModel->lastError().text();
-
         if(status == true)
         {
-            qDebug() << categoriesModel->submitAll();
-
+            categoriesModel->submitAll();
             addRecord();
-
-            qDebug() << categoriesModel->lastError().text();
+            //qDebug() << categoriesModel->lastError().text();
         }
     }
 
@@ -167,7 +160,6 @@ void CategoryForm::clear()
 }
 
 void CategoryForm::setModel(CategoriesModel *model){
-    qDebug() << "setModel Called";
     categoriesModel = model;
     dataMapper->setModel(categoriesModel);
     addRecord();

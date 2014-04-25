@@ -121,9 +121,9 @@ void AngadiMainWindow::openCategoryTab()
         categoryForm->setProperty("name", tabName);
         ui->mainTab->addTab(categoryForm, "Category");
     }
-    ui->mainTab->setCurrentWidget (categoryForm);
-    categoryForm->setCodeFocus();    
     categoryForm->setModel(categoriesModel);
+    ui->mainTab->setCurrentWidget (categoryForm);
+    categoryForm->setCodeFocus();
 
     lssbar->setModel(categoriesModel);
 }

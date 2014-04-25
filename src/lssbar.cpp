@@ -44,11 +44,13 @@ void Lssbar::setupUi()
 
     vBox->addWidget(tableView);
     this->setLayout(vBox);
+
+    connect(this->tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(edit(QModelIndex)));
 }
 
 void Lssbar::setModel(QSqlTableModel *tableModel){
 
-    tableModel->select();
+    //tableModel->select();
     tableView->setModel(tableModel);
 
     //set all columns hidden
@@ -68,4 +70,9 @@ void Lssbar::setModel(QSqlTableModel *tableModel){
     }else if(tableModel->tableName() == "customers"){
 
     }
+}
+
+void Lssbar::edit(QModelIndex a)
+{
+    qDebug() << a;
 }
