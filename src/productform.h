@@ -30,6 +30,8 @@
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
 
+#include <QDataWidgetMapper>
+#include "lssbar.h"
 
 namespace Ui {
 class ProductForm;
@@ -41,16 +43,17 @@ class ProductForm : public QWidget
 
 public:
     explicit ProductForm(QWidget *parent = 0);
-
+    QMap<QString, int> categoryid_map;
     ~ProductForm();
     void setCodeFocus();
     void clear();
     void setModel(ProductsModel *model);
-
+    void setMapperIndex(QModelIndex index);
 private:
     Ui::ProductForm *ui;
     ProductsModel *productsModel;
-
+    QDataWidgetMapper *dataMapper;
+    Lssbar *lssbar;
 private slots:
     void save();
     bool codeValid();
@@ -58,7 +61,8 @@ private slots:
     bool mrpValid();
     bool salePriceValid();
     bool wholeSalePriceValid();
-	
+    void on_pushButtonDeleteAdd_clicked();
+    void on_pushButtonDeleteCancel_clicked();
 };
 
 #endif // PRODUCTFORM_H

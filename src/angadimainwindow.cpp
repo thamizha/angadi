@@ -110,6 +110,7 @@ void AngadiMainWindow::openTab()
 void AngadiMainWindow::openCategoryTab()
 {
     QString tabName = "category";
+    currentTab = "category";
     if(ui->mainTab->count() > 1){
         bool found = tabLoadedStatus(tabName);
         if(found == false){
@@ -132,6 +133,7 @@ void AngadiMainWindow::openCategoryTab()
 void AngadiMainWindow::openProductTab()
 {
     QString tabName = "product";
+    currentTab = "product";
     if(ui->mainTab->count() > 1){
         bool found = tabLoadedStatus(tabName);
         if(found == false){
@@ -144,9 +146,10 @@ void AngadiMainWindow::openProductTab()
         productForm->setProperty("name", tabName);
         ui->mainTab->addTab(productForm, "Product");
     }
+    productForm->setModel(productsModel);
     ui->mainTab->setCurrentWidget (productForm);
     productForm->setCodeFocus();
-    productForm->setModel(productsModel);
+
     lssbar->setModel(productsModel);
 
 }
@@ -154,6 +157,7 @@ void AngadiMainWindow::openProductTab()
 void AngadiMainWindow::openCustomerTab()
 {
     QString tabName = "customer";
+    currentTab = "customer";
     if(ui->mainTab->count() > 1){
         bool found = tabLoadedStatus(tabName);
         if(found == false){
@@ -240,9 +244,32 @@ void AngadiMainWindow::onTabChanged(int index){
     }else{
         showRightDock(false);
     }
+
+    showRightDock(false);
+        if(tabName == "category"){
+            categoryForm->setModel(categoriesModel);
+            lssbar->setModel(categoriesModel);
+            showRightDock(true);
+        }else if(tabName == "product"){
+            productForm->setModel(productsModel);
+            lssbar->setModel(productsModel);
+            showRightDock(true);
+        }else if(tabName == "customer"){
+            //customerForm->setModel(customersModel);
+            //lssbar->setModel(customersModel);
+            //showRightDock(true);
+        }
+
 }
 
 void AngadiMainWindow::doubleClicked(QModelIndex index)
 {
-    categoryForm->setMapperIndex(index);
+    //categoryForm->setMapperIndex(index);
+    if(currentTab == "category"){
+        categoryForm->setMapperIndex(index);
+     }else if(currentTab == "product"){
+        productForm->setMapperIndex(index);
+     }else if(currentTab == "customer"){
+        //customerForm->setMapperIndex(index);
+     }
 }

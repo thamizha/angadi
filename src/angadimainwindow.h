@@ -16,7 +16,7 @@ class AngadiMainWindow;
 class AngadiMainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    QString currentTab;
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);
     ~AngadiMainWindow();
