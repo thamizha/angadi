@@ -59,5 +59,5 @@ bool FormValidation::emailValid(QString value)
 
 bool FormValidation::dateValid(QString value)
 {
-
+    return true;
 }

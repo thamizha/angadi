@@ -2,6 +2,7 @@
 #define ANGADIAPP_H
 
 #include <QApplication>
+
 #include "logindialog.h"
 #include "angadimainwindow.h"
 
@@ -20,7 +21,6 @@ public slots:
 private :
     LoginDialog *login;
     AngadiMainWindow *angadiMainWindow;
-
 
 private slots:
     void onLoggedIn();

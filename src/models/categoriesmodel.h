@@ -20,7 +20,7 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * Manikk <manikk.h@gmail.com>
  *****************************************************************************/
 
 #ifndef CATEGORIESMODEL_H
@@ -33,10 +33,13 @@ class CategoriesModel : public QSqlTableModel
     Q_OBJECT
 public:
     explicit CategoriesModel(QObject *parent = 0);
+    ~CategoriesModel();
 
 signals:
 
 public slots:
+
+private:
 
 };
 

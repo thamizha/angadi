@@ -24,7 +24,6 @@
  *****************************************************************************/
 
 #include "lssbar.h"
-#include "connection.h"
 #include "categoryform.h"
 #include <QHeaderView>
 
@@ -51,7 +50,6 @@ void Lssbar::setupUi()
 
 void Lssbar::setModel(QSqlTableModel *tableModel)
 {
-    //tableModel->select();
     tableView->setModel(tableModel);
 
     //set all columns hidden
@@ -59,7 +57,7 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
         tableView->setColumnHidden(i,true);
     }
 
-    if(tableModel->tableName() == "categories" || tableModel->tableName() == "test"){
+    if(tableModel->tableName() == "categories"){
         int codeIndex = tableModel->fieldIndex("code");
         int nameIndex = tableModel->fieldIndex("name");
         tableView->setColumnHidden(codeIndex,false);
@@ -68,7 +66,10 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
     }else if(tableModel->tableName() == "products"){
         tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
         tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+
     }else if(tableModel->tableName() == "customers"){
+        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
+        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
 
     }
 }

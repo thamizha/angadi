@@ -31,7 +31,6 @@
 #include <QTableView>
 #include <QSqlTableModel>
 #include <QDebug>
-#include <models/category.h>
 
 class Lssbar : public QWidget
 {

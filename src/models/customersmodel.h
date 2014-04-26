@@ -1,7 +1,7 @@
 /*****************************************************************************
- * connection.cpp
+ * customersmodel.h
  *
- * Created: 18/04/2014 by selvam
+ * Created: 26/04/2014 by selvam
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,19 +23,24 @@
  *
  *****************************************************************************/
 
-#include "connection.h"
+#ifndef CUSTOMERSMODEL_H
+#define CUSTOMERSMODEL_H
 
-Connection::Connection(QObject *parent) :
-    QObject(parent)
-{
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
-}
+#include <QSqlTableModel>
 
-Connection::~Connection()
+class CustomersModel : public QSqlTableModel
 {
-}
+    Q_OBJECT
+public:
+    explicit CustomersModel(QObject *parent = 0);
+    ~CustomersModel();
+
+signals:
+
+public slots:
+
+private:
+
+};
+
+#endif // CUSTOMERSMODEL_H

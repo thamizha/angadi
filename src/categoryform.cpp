@@ -28,6 +28,8 @@
 #include <QDebug>
 #include <QIntValidator>
 #include <QMessageBox>
+#include <QDateTime>
+#include <QSqlRecord>
 
 CategoryForm::CategoryForm(QWidget *parent) :
     QWidget(parent),
@@ -43,10 +45,12 @@ CategoryForm::CategoryForm(QWidget *parent) :
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     // Enter key to focus next control
-    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
+    /*connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));	
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
-    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));*/
+
+    ui->dateTimeEdit->hide();
 }
 
 CategoryForm::~CategoryForm()
@@ -91,12 +95,20 @@ void CategoryForm::save()
 
             categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
             categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
-            categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+
+            QDateTime datetime = QDateTime::currentDateTime();
+            categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
             categoriesModel->submit();
 
-            clear();
+            //clear();
+            dataMapper->toLast();
+            this->ui->pushButtonSave->setEnabled(true);
+            this->ui->pushButtonSave->setText("Update");
 
         }else if(this->ui->pushButtonSave->text() == "Update"){
+            QDateTime datetime = QDateTime::currentDateTime();
+            ui->dateTimeEdit->setDateTime(datetime);
+
             status = dataMapper->submit();
             if(status == true)
             {
@@ -136,11 +148,15 @@ void CategoryForm::clear()
 void CategoryForm::setModel(CategoriesModel *model){
     categoriesModel = model;
     dataMapper->setModel(categoriesModel);
-    //addRecord();
 
     dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
+    dataMapper->addMapping(ui->dateTimeEdit,categoriesModel->fieldIndex("modifiedDate"));
     dataMapper->toFirst();
+
+    if(categoriesModel->rowCount() <= 0){
+        this->ui->pushButtonSave->setEnabled(false);
+    }
 }
 
 // function to validate code field
@@ -179,6 +195,7 @@ bool CategoryForm::nameValid(){
 
 void CategoryForm::setMapperIndex(QModelIndex index)
 {
+    globalIndex = index;
     this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
 }
@@ -186,6 +203,8 @@ void CategoryForm::setMapperIndex(QModelIndex index)
 void CategoryForm::on_pushButtonAdd_clicked()
 {
     this->ui->pushButtonSave->setText("Save");
+    this->ui->pushButtonSave->setEnabled(true);
+    this->ui->pushButtonCancel->setEnabled(true);
     clear();
     setCodeFocus();
 }
@@ -193,5 +212,24 @@ void CategoryForm::on_pushButtonAdd_clicked()
 void CategoryForm::on_pushButtonCancel_clicked()
 {
     this->ui->pushButtonSave->setText("Update");
+    this->ui->pushButtonCancel->setEnabled(false);
     dataMapper->toLast();
+    setCodeFocus();
+}
+
+void CategoryForm::on_pushButtonDelete_clicked()
+{
+    QDateTime datetime = QDateTime::currentDateTime();
+
+    QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
+    record.setValue("status", "D");
+    record.setValue("modifiedDate", datetime);
+    categoriesModel->setRecord(dataMapper->currentIndex(), record);
+    categoriesModel->submit();
+    categoriesModel->select();
+    dataMapper->toNext();
+    if(categoriesModel->rowCount() <= 0){
+        clear();
+        this->ui->pushButtonSave->setEnabled(false);
+    }
 }

@@ -35,3 +35,8 @@ CategoriesModel::CategoriesModel(QObject *parent) :
     setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
 }
+
+CategoriesModel::~CategoriesModel()
+{
+    //delete &dbcn;
+}

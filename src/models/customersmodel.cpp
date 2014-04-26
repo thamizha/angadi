@@ -1,7 +1,7 @@
 /*****************************************************************************
- * connection.cpp
+ * customersmodel.cpp
  *
- * Created: 18/04/2014 by selvam
+ * Created: 26/04/2014 by selvam
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,22 +20,23 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * Selvam <vjpselvam@gmail.com>
  *****************************************************************************/
 
-#include "connection.h"
+#include "customersmodel.h"
 
-Connection::Connection(QObject *parent) :
-    QObject(parent)
+CustomersModel::CustomersModel(QObject *parent) :
+    QSqlTableModel(parent)
 {
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
-    db.open();
+    setTable("customers");
+    setHeaderData(fieldIndex("code"), Qt::Horizontal, QObject::tr("Code"));
+    setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
+    setFilter("status = 'A'");
+    setSort(fieldIndex("id"),Qt::AscendingOrder);
+    select();
 }
 
-Connection::~Connection()
+CustomersModel::~CustomersModel()
 {
+
 }

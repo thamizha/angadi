@@ -16,32 +16,28 @@ SOURCES += main.cpp\
         login.cpp \
     angadiapp.cpp \
     angadimainwindow.cpp \
-    models/category.cpp \
     customerform.cpp \
-    models/customer.cpp \
     categoryform.cpp \
     connection.cpp \
     productform.cpp \
     lssbar.cpp \
-    models/product.cpp \
     models/categoriesmodel.cpp \
     models/productsmodel.cpp \
-    models/formvalidation.cpp
+    models/formvalidation.cpp \
+    models/customersmodel.cpp
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
     logindialog.h \
-    models/category.h \
     customerform.h \
-    models/customer.h \
     categoryform.h \
     connection.h \
     productform.h \
     lssbar.h \
-    models/product.h \
     models/categoriesmodel.h \
     models/productsmodel.h \
-    models/formvalidation.h
+    models/formvalidation.h \
+    models/customersmodel.h
 
 FORMS    += \
     angadimainwindow.ui \

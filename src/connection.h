@@ -52,6 +52,7 @@ public:
     explicit Connection(QObject *parent = 0);
     QSqlDatabase db;
     ~Connection();
+
 signals:
 
 public slots:

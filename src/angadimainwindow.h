@@ -2,12 +2,14 @@
 #define ANGADIMAINWINDOW_H
 
 #include <QMainWindow>
-#include "customerform.h"
+
+#include "lssbar.h"
 #include "categoryform.h"
 #include "productform.h"
-#include "lssbar.h"
-#include <models/categoriesmodel.h>
+#include "customerform.h"
+#include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
+#include "models/customersmodel.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -16,6 +18,7 @@ class AngadiMainWindow;
 class AngadiMainWindow : public QMainWindow
 {
     Q_OBJECT
+    QString currentTab;
 
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);
@@ -30,11 +33,12 @@ private:
     bool tabLoadedStatus(QString tabName);
     Ui::AngadiMainWindow *ui;
     CategoryForm *categoryForm;
-    CustomerForm *customerForm;
     ProductForm *productForm;
+    CustomerForm *customerForm;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
+    CustomersModel *customersModel;
 
     void openCustomerTab();
     void openProductTab();
@@ -49,8 +53,6 @@ private:
 
     void showRightDock(bool);
     Lssbar *lssbar;
-
-    Connection conn;
 
 private slots:    
     void exitApp();

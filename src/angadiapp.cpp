@@ -1,11 +1,15 @@
 #include "angadiapp.h"
 #include "logindialog.h"
 #include "angadimainwindow.h"
+#include <connection.h>
+
 #include <QDebug>
 
 AngadiApp::AngadiApp(int argc,char *argv[]) :
     QApplication(argc,argv)
 {
+    Connection dbcn;
+
     login = new LoginDialog();
     angadiMainWindow = new AngadiMainWindow();
 }

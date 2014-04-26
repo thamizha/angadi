@@ -26,6 +26,8 @@
 #include "customerform.h"
 #include "ui_customerform.h"
 
+#include <QDateTime>
+
 CustomerForm::CustomerForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CustomerForm)
@@ -42,7 +44,11 @@ CustomerForm::CustomerForm(QWidget *parent) :
     ui->comboBoxGender->addItem("Transgender");
 
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
-    connect(ui->pushButtonDelete, SIGNAL(clicked()), this, SLOT(deleteAll()));
+
+    dataMapper = new QDataWidgetMapper(this);
+    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+
+    ui->dateTimeEdit->hide();
 }
 
 CustomerForm::~CustomerForm()
@@ -57,32 +63,103 @@ void CustomerForm::setCodeFocus()
 
 void CustomerForm::save()
 {
-    Customer customer;
-    customer.setCode(ui->lineEditCode->text());
-    customer.setName(ui->lineEditName->text());
-    customer.setType(ui->comboBoxType->currentText());
-    customer.setCreditLimit(ui->lineEditCreditLimit->text().toDouble());
-    customer.setContactPerson(ui->lineEditContactPerson->text());
-    customer.setAddress1(ui->lineEditAddress1->text());
-    customer.setAddress2(ui->lineEditAddress2->text());
-    customer.setCity(ui->lineEditCity->text());
-    customer.setState(ui->lineEditState->text());
-    customer.setCountry(ui->lineEditCountry->text());
-    customer.setPincode(ui->lineEditPincode->text());
-    customer.setPhone1(ui->lineEditPhone1->text());
-    customer.setPhone2(ui->lineEditPhone2->text());
-    customer.setMobile1(ui->lineEditMobile1->text());
-    customer.setMobile2(ui->lineEditMobile2->text());
-    customer.setEmail(ui->lineEditEmail->text());
-    customer.setWebsite(ui->lineEditWebsite->text());
-    customer.setNotes(ui->textEditNote->toPlainText());
-    bool status = customer.save();
-    qDebug() << status;
+    bool status;
+
+    if(this->ui->pushButtonSave->text() == "Save"){
+        int row = customersModel->rowCount();
+        qDebug() << row;
+        customersModel->insertRows(row, 1);
+
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("code")),ui->lineEditCode->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("name")),ui->lineEditName->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("type")),ui->comboBoxType->currentText());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("creditLimit")),ui->lineEditCreditLimit->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("contactPerson")),ui->lineEditContactPerson->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("address1")),ui->lineEditAddress1->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("address2")),ui->lineEditAddress2->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("city")),ui->lineEditCity->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("state")),ui->lineEditState->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("country")),ui->lineEditCountry->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("pincode")),ui->lineEditPincode->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("phone1")),ui->lineEditPhone1->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("phone2")),ui->lineEditPhone2->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("mobile1")),ui->lineEditMobile1->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("mobile2")),ui->lineEditMobile2->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("email")),ui->lineEditEmail->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("website")),ui->lineEditWebsite->text());
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("notes")),ui->textEditNote->toPlainText());
+
+        QDateTime datetime = QDateTime::currentDateTime();
+        customersModel->setData(customersModel->index(row,customersModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+        customersModel->submit();
+
+        clear();
+
+    }else if(this->ui->pushButtonSave->text() == "Update"){
+        QDateTime datetime = QDateTime::currentDateTime();
+        ui->dateTimeEdit->setDateTime(datetime);
+
+        status = dataMapper->submit();
+        if(status == true)
+        {
+            customersModel->submit();
+        }
+    }
+    setCodeFocus();
 }
 
-void CustomerForm::deleteAll()
+void CustomerForm::setModel(CustomersModel *model){
+    customersModel = model;
+    dataMapper->setModel(customersModel);
+
+    dataMapper->addMapping(ui->lineEditCode,customersModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,customersModel->fieldIndex("name"));
+
+    dataMapper->addMapping(ui->comboBoxType,customersModel->fieldIndex("type"));
+    dataMapper->addMapping(ui->lineEditCreditLimit,customersModel->fieldIndex("creditLimit"));
+    dataMapper->addMapping(ui->lineEditContactPerson,customersModel->fieldIndex("contactPerson"));
+    dataMapper->addMapping(ui->lineEditAddress1,customersModel->fieldIndex("address1"));
+    dataMapper->addMapping(ui->lineEditAddress2,customersModel->fieldIndex("address2"));
+    dataMapper->addMapping(ui->lineEditCity,customersModel->fieldIndex("city"));
+    dataMapper->addMapping(ui->lineEditState,customersModel->fieldIndex("state"));
+    dataMapper->addMapping(ui->lineEditCountry,customersModel->fieldIndex("country"));
+    dataMapper->addMapping(ui->lineEditPincode,customersModel->fieldIndex("pincode"));
+    dataMapper->addMapping(ui->lineEditPhone1,customersModel->fieldIndex("phone1"));
+    dataMapper->addMapping(ui->lineEditPhone2,customersModel->fieldIndex("phone2"));
+    dataMapper->addMapping(ui->lineEditMobile1,customersModel->fieldIndex("mobile1"));
+    dataMapper->addMapping(ui->lineEditMobile2,customersModel->fieldIndex("mobile2"));
+    dataMapper->addMapping(ui->lineEditEmail,customersModel->fieldIndex("email"));
+    dataMapper->addMapping(ui->lineEditWebsite,customersModel->fieldIndex("website"));
+    dataMapper->addMapping(ui->textEditNote,customersModel->fieldIndex("notes"));
+    dataMapper->addMapping(ui->dateTimeEdit,customersModel->fieldIndex("modifiedDate"));
+    dataMapper->toFirst();
+}
+
+void CustomerForm::clear()
 {
-    Customer customer;
-    customer.setCode("2");
-    customer.deleteByCode();
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->clear();
+    }
+}
+
+void CustomerForm::setMapperIndex(QModelIndex index)
+{
+    this->ui->pushButtonSave->setText("Update");
+    dataMapper->setCurrentIndex(index.row());
+}
+
+void CustomerForm::on_pushButtonAdd_clicked()
+{
+    this->ui->pushButtonSave->setText("Save");
+    this->ui->pushButtonCancel->setEnabled(true);
+    clear();
+    setCodeFocus();
+}
+
+void CustomerForm::on_pushButtonCancel_clicked()
+{
+    this->ui->pushButtonSave->setText("Update");
+    this->ui->pushButtonCancel->setEnabled(false);
+    dataMapper->toLast();
+    setCodeFocus();
 }

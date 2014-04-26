@@ -26,7 +26,6 @@
 #include "productform.h"
 #include "ui_productform.h"
 #include <QMessageBox>
-#include "models/product.h"
 #include "models/productsmodel.h"
 
 ProductForm::ProductForm(QWidget *parent) :

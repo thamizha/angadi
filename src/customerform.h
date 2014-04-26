@@ -27,8 +27,9 @@
 #define CUSTOMERFORM_H
 
 #include <QWidget>
-#include <connection.h>
-#include <models/customer.h>
+#include <QDataWidgetMapper>
+#include "models/customersmodel.h"
+#include "lssbar.h"
 
 namespace Ui {
 class CustomerForm;
@@ -42,13 +43,21 @@ public:
     explicit CustomerForm(QWidget *parent = 0);
     ~CustomerForm();
     void setCodeFocus();
+    void setModel(CustomersModel *model);
+    void setMapperIndex(QModelIndex index);
 
 private:
     Ui::CustomerForm *ui;
+    CustomersModel *customersModel;
+    QDataWidgetMapper *dataMapper;
+    Lssbar *lssbar;
+    void clear();
 
 private slots:
     void save();
-    void deleteAll();
+
+    void on_pushButtonAdd_clicked();
+    void on_pushButtonCancel_clicked();
 };
 
 #endif // CUSTOMERFORM_H

@@ -117,6 +117,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonCancel">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -127,6 +130,16 @@
     </property>
     <property name="text">
      <string>Cancel</string>
+    </property>
+   </widget>
+   <widget class="QDateTimeEdit" name="dateTimeEdit">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>180</y>
+      <width>194</width>
+      <height>24</height>
+     </rect>
     </property>
    </widget>
   </widget>
