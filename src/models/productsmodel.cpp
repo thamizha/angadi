@@ -29,7 +29,9 @@ ProductsModel::ProductsModel(QObject *parent) :
     QSqlTableModel(parent)
 {
     setTable("products");
-    setHeaderData(fieldIndex("code"), Qt::Horizontal,QObject::tr("code"));
+    setHeaderData(fieldIndex("code"), Qt::Horizontal,QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
     setFilter("status = 'A'");
+    setSort(fieldIndex("id"),Qt::AscendingOrder);
+    select();
 }

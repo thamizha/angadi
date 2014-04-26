@@ -135,10 +135,10 @@ void AngadiMainWindow::openProductTab()
         productForm->setProperty("name", tabName);
         ui->mainTab->addTab(productForm, "Product");
     }
-
+    productForm->setModel(productsModel);
     ui->mainTab->setCurrentWidget (productForm);
     productForm->setCodeFocus();
-    productForm->setModel(productsModel);
+
     lssbar->setModel(productsModel);
 }
 
@@ -239,17 +239,36 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->setModel(customersModel);
         showRightDock(true);
     }
+
+    showRightDock(false);
+    if(tabName == "category"){
+        categoryForm->setModel(categoriesModel);
+        lssbar->setModel(categoriesModel);
+        showRightDock(true);
+
+    }else if(tabName == "product"){
+        productForm->setModel(productsModel);
+        lssbar->setModel(productsModel);
+        showRightDock(true);
+
+    }else if(tabName == "customer"){
+        customerForm->setModel(customersModel);
+        lssbar->setModel(customersModel);
+        showRightDock(true);
+    }
 }
 
 void AngadiMainWindow::doubleClicked(QModelIndex index)
 {
+    //categoryForm->setMapperIndex(index);
     if(currentTab == "category"){
         categoryForm->setMapperIndex(index);
 
-    }else if(currentTab == "product"){
+     }else if(currentTab == "product"){
+        productForm->setMapperIndex(index);
 
-    }else if(currentTab == "customer"){
-        customerForm->setMapperIndex(index);
+     }else if(currentTab == "customer"){
+        //customerForm->setMapperIndex(index);
 
-    }
+     }
 }

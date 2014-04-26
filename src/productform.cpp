@@ -25,14 +25,29 @@
 
 #include "productform.h"
 #include "ui_productform.h"
-#include <QMessageBox>
 #include "models/productsmodel.h"
+
+#include <QMessageBox>
+#include <QSqlQuery>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProductForm)
 {
     ui->setupUi(this);
+
+     //add category combobox value through query
+    //*****************
+    QSqlQuery query;
+         query.exec("SELECT id, code FROM categories");
+
+         while (query.next()) {
+                categoryid_map[query.value(1).toString()]=query.value(0).toInt();
+                ui->comboBoxcategoryId->addItem(query.value(1).toString());
+              }
+    //*****************
+
+
 
     // Hide the errors labels at the start
     ui->labelCodeValid->hide();
@@ -41,13 +56,9 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->labelSalePriceValid->hide();
     ui->labelWholeSalePriceValid->hide();
 
-    ui->comboBoxcategoryId->addItem("121");
-    ui->comboBoxcategoryId->addItem("122");
-    ui->comboBoxcategoryId->addItem("123");
-
-    ui->comboBoxManufacturer->addItem("test1");
-    ui->comboBoxManufacturer->addItem("test2");
-    ui->comboBoxManufacturer->addItem("test3");
+    ui->comboBoxManufacturer->addItem("106");
+    ui->comboBoxManufacturer->addItem("107");
+    ui->comboBoxManufacturer->addItem("108");
 
     ui->comboBoxUnit->addItem("100");
     ui->comboBoxUnit->addItem("101");
@@ -70,6 +81,9 @@ ProductForm::ProductForm(QWidget *parent) :
     connect(ui->lineEditMrp,SIGNAL(editingFinished()),SLOT(mrpValid()));
     connect(ui->lineEditSalePrice,SIGNAL(editingFinished()),SLOT(salePriceValid()));
     connect(ui->lineEditWholeSalePrice,SIGNAL(editingFinished()),SLOT(wholeSalePriceValid()));
+
+    dataMapper = new QDataWidgetMapper(this);
+    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 }
 
 ProductForm::~ProductForm()
@@ -80,7 +94,8 @@ ProductForm::~ProductForm()
 //save the product form
 void ProductForm::save()
 {
-    int valid = 0; // key for valid
+    /*int valid = 0; // key for valid
+
     QString errors = ""; // string to display errors
 
     // message box initialization
@@ -154,7 +169,36 @@ void ProductForm::save()
                // should never be reached
                break;
          }
+    }*/
+    bool status;
+
+    if(this->ui->pushButtonSave->text() == "Save"){
+        int row = productsModel->rowCount();
+        productsModel->insertRows(row, 1);
+
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("code")),ui->lineEditCode->text());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("name")),ui->lineEditName->text());
+
+        int categoryid = categoryid_map.value(ui->comboBoxcategoryId->currentText());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("categoryId")),categoryid);
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("manufacturer")),ui->comboBoxManufacturer->currentText());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("unit")),ui->comboBoxUnit->currentText());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("mrp")),ui->lineEditMrp->text());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("sprice")),ui->lineEditSalePrice->text());
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("wholeSalePrice")),ui->lineEditWholeSalePrice->text());
+        productsModel->submit();
+
+        clear();
+
+    }else if(this->ui->pushButtonSave->text() == "Update"){
+        status = dataMapper->submit();
+        if(status == true)
+        {
+            productsModel->submit();
+        }
     }
+    setCodeFocus();
+
 }
 
 
@@ -195,6 +239,10 @@ void ProductForm::setCodeFocus(){
 
 void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
+    dataMapper->setModel(productsModel);
+    dataMapper->addMapping(ui->lineEditCode,productsModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,productsModel->fieldIndex("name"));
+    dataMapper->toFirst();
 }
 
 // validate the code field
@@ -281,3 +329,25 @@ bool ProductForm::wholeSalePriceValid(){
     }
     return status;
 }
+
+
+void ProductForm::setMapperIndex(QModelIndex index)
+{
+    this->ui->pushButtonSave->setText("Update");
+    dataMapper->setCurrentIndex(index.row());
+}
+
+
+void ProductForm::on_pushButtonDeleteAdd_clicked()
+{
+    this->ui->pushButtonSave->setText("Save");
+    clear();
+    setCodeFocus();
+}
+
+void ProductForm::on_pushButtonDeleteCancel_clicked()
+{
+    this->ui->pushButtonSave->setText("Update");
+    dataMapper->toLast();
+}
+

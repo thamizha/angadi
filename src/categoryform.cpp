@@ -101,7 +101,6 @@ void CategoryForm::save()
             categoriesModel->submit();
 
             //clear();
-            dataMapper->toLast();
             this->ui->pushButtonSave->setEnabled(true);
             this->ui->pushButtonSave->setText("Update");
 
@@ -115,6 +114,8 @@ void CategoryForm::save()
                 categoriesModel->submit();
             }
         }
+        categoriesModel->select();
+        dataMapper->toLast();
         setCodeFocus();
 
     }else{                                      // display the error message if there is any errors
