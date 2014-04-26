@@ -9,6 +9,7 @@
 #include <QValidator>
 #include <QIntValidator>
 #include <QDataWidgetMapper>
+#include <QDateTime>
 
 namespace Ui {
 class CategoryForm;
@@ -17,7 +18,7 @@ class CategoryForm;
 class CategoryForm : public QWidget
 {
     Q_OBJECT
-    QModelIndex globalIndex;
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
 
 public:
     explicit CategoryForm(QWidget *parent = 0);
@@ -25,6 +26,8 @@ public:
     void setCodeFocus();
     void setModel(CategoriesModel *model);
     void setMapperIndex(QModelIndex index);
+    QDateTime modifiedDate() const;
+    void setModifiedDate(QDateTime modifiedDate);
 
 signals:
 
@@ -36,6 +39,7 @@ private:
     QDataWidgetMapper *dataMapper;
     Lssbar *lssbar;
     void clear();
+    QDateTime m_modifiedDate;
 
 private slots:
     void save();

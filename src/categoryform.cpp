@@ -28,7 +28,6 @@
 #include <QDebug>
 #include <QIntValidator>
 #include <QMessageBox>
-#include <QDateTime>
 #include <QSqlRecord>
 
 CategoryForm::CategoryForm(QWidget *parent) :
@@ -49,8 +48,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));	
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));*/
-
-    ui->dateTimeEdit->hide();
 }
 
 CategoryForm::~CategoryForm()
@@ -106,7 +103,7 @@ void CategoryForm::save()
 
         }else if(this->ui->pushButtonSave->text() == "Update"){
             QDateTime datetime = QDateTime::currentDateTime();
-            ui->dateTimeEdit->setDateTime(datetime);
+            this->setProperty("modifiedDate", datetime);
 
             status = dataMapper->submit();
             if(status == true)
@@ -152,7 +149,7 @@ void CategoryForm::setModel(CategoriesModel *model){
 
     dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
-    dataMapper->addMapping(ui->dateTimeEdit,categoriesModel->fieldIndex("modifiedDate"));
+    dataMapper->addMapping(this,categoriesModel->fieldIndex("modifiedDate"), "modifiedDate");
     dataMapper->toFirst();
 
     if(categoriesModel->rowCount() <= 0){
@@ -196,7 +193,6 @@ bool CategoryForm::nameValid(){
 
 void CategoryForm::setMapperIndex(QModelIndex index)
 {
-    globalIndex = index;
     this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
 }
@@ -227,10 +223,22 @@ void CategoryForm::on_pushButtonDelete_clicked()
     record.setValue("modifiedDate", datetime);
     categoriesModel->setRecord(dataMapper->currentIndex(), record);
     categoriesModel->submit();
+
     categoriesModel->select();
     dataMapper->toNext();
+
     if(categoriesModel->rowCount() <= 0){
         clear();
         this->ui->pushButtonSave->setEnabled(false);
     }
+}
+
+QDateTime CategoryForm::modifiedDate() const
+{
+    return m_modifiedDate;
+}
+
+void CategoryForm::setModifiedDate(QDateTime modifiedDate)
+{
+    m_modifiedDate = modifiedDate;
 }
