@@ -38,10 +38,11 @@ private:
     Lssbar *lssbar;
 
 private slots:
-    void addRecord();
     void save();
     bool codeValid();
     bool nameValid();
+    void on_pushButtonAdd_clicked();
+    void on_pushButtonCancel_clicked();
 };
 
 #endif // CategoryForm_H

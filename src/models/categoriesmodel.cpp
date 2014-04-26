@@ -29,7 +29,6 @@ CategoriesModel::CategoriesModel(QObject *parent) :
     QSqlTableModel(parent)
 {
     setTable("categories");
-    //setTable("test");
     setHeaderData(fieldIndex("code"), Qt::Horizontal, QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
     setFilter("status = 'A'");

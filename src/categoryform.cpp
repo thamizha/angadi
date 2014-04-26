@@ -54,109 +54,70 @@ CategoryForm::~CategoryForm()
     delete ui;
 }
 
-void CategoryForm::addRecord()
-{
-    //int row = categoriesModel->rowCount();
-    //categoriesModel->insertRows(row, 1);
-
-    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
-    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
-    dataMapper->toFirst();
-}
-
 void CategoryForm::save()
 {
-    bool status;
-
-    status = dataMapper->submit();
-
-    qDebug() << status;
-
-    if(status == true)
-    {
-        categoriesModel->submit();
-    }
-
     // Initialization of local variables
-    /*int validError = 0;
-    QString errors = "";*/
+    int validError = 0;
+    QString errors = "";
 
     // Initialization of message box
-    /*QMessageBox msgBox;
+    QMessageBox msgBox;
     msgBox.setText("Validation Error in this forms. Please correct the form and resubmit it");
     msgBox.setInformativeText("");
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);*/
+    msgBox.setDefaultButton(QMessageBox::Ok);
 
     // validate code field
-    /*if(!CategoryForm::codeValid())
+    if(!CategoryForm::codeValid())
     {
         validError=1;
         errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
-    }*/
+    }
 
     // validate name field
-    /*if(!CategoryForm::nameValid())
+    if(!CategoryForm::nameValid())
     {
         validError=1;
         errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters");
-    }*/
+    }
 
     // save the form if there is no errors
-//    if(validError==0)
-//    {
-//        /*int rowIndex = categoriesModel->rowCount();
-//        qDebug() << "rowIndex :::>" << rowIndex;
-//        categoriesModel->insertRow(rowIndex);
-//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
-//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
-//        categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-//        if(categoriesModel->submit())
-//            qDebug() << "Success";
-//        else
-//            qDebug() << "failed";
-//        */
+    if(validError==0){
+        bool status;
 
-//        bool status;
-//        //dataMapper->toFirst();
+        if(this->ui->pushButtonSave->text() == "Save"){
+            int row = categoriesModel->rowCount();
+            categoriesModel->insertRows(row, 1);
 
-//        status = dataMapper->submit();
+            categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
+            categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
+            categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
+            categoriesModel->submit();
 
-//        qDebug() << status;
+            clear();
 
-//        if(status == true)
-//        {
-//            categoriesModel->submit();
-//            //addRecord();
-//            //qDebug() << categoriesModel->lastError().text();
-//        }
-//    }
+        }else if(this->ui->pushButtonSave->text() == "Update"){
+            status = dataMapper->submit();
+            if(status == true)
+            {
+                categoriesModel->submit();
+            }
+        }
+        setCodeFocus();
 
-//    // display the error message if there is any errors
-//    else
-//    {
-//        msgBox.setInformativeText(errors);
-//        int ret = msgBox.exec();
-//        switch (ret) {
-//           case QMessageBox::Ok:
-//               ui->lineEditCode->setFocus();
-//               ui->lineEditCode->selectAll();
-//               break;
-//           default:
-//               // should never be reached
-//               break;
-//         }
-//    }
-
-    /*int rowIndex = categoriesModel->rowCount();
-    qDebug() << "rowIndex :::>" << rowIndex;
-    categoriesModel->insertRow(rowIndex);
-    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("code")),ui->lineEditCode->text());
-    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("name")),ui->lineEditName->text());
-    categoriesModel->setData(categoriesModel->index(rowIndex,categoriesModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-    categoriesModel->submit();*/
-//    clear();
-//    setCodeFocus();
+    }else{                                      // display the error message if there is any errors
+        msgBox.setInformativeText(errors);
+        int ret = msgBox.exec();
+        switch (ret) {
+           case QMessageBox::Ok:
+               ui->lineEditCode->setFocus();
+               ui->lineEditCode->selectAll();
+               break;
+           default:
+               // should never be reached
+               break;
+         }
+    }
 }
 
 void CategoryForm::setCodeFocus()
@@ -175,7 +136,11 @@ void CategoryForm::clear()
 void CategoryForm::setModel(CategoriesModel *model){
     categoriesModel = model;
     dataMapper->setModel(categoriesModel);
-    addRecord();
+    //addRecord();
+
+    dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
+    dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
+    dataMapper->toFirst();
 }
 
 // function to validate code field
@@ -214,5 +179,19 @@ bool CategoryForm::nameValid(){
 
 void CategoryForm::setMapperIndex(QModelIndex index)
 {
+    this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
+}
+
+void CategoryForm::on_pushButtonAdd_clicked()
+{
+    this->ui->pushButtonSave->setText("Save");
+    clear();
+    setCodeFocus();
+}
+
+void CategoryForm::on_pushButtonCancel_clicked()
+{
+    this->ui->pushButtonSave->setText("Update");
+    dataMapper->toLast();
 }
