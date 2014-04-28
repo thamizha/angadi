@@ -29,6 +29,7 @@
 #include <QIntValidator>
 #include <QMessageBox>
 #include <QSqlRecord>
+#include <QSqlQuery>
 
 CategoryForm::CategoryForm(QWidget *parent) :
     QWidget(parent),
@@ -225,9 +226,15 @@ void CategoryForm::on_pushButtonCancel_clicked()
 
 void CategoryForm::on_pushButtonDelete_clicked()
 {
+    QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
+//    QSqlQuery query;
+//    query.prepare("SELECT * as count FROM products");
+////    query.bindValue(":categoryId", record.value("id"));
+//    query.exec();
+//    qDebug() << query.record().value("count");
+
     QDateTime datetime = QDateTime::currentDateTime();
 
-    QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
     record.setValue("status", "D");
     record.setValue("modifiedDate", datetime);
     categoriesModel->setRecord(dataMapper->currentIndex(), record);

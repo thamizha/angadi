@@ -32,6 +32,8 @@
 #include <QWidget>
 #include <QDataWidgetMapper>
 #include <QDateTime>
+#include <QEvent>
+#include <QKeyEvent>
 
 namespace Ui {
 class CustomerForm;
@@ -48,8 +50,11 @@ public:
     void setCodeFocus();
     void setModel(CustomersModel *model);
     void setMapperIndex(QModelIndex index);
+    void search(QString value);
     QDateTime modifiedDate();
     void setModifiedDate(QDateTime modifiedDate);
+
+signals:
 
 private:
     Ui::CustomerForm *ui;

@@ -40,7 +40,7 @@ void Lssbar::setupUi()
     QVBoxLayout *vBox = new QVBoxLayout;
 
     // new lineedit intialization for search bar
-    lineEditSearch= new QLineEdit(this);
+    lineEditSearch = new QLineEdit(this);
     lineEditSearch->installEventFilter(this);
     //QLineEdit *lineEditName= new QLineEdit(this);
 
@@ -49,6 +49,7 @@ void Lssbar::setupUi()
     tableView->horizontalHeader()->setStretchLastSection(true);
     tableView->verticalHeader()->setVisible(false);
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
     // adding lineedit widget to the right dock
     vBox->addWidget(lineEditSearch);
@@ -59,6 +60,7 @@ void Lssbar::setupUi()
 
     connect(lineEditSearch,SIGNAL(textChanged(QString)),this,SLOT(search(QString)));
     connect(tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
+    connect(tableView,SIGNAL(activated(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(lineEditSearch,SIGNAL(returnPressed()),this,SLOT(returnKeyPressed()));
 }
 
@@ -84,7 +86,6 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
     }else if(tableModel->tableName() == "customers"){
         tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
         tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
-
     }
 }
 
@@ -117,26 +118,26 @@ void Lssbar::search(QString value)
 bool Lssbar::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == lineEditSearch) //to check if the obj is lineedit search
+    {
+        if (event->type() == QEvent::KeyPress) //to check if the event is keypress event
         {
-            if (event->type() == QEvent::KeyPress) //to check if the event is keypress event
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event); //if it is keypress event in lineedit search assign a new keyevent variable
+            if (keyEvent->key() == Qt::Key_Up) //to check if the keyevent is up
             {
-                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event); //if it is keypress event in lineedit search assign a new keyevent variable
-                if (keyEvent->key() == Qt::Key_Up) //to check if the keyevent is up
-                {
-                    indexOffset=indexOffset-1; //offset the index by -1
-                    emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
-                    return true;
-                }
-                else if(keyEvent->key() == Qt::Key_Down) // to check if the keyevent is down arrow
-                {
-                    indexOffset=indexOffset+1; //offset the index by +1
-                    emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
-                    return true;
-                }
+                indexOffset=indexOffset-1; //offset the index by -1
+                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+                return true;
             }
-            return false;
+            else if(keyEvent->key() == Qt::Key_Down) // to check if the keyevent is down arrow
+            {
+                indexOffset=indexOffset+1; //offset the index by +1
+                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+                return true;
+            }
         }
-        return Lssbar::eventFilter(obj, event);
+        return false;
+    }
+    return Lssbar::eventFilter(obj, event);
 }
 
 // to emit the return key press signal on the lineedit search so that the selected index data is moved to the form

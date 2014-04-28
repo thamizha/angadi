@@ -146,6 +146,13 @@ void CustomerForm::setMapperIndex(QModelIndex index)
     dataMapper->setCurrentIndex(index.row());
 }
 
+void CustomerForm::search(QString value)
+{
+    QString searchValue = "name = ";
+    searchValue.append(value);
+    customersModel->selectRow(1);
+}
+
 void CustomerForm::on_pushButtonAdd_clicked()
 {
     this->ui->pushButtonSave->setText("Save");
