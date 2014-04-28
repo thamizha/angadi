@@ -227,25 +227,35 @@ void CategoryForm::on_pushButtonCancel_clicked()
 void CategoryForm::on_pushButtonDelete_clicked()
 {
     QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
-//    QSqlQuery query;
-//    query.prepare("SELECT * as count FROM products");
-////    query.bindValue(":categoryId", record.value("id"));
-//    query.exec();
-//    qDebug() << query.record().value("count");
 
-    QDateTime datetime = QDateTime::currentDateTime();
+    QSqlQueryModel model;
+    QSqlQuery query;
+    query.prepare("Select * from products where category_id = :category_id");
+    query.bindValue(":category_id", record.value("id").toInt());
+    query.exec();
+    model.setQuery(query);
 
-    record.setValue("status", "D");
-    record.setValue("modifiedDate", datetime);
-    categoriesModel->setRecord(dataMapper->currentIndex(), record);
-    categoriesModel->submit();
+    if(model.rowCount() == 0){
+        QDateTime datetime = QDateTime::currentDateTime();
 
-    categoriesModel->select();
-    dataMapper->toNext();
+        record.setValue("status", "D");
+        record.setValue("modifiedDate", datetime);
+        categoriesModel->setRecord(dataMapper->currentIndex(), record);
+        categoriesModel->submit();
 
-    if(categoriesModel->rowCount() <= 0){
-        clear();
-        this->ui->pushButtonSave->setEnabled(false);
+        categoriesModel->select();
+        dataMapper->toNext();
+
+        if(categoriesModel->rowCount() <= 0){
+            clear();
+            this->ui->pushButtonSave->setEnabled(false);
+        }
+    }else{
+        QMessageBox msgBox;
+        msgBox.setText("Products found under this category. Cannot delete!!!");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
     }
 }
 

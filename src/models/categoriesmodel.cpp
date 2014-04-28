@@ -26,14 +26,17 @@
 #include "categoriesmodel.h"
 
 CategoriesModel::CategoriesModel(QObject *parent) :
-    QSqlTableModel(parent)
+    QSqlRelationalTableModel(parent)
 {
     setTable("categories");
+//    setRelation(1, QSqlRelation("products", "id", "name"));
+//    setEditStrategy(QSqlTableModel::OnManualSubmit);
     setHeaderData(fieldIndex("code"), Qt::Horizontal, QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
     setFilter("status = 'A'");
     setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
+//    qDebug() << rowCount();
 }
 
 CategoriesModel::~CategoriesModel()

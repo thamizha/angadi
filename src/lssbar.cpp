@@ -25,9 +25,11 @@
 
 #include "lssbar.h"
 #include "categoryform.h"
+
 #include <QHeaderView>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QSqlRelationalDelegate>
 
 Lssbar::Lssbar(QWidget *parent) :
     QWidget(parent)
@@ -80,6 +82,8 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
         tableView->setColumnHidden(nameIndex,false);
 
     }else if(tableModel->tableName() == "products"){
+        tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
+
         tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
         tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
 

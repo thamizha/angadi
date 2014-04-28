@@ -27,8 +27,10 @@
 #define PRODUCTSMODEL_H
 
 #include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
+#include <QDebug>
 
-class ProductsModel : public QSqlTableModel
+class ProductsModel : public QSqlRelationalTableModel
 {
     Q_OBJECT
 public:

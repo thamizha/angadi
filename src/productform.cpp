@@ -30,6 +30,8 @@
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QDateTime>
+#include <QSqlRelationalDelegate>
+#include <QSqlError>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -38,13 +40,16 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->setupUi(this);
 
     // add category combobox value through query
-    QSqlQuery query;
-    query.exec("SELECT id, name FROM categories");
+//    QSqlQuery query;
+//    query.exec("SELECT id, name FROM categories where status='A'");
 
-    while (query.next()) {
-        categoryid_map[query.value(1).toString()]=query.value(0).toInt();
-        ui->comboBoxcategoryId->addItem(query.value(1).toString());
-    }
+//    while (query.next()) {
+//        categoryid_map[query.value(1).toString()]=query.value(0).toInt();
+//        ui->comboBoxcategoryId->addItem(query.value(1).toString());
+//    }
+
+//    ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
+//    ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
 
     // Hide the errors labels at the start
     ui->labelCodeValid->hide();
@@ -80,6 +85,7 @@ ProductForm::ProductForm(QWidget *parent) :
     connect(ui->lineEditWholeSalePrice,SIGNAL(editingFinished()),SLOT(wholeSalePriceValid()));
 
     dataMapper = new QDataWidgetMapper(this);
+    dataMapper->setItemDelegate(new QSqlRelationalDelegate(this));
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 }
 
@@ -194,12 +200,10 @@ void ProductForm::save()
     }else if(this->ui->pushButtonSave->text() == "Update"){
         status = dataMapper->submit();
 
-        qDebug() << status;
-
-        if(status == true)
-        {
+        if(status == true){
             productsModel->submit();
         }
+        qDebug() << productsModel->lastError().text();
     }
     setCodeFocus();
 
@@ -220,9 +224,12 @@ void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
     dataMapper->setModel(productsModel);
 
+    ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
+    ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
+
     dataMapper->addMapping(ui->lineEditCode,productsModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,productsModel->fieldIndex("name"));
-//    dataMapper->addMapping(ui->comboBoxcategoryId,productsModel->fieldIndex("categoryId"));
+    dataMapper->addMapping(ui->comboBoxcategoryId, 4);
 //    dataMapper->addMapping(ui->comboBoxManufacturer,productsModel->fieldIndex("manufacturer"));
     dataMapper->addMapping(ui->comboBoxUnit,productsModel->fieldIndex("unit"));
     dataMapper->addMapping(ui->lineEditMrp,productsModel->fieldIndex("mrp"));
@@ -320,7 +327,6 @@ bool ProductForm::wholeSalePriceValid(){
     }
     return status;
 }
-
 
 void ProductForm::setMapperIndex(QModelIndex index)
 {

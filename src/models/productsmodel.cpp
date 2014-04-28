@@ -26,12 +26,14 @@
 #include "productsmodel.h"
 
 ProductsModel::ProductsModel(QObject *parent) :
-    QSqlTableModel(parent)
+    QSqlRelationalTableModel(parent)
 {
     setTable("products");
+    setRelation(4, QSqlRelation("categories", "id", "name"));
+    setEditStrategy(QSqlTableModel::OnManualSubmit);
     setHeaderData(fieldIndex("code"), Qt::Horizontal,QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
-    setFilter("status = 'A'");
+    setFilter("products.status = 'A'");
     setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
 }

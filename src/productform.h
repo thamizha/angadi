@@ -49,11 +49,13 @@ public:
     void clear();
     void setModel(ProductsModel *model);
     void setMapperIndex(QModelIndex index);
+
 private:
     Ui::ProductForm *ui;
     ProductsModel *productsModel;
     QDataWidgetMapper *dataMapper;
     Lssbar *lssbar;
+
 private slots:
     void save();
     bool codeValid();

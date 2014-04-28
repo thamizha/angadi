@@ -27,8 +27,10 @@
 #define CATEGORIESMODEL_H
 
 #include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
+#include <QDebug>
 
-class CategoriesModel : public QSqlTableModel
+class CategoriesModel : public QSqlRelationalTableModel
 {
     Q_OBJECT
 public:
