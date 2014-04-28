@@ -29,6 +29,7 @@
 
 #include <QMessageBox>
 #include <QSqlQuery>
+#include <QDateTime>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -36,18 +37,14 @@ ProductForm::ProductForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-     //add category combobox value through query
-    //*****************
+    // add category combobox value through query
     QSqlQuery query;
-         query.exec("SELECT id, code FROM categories");
+    query.exec("SELECT id, name FROM categories");
 
-         while (query.next()) {
-                categoryid_map[query.value(1).toString()]=query.value(0).toInt();
-                ui->comboBoxcategoryId->addItem(query.value(1).toString());
-              }
-    //*****************
-
-
+    while (query.next()) {
+        categoryid_map[query.value(1).toString()]=query.value(0).toInt();
+        ui->comboBoxcategoryId->addItem(query.value(1).toString());
+    }
 
     // Hide the errors labels at the start
     ui->labelCodeValid->hide();
@@ -56,25 +53,25 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->labelSalePriceValid->hide();
     ui->labelWholeSalePriceValid->hide();
 
-    ui->comboBoxManufacturer->addItem("106");
-    ui->comboBoxManufacturer->addItem("107");
-    ui->comboBoxManufacturer->addItem("108");
+    ui->comboBoxManufacturer->addItem("Manufacturer 1");
+    ui->comboBoxManufacturer->addItem("Manufacturer 2");
+    ui->comboBoxManufacturer->addItem("Manufacturer 3");
 
-    ui->comboBoxUnit->addItem("100");
-    ui->comboBoxUnit->addItem("101");
-    ui->comboBoxUnit->addItem("102");
+    ui->comboBoxUnit->addItem("Nos");
+    ui->comboBoxUnit->addItem("Kgs");
+    ui->comboBoxUnit->addItem("Bundles");
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
 
     // Enter key to focus next control
-    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
-    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->comboBoxcategoryId,SLOT(setFocus()));
-    //connect(ui->comboBoxcategoryId->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxManufacturer,SLOT(setFocus()));
-    //connect(ui->comboBoxManufacturer->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxUnit,SLOT(setFocus()));
-    //connect(ui->comboBoxUnit->lineEdit(),SIGNAL(returnPressed()),ui->lineEditMrp,SLOT(setFocus()));
-    connect(ui->lineEditMrp,SIGNAL(returnPressed()),ui->lineEditSalePrice,SLOT(setFocus()));
-    connect(ui->lineEditSalePrice,SIGNAL(returnPressed()),ui->lineEditWholeSalePrice,SLOT(setFocus()));
-    connect(ui->lineEditWholeSalePrice,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
+//    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
+//    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->comboBoxcategoryId,SLOT(setFocus()));
+//    connect(ui->comboBoxcategoryId->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxManufacturer,SLOT(setFocus()));
+//    connect(ui->comboBoxManufacturer->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxUnit,SLOT(setFocus()));
+//    connect(ui->comboBoxUnit->lineEdit(),SIGNAL(returnPressed()),ui->lineEditMrp,SLOT(setFocus()));
+//    connect(ui->lineEditMrp,SIGNAL(returnPressed()),ui->lineEditSalePrice,SLOT(setFocus()));
+//    connect(ui->lineEditSalePrice,SIGNAL(returnPressed()),ui->lineEditWholeSalePrice,SLOT(setFocus()));
+//    connect(ui->lineEditWholeSalePrice,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
 
     connect(ui->lineEditCode,SIGNAL(editingFinished()),SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),SLOT(nameValid()));
@@ -186,12 +183,19 @@ void ProductForm::save()
         productsModel->setData(productsModel->index(row,productsModel->fieldIndex("mrp")),ui->lineEditMrp->text());
         productsModel->setData(productsModel->index(row,productsModel->fieldIndex("sprice")),ui->lineEditSalePrice->text());
         productsModel->setData(productsModel->index(row,productsModel->fieldIndex("wholeSalePrice")),ui->lineEditWholeSalePrice->text());
+
+        QDateTime datetime = QDateTime::currentDateTime();
+        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+
         productsModel->submit();
 
         clear();
 
     }else if(this->ui->pushButtonSave->text() == "Update"){
         status = dataMapper->submit();
+
+        qDebug() << status;
+
         if(status == true)
         {
             productsModel->submit();
@@ -200,31 +204,6 @@ void ProductForm::save()
     setCodeFocus();
 
 }
-
-
-/*void ProductForm::save()
-{
-    Product product;
-    product.setCode(ui->lineEditCode->text());
-    product.setName(ui->lineEditName->text());
-    //QMessageBox::information(this,"title",ui->comboBoxcategoryId->property("currentText").toString());
-
-
-    product.setCategoryId(ui->comboBoxcategoryId->property("currentText").toDouble(0));
-    product.setManufacturer(ui->comboBoxManufacturer->property("currentText").toString());
-    product.setUnit(ui->comboBoxUnit->property("currentText").toString());
-    product.setMrp(ui->lineEditMrp->text().toDouble(0));
-    product.setSprice(ui->lineEditSalePrice->text().toDouble());
-    product.setWholeSalePrice(ui->lineEditWholeSalePrice->text().toDouble());
-
-    bool status=product.save();
-    qDebug()<<status;
-    if(status==true)
-        QMessageBox::information(this,"title","Product Saved succesfully");
-    else
-        QMessageBox::information(this,"title","<b>Product NOT Saved succesfully</b>");
-    setCodeFocus();
-}*/
 
 void ProductForm::clear(){
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
@@ -240,9 +219,21 @@ void ProductForm::setCodeFocus(){
 void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
     dataMapper->setModel(productsModel);
+
     dataMapper->addMapping(ui->lineEditCode,productsModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,productsModel->fieldIndex("name"));
+//    dataMapper->addMapping(ui->comboBoxcategoryId,productsModel->fieldIndex("categoryId"));
+//    dataMapper->addMapping(ui->comboBoxManufacturer,productsModel->fieldIndex("manufacturer"));
+    dataMapper->addMapping(ui->comboBoxUnit,productsModel->fieldIndex("unit"));
+    dataMapper->addMapping(ui->lineEditMrp,productsModel->fieldIndex("mrp"));
+    dataMapper->addMapping(ui->lineEditSalePrice,productsModel->fieldIndex("sprice"));
+    dataMapper->addMapping(ui->lineEditWholeSalePrice,productsModel->fieldIndex("wholeSalePrice"));
+
     dataMapper->toFirst();
+
+    if(productsModel->rowCount() <= 0){
+        this->ui->pushButtonSave->setEnabled(false);
+    }
 }
 
 // validate the code field

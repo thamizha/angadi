@@ -625,16 +625,6 @@
     <string>Add</string>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="dateTimeEdit">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>20</y>
-     <width>194</width>
-     <height>24</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditCode</tabstop>

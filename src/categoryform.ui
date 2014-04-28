@@ -132,16 +132,6 @@
      <string>Cancel</string>
     </property>
    </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>180</y>
-      <width>194</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QLabel" name="labelCodeValid">
    <property name="geometry">

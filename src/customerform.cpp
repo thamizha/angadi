@@ -47,8 +47,6 @@ CustomerForm::CustomerForm(QWidget *parent) :
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-
-    ui->dateTimeEdit->hide();
 }
 
 CustomerForm::~CustomerForm()
@@ -97,7 +95,7 @@ void CustomerForm::save()
 
     }else if(this->ui->pushButtonSave->text() == "Update"){
         QDateTime datetime = QDateTime::currentDateTime();
-        ui->dateTimeEdit->setDateTime(datetime);
+        this->setProperty("modifiedDate", datetime);
 
         status = dataMapper->submit();
         if(status == true)
@@ -131,7 +129,7 @@ void CustomerForm::setModel(CustomersModel *model){
     dataMapper->addMapping(ui->lineEditEmail,customersModel->fieldIndex("email"));
     dataMapper->addMapping(ui->lineEditWebsite,customersModel->fieldIndex("website"));
     dataMapper->addMapping(ui->textEditNote,customersModel->fieldIndex("notes"));
-    dataMapper->addMapping(ui->dateTimeEdit,customersModel->fieldIndex("modifiedDate"));
+    dataMapper->addMapping(this,customersModel->fieldIndex("modifiedDate"), "modifiedDate");
     dataMapper->toFirst();
 }
 
@@ -162,4 +160,14 @@ void CustomerForm::on_pushButtonCancel_clicked()
     this->ui->pushButtonCancel->setEnabled(false);
     dataMapper->toLast();
     setCodeFocus();
+}
+
+QDateTime CustomerForm::modifiedDate()
+{
+    return m_modifiedDate;
+}
+
+void CustomerForm::setModifiedDate(QDateTime modifiedDate)
+{
+    m_modifiedDate = modifiedDate;
 }

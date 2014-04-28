@@ -26,10 +26,12 @@
 #ifndef CUSTOMERFORM_H
 #define CUSTOMERFORM_H
 
-#include <QWidget>
-#include <QDataWidgetMapper>
 #include "models/customersmodel.h"
 #include "lssbar.h"
+
+#include <QWidget>
+#include <QDataWidgetMapper>
+#include <QDateTime>
 
 namespace Ui {
 class CustomerForm;
@@ -38,6 +40,7 @@ class CustomerForm;
 class CustomerForm : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
 
 public:
     explicit CustomerForm(QWidget *parent = 0);
@@ -45,6 +48,8 @@ public:
     void setCodeFocus();
     void setModel(CustomersModel *model);
     void setMapperIndex(QModelIndex index);
+    QDateTime modifiedDate();
+    void setModifiedDate(QDateTime modifiedDate);
 
 private:
     Ui::CustomerForm *ui;
@@ -52,6 +57,7 @@ private:
     QDataWidgetMapper *dataMapper;
     Lssbar *lssbar;
     void clear();
+    QDateTime m_modifiedDate;
 
 private slots:
     void save();
