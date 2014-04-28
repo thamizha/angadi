@@ -41,7 +41,7 @@ public:
     explicit Lssbar(QWidget *parent = 0);
     QTableView *tableView;
     QLineEdit *lineEditSearch;
-    int indexOffset = 0;
+    int indexOffset = 0; // initialization of index offset and reset it to 0 used to move the selection  based on up/down key press
 
 signals:
     void signalEdit(QModelIndex);

@@ -41,6 +41,7 @@ private:
     ProductsModel *productsModel;
     CustomersModel *customersModel;
 
+    // initialization of sort filter proxy model for all models.
     QSortFilterProxyModel *categoriesProxyModel;
     QSortFilterProxyModel *productsProxyModel;
     QSortFilterProxyModel *customersProxyModel;

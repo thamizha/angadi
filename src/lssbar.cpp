@@ -39,6 +39,7 @@ void Lssbar::setupUi()
 {
     QVBoxLayout *vBox = new QVBoxLayout;
 
+    // new lineedit intialization for search bar
     lineEditSearch= new QLineEdit(this);
     lineEditSearch->installEventFilter(this);
     //QLineEdit *lineEditName= new QLineEdit(this);
@@ -49,6 +50,7 @@ void Lssbar::setupUi()
     tableView->verticalHeader()->setVisible(false);
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    // adding lineedit widget to the right dock
     vBox->addWidget(lineEditSearch);
     //vBox->addWidget(lineEditName);
     vBox->addWidget(tableView);
@@ -88,66 +90,47 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
 
 void Lssbar::setFilterSelect(QModelIndex index, int update)
 {
-    tableView->clearSelection();
-    indexOffset=update;
+    tableView->clearSelection();// clear the previous selection
+    indexOffset=update; //update the indexOffset value
     if (index.isValid()) {
-        tableView->setColumnHidden(0, false);
-        tableView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
-        tableView->scrollTo(index, QAbstractItemView::EnsureVisible);
-        tableView->setColumnHidden(0, true);
-        tableView->setCurrentIndex(index);
+        tableView->setColumnHidden(0, false); // to unhide the hidden primary key column
+        tableView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows); //select the row given by index
+        tableView->scrollTo(index, QAbstractItemView::EnsureVisible); //scroll to that row so that its visible
+        tableView->setColumnHidden(0, true); // hide the primary key column
+        tableView->setCurrentIndex(index); //set the current index of the table view to the current index
     }
-
-
-    /*//set all columns hidden
-    for(int i=0;i<tableModel->columnCount();i++){
-        tableView->setColumnHidden(i,true);
-    }
-
-    if(tableModel->tableName() == "categories"){
-        int codeIndex = tableModel->fieldIndex("code");
-        int nameIndex = tableModel->fieldIndex("name");
-        tableView->setColumnHidden(codeIndex,false);
-        tableView->setColumnHidden(nameIndex,false);
-
-    }else if(tableModel->tableName() == "products"){
-        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
-        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
-
-    }else if(tableModel->tableName() == "customers"){
-        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
-        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
-
-    }*/
 }
 
+//to emit the double clicked on the table view row signal
 void Lssbar::doubleClicked(QModelIndex index)
 {
     emit signalEdit(index);
 }
 
+//to emit the search signal for the typed value on the lineeditsearch
 void Lssbar::search(QString value)
 {
     emit signalSearch(value);
 }
 
+//event filter to listen to the up/down arrow key on the lineedit search
 bool Lssbar::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == lineEditSearch)
+    if (obj == lineEditSearch) //to check if the obj is lineedit search
         {
-            if (event->type() == QEvent::KeyPress)
+            if (event->type() == QEvent::KeyPress) //to check if the event is keypress event
             {
-                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-                if (keyEvent->key() == Qt::Key_Up)
+                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event); //if it is keypress event in lineedit search assign a new keyevent variable
+                if (keyEvent->key() == Qt::Key_Up) //to check if the keyevent is up
                 {
-                    indexOffset=indexOffset-1;
-                    emit signalMoveUpDown(indexOffset);
+                    indexOffset=indexOffset-1; //offset the index by -1
+                    emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
                     return true;
                 }
-                else if(keyEvent->key() == Qt::Key_Down)
+                else if(keyEvent->key() == Qt::Key_Down) // to check if the keyevent is down arrow
                 {
-                    indexOffset=indexOffset+1;
-                    emit signalMoveUpDown(indexOffset);
+                    indexOffset=indexOffset+1; //offset the index by +1
+                    emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
                     return true;
                 }
             }
@@ -156,8 +139,9 @@ bool Lssbar::eventFilter(QObject *obj, QEvent *event)
         return Lssbar::eventFilter(obj, event);
 }
 
+// to emit the return key press signal on the lineedit search so that the selected index data is moved to the form
 void Lssbar::returnKeyPressed()
 {
-    QModelIndex index = tableView->currentIndex();
-    emit signalEdit(index);
+    QModelIndex index = tableView->currentIndex(); //get the current index of the table view
+    emit signalEdit(index); //emit the signal edit so that the data is moved to the form
 }

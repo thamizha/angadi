@@ -84,9 +84,11 @@ void AngadiMainWindow::setupConnections()
 void AngadiMainWindow::setupModels()
 {
     categoriesModel = new CategoriesModel;
-    categoriesProxyModel = new QSortFilterProxyModel;
-    categoriesProxyModel->setSourceModel(categoriesModel);
-    categoriesProxyModel->setFilterKeyColumn(1);
+
+    // Create new categoriesproxy model to filter sort functionalities
+    categoriesProxyModel = new QSortFilterProxyModel; //initialization
+    categoriesProxyModel->setSourceModel(categoriesModel); //set the source model to categories model
+    categoriesProxyModel->setFilterKeyColumn(1); // set the filter to the code column
 
     productsModel = new ProductsModel;
     customersModel = new CustomersModel;
@@ -286,15 +288,16 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
      }
 }
 
+// search the model for the given string
 void AngadiMainWindow::search(QString value)
 {
     if(currentTab == "category"){
-        categoriesProxyModel->setFilterRegExp(QString("^%1").arg(value));
-        int indexOffset =0;
-        QModelIndex proxyIndex, index;
-        proxyIndex = categoriesProxyModel->index(indexOffset,0);
-        index = categoriesProxyModel->mapToSource(proxyIndex);
-        lssbar->setFilterSelect(index,indexOffset);
+        categoriesProxyModel->setFilterRegExp(QString("^%1").arg(value)); // set the filter on te categories proxy model
+        int indexOffset =0; //reset the indexOffset
+        QModelIndex proxyIndex, index; //Initialization of new index
+        proxyIndex = categoriesProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
+        index = categoriesProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
+        lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
 
      }else if(currentTab == "product"){
         //productForm->search(value);
@@ -305,23 +308,22 @@ void AngadiMainWindow::search(QString value)
      }
 }
 
+// move the selection up/down within the filtered proxy model
 void AngadiMainWindow::moveUpDown(int indexOffset)
 {
     if(currentTab == "category"){
-        QModelIndex proxyIndex,index;
-
-        qint8 rowCount = categoriesProxyModel->rowCount();
-
-        if(indexOffset < 0)
+        QModelIndex proxyIndex,index; //intialize the model index
+        qint8 rowCount = categoriesProxyModel->rowCount(); // get the proxy model total row count
+        if(indexOffset < 0) // if the index model is less than 0, mark the index to the last row
             indexOffset=rowCount-1;
-        else if(indexOffset > rowCount-1)
+        else if(indexOffset > rowCount-1) // if the indexmodel is greater than row count reset it to zero
             indexOffset = 0;
         else
             indexOffset = indexOffset;
 
-        proxyIndex = categoriesProxyModel->index(indexOffset,0);
-        index = categoriesProxyModel->mapToSource(proxyIndex);
-        lssbar->setFilterSelect(index,indexOffset);
+        proxyIndex = categoriesProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
+        index = categoriesProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
+        lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }else if(currentTab == "product"){
         //productForm->search(value);
