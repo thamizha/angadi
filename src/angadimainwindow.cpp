@@ -37,12 +37,21 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    /*QDockWidget *dock = new QDockWidget(tr("Search Bar"), this);
+    QLineEdit *lineEditCode= new QLineEdit(dock);
+    QLineEdit *lineEditName= new QLineEdit(dock);
+    dock->setWidget(lineEditCode);
+    dock->setWidget(lineEditName);
+    addDockWidget(Qt::RightDockWidgetArea, dock);*/
+
     lssbar = new Lssbar;
 
     connect(lssbar,SIGNAL(signalEdit(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
+    connect(lssbar,SIGNAL(signalSearch(QString)),this,SLOT(search(QString)));
+    connect(lssbar,SIGNAL(signalMoveUpDown(int)),this,SLOT(moveUpDown(int)));
+
     //Hide rightdock widget on start
     showRightDock(false);
-
     ui->rightDock->setWidget(lssbar);
 
     //Set dynamic properties
@@ -75,6 +84,10 @@ void AngadiMainWindow::setupConnections()
 void AngadiMainWindow::setupModels()
 {
     categoriesModel = new CategoriesModel;
+    categoriesProxyModel = new QSortFilterProxyModel;
+    categoriesProxyModel->setSourceModel(categoriesModel);
+    categoriesProxyModel->setFilterKeyColumn(1);
+
     productsModel = new ProductsModel;
     customersModel = new CustomersModel;
 }
@@ -269,6 +282,52 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 
      }else if(currentTab == "customer"){
         //customerForm->setMapperIndex(index);
+
+     }
+}
+
+void AngadiMainWindow::search(QString value)
+{
+    if(currentTab == "category"){
+        categoriesProxyModel->setFilterRegExp(QString("^%1").arg(value));
+        int indexOffset =0;
+        QModelIndex proxyIndex, index;
+        proxyIndex = categoriesProxyModel->index(indexOffset,0);
+        index = categoriesProxyModel->mapToSource(proxyIndex);
+        lssbar->setFilterSelect(index,indexOffset);
+
+     }else if(currentTab == "product"){
+        //productForm->search(value);
+
+     }else if(currentTab == "customer"){
+        //customerForm->search(value);
+
+     }
+}
+
+void AngadiMainWindow::moveUpDown(int indexOffset)
+{
+    if(currentTab == "category"){
+        QModelIndex proxyIndex,index;
+
+        qint8 rowCount = categoriesProxyModel->rowCount();
+
+        if(indexOffset < 0)
+            indexOffset=rowCount-1;
+        else if(indexOffset > rowCount-1)
+            indexOffset = 0;
+        else
+            indexOffset = indexOffset;
+
+        proxyIndex = categoriesProxyModel->index(indexOffset,0);
+        index = categoriesProxyModel->mapToSource(proxyIndex);
+        lssbar->setFilterSelect(index,indexOffset);
+
+     }else if(currentTab == "product"){
+        //productForm->search(value);
+
+     }else if(currentTab == "customer"){
+        //customerForm->search(value);
 
      }
 }

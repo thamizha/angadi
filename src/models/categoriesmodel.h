@@ -41,6 +41,9 @@ public slots:
 
 private:
 
+private slots:
+
+
 };
 
 #endif // CATEGORIESMODEL_H

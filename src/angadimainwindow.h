@@ -10,6 +10,7 @@
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
+#include <QSortFilterProxyModel>
 
 namespace Ui {
 class AngadiMainWindow;
@@ -40,6 +41,10 @@ private:
     ProductsModel *productsModel;
     CustomersModel *customersModel;
 
+    QSortFilterProxyModel *categoriesProxyModel;
+    QSortFilterProxyModel *productsProxyModel;
+    QSortFilterProxyModel *customersProxyModel;
+
     void openCustomerTab();
     void openProductTab();
     void openCategoryTab();
@@ -60,6 +65,8 @@ private slots:
     void onCloseTab(int);
     void onTabChanged(int);
     void doubleClicked(QModelIndex index);
+    void search(QString value);
+    void moveUpDown(int indexOffset);
 };
 
 #endif // ANGADIMAINWINDOW_H

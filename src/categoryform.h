@@ -25,6 +25,7 @@ public:
     void setCodeFocus();
     void setModel(CategoriesModel *model);
     void setMapperIndex(QModelIndex index);
+    void search(QString value);
 
 signals:
 

@@ -31,6 +31,8 @@
 #include <QTableView>
 #include <QSqlTableModel>
 #include <QDebug>
+#include <QLineEdit>
+#include <QSortFilterProxyModel>
 
 class Lssbar : public QWidget
 {
@@ -38,18 +40,27 @@ class Lssbar : public QWidget
 public:
     explicit Lssbar(QWidget *parent = 0);
     QTableView *tableView;
+    QLineEdit *lineEditSearch;
+    int indexOffset = 0;
 
 signals:
     void signalEdit(QModelIndex);
+    void signalSearch(QString value);
+    void signalMoveUpDown(int);
 
 public slots:
     void setModel(QSqlTableModel *tableModel);
+    void setFilterSelect(QModelIndex index,int update);
 
 private:
+
 
 private slots:
     void setupUi();
     void doubleClicked(QModelIndex index);
+    void search(QString value);
+    bool eventFilter(QObject *obj, QEvent *event);
+    void returnKeyPressed();
 };
 
 #endif // LSSBAR_H

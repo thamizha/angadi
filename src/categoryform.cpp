@@ -201,6 +201,15 @@ void CategoryForm::setMapperIndex(QModelIndex index)
     dataMapper->setCurrentIndex(index.row());
 }
 
+void CategoryForm::search(QString value)
+{
+    QString searchValue = "code = ";
+    searchValue.append(value);
+    categoriesModel->selectRow(1);
+    qDebug() << categoriesModel->selectRow(1);
+    //categoriesModel->setFilter(searchValue);
+}
+
 void CategoryForm::on_pushButtonAdd_clicked()
 {
     this->ui->pushButtonSave->setText("Save");
