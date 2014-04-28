@@ -35,7 +35,6 @@ CustomerForm::CustomerForm(QWidget *parent) :
     ui->setupUi(this);
 
     ui->pushButtonSave->setText("Update");
-    ui->pushButtonCancel->setEnabled(false);
 
     // populate customer type combo box
     ui->comboBoxType->addItem("Retailer");
@@ -140,6 +139,7 @@ void CustomerForm::clear()
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->clear();
     }
+    ui->textEditNote->clear();
 }
 
 void CustomerForm::setMapperIndex(QModelIndex index)
@@ -158,16 +158,29 @@ void CustomerForm::search(QString value)
 void CustomerForm::on_pushButtonAdd_clicked()
 {
     this->ui->pushButtonSave->setText("Save");
-    this->ui->pushButtonCancel->setEnabled(true);
+
+    ui->pushButtonAdd->setEnabled(false);
+    ui->pushButtonDelete->setEnabled(false);
+
     clear();
     setCodeFocus();
 }
 
 void CustomerForm::on_pushButtonCancel_clicked()
 {
-    this->ui->pushButtonSave->setText("Update");
-    this->ui->pushButtonCancel->setEnabled(false);
-    dataMapper->toLast();
+    ui->pushButtonAdd->setEnabled(true);
+    ui->pushButtonDelete->setEnabled(true);
+
+    if(this->ui->pushButtonSave->text() == "Save"){
+        clear();
+
+        this->ui->pushButtonSave->setText("Update");
+        dataMapper->toLast();
+
+    }else if(this->ui->pushButtonSave->text() == "Update"){
+        dataMapper->setCurrentIndex(dataMapper->currentIndex());
+
+    }
     setCodeFocus();
 }
 

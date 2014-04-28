@@ -39,7 +39,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->setupUi(this);
 
     ui->pushButtonSave->setText("Update");
-    ui->pushButtonCancel->setEnabled(false);
 
     ui->labelCodeValid->hide();
     ui->labelNameValid->hide();
@@ -107,7 +106,12 @@ void CategoryForm::save()
             this->ui->pushButtonSave->setEnabled(true);
             this->ui->pushButtonSave->setText("Update");
 
+            categoriesModel->select();
+            dataMapper->toLast();
+
         }else if(this->ui->pushButtonSave->text() == "Update"){
+            int cIndex = dataMapper->currentIndex();
+
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
 
@@ -116,9 +120,9 @@ void CategoryForm::save()
             {
                 categoriesModel->submit();
             }
+            categoriesModel->select();
+            dataMapper->setCurrentIndex(cIndex);
         }
-        categoriesModel->select();
-        dataMapper->toLast();
         setCodeFocus();
 
     }else{                                      // display the error message if there is any errors
@@ -215,17 +219,31 @@ void CategoryForm::search(QString value)
 void CategoryForm::on_pushButtonAdd_clicked()
 {
     this->ui->pushButtonSave->setText("Save");
+
     this->ui->pushButtonSave->setEnabled(true);
-    this->ui->pushButtonCancel->setEnabled(true);
+
+    ui->pushButtonAdd->setEnabled(false);
+    ui->pushButtonDelete->setEnabled(false);
+
     clear();
     setCodeFocus();
 }
 
 void CategoryForm::on_pushButtonCancel_clicked()
 {
-    this->ui->pushButtonSave->setText("Update");
-    this->ui->pushButtonCancel->setEnabled(false);
-    dataMapper->toLast();
+    ui->pushButtonAdd->setEnabled(true);
+    ui->pushButtonDelete->setEnabled(true);
+
+    if(this->ui->pushButtonSave->text() == "Save"){
+        clear();
+
+        this->ui->pushButtonSave->setText("Update");
+        dataMapper->toLast();
+
+    }else if(this->ui->pushButtonSave->text() == "Update"){
+        dataMapper->setCurrentIndex(dataMapper->currentIndex());
+
+    }
     setCodeFocus();
 }
 

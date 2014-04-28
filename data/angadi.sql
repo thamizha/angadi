@@ -31,9 +31,8 @@ CREATE TABLE `categories` (
   `status` enum('A','I','D') NOT NULL DEFAULT 'A' COMMENT 'A => Active; I => Inactive; D => Delete',
   `createdDate` datetime DEFAULT NULL,
   `modifiedDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,12 +62,12 @@ CREATE TABLE `customers` (
   `email` varchar(80) DEFAULT NULL,
   `website` varchar(80) DEFAULT NULL,
   `notes` text,
-  `status` enum('A','I','D') DEFAULT 'A',
+  `status` enum('A','I','D') NOT NULL DEFAULT 'A',
   `createdDate` datetime DEFAULT NULL,
   `modifiedDate` varchar(45) DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,9 +90,8 @@ CREATE TABLE `products` (
   `createdDate` datetime DEFAULT NULL,
   `modifiedDate` datetime DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,10 +108,9 @@ CREATE TABLE `users` (
   `createdDate` datetime DEFAULT NULL,
   `modifiedDate` datetime DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT '0',
-  `status` enum('A','I','D','N') DEFAULT 'N',
+  `status` enum('A','I','D','N') NOT NULL DEFAULT 'N',
   `rememberMe` enum('Y','N') DEFAULT 'N',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -126,4 +123,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-26 19:51:31
+-- Dump completed on 2014-04-28 19:06:52
