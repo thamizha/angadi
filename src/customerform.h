@@ -66,7 +66,6 @@ private:
 
 private slots:
     void save();
-
     void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
 };
