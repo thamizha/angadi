@@ -34,6 +34,7 @@ ProductsModel::ProductsModel(QObject *parent) :
     setHeaderData(fieldIndex("code"), Qt::Horizontal,QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
     setFilter("products.status = 'A'");
+    relationModel(4)->setFilter("status = 'A'");
     setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
 }

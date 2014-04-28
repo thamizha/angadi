@@ -32,6 +32,7 @@
 #include <QDateTime>
 #include <QSqlRelationalDelegate>
 #include <QSqlError>
+#include <QSqlRecord>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -39,19 +40,12 @@ ProductForm::ProductForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // add category combobox value through query
-//    QSqlQuery query;
-//    query.exec("SELECT id, name FROM categories where status='A'");
-
-//    while (query.next()) {
-//        categoryid_map[query.value(1).toString()]=query.value(0).toInt();
-//        ui->comboBoxcategoryId->addItem(query.value(1).toString());
-//    }
-
-//    ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
-//    ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
+    ui->pushButtonSave->setText("Update");
+    ui->pushButtonCancel->setEnabled(false);
 
     // Hide the errors labels at the start
+    ui->labelManufacturer->hide();
+    ui->comboBoxManufacturer->hide();
     ui->labelCodeValid->hide();
     ui->labelMrpValid->hide();
     ui->labelNameValid->hide();
@@ -67,16 +61,6 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->comboBoxUnit->addItem("Bundles");
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
-
-    // Enter key to focus next control
-//    connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
-//    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->comboBoxcategoryId,SLOT(setFocus()));
-//    connect(ui->comboBoxcategoryId->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxManufacturer,SLOT(setFocus()));
-//    connect(ui->comboBoxManufacturer->lineEdit(),SIGNAL(returnPressed()),ui->comboBoxUnit,SLOT(setFocus()));
-//    connect(ui->comboBoxUnit->lineEdit(),SIGNAL(returnPressed()),ui->lineEditMrp,SLOT(setFocus()));
-//    connect(ui->lineEditMrp,SIGNAL(returnPressed()),ui->lineEditSalePrice,SLOT(setFocus()));
-//    connect(ui->lineEditSalePrice,SIGNAL(returnPressed()),ui->lineEditWholeSalePrice,SLOT(setFocus()));
-//    connect(ui->lineEditWholeSalePrice,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));
 
     connect(ui->lineEditCode,SIGNAL(editingFinished()),SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),SLOT(nameValid()));
@@ -97,7 +81,7 @@ ProductForm::~ProductForm()
 //save the product form
 void ProductForm::save()
 {
-    /*int valid = 0; // key for valid
+    int valid = 0; // key for valid
 
     QString errors = ""; // string to display errors
 
@@ -144,20 +128,53 @@ void ProductForm::save()
     }
 
     // save the form if there is no errors
-    if(valid==0)
-    {
-        int rowIndex = productsModel->rowCount();
-        qDebug() << "rowIndex :::>" << rowIndex;
-        productsModel->insertRow(rowIndex);
-        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("code")),ui->lineEditCode->text());
-        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("name")),ui->lineEditName->text());
-        productsModel->setData(productsModel->index(rowIndex,productsModel->fieldIndex("createdDate")),"2014-04-22 00:00:00");
-        productsModel->submit();
+    if(valid==0){
+        bool status;
 
-        clear();
+        if(this->ui->pushButtonSave->text() == "Save"){
+            int row = productsModel->rowCount();
+            productsModel->insertRows(row, 1);
+
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("code")),ui->lineEditCode->text());
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("name")),ui->lineEditName->text());
+
+            QSqlQueryModel model;
+            QSqlQuery query;
+            query.prepare("Select id from categories where name = :category_name");
+            query.bindValue(":category_name", ui->comboBoxcategoryId->currentText());
+            query.exec();
+            model.setQuery(query);
+            QSqlRecord record = model.record(0);
+            int category_id = record.value("id").toInt();
+            QModelIndex idx = productsModel->index(row,4);
+            productsModel->setData(idx, category_id, Qt::EditRole);
+//            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("manufacturer")),ui->comboBoxManufacturer->currentText());
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("unit")),ui->comboBoxUnit->currentText());
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("mrp")),ui->lineEditMrp->text());
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("sprice")),ui->lineEditSalePrice->text());
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("wholeSalePrice")),ui->lineEditWholeSalePrice->text());
+
+            QDateTime datetime = QDateTime::currentDateTime();
+            productsModel->setData(productsModel->index(row,productsModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+
+            productsModel->submitAll();
+
+            this->ui->pushButtonSave->setEnabled(true);
+            this->ui->pushButtonSave->setText("Update");
+
+        }else if(this->ui->pushButtonSave->text() == "Update"){
+            status = dataMapper->submit();
+
+            if(status == true){
+                productsModel->submitAll();
+            }
+        }
+        productsModel->select();
+        dataMapper->toLast();
+        ui->pushButtonAdd->setEnabled(true);
+        ui->pushButtonCancel->setEnabled(false);
         setCodeFocus();
     }
-
     // display the message box if there is any errors
     else
     {
@@ -172,41 +189,7 @@ void ProductForm::save()
                // should never be reached
                break;
          }
-    }*/
-    bool status;
-
-    if(this->ui->pushButtonSave->text() == "Save"){
-        int row = productsModel->rowCount();
-        productsModel->insertRows(row, 1);
-
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("code")),ui->lineEditCode->text());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("name")),ui->lineEditName->text());
-
-        int categoryid = categoryid_map.value(ui->comboBoxcategoryId->currentText());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("categoryId")),categoryid);
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("manufacturer")),ui->comboBoxManufacturer->currentText());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("unit")),ui->comboBoxUnit->currentText());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("mrp")),ui->lineEditMrp->text());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("sprice")),ui->lineEditSalePrice->text());
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("wholeSalePrice")),ui->lineEditWholeSalePrice->text());
-
-        QDateTime datetime = QDateTime::currentDateTime();
-        productsModel->setData(productsModel->index(row,productsModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
-
-        productsModel->submit();
-
-        clear();
-
-    }else if(this->ui->pushButtonSave->text() == "Update"){
-        status = dataMapper->submit();
-
-        if(status == true){
-            productsModel->submit();
-        }
-        qDebug() << productsModel->lastError().text();
     }
-    setCodeFocus();
-
 }
 
 void ProductForm::clear(){
@@ -335,16 +318,24 @@ void ProductForm::setMapperIndex(QModelIndex index)
 }
 
 
-void ProductForm::on_pushButtonDeleteAdd_clicked()
+void ProductForm::on_pushButtonAdd_clicked()
 {
-    this->ui->pushButtonSave->setText("Save");
+    ui->pushButtonSave->setText("Save");
+    ui->pushButtonSave->setEnabled(true);
+    ui->pushButtonAdd->setEnabled(false);
+    ui->pushButtonCancel->setEnabled(true);
     clear();
     setCodeFocus();
 }
 
-void ProductForm::on_pushButtonDeleteCancel_clicked()
+void ProductForm::on_pushButtonCancel_clicked()
 {
+    ui->pushButtonAdd->setEnabled(true);
+    ui->pushButtonCancel->setEnabled(false);
     this->ui->pushButtonSave->setText("Update");
     dataMapper->toLast();
+    if(productsModel->rowCount() <= 0){
+        this->ui->pushButtonSave->setEnabled(false);
+    }
 }
 

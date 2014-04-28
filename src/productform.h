@@ -63,8 +63,8 @@ private slots:
     bool mrpValid();
     bool salePriceValid();
     bool wholeSalePriceValid();
-    void on_pushButtonDeleteAdd_clicked();
-    void on_pushButtonDeleteCancel_clicked();
+    void on_pushButtonAdd_clicked();
+    void on_pushButtonCancel_clicked();
 };
 
 #endif // PRODUCTFORM_H

@@ -21,6 +21,7 @@
  *
  * Authors :
  * gvijaydhanasekaran <vijay.kuruntham@gmail.com>
+ * Selvam <vjpselvam@gmail.com>
  *****************************************************************************/
 
 #include "categoryform.h"
@@ -36,6 +37,10 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui(new Ui::CategoryForm)
 {
     ui->setupUi(this);
+
+    ui->pushButtonSave->setText("Update");
+    ui->pushButtonCancel->setEnabled(false);
+
     ui->labelCodeValid->hide();
     ui->labelNameValid->hide();
 

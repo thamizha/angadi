@@ -38,7 +38,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Update</string>
+     <string>Save</string>
     </property>
     <property name="default">
      <bool>true</bool>
@@ -118,7 +118,7 @@
    </widget>
    <widget class="QPushButton" name="pushButtonCancel">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>

@@ -34,6 +34,9 @@ CustomerForm::CustomerForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->pushButtonSave->setText("Update");
+    ui->pushButtonCancel->setEnabled(false);
+
     // populate customer type combo box
     ui->comboBoxType->addItem("Retailer");
     ui->comboBoxType->addItem("Whole Saler");
@@ -65,7 +68,6 @@ void CustomerForm::save()
 
     if(this->ui->pushButtonSave->text() == "Save"){
         int row = customersModel->rowCount();
-        qDebug() << row;
         customersModel->insertRows(row, 1);
 
         customersModel->setData(customersModel->index(row,customersModel->fieldIndex("code")),ui->lineEditCode->text());
