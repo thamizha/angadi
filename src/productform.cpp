@@ -34,6 +34,10 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
+#include <iostream>ssss
+
+
+
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProductForm)
@@ -160,6 +164,7 @@ void ProductForm::save()
             productsModel->submitAll();
 
             this->ui->pushButtonSave->setEnabled(true);
+            this->ui->pushButtonDelete->setEnabled(true);
             this->ui->pushButtonSave->setText("Update");
 
         }else if(this->ui->pushButtonSave->text() == "Update"){
@@ -323,6 +328,7 @@ void ProductForm::on_pushButtonAdd_clicked()
     ui->pushButtonSave->setText("Save");
     ui->pushButtonSave->setEnabled(true);
     ui->pushButtonAdd->setEnabled(false);
+    ui->pushButtonDelete->setEnabled(false);
     ui->pushButtonCancel->setEnabled(true);
     clear();
     setCodeFocus();
@@ -332,10 +338,38 @@ void ProductForm::on_pushButtonCancel_clicked()
 {
     ui->pushButtonAdd->setEnabled(true);
     ui->pushButtonCancel->setEnabled(false);
-    this->ui->pushButtonSave->setText("Update");
+    ui->pushButtonSave->setText("Update");
+    ui->pushButtonDelete->setEnabled(true);
     dataMapper->toLast();
     if(productsModel->rowCount() <= 0){
-        this->ui->pushButtonSave->setEnabled(false);
+        ui->pushButtonSave->setEnabled(false);
+        ui->pushButtonDelete->setEnabled(false);
     }
 }
 
+
+void ProductForm::on_pushButtonDelete_clicked()
+{
+
+    QSqlRecord record = productsModel->record(dataMapper->currentIndex());
+
+    QDateTime datetime = QDateTime::currentDateTime();
+    //qDebug() << record.value("status");
+    QChar t_status = 'D';
+    record.setValue("status", t_status);
+    //qDebug() << record.value("status");
+    record.setValue("modifiedDate", datetime);
+    productsModel->setRecord(dataMapper->currentIndex(),record);
+    if(productsModel->submit()){
+        if(productsModel->submitAll()){
+            qDebug() << "Success";
+        }
+    }
+    else
+        qDebug() << "No";
+    productsModel->select();
+    dataMapper->toNext();
+
+
+
+}
