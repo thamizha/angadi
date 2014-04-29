@@ -70,6 +70,7 @@ private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void onNameChanged(QString str);
+    void hideValidationErrors();
 };
 
 #endif // CUSTOMERFORM_H

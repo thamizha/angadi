@@ -46,11 +46,8 @@ ProductForm::ProductForm(QWidget *parent) :
     // Hide the errors labels at the start
     ui->labelManufacturer->hide();
     ui->comboBoxManufacturer->hide();
-    ui->labelCodeValid->hide();
-    ui->labelMrpValid->hide();
-    ui->labelNameValid->hide();
-    ui->labelSalePriceValid->hide();
-    ui->labelWholeSalePriceValid->hide();
+
+    hideValidationErrors();
 
     ui->comboBoxManufacturer->addItem("Manufacturer 1");
     ui->comboBoxManufacturer->addItem("Manufacturer 2");
@@ -335,17 +332,20 @@ void ProductForm::on_pushButtonAdd_clicked()
 
 void ProductForm::on_pushButtonCancel_clicked()
 {
+    hideValidationErrors();
+
     ui->pushButtonAdd->setEnabled(true);
     ui->pushButtonCancel->setEnabled(false);
     ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
-    dataMapper->toLast();
+
+//    dataMapper->toLast();
+
     if(productsModel->rowCount() <= 0){
         ui->pushButtonSave->setEnabled(false);
         ui->pushButtonDelete->setEnabled(false);
     }
 }
-
 
 void ProductForm::on_pushButtonDelete_clicked()
 {
@@ -372,4 +372,14 @@ void ProductForm::on_pushButtonDelete_clicked()
 void ProductForm::onNameChanged(QString str)
 {
     emit signalName(str);
+}
+
+void ProductForm::hideValidationErrors()
+{
+    ui->labelCodeValid->hide();
+    ui->labelNameValid->hide();
+    ui->labelCodeValid->hide();
+    ui->labelMrpValid->hide();
+    ui->labelSalePriceValid->hide();
+    ui->labelWholeSalePriceValid->hide();
 }

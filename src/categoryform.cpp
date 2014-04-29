@@ -45,6 +45,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),this,SLOT(setSignalFromCategoryForm()));
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -258,11 +259,11 @@ void CategoryForm::on_pushButtonCancel_clicked()
     if(this->ui->pushButtonSave->text() == "Save"){
         clear();
 
-        this->ui->pushButtonSave->setText("Update");
-        dataMapper->toLast();
+//        this->ui->pushButtonSave->setText("Update");
+//        dataMapper->toLast();
 
     }else if(this->ui->pushButtonSave->text() == "Update"){
-        dataMapper->setCurrentIndex(dataMapper->currentIndex());
+//        dataMapper->setCurrentIndex(dataMapper->currentIndex());
 
     }
     setCodeFocus();
@@ -346,4 +347,9 @@ bool CategoryForm::uniqueValid(QString text,QString field)
         }
     }
     return status;
+}
+
+void CategoryForm::setSignalFromCategoryForm()
+{
+    emit signalFromCategoryForm();
 }

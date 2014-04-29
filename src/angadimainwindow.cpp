@@ -93,6 +93,12 @@ void AngadiMainWindow::setupModels()
 
     productsModel = new ProductsModel;
 
+    // Create new productsproxy model to filter sort functionalities
+    productsProxyModel = new QSortFilterProxyModel; //initialization
+    productsProxyModel->setSourceModel(productsModel); //set the source model to categories model
+    productsProxyModel->setFilterKeyColumn(2); // set the filter to the name column
+    productsProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
     customersModel = new CustomersModel;
 
     // Create new customersproxy model to filter sort functionalities
@@ -141,6 +147,7 @@ void AngadiMainWindow::openCategoryTab()
         lssbar->lineEditSearch->setText("");
     }
     connect(categoryForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(categoryForm,SIGNAL(signalFromCategoryForm()),lssbar,SLOT(setSearchFocus()));
 
     categoryForm->setModel(categoriesModel);
     ui->mainTab->setCurrentWidget (categoryForm);
@@ -165,9 +172,9 @@ void AngadiMainWindow::openProductTab()
 
     productForm->setModel(productsModel);
     ui->mainTab->setCurrentWidget (productForm);
-    productForm->setCodeFocus();
+//    productForm->setCodeFocus();
 
-    lssbar->setModel(productsModel);
+//    lssbar->setModel(productsModel);
 }
 
 void AngadiMainWindow::openCustomerTab()
@@ -186,9 +193,9 @@ void AngadiMainWindow::openCustomerTab()
 
     customerForm->setModel(customersModel);
     ui->mainTab->setCurrentWidget (customerForm);
-    customerForm->setCodeFocus();
+//    customerForm->setCodeFocus();
 
-    lssbar->setModel(customersModel);
+//    lssbar->setModel(customersModel);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -220,10 +227,13 @@ void AngadiMainWindow::onCloseTab(int index)
         ui->mainTab->removeTab(index);
         if(tabName == "category"){
             onCategoryTabClosed();
+
         }else if(tabName == "customer"){
             onCustomerTabClosed();
+
         }else if(tabName == "product"){
             onProductTabClosed();
+
         }
     }
 }
@@ -276,6 +286,7 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 {
     if(currentTab == "category"){
         categoryForm->setMapperIndex(index);
+        categoryForm->setCodeFocus();
 
      }else if(currentTab == "product"){
         productForm->setMapperIndex(index);
@@ -298,7 +309,12 @@ void AngadiMainWindow::search(QString value)
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
 
      }else if(currentTab == "product"){
-        //productForm->search(value);
+        productsProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te products proxy model
+        int indexOffset = 0; //reset the indexOffset
+        QModelIndex proxyIndex, index; //Initialization of new index
+        proxyIndex = productsProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
+        index = productsProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
+        lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
 
      }else if(currentTab == "customer"){
         customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
@@ -329,7 +345,18 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
         lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }else if(currentTab == "product"){
-        //productForm->search(value);
+        QModelIndex proxyIndex,index; //intialize the model index
+        qint8 rowCount = productsProxyModel->rowCount(); // get the proxy model total row count
+        if(indexOffset < 0) // if the index model is less than 0, mark the index to the last row
+            indexOffset=rowCount-1;
+        else if(indexOffset > rowCount-1) // if the indexmodel is greater than row count reset it to zero
+            indexOffset = 0;
+        else
+            indexOffset = indexOffset;
+
+        proxyIndex = productsProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
+        index = productsProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
+        lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }else if(currentTab == "customer"){
         QModelIndex proxyIndex,index; //intialize the model index
