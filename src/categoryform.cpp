@@ -38,7 +38,8 @@ CategoryForm::CategoryForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->pushButtonSave->setText("Update");
+    ui->pushButtonAdd->hide();
+//    ui->pushButtonSave->setText("Update");
 
     ui->labelCodeValid->hide();
     ui->labelNameValid->hide();
@@ -60,6 +61,11 @@ CategoryForm::CategoryForm(QWidget *parent) :
 CategoryForm::~CategoryForm()
 {
     delete ui;
+}
+
+void CategoryForm::save1()
+{
+    qDebug() << dataMapper->currentIndex();
 }
 
 void CategoryForm::save()
@@ -93,7 +99,8 @@ void CategoryForm::save()
     if(validError==0){
         bool status;
 
-        if(this->ui->pushButtonSave->text() == "Save"){
+//        if(this->ui->pushButtonSave->text() == "Save"){
+        if(dataMapper->currentIndex() < 0){
             int row = categoriesModel->rowCount();
             categoriesModel->insertRows(row, 1);
 
@@ -104,15 +111,14 @@ void CategoryForm::save()
             categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
             categoriesModel->submit();
 
-            //clear();
-            this->ui->pushButtonSave->setEnabled(true);
-            this->ui->pushButtonSave->setText("Update");
+//            this->ui->pushButtonSave->setEnabled(true);
+//            this->ui->pushButtonSave->setText("Update");
 
-            categoriesModel->select();
-            dataMapper->toLast();
+//            dataMapper->toLast();
 
-        }else if(this->ui->pushButtonSave->text() == "Update"){
-            int cIndex = dataMapper->currentIndex();
+//        }else if(this->ui->pushButtonSave->text() == "Update"){
+        }else{
+//            int cIndex = dataMapper->currentIndex();
 
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
@@ -122,9 +128,10 @@ void CategoryForm::save()
             {
                 categoriesModel->submit();
             }
-            categoriesModel->select();
-            dataMapper->setCurrentIndex(cIndex);
+//            dataMapper->setCurrentIndex(cIndex);
         }
+//        categoriesModel->select();
+        clear();
         setCodeFocus();
 
     }else{                                      // display the error message if there is any errors
@@ -147,6 +154,7 @@ void CategoryForm::setCodeFocus()
     ui->lineEditCode->styleSheet().append("background-color: rgb(95, 164, 209);");
 //    ui->lineEditCode->setFocus();
     ui->lineEditName->setFocus();
+    ui->lineEditName->selectAll();
 }
 
 void CategoryForm::clear()
@@ -231,7 +239,7 @@ void CategoryForm::on_pushButtonAdd_clicked()
     ui->pushButtonDelete->setEnabled(false);
 
     clear();
-    setCodeFocus();
+    ui->lineEditCode->setFocus();
 }
 
 void CategoryForm::on_pushButtonCancel_clicked()
