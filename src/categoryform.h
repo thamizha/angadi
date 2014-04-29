@@ -51,6 +51,7 @@ private slots:
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
+    bool uniqueValid(QString text, QString field);
 };
 
 #endif // CategoryForm_H

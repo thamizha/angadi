@@ -61,3 +61,23 @@ bool FormValidation::emailValid(QString value)
 //{
 //    return true;
 //}
+
+int FormValidation::uniqueValid(int id, QString value, QString table ,QString column)
+{
+    int size;
+    QSqlQuery query;
+    QString queryText;
+    queryText = "SELECT * FROM ";
+    queryText.append(table);
+    queryText.append(" WHERE ");
+    queryText.append(column);
+    queryText.append(" ='");
+    queryText.append(value);
+    queryText.append("' AND status = 'A' AND id !='");
+    queryText.append(id);
+    queryText.append("'");
+    query.exec(queryText);
+    size = query.size();
+    qDebug() << size;
+    return size;
+}

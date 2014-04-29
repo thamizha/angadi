@@ -51,9 +51,9 @@ CategoryForm::CategoryForm(QWidget *parent) :
 
     // Enter key to focus next control
     /*connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
-    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));	
+    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));*/
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
-    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));*/
+    connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
 
 CategoryForm::~CategoryForm()
@@ -177,8 +177,17 @@ bool CategoryForm::codeValid(){
     FormValidation formValidation;
     if(formValidation.intValid(ui->lineEditCode->text()))
     {
-        ui->labelCodeValid->hide();
-        status = true;
+        if(uniqueValid(ui->lineEditCode->text(),"code"))
+        {
+            ui->labelCodeValid->hide();
+            status = true;
+        }
+        else
+        {
+            ui->labelCodeValid->show();
+            status= false;
+        }
+
     }
     else
     {
@@ -194,8 +203,16 @@ bool CategoryForm::nameValid(){
     FormValidation formValidation;
     if(formValidation.textValid(ui->lineEditName->text(),20))
     {
-        status = true;
-        ui->labelNameValid->hide();
+        if(uniqueValid(ui->lineEditName->text(),"name"))
+        {
+            status = true;
+            ui->labelNameValid->hide();
+        }
+        else
+        {
+            status = false;
+            ui->labelNameValid->show();
+        }
     }
     else
     {
@@ -299,4 +316,34 @@ void CategoryForm::setModifiedDate(QDateTime modifiedDate)
 void CategoryForm::onNameChanged(QString str)
 {
     emit signalName(str);
+}
+
+bool CategoryForm::uniqueValid(QString text,QString field)
+{
+    bool status = false;
+    FormValidation formValidation;
+    int count = formValidation.uniqueValid(0,text,"categories",field);
+    if(ui->pushButtonSave->text()=="Save")
+    {
+        if(count == 0)
+        {
+            status = true;
+        }
+        else
+        {
+            status = false;
+        }
+    }
+    else if (ui->pushButtonSave->text()=="Update")
+    {
+        if(count > 0)
+        {
+            status = true;
+        }
+        else
+        {
+            status = false;
+        }
+    }
+    return status;
 }
