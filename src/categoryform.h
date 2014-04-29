@@ -1,7 +1,6 @@
 #ifndef CATEGORYFORM_H
 #define CATEGORYFORM_H
 
-#include "lssbar.h"
 #include "models/formvalidation.h"
 #include "models/categoriesmodel.h"
 
@@ -32,6 +31,7 @@ public:
 
 signals:
     void signalName(QString str);
+    void signalFromCategoryForm();
 
 public slots:
 
@@ -39,7 +39,6 @@ private:
     Ui::CategoryForm *ui;
     CategoriesModel *categoriesModel;
     QDataWidgetMapper *dataMapper;
-    Lssbar *lssbar;
     void clear();
     QDateTime m_modifiedDate;
 
@@ -51,6 +50,7 @@ private slots:
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
+    void setSignalFromCategoryForm();
 };
 
 #endif // CategoryForm_H

@@ -32,7 +32,7 @@ CategoriesModel::CategoriesModel(QObject *parent) :
     setHeaderData(fieldIndex("code"), Qt::Horizontal, QObject::tr("Code"));
     setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
     setFilter("status = 'A'");
-    setSort(fieldIndex("id"),Qt::AscendingOrder);
+    setSort(fieldIndex("name"),Qt::AscendingOrder);
     select();
 }
 

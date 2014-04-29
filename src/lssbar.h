@@ -51,6 +51,7 @@ signals:
 public slots:
     void setModel(QSqlTableModel *tableModel);
     void setFilterSelect(QModelIndex index,int update);
+    void setSearchFocus();
 
 private:
 

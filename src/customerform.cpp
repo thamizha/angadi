@@ -206,3 +206,8 @@ void CustomerForm::onNameChanged(QString str)
 {
     emit signalName(str);
 }
+
+void CustomerForm::hideValidationErrors()
+{
+
+}

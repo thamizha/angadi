@@ -153,3 +153,8 @@ void Lssbar::returnKeyPressed()
     QModelIndex index = tableView->currentIndex(); //get the current index of the table view
     emit signalEdit(index); //emit the signal edit so that the data is moved to the form
 }
+
+void Lssbar::setSearchFocus()
+{
+    this->lineEditSearch->setFocus();
+}
