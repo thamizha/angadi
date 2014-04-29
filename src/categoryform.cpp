@@ -206,6 +206,7 @@ bool CategoryForm::nameValid(){
     {
         if(uniqueValid(ui->lineEditName->text(),"name"))
         {
+            qDebug() << "true";
             status = true;
             ui->labelNameValid->hide();
         }
@@ -323,9 +324,9 @@ bool CategoryForm::uniqueValid(QString text,QString field)
 {
     bool status = false;
     FormValidation formValidation;
-    int count = formValidation.uniqueValid(0,text,"categories",field);
     if(ui->pushButtonSave->text()=="Save")
     {
+        int count = formValidation.uniqueValid(0,text,"categories",field);
         if(count == 0)
         {
             status = true;
@@ -337,7 +338,11 @@ bool CategoryForm::uniqueValid(QString text,QString field)
     }
     else if (ui->pushButtonSave->text()=="Update")
     {
-        if(count > 0)
+        QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
+        int id= record.value("id").toInt();
+        int count = formValidation.uniqueValid(id,text,"categories",field);
+        qDebug() << id;
+        if(count <= 1)
         {
             status = true;
         }

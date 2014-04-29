@@ -78,6 +78,7 @@ int FormValidation::uniqueValid(int id, QString value, QString table ,QString co
     queryText.append("'");
     query.exec(queryText);
     size = query.size();
-    qDebug() << size;
+    //qDebug() << queryText;
+    //qDebug() << size;
     return size;
 }
