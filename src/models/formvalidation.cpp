@@ -1,4 +1,5 @@
 #include "formvalidation.h"
+#include <QSqlError>
 
 FormValidation::FormValidation(QObject *parent) :
     QObject(parent)
@@ -62,7 +63,7 @@ bool FormValidation::emailValid(QString value)
 //    return true;
 //}
 
-int FormValidation::uniqueValid(int id, QString value, QString table ,QString column)
+int FormValidation::uniqueValid(QString id, QString value, QString table ,QString column)
 {
     int size;
     QSqlQuery query;
@@ -73,12 +74,9 @@ int FormValidation::uniqueValid(int id, QString value, QString table ,QString co
     queryText.append(column);
     queryText.append(" ='");
     queryText.append(value);
-    queryText.append("' AND status = 'A' AND id !='");
+    queryText.append("' AND status = 'A' AND id !=");
     queryText.append(id);
-    queryText.append("'");
     query.exec(queryText);
     size = query.size();
-    //qDebug() << queryText;
-    //qDebug() << size;
     return size;
 }

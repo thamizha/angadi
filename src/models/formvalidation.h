@@ -14,7 +14,7 @@ public:
     bool intValid(QString value);
     bool textValid(QString value,int len);
     bool emailValid(QString value);
-    int uniqueValid(int id, QString value, QString table, QString column);
+    int uniqueValid(QString id, QString value, QString table, QString column);
 //    bool dateValid(QString value);
 
 signals:
