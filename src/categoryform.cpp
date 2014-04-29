@@ -44,6 +44,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->labelNameValid->hide();
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+    connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -142,8 +143,9 @@ void CategoryForm::save()
 
 void CategoryForm::setCodeFocus()
 {
-    ui->lineEditCode->setFocus();
-
+    ui->lineEditCode->styleSheet().append("background-color: rgb(95, 164, 209);");
+//    ui->lineEditCode->setFocus();
+    ui->lineEditName->setFocus();
 }
 
 void CategoryForm::clear()
@@ -160,7 +162,9 @@ void CategoryForm::setModel(CategoriesModel *model){
     dataMapper->addMapping(ui->lineEditCode,categoriesModel->fieldIndex("code"));
     dataMapper->addMapping(ui->lineEditName,categoriesModel->fieldIndex("name"));
     dataMapper->addMapping(this,categoriesModel->fieldIndex("modifiedDate"), "modifiedDate");
-    dataMapper->toFirst();
+//    dataMapper->toFirst();
+
+    setCodeFocus();
 
     if(categoriesModel->rowCount() <= 0){
         this->ui->pushButtonSave->setEnabled(false);
@@ -290,4 +294,9 @@ QDateTime CategoryForm::modifiedDate() const
 void CategoryForm::setModifiedDate(QDateTime modifiedDate)
 {
     m_modifiedDate = modifiedDate;
+}
+
+void CategoryForm::onNameChanged(QString str)
+{
+    emit signalName(str);
 }

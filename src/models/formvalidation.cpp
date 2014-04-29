@@ -57,7 +57,7 @@ bool FormValidation::emailValid(QString value)
     return status;
 }
 
-bool FormValidation::dateValid(QString value)
-{
-    return true;
-}
+//bool FormValidation::dateValid(QString value)
+//{
+//    return true;
+//}

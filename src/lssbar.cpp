@@ -39,6 +39,8 @@ Lssbar::Lssbar(QWidget *parent) :
 
 void Lssbar::setupUi()
 {
+    indexOffset = 0;
+
     QVBoxLayout *vBox = new QVBoxLayout;
 
     // new lineedit intialization for search bar
@@ -96,7 +98,7 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
 void Lssbar::setFilterSelect(QModelIndex index, int update)
 {
     tableView->clearSelection();// clear the previous selection
-    indexOffset=update; //update the indexOffset value
+    indexOffset = update; //update the indexOffset value
     if (index.isValid()) {
         tableView->setColumnHidden(0, false); // to unhide the hidden primary key column
         tableView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows); //select the row given by index
@@ -115,6 +117,7 @@ void Lssbar::doubleClicked(QModelIndex index)
 //to emit the search signal for the typed value on the lineeditsearch
 void Lssbar::search(QString value)
 {
+//    qDebug() << value;
     emit signalSearch(value);
 }
 

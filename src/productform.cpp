@@ -34,10 +34,6 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
-#include <iostream>ssss
-
-
-
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProductForm)
@@ -65,6 +61,7 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->comboBoxUnit->addItem("Bundles");
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+    connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
 
     connect(ui->lineEditCode,SIGNAL(editingFinished()),SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),SLOT(nameValid()));
@@ -204,7 +201,8 @@ void ProductForm::clear(){
 }
 
 void ProductForm::setCodeFocus(){
-    ui->lineEditCode->setFocus();
+//    ui->lineEditCode->setFocus();
+    ui->lineEditName->setFocus();
 }
 
 
@@ -224,7 +222,8 @@ void ProductForm::setModel(ProductsModel *model){
     dataMapper->addMapping(ui->lineEditSalePrice,productsModel->fieldIndex("sprice"));
     dataMapper->addMapping(ui->lineEditWholeSalePrice,productsModel->fieldIndex("wholeSalePrice"));
 
-    dataMapper->toFirst();
+//    dataMapper->toFirst();
+    setCodeFocus();
 
     if(productsModel->rowCount() <= 0){
         this->ui->pushButtonSave->setEnabled(false);
@@ -350,7 +349,6 @@ void ProductForm::on_pushButtonCancel_clicked()
 
 void ProductForm::on_pushButtonDelete_clicked()
 {
-
     QSqlRecord record = productsModel->record(dataMapper->currentIndex());
 
     QDateTime datetime = QDateTime::currentDateTime();
@@ -369,7 +367,9 @@ void ProductForm::on_pushButtonDelete_clicked()
         qDebug() << "No";
     productsModel->select();
     dataMapper->toNext();
+}
 
-
-
+void ProductForm::onNameChanged(QString str)
+{
+    emit signalName(str);
 }

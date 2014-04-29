@@ -50,6 +50,9 @@ public:
     void setModel(ProductsModel *model);
     void setMapperIndex(QModelIndex index);
 
+signals:
+    void signalName(QString str);
+
 private:
     Ui::ProductForm *ui;
     ProductsModel *productsModel;
@@ -66,6 +69,7 @@ private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
+    void onNameChanged(QString str);
 };
 
 #endif // PRODUCTFORM_H

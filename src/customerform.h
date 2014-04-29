@@ -55,6 +55,7 @@ public:
     void setModifiedDate(QDateTime modifiedDate);
 
 signals:
+    void signalName(QString str);
 
 private:
     Ui::CustomerForm *ui;
@@ -68,6 +69,7 @@ private slots:
     void save();
     void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
+    void onNameChanged(QString str);
 };
 
 #endif // CUSTOMERFORM_H

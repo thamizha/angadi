@@ -31,6 +31,7 @@ public:
     void setModifiedDate(QDateTime modifiedDate);
 
 signals:
+    void signalName(QString str);
 
 public slots:
 
@@ -49,6 +50,7 @@ private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
+    void onNameChanged(QString str);
 };
 
 #endif // CategoryForm_H

@@ -88,7 +88,8 @@ void AngadiMainWindow::setupModels()
     // Create new categoriesproxy model to filter sort functionalities
     categoriesProxyModel = new QSortFilterProxyModel; //initialization
     categoriesProxyModel->setSourceModel(categoriesModel); //set the source model to categories model
-    categoriesProxyModel->setFilterKeyColumn(1); // set the filter to the code column
+    categoriesProxyModel->setFilterKeyColumn(2); // set the filter to the name column
+    categoriesProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
     productsModel = new ProductsModel;
 
@@ -97,7 +98,8 @@ void AngadiMainWindow::setupModels()
     // Create new customersproxy model to filter sort functionalities
     customersProxyModel = new QSortFilterProxyModel; //initialization
     customersProxyModel->setSourceModel(customersModel); //set the source model to categories model
-    customersProxyModel->setFilterKeyColumn(1); // set the filter to the code column
+    customersProxyModel->setFilterKeyColumn(2); // set the filter to the name column
+    customersProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 void AngadiMainWindow::exitApp()
@@ -138,12 +140,13 @@ void AngadiMainWindow::openCategoryTab()
         ui->mainTab->addTab(categoryForm, "Category");
         lssbar->lineEditSearch->setText("");
     }
+    connect(categoryForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
 
     categoryForm->setModel(categoriesModel);
     ui->mainTab->setCurrentWidget (categoryForm);
-    categoryForm->setCodeFocus();
+//    categoryForm->setCodeFocus();
 
-    lssbar->setModel(categoriesModel);
+//    lssbar->setModel(categoriesModel);
 }
 
 void AngadiMainWindow::openProductTab()
@@ -158,6 +161,8 @@ void AngadiMainWindow::openProductTab()
         ui->mainTab->addTab(productForm, "Product");
         lssbar->lineEditSearch->setText("");
     }
+    connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+
     productForm->setModel(productsModel);
     ui->mainTab->setCurrentWidget (productForm);
     productForm->setCodeFocus();
@@ -177,6 +182,7 @@ void AngadiMainWindow::openCustomerTab()
         ui->mainTab->addTab(customerForm, "Customer");
         lssbar->lineEditSearch->setText("");
     }
+    connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
 
     customerForm->setModel(customersModel);
     ui->mainTab->setCurrentWidget (customerForm);
@@ -284,8 +290,8 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 void AngadiMainWindow::search(QString value)
 {
     if(currentTab == "category"){
-        categoriesProxyModel->setFilterRegExp(QString("^%1").arg(value)); // set the filter on te categories proxy model
-        int indexOffset =0; //reset the indexOffset
+        categoriesProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te categories proxy model
+        int indexOffset = 0; //reset the indexOffset
         QModelIndex proxyIndex, index; //Initialization of new index
         proxyIndex = categoriesProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
         index = categoriesProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
@@ -295,7 +301,7 @@ void AngadiMainWindow::search(QString value)
         //productForm->search(value);
 
      }else if(currentTab == "customer"){
-        customersProxyModel->setFilterRegExp(QString("^%1").arg(value)); // set the filter on te customers proxy model
+        customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
         int indexOffset = 0; //reset the indexOffset
         QModelIndex proxyIndex, index; //Initialization of new index
         proxyIndex = customersProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
@@ -340,4 +346,9 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
         lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }
+}
+
+void AngadiMainWindow::setSearchTerm(QString str)
+{
+    lssbar->lineEditSearch->setText(str);
 }

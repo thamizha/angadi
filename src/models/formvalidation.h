@@ -13,7 +13,7 @@ public:
     bool intValid(QString value);
     bool textValid(QString value,int len);
     bool emailValid(QString value);
-    bool dateValid(QString value);
+//    bool dateValid(QString value);
 
 signals:
 

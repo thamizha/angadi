@@ -68,6 +68,7 @@ private slots:
     void doubleClicked(QModelIndex index);
     void search(QString value);
     void moveUpDown(int indexOffset);
+    void setSearchTerm(QString str);
 };
 
 #endif // ANGADIMAINWINDOW_H

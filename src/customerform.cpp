@@ -46,6 +46,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
     ui->comboBoxGender->addItem("Transgender");
 
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
+    connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -58,7 +59,8 @@ CustomerForm::~CustomerForm()
 
 void CustomerForm::setCodeFocus()
 {
-    ui->lineEditCode->setFocus();
+//    ui->lineEditCode->setFocus();
+    ui->lineEditName->setFocus();
 }
 
 void CustomerForm::save()
@@ -131,7 +133,13 @@ void CustomerForm::setModel(CustomersModel *model){
     dataMapper->addMapping(ui->lineEditWebsite,customersModel->fieldIndex("website"));
     dataMapper->addMapping(ui->textEditNote,customersModel->fieldIndex("notes"));
     dataMapper->addMapping(this,customersModel->fieldIndex("modifiedDate"), "modifiedDate");
-    dataMapper->toFirst();
+//    dataMapper->toFirst();
+
+    setCodeFocus();
+
+    if(customersModel->rowCount() <= 0){
+        this->ui->pushButtonSave->setEnabled(false);
+    }
 }
 
 void CustomerForm::clear()
@@ -192,4 +200,9 @@ QDateTime CustomerForm::modifiedDate()
 void CustomerForm::setModifiedDate(QDateTime modifiedDate)
 {
     m_modifiedDate = modifiedDate;
+}
+
+void CustomerForm::onNameChanged(QString str)
+{
+    emit signalName(str);
 }
