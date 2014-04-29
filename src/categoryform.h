@@ -44,6 +44,7 @@ private:
 
 private slots:
     void save();
+    void save1();
     bool codeValid();
     bool nameValid();
     void on_pushButtonAdd_clicked();
