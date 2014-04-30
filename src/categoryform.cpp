@@ -41,9 +41,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
     ui->pushButtonAdd->hide();
 //    ui->pushButtonSave->setText("Update");
 
-    ui->labelCodeValid->hide();
-    ui->labelNameValid->hide();
-
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
     connect(ui->lineEditName,SIGNAL(returnPressed()),this,SLOT(setSignalFromCategoryForm()));

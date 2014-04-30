@@ -32,6 +32,19 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QTextEdit" name="flashMsgUp">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -116,44 +129,6 @@
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="labelCodeValid">
-          <property name="geometry">
-           <rect>
-            <x>230</x>
-            <y>30</y>
-            <width>260</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Code may be empty or contains text or greater than 10000 or this code already exit</string>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="labelNameValid">
-          <property name="geometry">
-           <rect>
-            <x>230</x>
-            <y>70</y>
-            <width>261</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Name may be empty or exceeds 20 characters or this name already exit</string>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
          <widget class="QPushButton" name="pushButtonDelete">
           <property name="geometry">
            <rect>
@@ -226,6 +201,19 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="flashMsgDown">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

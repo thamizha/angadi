@@ -35,6 +35,19 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QTextEdit" name="flashMsgUp">
+         <property name="maximumSize">
+          <size>
+           <width>600</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -139,22 +152,6 @@
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="labelWholeSalePriceValid">
-          <property name="geometry">
-           <rect>
-            <x>335</x>
-            <y>220</y>
-            <width>261</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Whole Sale price may be empty or contains text</string>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
          <widget class="QComboBox" name="comboBoxUnit">
           <property name="geometry">
            <rect>
@@ -178,22 +175,6 @@
            <string>Manufacturer</string>
           </property>
          </widget>
-         <widget class="QLabel" name="labelNameValid">
-          <property name="geometry">
-           <rect>
-            <x>340</x>
-            <y>70</y>
-            <width>261</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Name may be empty or exceeds 20 characters limit or already exist</string>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
          <widget class="QPushButton" name="pushButtonSave">
           <property name="geometry">
            <rect>
@@ -210,38 +191,6 @@
            <bool>true</bool>
           </property>
          </widget>
-         <widget class="QLabel" name="labelCodeValid">
-          <property name="geometry">
-           <rect>
-            <x>336</x>
-            <y>40</y>
-            <width>260</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Code may be empty or contains text or greater than 10000 or already exist</string>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="labelMrpValid">
-          <property name="geometry">
-           <rect>
-            <x>334</x>
-            <y>160</y>
-            <width>240</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Mrp may be empty or contains text</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
@@ -256,19 +205,6 @@
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="labelSalePriceValid">
-          <property name="geometry">
-           <rect>
-            <x>334</x>
-            <y>190</y>
-            <width>261</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Sale Price may be empty or contains text</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditMrp">
@@ -396,6 +332,19 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="flashMsgBottom">
+         <property name="maximumSize">
+          <size>
+           <width>600</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

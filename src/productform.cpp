@@ -436,12 +436,12 @@ void ProductForm::onNameChanged(QString str)
 
 void ProductForm::hideValidationErrors()
 {
-    ui->labelCodeValid->hide();
+    /*ui->labelCodeValid->hide();
     ui->labelNameValid->hide();
     ui->labelCodeValid->hide();
     ui->labelMrpValid->hide();
     ui->labelSalePriceValid->hide();
-    ui->labelWholeSalePriceValid->hide();
+    ui->labelWholeSalePriceValid->hide();*/
 }
 
 void ProductForm::setSignalFromProductForm()

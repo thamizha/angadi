@@ -41,6 +41,12 @@
 	border-style: outset;
     border-width: 2px;
     border-color: red;
+}
+
+*[vError=&quot;true&quot;]
+{
+	position: absolute;
+     z-index:998;
 }</string>
       </property>
       <property name="tabShape">
