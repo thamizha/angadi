@@ -207,6 +207,7 @@ void ProductForm::clear(){
     ui->lineEditWholeSalePrice->setProperty("validationError",false);
     ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
     ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+    uninstallEventFilter();
 }
 
 void ProductForm::setCodeFocus(){
@@ -313,13 +314,14 @@ bool ProductForm::mrpValid(){
             ui->lineEditMrp->setStyleSheet(styleSheet());
             status = true;
         }else{
-            ui->flashMsgUp->setText("Mrp field is empty. You have to fix some price for this Product.");
+            ui->flashMsgUp->setText("Mrp is not a number. You have to fix some price for this Product in number.");
             ui->lineEditMrp->setProperty("validationError",true);
             ui->lineEditMrp->setProperty("validationSuccess",false);
             ui->lineEditMrp->setStyleSheet(styleSheet());
             status = false;
         }
     }else{
+        ui->flashMsgUp->setText("Mrp field is empty. You have to fix some price for this Product.");
         ui->lineEditMrp->setProperty("validationError",true);
         ui->lineEditMrp->setProperty("validationSuccess",false);
         ui->lineEditMrp->setStyleSheet(styleSheet());
@@ -346,7 +348,8 @@ bool ProductForm::salePriceValid(){
                 ui->lineEditSalePrice->setStyleSheet(styleSheet());
                 status = false;
             }
-        }else{
+        }
+    }else{
             ui->flashMsgUp->setText("Sale Price is empty. You have to fix some price for this Product.");
             ui->lineEditSalePrice->setProperty("validationError",true);
             ui->lineEditSalePrice->setProperty("validationSuccess",false);
@@ -354,7 +357,6 @@ bool ProductForm::salePriceValid(){
             status = false;
         }
 
-    }
 
     return status;
 }
@@ -495,4 +497,14 @@ void ProductForm::setFieldMaxLength()
     ui->lineEditWholeSalePrice->setProperty("validationError",false);
     ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
     ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+}
+
+void ProductForm::uninstallEventFilter()
+{
+    ui->lineEditCode->removeEventFilter(this);
+    ui->lineEditMrp->removeEventFilter(this);
+    ui->lineEditName->removeEventFilter(this);
+    ui->lineEditSalePrice->removeEventFilter(this);
+    ui->lineEditWholeSalePrice->removeEventFilter(this);
+    ui->flashMsgUp->clear();
 }

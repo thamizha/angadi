@@ -60,6 +60,7 @@ private slots:
     //void unsetStyles();
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();
+    void uninstallEventFilter();
 };
 
 #endif // CategoryForm_H

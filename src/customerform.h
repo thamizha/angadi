@@ -81,6 +81,7 @@ private slots:
     bool on_lineEditCode_editingFinished();
     bool on_lineEditName_editingFinished();
     bool on_lineEditEmail_editingFinished();
+    void uninstallEventFilter();
 };
 
 #endif // CUSTOMERFORM_H

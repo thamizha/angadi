@@ -153,6 +153,7 @@ void CustomerForm::clear()
         widget->clear();
     }
     ui->textEditNote->clear();
+    uninstallEventFilter();
 }
 
 void CustomerForm::setMapperIndex(QModelIndex index)
@@ -360,4 +361,12 @@ bool CustomerForm::on_lineEditEmail_editingFinished()
         status = false;
     }
     return status;
+}
+
+void CustomerForm::uninstallEventFilter()
+{
+    ui->lineEditCode->removeEventFilter(this);
+    ui->lineEditName->removeEventFilter(this);
+    ui->lineEditEmail->removeEventFilter(this);
+    ui->flashMsgUp->clear();
 }

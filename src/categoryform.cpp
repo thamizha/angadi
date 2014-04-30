@@ -140,7 +140,7 @@ void CategoryForm::setCodeFocus()
 {
 //    ui->lineEditCode->styleSheet().append("background-color: rgb(95, 164, 209);");
     ui->lineEditCode->setFocus();
-    ui->lineEditCode->selectAll();
+    //ui->lineEditCode->selectAll();
 }
 
 void CategoryForm::clear()
@@ -364,4 +364,11 @@ bool CategoryForm::eventFilter(QObject *obj, QEvent *event)
         return false;
     }
     return CategoryForm::eventFilter(obj, event);
+}
+
+void CategoryForm::uninstallEventFilter()
+{
+    ui->lineEditCode->removeEventFilter(this);
+    ui->lineEditName->removeEventFilter(this);
+    ui->flashMsgUp->clear();
 }
