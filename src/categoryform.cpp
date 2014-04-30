@@ -85,14 +85,14 @@ void CategoryForm::save()
     if(!CategoryForm::codeValid())
     {
         validError=1;
-        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
+        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000 or this code already exit");
     }
 
     // validate name field
     if(!CategoryForm::nameValid())
     {
         validError=1;
-        errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters");
+        errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters or this name already exit");
     }
 
     // save the form if there is no errors
@@ -271,7 +271,7 @@ void CategoryForm::on_pushButtonCancel_clicked()
 //        dataMapper->toLast();
 
     }else if(this->ui->pushButtonSave->text() == "Update"){
-//        dataMapper->setCurrentIndex(dataMapper->currentIndex());
+        dataMapper->setCurrentIndex(dataMapper->currentIndex());
 
     }
     setCodeFocus();

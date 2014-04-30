@@ -29,9 +29,10 @@
 #include <QWidget>
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
-
+#include <QErrorMessage>
 #include <QDataWidgetMapper>
 #include "lssbar.h"
+#include <models/formvalidation.h>
 
 namespace Ui {
 class ProductForm;
@@ -73,7 +74,7 @@ private slots:
     void onNameChanged(QString str);
     void hideValidationErrors();
     void setSignalFromProductForm();
-
+    bool uniqueValid(QString text, QString field);
 };
 
 #endif // PRODUCTFORM_H

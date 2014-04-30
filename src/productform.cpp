@@ -95,14 +95,14 @@ void ProductForm::save()
     if(!ProductForm::codeValid())
     {
         valid =1;
-        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000");
+        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000 or this code already exist");
     }
 
     // Validate Name field
     if(!ProductForm::nameValid())
     {
         valid = 1;
-        errors.append("\nThe Name field may be empty or exceed the 20 characters limit");
+        errors.append("\nThe Name field may be empty or exceed the 20 characters limit or this name already exist");
     }
 
     //Validate Mrp field
@@ -234,12 +234,26 @@ bool ProductForm::codeValid(){
     bool status = false;
     if(formValidation.intValid(ui->lineEditCode->text()))
     {
-        ui->labelCodeValid->hide();
-        status = true;
+        if (uniqueValid(ui->lineEditCode->text(),"code"))
+        {
+            ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->hide();
+            status = true;
+        }
+        else
+        {
+            ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->show();
+            status = false;
+        }
     }
     else
     {
         ui->labelCodeValid->show();
+        ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setStyleSheet(styleSheet());
         status = false;
     }
     return status;
@@ -251,12 +265,26 @@ bool ProductForm::nameValid(){
     bool status= false;
     if(formValidation.textValid(ui->lineEditName->text(),20))
     {
-        ui->labelNameValid->hide();
-        status= true;
+        if(uniqueValid(ui->lineEditName->text(),"name"))
+        {
+            ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setStyleSheet(styleSheet());
+            //ui->labelNameValid->hide();
+            status= true;
+        }
+        else
+        {
+            ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setStyleSheet(styleSheet());
+            //ui->labelNameValid->show();
+            status= false;
+        }
     }
     else
     {
-        ui->labelNameValid->show();
+        ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setStyleSheet(styleSheet());
+        //ui->labelNameValid->show();
         status= false;
     }
     return status;
@@ -268,12 +296,16 @@ bool ProductForm::mrpValid(){
     bool status = false;
     if(formValidation.intValid(ui->lineEditMrp->text()))
     {
-        ui->labelMrpValid->hide();
+        ui->lineEditMrp->setProperty("validationError",false);
+        ui->lineEditMrp->setStyleSheet(styleSheet());
+        //ui->labelMrpValid->hide();
         status = true;
     }
     else
     {
-        ui->labelMrpValid->show();
+        ui->lineEditMrp->setProperty("validationError",true);
+        ui->lineEditMrp->setStyleSheet(styleSheet());
+        //ui->labelMrpValid->show();
         status = false;
     }
     return status;
@@ -285,12 +317,16 @@ bool ProductForm::salePriceValid(){
     bool status = false;
     if(formValidation.intValid(ui->lineEditSalePrice->text()))
     {
-        ui->labelSalePriceValid->hide();
+        ui->lineEditSalePrice->setProperty("validationError",false);
+        ui->lineEditSalePrice->setStyleSheet(styleSheet());
+        //ui->labelSalePriceValid->hide();
         status = true;
     }
     else
     {
-        ui->labelSalePriceValid->show();
+        ui->lineEditSalePrice->setProperty("validationError",true);
+        ui->lineEditSalePrice->setStyleSheet(styleSheet());
+        //ui->labelSalePriceValid->show();
         status = false;
     }
     return status;
@@ -300,14 +336,18 @@ bool ProductForm::salePriceValid(){
 bool ProductForm::wholeSalePriceValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditSalePrice->text()))
+    if(formValidation.intValid(ui->lineEditWholeSalePrice->text()))
     {
-        ui->labelWholeSalePriceValid->hide();
+        ui->lineEditWholeSalePrice->setProperty("validationError",false);
+        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+        //ui->labelWholeSalePriceValid->hide();
         status = true;
     }
     else
     {
-        ui->labelWholeSalePriceValid->show();
+        ui->lineEditWholeSalePrice->setProperty("validationError",true);
+        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+        //ui->labelWholeSalePriceValid->show();
         status = false;
     }
     return status;
@@ -388,4 +428,29 @@ void ProductForm::hideValidationErrors()
 void ProductForm::setSignalFromProductForm()
 {
     emit signalFromProductForm();
+}
+
+bool ProductForm::uniqueValid(QString text, QString field)
+{
+    bool status = false;
+    FormValidation formValidation;
+    QString id;
+    QSqlRecord cRecord;
+    if(ui->pushButtonSave->text()=="Save")
+        id = "0";
+    else
+    {
+        cRecord=productsModel->record(dataMapper->currentIndex());
+        id = cRecord.value("id").toString();
+    }
+    int count = formValidation.uniqueValid(id,text,"products",field);
+    if(count <= 0)
+    {
+        status = true;
+    }
+    else
+    {
+        status = false;
+    }
+    return status;
 }

@@ -120,13 +120,13 @@
           <property name="geometry">
            <rect>
             <x>230</x>
-            <y>40</y>
+            <y>30</y>
             <width>260</width>
-            <height>31</height>
+            <height>41</height>
            </rect>
           </property>
           <property name="text">
-           <string>Code may be empty or contains text or greater than 10000</string>
+           <string>Code may be empty or contains text or greater than 10000 or this code already exit</string>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -145,7 +145,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Name may be empty or exceeds 20 characters</string>
+           <string>Name may be empty or exceeds 20 characters or this name already exit</string>
           </property>
           <property name="scaledContents">
            <bool>true</bool>

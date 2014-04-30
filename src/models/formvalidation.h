@@ -12,7 +12,9 @@ class FormValidation : public QObject
 public:
     explicit FormValidation(QObject *parent = 0);
     bool intValid(QString value);
+    bool notNullIntValid(QString value);
     bool textValid(QString value,int len);
+    bool notNullTextValid(QString value, int len);
     bool emailValid(QString value);
     int uniqueValid(QString id, QString value, QString table, QString column);
 //    bool dateValid(QString value);
