@@ -80,6 +80,7 @@ private slots:
     bool eventFilter(QObject *obj, QEvent *event);
     bool on_lineEditCode_editingFinished();
     bool on_lineEditName_editingFinished();
+    bool on_lineEditEmail_editingFinished();
 };
 
 #endif // CUSTOMERFORM_H

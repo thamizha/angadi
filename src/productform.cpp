@@ -378,6 +378,7 @@ bool ProductForm::wholeSalePriceValid(){
                 status = false;
             }
         }else{
+            ui->flashMsgUp->setText("Whole Sale Price is empty. Please fix the price in number.");
             ui->lineEditWholeSalePrice->setProperty("validationError",true);
             ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
             ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());

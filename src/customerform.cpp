@@ -327,5 +327,37 @@ bool CustomerForm::eventFilter(QObject *obj, QEvent *event)
             CustomerForm::on_lineEditName_editingFinished();
         return false;
     }
+    else if (obj == ui->lineEditEmail)
+    {
+        if (event->type() == QEvent::FocusIn)
+            CustomerForm::on_lineEditEmail_editingFinished();
+        return false;
+    }
     return CustomerForm::eventFilter(obj, event);
+}
+
+bool CustomerForm::on_lineEditEmail_editingFinished()
+{
+    bool status = false;
+    ui->lineEditEmail->installEventFilter(this);
+    if(ui->lineEditEmail->text() > 0){
+        if(formValidation->emailValid(ui->lineEditEmail->text())){
+            ui->lineEditEmail->setProperty("validationError",false);
+            ui->lineEditEmail->setProperty("validationSuccess",true);
+            ui->lineEditEmail->setStyleSheet(styleSheet());
+            status = true;
+        }else{
+            ui->flashMsgUp->setText("This is not a valid Email Address");
+            ui->lineEditEmail->setProperty("validationError",true);
+            ui->lineEditEmail->setProperty("validationSuccess",false);
+            ui->lineEditEmail->setStyleSheet(styleSheet());
+            status = false;
+        }
+    }else{
+        ui->lineEditEmail->setProperty("validationError",false);
+        ui->lineEditEmail->setProperty("validationSuccess",true);
+        ui->lineEditEmail->setStyleSheet(styleSheet());
+        status = false;
+    }
+    return status;
 }
