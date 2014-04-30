@@ -57,7 +57,7 @@ private slots:
     bool uniqueValid(QString text, QString field);
     void setSignalFromCategoryForm();
     void setFieldMaxLength();
-    void unsetStyles();
+    //void unsetStyles();
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();
 };
