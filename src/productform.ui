@@ -194,14 +194,14 @@
          <widget class="QLabel" name="labelNameValid">
           <property name="geometry">
            <rect>
-            <x>336</x>
+            <x>340</x>
             <y>70</y>
             <width>261</width>
             <height>31</height>
            </rect>
           </property>
           <property name="text">
-           <string>Name may be empty or exceeds 20 characters limit</string>
+           <string>Name may be empty or exceeds 20 characters limit or already exist</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -233,7 +233,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Code may be empty or contains text or greater than 10000</string>
+           <string>Code may be empty or contains text or greater than 10000 or already exist</string>
           </property>
           <property name="scaledContents">
            <bool>true</bool>

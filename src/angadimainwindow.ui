@@ -32,6 +32,14 @@
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
+      <property name="styleSheet">
+       <string notr="true">*[validationError=&quot;true&quot;] 
+{ 
+	border-style: outset;
+    border-width: 2px;
+    border-color: red;
+}</string>
+      </property>
       <property name="tabShape">
        <enum>QTabWidget::Rounded</enum>
       </property>
