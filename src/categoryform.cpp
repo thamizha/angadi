@@ -49,14 +49,10 @@ CategoryForm::CategoryForm(QWidget *parent) :
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
-    // Enter key to focus next control
-    /*connect(ui->lineEditCode,SIGNAL(returnPressed()),ui->lineEditName,SLOT(setFocus()));
-    connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));*/
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 
     setFieldMaxLength();
-    unsetStyles();
 }
 
 CategoryForm::~CategoryForm()
@@ -111,16 +107,7 @@ void CategoryForm::save()
             QDateTime datetime = QDateTime::currentDateTime();
             categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
             categoriesModel->submit();
-
-//            this->ui->pushButtonSave->setEnabled(true);
-//            this->ui->pushButtonSave->setText("Update");
-
-//            dataMapper->toLast();
-
-//        }else if(this->ui->pushButtonSave->text() == "Update"){
         }else{
-//            int cIndex = dataMapper->currentIndex();
-
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
 
@@ -129,9 +116,8 @@ void CategoryForm::save()
             {
                 categoriesModel->submit();
             }
-//            dataMapper->setCurrentIndex(cIndex);
         }
-//        categoriesModel->select();
+        resetDataMapper();
         clear();
         setCodeFocus();
 
@@ -161,6 +147,9 @@ void CategoryForm::clear()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->clear();
+        widget->setProperty("validationError",false);
+        widget->setProperty("validationSuccess",false);
+        widget->setStyleSheet(styleSheet());
     }
 }
 
@@ -175,9 +164,9 @@ void CategoryForm::setModel(CategoriesModel *model){
 
     setCodeFocus();
 
-    if(categoriesModel->rowCount() <= 0){
-        this->ui->pushButtonSave->setEnabled(false);
-    }
+//    if(categoriesModel->rowCount() <= 0){
+//        this->ui->pushButtonSave->setEnabled(false);
+//    }
 }
 
 // function to validate code field
@@ -259,7 +248,7 @@ bool CategoryForm::uniqueValid(QString text,QString field)
 
 void CategoryForm::setMapperIndex(QModelIndex index)
 {
-    this->ui->pushButtonSave->setText("Update");
+//    this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
 }
 
@@ -287,21 +276,8 @@ void CategoryForm::on_pushButtonAdd_clicked()
 
 void CategoryForm::on_pushButtonCancel_clicked()
 {
-//    ui->pushButtonAdd->setEnabled(true);
-//    ui->pushButtonDelete->setEnabled(true);
-
-    if(this->ui->pushButtonSave->text() == "Save"){
-        clear();
-
-//        this->ui->pushButtonSave->setText("Update");
-//        dataMapper->toLast();
-
-    }else if(this->ui->pushButtonSave->text() == "Update"){
-        dataMapper->setCurrentIndex(dataMapper->currentIndex());
-
-    }
+    resetDataMapper();
     clear();
-    unsetStyles();
     setCodeFocus();
 }
 
@@ -366,13 +342,11 @@ void CategoryForm::setFieldMaxLength()
     ui->lineEditName->setMaxLength(200);
 }
 
-void CategoryForm::unsetStyles()
+void CategoryForm::resetDataMapper()
 {
-    ui->lineEditCode->setProperty("validationError",false);
-    ui->lineEditCode->setStyleSheet(styleSheet());
-
-    ui->lineEditName->setProperty("validationError",false);
-    ui->lineEditName->setStyleSheet(styleSheet());
+    dataMapper = new QDataWidgetMapper(this);
+    dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    setModel(categoriesModel);
 }
 
 bool CategoryForm::eventFilter(QObject *obj, QEvent *event)

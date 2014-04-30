@@ -151,6 +151,7 @@ void AngadiMainWindow::openCategoryTab()
     connect(categoryForm,SIGNAL(signalFromCategoryForm()),lssbar,SLOT(setSearchFocus()));
 
     categoryForm->setModel(categoriesModel);
+    categoryForm->clear();
     ui->mainTab->setCurrentWidget (categoryForm);
 //    categoryForm->setCodeFocus();
 
@@ -173,7 +174,10 @@ void AngadiMainWindow::openProductTab()
     connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
 
     productForm->setModel(productsModel);
+    productForm->clear();
     ui->mainTab->setCurrentWidget (productForm);
+    productForm->setFieldMaxLength();
+
 //    productForm->setCodeFocus();
 
 //    lssbar->setModel(productsModel);
@@ -195,6 +199,7 @@ void AngadiMainWindow::openCustomerTab()
     connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
 
     customerForm->setModel(customersModel);
+    customerForm->clear();
     ui->mainTab->setCurrentWidget (customerForm);
 //    customerForm->setCodeFocus();
 
@@ -270,18 +275,21 @@ void AngadiMainWindow::onTabChanged(int index){
     showRightDock(false);
     if(tabName == "category"){
         categoryForm->setModel(categoriesModel);
+        categoryForm->clear();
         lssbar->setModel(categoriesModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(categoryTabSearchTerm);
 
     }else if(tabName == "product"){
         productForm->setModel(productsModel);
+        productForm->clear();
         lssbar->setModel(productsModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(productTabSearchTerm);
 
     }else if(tabName == "customer"){
         customerForm->setModel(customersModel);
+        customerForm->clear();
         lssbar->setModel(customersModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);

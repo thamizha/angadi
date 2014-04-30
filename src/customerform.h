@@ -56,6 +56,7 @@ public:
     void search(QString value);
     QDateTime modifiedDate();
     void setModifiedDate(QDateTime modifiedDate);
+    void clear();
 
 signals:
     void signalName(QString str);
@@ -66,7 +67,6 @@ private:
     CustomersModel *customersModel;
     QDataWidgetMapper *dataMapper;
     Lssbar *lssbar;
-    void clear();
     QDateTime m_modifiedDate;
 
 private slots:

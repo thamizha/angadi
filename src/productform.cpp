@@ -21,6 +21,7 @@
  *
  * Authors :
  * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
+ * Selvam <vjpselvam@gmail.com>
  *****************************************************************************/
 
 #include "productform.h"
@@ -41,14 +42,11 @@ ProductForm::ProductForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->pushButtonSave->setText("Update");
-    ui->pushButtonCancel->setEnabled(false);
+    formValidation = new FormValidation;
 
     // Hide the errors labels at the start
     ui->labelManufacturer->hide();
     ui->comboBoxManufacturer->hide();
-
-    hideValidationErrors();
 
     ui->comboBoxManufacturer->addItem("Manufacturer 1");
     ui->comboBoxManufacturer->addItem("Manufacturer 2");
@@ -71,6 +69,8 @@ ProductForm::ProductForm(QWidget *parent) :
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setItemDelegate(new QSqlRelationalDelegate(this));
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+
+    setFieldMaxLength();
 }
 
 ProductForm::~ProductForm()
@@ -131,7 +131,7 @@ void ProductForm::save()
     if(valid==0){
         bool status;
 
-        if(this->ui->pushButtonSave->text() == "Save"){
+        if(dataMapper->currentIndex() < 0){
             int row = productsModel->rowCount();
             productsModel->insertRows(row, 1);
 
@@ -159,21 +159,25 @@ void ProductForm::save()
 
             productsModel->submitAll();
 
-            this->ui->pushButtonSave->setEnabled(true);
-            this->ui->pushButtonDelete->setEnabled(true);
-            this->ui->pushButtonSave->setText("Update");
+//            this->ui->pushButtonSave->setEnabled(true);
+//            this->ui->pushButtonDelete->setEnabled(true);
+//            this->ui->pushButtonSave->setText("Update");
 
-        }else if(this->ui->pushButtonSave->text() == "Update"){
+        }else{
+            QDateTime datetime = QDateTime::currentDateTime();
+            this->setProperty("modifiedDate", datetime);
+
             status = dataMapper->submit();
 
             if(status == true){
                 productsModel->submitAll();
             }
         }
-        productsModel->select();
-        dataMapper->toLast();
-        //ui->pushButtonAdd->setEnabled(true);
-        ui->pushButtonCancel->setEnabled(false);
+//        productsModel->select();
+//        dataMapper->toLast();
+//        //ui->pushButtonAdd->setEnabled(true);
+//        ui->pushButtonCancel->setEnabled(false);
+        clear();
         setCodeFocus();
     }
     // display the message box if there is any errors
@@ -196,14 +200,19 @@ void ProductForm::save()
 void ProductForm::clear(){
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->clear();
+        widget->setProperty("validationError",false);
+        widget->setProperty("validationSuccess",false);
+        widget->setStyleSheet(styleSheet());
     }
+    ui->lineEditWholeSalePrice->setProperty("validationError",false);
+    ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
+    ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
 }
 
 void ProductForm::setCodeFocus(){
-//    ui->lineEditCode->setFocus();
-    ui->lineEditName->setFocus();
+    ui->lineEditCode->setFocus();
+    ui->lineEditCode->selectAll();
 }
-
 
 void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
@@ -235,19 +244,18 @@ bool ProductForm::codeValid(){
     ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text()!=0)
     {
-        if (uniqueValid(ui->lineEditCode->text(),"code"))
-        {
+        if (uniqueValid(ui->lineEditCode->text(),"code")){
             ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setProperty("validationSuccess",true);
             ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->hide();
             status = true;
         }
         else
         {
             ui->flashMsgUp->setText("This Product Code has been already taken. Please select some other code for this Product.");
             ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->show();
             status = false;
         }
     }
@@ -256,6 +264,7 @@ bool ProductForm::codeValid(){
         ui->flashMsgUp->setText("Product Code is empty. Please select any code for this Product.");
         //ui->labelCodeValid->show();
         ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
         status = false;
     }
@@ -266,21 +275,19 @@ bool ProductForm::codeValid(){
 bool ProductForm::nameValid(){
     bool status= false;
     ui->lineEditName->installEventFilter(this);
-    if(ui->lineEditName->text()!=0)
-    {
-        if(uniqueValid(ui->lineEditName->text(),"name"))
-        {
+    if(ui->lineEditName->text().length() > 0){
+        if(uniqueValid(ui->lineEditName->text(),"name")){
             ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setProperty("validationSuccess",true);
             ui->lineEditName->setStyleSheet(styleSheet());
-            //ui->labelNameValid->hide();
             status= true;
         }
         else
         {
             ui->flashMsgUp->setText("This Product Name has been already taken. Please select some other name for this Product.");
             ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
-            //ui->labelNameValid->show();
             status= false;
         }
     }
@@ -288,67 +295,65 @@ bool ProductForm::nameValid(){
     {
         ui->flashMsgUp->setText("Product Name is empty. Please select any name for this Product.");
         ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setProperty("validationSuccess",false);
         ui->lineEditName->setStyleSheet(styleSheet());
-        //ui->labelNameValid->show();
         status= false;
     }
     return status;
 }
 
 //validate the mrp field
-bool ProductForm::mrpValid()
-{
-    FormValidation formValidation;
+bool ProductForm::mrpValid(){
     bool status = false;
     ui->lineEditMrp->installEventFilter(this);
-    if(formValidation.isDouble(ui->lineEditMrp->text()))
-    {
-        ui->lineEditMrp->setProperty("validationError",false);
-        ui->lineEditMrp->setStyleSheet(styleSheet());
-        //ui->labelMrpValid->hide();
-        status = true;
-    }
-    else
-    {
-        ui->flashMsgUp->setText("Mrp field is empty. You have to fix some price for this Product.");
+    if(ui->lineEditMrp->text().length() > 0){
+        if(formValidation->isDouble(ui->lineEditMrp->text())){
+            ui->lineEditMrp->setProperty("validationError",false);
+            ui->lineEditMrp->setProperty("validationSuccess",true);
+            ui->lineEditMrp->setStyleSheet(styleSheet());
+            status = true;
+        }else{
+            ui->flashMsgUp->setText("Mrp field is empty. You have to fix some price for this Product.");
+            ui->lineEditMrp->setProperty("validationError",true);
+            ui->lineEditMrp->setProperty("validationSuccess",false);
+            ui->lineEditMrp->setStyleSheet(styleSheet());
+            status = false;
+        }
+    }else{
         ui->lineEditMrp->setProperty("validationError",true);
+        ui->lineEditMrp->setProperty("validationSuccess",false);
         ui->lineEditMrp->setStyleSheet(styleSheet());
-        //ui->labelMrpValid->show();
         status = false;
     }
     return status;
 }
 
 //validate the sale price field
-bool ProductForm::salePriceValid()
-{
-    FormValidation formValidation;
+bool ProductForm::salePriceValid(){
     bool status = false;
     ui->lineEditSalePrice->installEventFilter(this);
-    if(ui->lineEditSalePrice->text().length() != 0){
-        if(formValidation.isDouble(ui->lineEditSalePrice->text()))
-        {
-            ui->lineEditSalePrice->setProperty("validationError",false);
-            ui->lineEditSalePrice->setStyleSheet(styleSheet());
-            //ui->labelSalePriceValid->hide();
-            status = true;
-        }
-        else
-        {
-            ui->flashMsgUp->setText("Sale Price is not a number. You have to fix price in number.");
+    if(ui->lineEditSalePrice->text().length() > 0){
+        if(formValidation->isDouble(ui->lineEditSalePrice->text())){
+            if(ui->lineEditSalePrice->text().toDouble() <= ui->lineEditMrp->text().toDouble()){
+                ui->lineEditSalePrice->setProperty("validationError",false);
+                ui->lineEditSalePrice->setProperty("validationSuccess",true);
+                ui->lineEditSalePrice->setStyleSheet(styleSheet());
+                status = true;
+            }else{
+                ui->flashMsgUp->setText("Sale Price is not a number. You have to fix price in number.");
+                ui->lineEditSalePrice->setProperty("validationError",true);
+                ui->lineEditSalePrice->setProperty("validationSuccess",false);
+                ui->lineEditSalePrice->setStyleSheet(styleSheet());
+                status = false;
+            }
+        }else{
+            ui->flashMsgUp->setText("Sale Price is empty. You have to fix some price for this Product.");
             ui->lineEditSalePrice->setProperty("validationError",true);
+            ui->lineEditSalePrice->setProperty("validationSuccess",false);
             ui->lineEditSalePrice->setStyleSheet(styleSheet());
-            //ui->labelSalePriceValid->show();
             status = false;
         }
-    }
-    else
-    {
-        ui->flashMsgUp->setText("Sale Price is empty. You have to fix some price for this Product.");
-        ui->lineEditSalePrice->setProperty("validationError",true);
-        ui->lineEditSalePrice->setStyleSheet(styleSheet());
-        //ui->labelSalePriceValid->show();
-        status = false;
+
     }
 
     return status;
@@ -356,32 +361,28 @@ bool ProductForm::salePriceValid()
 
 //validate the whole sale price field
 bool ProductForm::wholeSalePriceValid(){
-    FormValidation formValidation;
     bool status = false;
     ui->lineEditWholeSalePrice->installEventFilter(this);
-    if(ui->lineEditWholeSalePrice->text()!=0)
-    {
-        if(formValidation.isDouble(ui->lineEditWholeSalePrice->text()))
-        {
-            ui->lineEditWholeSalePrice->setProperty("validationError",false);
-            ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
-            //ui->labelWholeSalePriceValid->hide();
-            status = true;
-        }
-        else
-        {
-            ui->flashMsgUp->setText("Whole Sale Price is not a number. Please fix the price in number.");
+    if(ui->lineEditWholeSalePrice->text() > 0){
+        if(formValidation->isDouble(ui->lineEditWholeSalePrice->text())){
+            if(ui->lineEditWholeSalePrice->text().toDouble() <= ui->lineEditSalePrice->text().toDouble()){
+                ui->lineEditWholeSalePrice->setProperty("validationError",false);
+                ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
+                ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+                status = true;
+            }else{
+                ui->flashMsgUp->setText("Whole Sale Price is not a number. Please fix the price in number.");
+                ui->lineEditWholeSalePrice->setProperty("validationError",true);
+                ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
+                ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+                status = false;
+            }
+        }else{
             ui->lineEditWholeSalePrice->setProperty("validationError",true);
+            ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
             ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
-            //ui->labelWholeSalePriceValid->show();
             status = false;
         }
-    }
-    else{
-        ui->lineEditWholeSalePrice->setProperty("validationError",false);
-        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
-        //ui->labelWholeSalePriceValid->hide();
-        status = true;
     }
     return status;
 }
@@ -392,43 +393,9 @@ void ProductForm::setMapperIndex(QModelIndex index)
     dataMapper->setCurrentIndex(index.row());
 }
 
-
-/*void ProductForm::on_pushButtonAdd_clicked()
-{
-    ui->pushButtonSave->setText("Save");
-    ui->pushButtonSave->setEnabled(true);
-    ui->pushButtonAdd->setEnabled(false);
-    ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonCancel->setEnabled(true);
-    clear();
-    setCodeFocus();
-}*/
-
 void ProductForm::on_pushButtonCancel_clicked()
 {
-    hideValidationErrors();
-
-    //ui->pushButtonAdd->setEnabled(true);
-    ui->pushButtonCancel->setEnabled(false);
-    //ui->pushButtonSave->setText("Update");
-    ui->pushButtonDelete->setEnabled(true);
-
-//    dataMapper->toLast();
-
-    if(productsModel->rowCount() <= 0){
-        ui->pushButtonSave->setEnabled(false);
-        ui->pushButtonDelete->setEnabled(false);
-    }
-    if(this->ui->pushButtonSave->text() == "Save"){
-        clear();
-
-//        this->ui->pushButtonSave->setText("Update");
-//        dataMapper->toLast();
-
-    }else if(this->ui->pushButtonSave->text() == "Update"){
-        dataMapper->setCurrentIndex(dataMapper->currentIndex());
-
-    }
+    clear();
     setCodeFocus();
 }
 
@@ -459,16 +426,6 @@ void ProductForm::onNameChanged(QString str)
     emit signalName(str);
 }
 
-void ProductForm::hideValidationErrors()
-{
-    /*ui->labelCodeValid->hide();
-    ui->labelNameValid->hide();
-    ui->labelCodeValid->hide();
-    ui->labelMrpValid->hide();
-    ui->labelSalePriceValid->hide();
-    ui->labelWholeSalePriceValid->hide();*/
-}
-
 void ProductForm::setSignalFromProductForm()
 {
     emit signalFromProductForm();
@@ -477,23 +434,18 @@ void ProductForm::setSignalFromProductForm()
 bool ProductForm::uniqueValid(QString text, QString field)
 {
     bool status = false;
-    FormValidation formValidation;
     QString id;
     QSqlRecord cRecord;
     if(ui->pushButtonSave->text()=="Save")
         id = "0";
-    else
-    {
+    else{
         cRecord=productsModel->record(dataMapper->currentIndex());
         id = cRecord.value("id").toString();
     }
-    int count = formValidation.uniqueValid(id,text,"products",field);
-    if(count <= 0)
-    {
+    int count = formValidation->uniqueValid(id,text,"products",field);
+    if(count <= 0){
         status = true;
-    }
-    else
-    {
+    }else{
         status = false;
     }
     return status;
@@ -532,4 +484,14 @@ bool ProductForm::eventFilter(QObject *obj, QEvent *event)
         return false;
     }
     return ProductForm::eventFilter(obj, event);
+}
+
+void ProductForm::setFieldMaxLength()
+{
+    ui->lineEditCode->setMaxLength(100);
+    ui->lineEditName->setMaxLength(200);
+
+    ui->lineEditWholeSalePrice->setProperty("validationError",false);
+    ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
+    ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
 }

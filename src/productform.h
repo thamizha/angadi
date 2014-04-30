@@ -27,12 +27,13 @@
 #define PRODUCTFORM_H
 
 #include <QWidget>
-#include "models/productsmodel.h"
-#include "models/formvalidation.h"
 #include <QErrorMessage>
 #include <QDataWidgetMapper>
+
 #include "lssbar.h"
-#include <models/formvalidation.h>
+#include "models/productsmodel.h"
+#include "models/formvalidation.h"
+#include "models/formvalidation.h"
 
 namespace Ui {
 class ProductForm;
@@ -44,12 +45,12 @@ class ProductForm : public QWidget
 
 public:
     explicit ProductForm(QWidget *parent = 0);
-    QMap<QString, int> categoryid_map;
     ~ProductForm();
     void setCodeFocus();
     void clear();
     void setModel(ProductsModel *model);
     void setMapperIndex(QModelIndex index);
+    void setFieldMaxLength();
 
 signals:
     void signalName(QString str);
@@ -60,6 +61,7 @@ private:
     ProductsModel *productsModel;
     QDataWidgetMapper *dataMapper;
     Lssbar *lssbar;
+    FormValidation *formValidation;
 
 private slots:
     void save();
@@ -68,11 +70,9 @@ private slots:
     bool mrpValid();
     bool salePriceValid();
     bool wholeSalePriceValid();
-    //void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
-    void hideValidationErrors();
     void setSignalFromProductForm();
     bool uniqueValid(QString text, QString field);
     bool eventFilter(QObject *obj, QEvent *event);
