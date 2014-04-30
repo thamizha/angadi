@@ -184,25 +184,25 @@ void CategoryForm::setModel(CategoriesModel *model){
 bool CategoryForm::codeValid(){
     bool status =false;
     FormValidation formValidation;
-    if(formValidation.intValid(ui->lineEditCode->text()))
-    {
-        if(uniqueValid(ui->lineEditCode->text(),"code"))
-        {
-            ui->labelCodeValid->hide();
-            status = true;
-        }
-        else
-        {
-            ui->labelCodeValid->show();
-            status= false;
-        }
+//    if(formValidation.intValid(ui->lineEditCode->text()))
+//    {
+//        if(uniqueValid(ui->lineEditCode->text(),"code"))
+//        {
+//            ui->labelCodeValid->hide();
+//            status = true;
+//        }
+//        else
+//        {
+//            ui->labelCodeValid->show();
+//            status= false;
+//        }
 
-    }
-    else
-    {
-        ui->labelCodeValid->show();
-        status= false;
-    }
+//    }
+//    else
+//    {
+//        ui->labelCodeValid->show();
+//        status= false;
+//    }
     return status;
 }
 
@@ -210,24 +210,24 @@ bool CategoryForm::codeValid(){
 bool CategoryForm::nameValid(){
     bool status = false;
     FormValidation formValidation;
-    if(formValidation.textValid(ui->lineEditName->text(),20))
-    {
-        if(uniqueValid(ui->lineEditName->text(),"name"))
-        {
-            status = true;
-            ui->labelNameValid->hide();
-        }
-        else
-        {
-            status = false;
-            ui->labelNameValid->show();
-        }
-    }
-    else
-    {
-        status = false;
-        ui->labelNameValid->show();
-    }
+//    if(formValidation.textValid(ui->lineEditName->text(),20))
+//    {
+//        if(uniqueValid(ui->lineEditName->text(),"name"))
+//        {
+//            status = true;
+//            ui->labelNameValid->hide();
+//        }
+//        else
+//        {
+//            status = false;
+//            ui->labelNameValid->show();
+//        }
+//    }
+//    else
+//    {
+//        status = false;
+//        ui->labelNameValid->show();
+//    }
     return status;
 }
 

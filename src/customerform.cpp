@@ -224,21 +224,26 @@ void CustomerForm::setSignalFromCustomerForm()
 
 void CustomerForm::on_lineEditCode_editingFinished()
 {
-    bool status = formValidation->textValid(ui->lineEditCode->text(),3);
-    if(status == false){
-        ui->lineEditCode->setProperty("validationError",true);
-//        ui->lineEditCode->setStyleSheet("background-color : red");
+    if(formValidation->isInteger(ui->lineEditCode->text())){
+        ui->lineEditCode->setProperty("validationError",false);
+        ui->lineEditCode->setStyleSheet(styleSheet());
+
     }else{
-//        ui->lineEditCode->setStyleSheet("");
+        ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setStyleSheet(styleSheet());
+
     }
 }
 
 void CustomerForm::on_lineEditName_editingFinished()
 {
-    bool status = formValidation->textValid(ui->lineEditName->text(),200);
-    if(status == false){
-//        ui->lineEditName->setStyleSheet("background-color : red");
-    }else{
-//        ui->lineEditName->setStyleSheet("");
-    }
+//    if(formValidation->textValid(ui->lineEditName->text(),200)){
+//        ui->lineEditName->setProperty("validationError",false);
+//        ui->lineEditName->setStyleSheet(styleSheet());
+
+//    }else{
+//        ui->lineEditName->setProperty("validationError",true);
+//        ui->lineEditName->setStyleSheet(styleSheet());
+
+//    }
 }

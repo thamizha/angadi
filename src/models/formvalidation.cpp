@@ -6,74 +6,41 @@ FormValidation::FormValidation(QObject *parent) :
 {
 }
 
-bool FormValidation::intValid(QString value)
+bool FormValidation::isInteger(QString value)
+{
+    int pos=0;
+    bool status = false;
+    if(value.length() > 0){
+        QIntValidator v(1,10000,this);
+        qint8 vState= v.validate(value,pos);
+        if(vState==2){
+            status = true;
+        }
+    }
+    return status;
+}
+
+bool FormValidation::intRequired(QString value)
 {
     int pos=0;
     QIntValidator v(1,10000,this);
     qint8 vState= v.validate(value,pos);
-    if(vState==2)
-    {
+
+    bool status = false;
+    if(vState == 2 || value.length() > 0){
         bool status = true;
         return status;
     }
-    else
-    {
-        bool status = false;
-        return status;
-    }
-}
-
-bool FormValidation::notNullIntValid(QString value)
-{
-    int pos=0;
-    bool status;
-    if(value.length()==0)
-    {
-        QIntValidator v(1,10000,this);
-        qint8 vState= v.validate(value,pos);
-        if(vState==2)
-            bool status = true;
-        else
-            status = false;
-    }
-    else
-        status = true;
     return status;
 }
 
-bool FormValidation::textValid(QString value,int len)
+bool FormValidation::textRequired(QString value,int len)
 {
-    int Len=value.length();
-    if (Len==0)
-    {
-        bool status = false;
-        return status;
+    bool status = false;
+    if (value.length() > 0 || value.length() <= len){
+        status = true;
     }
-    else if (Len <= len)
-    {
-        bool status = true;
-        return status;
-    }
-    else
-    {
-        bool status = false;
-        return status;
-    }
-}
-
-bool FormValidation::notNullTextValid(QString value,int len)
-{
-    int Len=value.length();
-    if (Len <= len)
-    {
-        bool status = true;
-        return status;
-    }
-    else
-    {
-        bool status = false;
-        return status;
-    }
+    return status;
 }
 
 bool FormValidation::emailValid(QString value)
@@ -90,11 +57,6 @@ bool FormValidation::emailValid(QString value)
         status = false;
     return status;
 }
-
-//bool FormValidation::dateValid(QString value)
-//{
-//    return true;
-//}
 
 int FormValidation::uniqueValid(QString id, QString value, QString table ,QString column)
 {

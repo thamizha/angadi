@@ -232,30 +232,30 @@ void ProductForm::setModel(ProductsModel *model){
 bool ProductForm::codeValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditCode->text()))
-    {
-        if (uniqueValid(ui->lineEditCode->text(),"code"))
-        {
-            ui->lineEditCode->setProperty("validationError",false);
-            ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->hide();
-            status = true;
-        }
-        else
-        {
-            ui->lineEditCode->setProperty("validationError",true);
-            ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->show();
-            status = false;
-        }
-    }
-    else
-    {
-        ui->labelCodeValid->show();
-        ui->lineEditCode->setProperty("validationError",true);
-        ui->lineEditCode->setStyleSheet(styleSheet());
-        status = false;
-    }
+//    if(formValidation.intValid(ui->lineEditCode->text()))
+//    {
+//        if (uniqueValid(ui->lineEditCode->text(),"code"))
+//        {
+//            ui->lineEditCode->setProperty("validationError",false);
+//            ui->lineEditCode->setStyleSheet(styleSheet());
+//            //ui->labelCodeValid->hide();
+//            status = true;
+//        }
+//        else
+//        {
+//            ui->lineEditCode->setProperty("validationError",true);
+//            ui->lineEditCode->setStyleSheet(styleSheet());
+//            //ui->labelCodeValid->show();
+//            status = false;
+//        }
+//    }
+//    else
+//    {
+//        ui->labelCodeValid->show();
+//        ui->lineEditCode->setProperty("validationError",true);
+//        ui->lineEditCode->setStyleSheet(styleSheet());
+//        status = false;
+//    }
     return status;
 }
 
@@ -263,30 +263,30 @@ bool ProductForm::codeValid(){
 bool ProductForm::nameValid(){
     FormValidation formValidation;
     bool status= false;
-    if(formValidation.textValid(ui->lineEditName->text(),20))
-    {
-        if(uniqueValid(ui->lineEditName->text(),"name"))
-        {
-            ui->lineEditName->setProperty("validationError",false);
-            ui->lineEditName->setStyleSheet(styleSheet());
-            //ui->labelNameValid->hide();
-            status= true;
-        }
-        else
-        {
-            ui->lineEditName->setProperty("validationError",true);
-            ui->lineEditName->setStyleSheet(styleSheet());
-            //ui->labelNameValid->show();
-            status= false;
-        }
-    }
-    else
-    {
-        ui->lineEditName->setProperty("validationError",true);
-        ui->lineEditName->setStyleSheet(styleSheet());
-        //ui->labelNameValid->show();
-        status= false;
-    }
+//    if(formValidation.textValid(ui->lineEditName->text(),20))
+//    {
+//        if(uniqueValid(ui->lineEditName->text(),"name"))
+//        {
+//            ui->lineEditName->setProperty("validationError",false);
+//            ui->lineEditName->setStyleSheet(styleSheet());
+//            //ui->labelNameValid->hide();
+//            status= true;
+//        }
+//        else
+//        {
+//            ui->lineEditName->setProperty("validationError",true);
+//            ui->lineEditName->setStyleSheet(styleSheet());
+//            //ui->labelNameValid->show();
+//            status= false;
+//        }
+//    }
+//    else
+//    {
+//        ui->lineEditName->setProperty("validationError",true);
+//        ui->lineEditName->setStyleSheet(styleSheet());
+//        //ui->labelNameValid->show();
+//        status= false;
+//    }
     return status;
 }
 
@@ -294,20 +294,20 @@ bool ProductForm::nameValid(){
 bool ProductForm::mrpValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditMrp->text()))
-    {
-        ui->lineEditMrp->setProperty("validationError",false);
-        ui->lineEditMrp->setStyleSheet(styleSheet());
-        //ui->labelMrpValid->hide();
-        status = true;
-    }
-    else
-    {
-        ui->lineEditMrp->setProperty("validationError",true);
-        ui->lineEditMrp->setStyleSheet(styleSheet());
-        //ui->labelMrpValid->show();
-        status = false;
-    }
+//    if(formValidation.intValid(ui->lineEditMrp->text()))
+//    {
+//        ui->lineEditMrp->setProperty("validationError",false);
+//        ui->lineEditMrp->setStyleSheet(styleSheet());
+//        //ui->labelMrpValid->hide();
+//        status = true;
+//    }
+//    else
+//    {
+//        ui->lineEditMrp->setProperty("validationError",true);
+//        ui->lineEditMrp->setStyleSheet(styleSheet());
+//        //ui->labelMrpValid->show();
+//        status = false;
+//    }
     return status;
 }
 
@@ -315,20 +315,20 @@ bool ProductForm::mrpValid(){
 bool ProductForm::salePriceValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditSalePrice->text()))
-    {
-        ui->lineEditSalePrice->setProperty("validationError",false);
-        ui->lineEditSalePrice->setStyleSheet(styleSheet());
-        //ui->labelSalePriceValid->hide();
-        status = true;
-    }
-    else
-    {
-        ui->lineEditSalePrice->setProperty("validationError",true);
-        ui->lineEditSalePrice->setStyleSheet(styleSheet());
-        //ui->labelSalePriceValid->show();
-        status = false;
-    }
+//    if(formValidation.intValid(ui->lineEditSalePrice->text()))
+//    {
+//        ui->lineEditSalePrice->setProperty("validationError",false);
+//        ui->lineEditSalePrice->setStyleSheet(styleSheet());
+//        //ui->labelSalePriceValid->hide();
+//        status = true;
+//    }
+//    else
+//    {
+//        ui->lineEditSalePrice->setProperty("validationError",true);
+//        ui->lineEditSalePrice->setStyleSheet(styleSheet());
+//        //ui->labelSalePriceValid->show();
+//        status = false;
+//    }
     return status;
 }
 
@@ -336,20 +336,20 @@ bool ProductForm::salePriceValid(){
 bool ProductForm::wholeSalePriceValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditWholeSalePrice->text()))
-    {
-        ui->lineEditWholeSalePrice->setProperty("validationError",false);
-        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
-        //ui->labelWholeSalePriceValid->hide();
-        status = true;
-    }
-    else
-    {
-        ui->lineEditWholeSalePrice->setProperty("validationError",true);
-        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
-        //ui->labelWholeSalePriceValid->show();
-        status = false;
-    }
+//    if(formValidation.intValid(ui->lineEditWholeSalePrice->text()))
+//    {
+//        ui->lineEditWholeSalePrice->setProperty("validationError",false);
+//        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+//        //ui->labelWholeSalePriceValid->hide();
+//        status = true;
+//    }
+//    else
+//    {
+//        ui->lineEditWholeSalePrice->setProperty("validationError",true);
+//        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+//        //ui->labelWholeSalePriceValid->show();
+//        status = false;
+//    }
     return status;
 }
 

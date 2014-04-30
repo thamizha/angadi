@@ -2,6 +2,7 @@
 #define ANGADIMAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSortFilterProxyModel>
 
 #include "lssbar.h"
 #include "categoryform.h"
@@ -10,7 +11,6 @@
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
-#include <QSortFilterProxyModel>
 
 namespace Ui {
 class AngadiMainWindow;
@@ -34,6 +34,7 @@ signals:
 private:
     bool tabLoadedStatus(QString tabName);
     Ui::AngadiMainWindow *ui;
+
     CategoryForm *categoryForm;
     ProductForm *productForm;
     CustomerForm *customerForm;
