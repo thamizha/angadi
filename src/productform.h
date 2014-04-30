@@ -68,7 +68,7 @@ private slots:
     bool mrpValid();
     bool salePriceValid();
     bool wholeSalePriceValid();
-    void on_pushButtonAdd_clicked();
+    //void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
