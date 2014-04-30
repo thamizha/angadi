@@ -184,25 +184,31 @@ void CategoryForm::setModel(CategoriesModel *model){
 bool CategoryForm::codeValid(){
     bool status =false;
     FormValidation formValidation;
-//    if(formValidation.intValid(ui->lineEditCode->text()))
-//    {
-//        if(uniqueValid(ui->lineEditCode->text(),"code"))
-//        {
-//            ui->labelCodeValid->hide();
-//            status = true;
-//        }
-//        else
-//        {
-//            ui->labelCodeValid->show();
-//            status= false;
-//        }
+    if(formValidation.textValid(ui->lineEditCode->text(),20))
+    {
+        if(uniqueValid(ui->lineEditCode->text(),"code"))
+        {
+            ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->hide();
+            status = true;
+        }
+        else
+        {
+            ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->show();
+            status= false;
+        }
 
-//    }
-//    else
-//    {
-//        ui->labelCodeValid->show();
-//        status= false;
-//    }
+    }
+    else
+    {
+        ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setStyleSheet(styleSheet());
+        //ui->labelCodeValid->show();
+        status= false;
+    }
     return status;
 }
 
@@ -210,24 +216,30 @@ bool CategoryForm::codeValid(){
 bool CategoryForm::nameValid(){
     bool status = false;
     FormValidation formValidation;
-//    if(formValidation.textValid(ui->lineEditName->text(),20))
-//    {
-//        if(uniqueValid(ui->lineEditName->text(),"name"))
-//        {
-//            status = true;
-//            ui->labelNameValid->hide();
-//        }
-//        else
-//        {
-//            status = false;
-//            ui->labelNameValid->show();
-//        }
-//    }
-//    else
-//    {
-//        status = false;
-//        ui->labelNameValid->show();
-//    }
+    if(formValidation.textValid(ui->lineEditName->text(),20))
+    {
+        if(uniqueValid(ui->lineEditName->text(),"name"))
+        {
+            status = true;
+            //ui->labelNameValid->hide();
+            ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setStyleSheet(styleSheet());
+        }
+        else
+        {
+            status = false;
+            //ui->labelNameValid->show();
+            ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setStyleSheet(styleSheet());
+        }
+    }
+    else
+    {
+        status = false;
+        //ui->labelNameValid->show();
+        ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setStyleSheet(styleSheet());
+    }
     return status;
 }
 
