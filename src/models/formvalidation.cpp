@@ -27,12 +27,13 @@ bool FormValidation::notNullIntValid(QString value)
 {
     int pos=0;
     bool status;
-    if(value.length()==0)
+    qDebug() << value.length();
+    if(value.length()!=0)
     {
         QIntValidator v(1,10000,this);
         qint8 vState= v.validate(value,pos);
         if(vState==2)
-            bool status = true;
+            status = true;
         else
             status = false;
     }

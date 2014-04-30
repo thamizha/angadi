@@ -232,7 +232,7 @@ void ProductForm::setModel(ProductsModel *model){
 bool ProductForm::codeValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditCode->text()))
+    if(formValidation.textValid(ui->lineEditCode->text(),20))
     {
         if (uniqueValid(ui->lineEditCode->text(),"code"))
         {
@@ -251,7 +251,7 @@ bool ProductForm::codeValid(){
     }
     else
     {
-        ui->labelCodeValid->show();
+        //ui->labelCodeValid->show();
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setStyleSheet(styleSheet());
         status = false;
@@ -336,7 +336,7 @@ bool ProductForm::salePriceValid(){
 bool ProductForm::wholeSalePriceValid(){
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.intValid(ui->lineEditWholeSalePrice->text()))
+    if(formValidation.notNullIntValid(ui->lineEditWholeSalePrice->text()))
     {
         ui->lineEditWholeSalePrice->setProperty("validationError",false);
         ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());

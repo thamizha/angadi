@@ -184,23 +184,29 @@ void CategoryForm::setModel(CategoriesModel *model){
 bool CategoryForm::codeValid(){
     bool status =false;
     FormValidation formValidation;
-    if(formValidation.intValid(ui->lineEditCode->text()))
+    if(formValidation.textValid(ui->lineEditCode->text(),20))
     {
         if(uniqueValid(ui->lineEditCode->text(),"code"))
         {
-            ui->labelCodeValid->hide();
+            ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->hide();
             status = true;
         }
         else
         {
-            ui->labelCodeValid->show();
+            ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->show();
             status= false;
         }
 
     }
     else
     {
-        ui->labelCodeValid->show();
+        ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setStyleSheet(styleSheet());
+        //ui->labelCodeValid->show();
         status= false;
     }
     return status;
@@ -215,18 +221,24 @@ bool CategoryForm::nameValid(){
         if(uniqueValid(ui->lineEditName->text(),"name"))
         {
             status = true;
-            ui->labelNameValid->hide();
+            //ui->labelNameValid->hide();
+            ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setStyleSheet(styleSheet());
         }
         else
         {
             status = false;
-            ui->labelNameValid->show();
+            //ui->labelNameValid->show();
+            ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setStyleSheet(styleSheet());
         }
     }
     else
     {
         status = false;
-        ui->labelNameValid->show();
+        //ui->labelNameValid->show();
+        ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setStyleSheet(styleSheet());
     }
     return status;
 }
