@@ -75,6 +75,7 @@ private slots:
     void hideValidationErrors();
     void setSignalFromProductForm();
     bool uniqueValid(QString text, QString field);
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif // PRODUCTFORM_H

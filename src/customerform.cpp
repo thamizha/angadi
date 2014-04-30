@@ -225,6 +225,7 @@ void CustomerForm::setSignalFromCustomerForm()
 bool CustomerForm::on_lineEditCode_editingFinished()
 {
     bool status = false;
+    ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text()!=0)
     {
         if(uniqueValid(ui->lineEditCode->text(),"code"))
@@ -236,6 +237,7 @@ bool CustomerForm::on_lineEditCode_editingFinished()
         }
         else
         {
+            ui->flashMsgUp->setText("This Code has been already taken. Please select some other code.");
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setStyleSheet(styleSheet());
             //ui->labelCodeValid->show();
@@ -244,6 +246,7 @@ bool CustomerForm::on_lineEditCode_editingFinished()
     }
     else
     {
+        ui->flashMsgUp->setText("Code is empty. Please give any code.");
         //ui->labelCodeValid->show();
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setStyleSheet(styleSheet());
@@ -255,6 +258,7 @@ bool CustomerForm::on_lineEditCode_editingFinished()
 bool CustomerForm::on_lineEditName_editingFinished()
 {
     bool status= false;
+    ui->lineEditName->installEventFilter(this);
     if(ui->lineEditName->text()!=0)
     {
         if(uniqueValid(ui->lineEditName->text(),"name"))
@@ -266,6 +270,7 @@ bool CustomerForm::on_lineEditName_editingFinished()
         }
         else
         {
+            ui->flashMsgUp->setText("This Name has been already taken. Please select some other name.");
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setStyleSheet(styleSheet());
             //ui->labelNameValid->show();
@@ -274,6 +279,7 @@ bool CustomerForm::on_lineEditName_editingFinished()
     }
     else
     {
+        ui->flashMsgUp->setText("The Name is empty. Please select some name.");
         ui->lineEditName->setProperty("validationError",true);
         ui->lineEditName->setStyleSheet(styleSheet());
         //ui->labelNameValid->show();
@@ -305,4 +311,21 @@ bool CustomerForm::uniqueValid(QString text, QString field)
         status = false;
     }
     return status;
+}
+
+bool CustomerForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->lineEditCode)
+    {
+        if (event->type() == QEvent::FocusIn)
+            CustomerForm::on_lineEditCode_editingFinished();
+        return false;
+    }
+    else if (obj == ui->lineEditName)
+    {
+        if (event->type() == QEvent::FocusIn)
+            CustomerForm::on_lineEditName_editingFinished();
+        return false;
+    }
+    return CustomerForm::eventFilter(obj, event);
 }

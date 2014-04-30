@@ -77,7 +77,7 @@ private slots:
     void hideValidationErrors();
     void setSignalFromCustomerForm();
     bool uniqueValid(QString text, QString field);
-
+    bool eventFilter(QObject *obj, QEvent *event);
     bool on_lineEditCode_editingFinished();
     bool on_lineEditName_editingFinished();
 };

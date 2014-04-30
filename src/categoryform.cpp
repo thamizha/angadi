@@ -183,6 +183,7 @@ void CategoryForm::setModel(CategoriesModel *model){
 // function to validate code field
 bool CategoryForm::codeValid(){
     bool status = false;
+    ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text().length() > 0){
         if(uniqueValid(ui->lineEditCode->text(), "code")){
             ui->lineEditCode->setProperty("validationError",false);
@@ -190,12 +191,14 @@ bool CategoryForm::codeValid(){
             ui->lineEditCode->setStyleSheet(styleSheet());
             status = true;
         }else{
+            ui->flashMsgUp->setText("This Code has been already taken. Please select some other names.");
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
             status = false;
         }
     }else{
+        ui->flashMsgUp->setText("Code field is empty. Please give some values.");
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
@@ -207,6 +210,7 @@ bool CategoryForm::codeValid(){
 //function to validate name field
 bool CategoryForm::nameValid(){
     bool status = false;
+    ui->lineEditName->installEventFilter(this);
     if(ui->lineEditName->text().length() > 0){
         if(uniqueValid(ui->lineEditName->text(),"name")){
             status = true;
@@ -215,12 +219,14 @@ bool CategoryForm::nameValid(){
             ui->lineEditName->setStyleSheet(styleSheet());
         }else{
             status = false;
+            ui->flashMsgUp->setText("This Name has been already taken. Please select some other names.");
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
         }
     }else{
         status = false;
+        ui->flashMsgUp->setText("Name field is empty. Please give some values.");
         ui->lineEditName->setProperty("validationError",true);
         ui->lineEditName->setProperty("validationSuccess",false);
         ui->lineEditName->setStyleSheet(styleSheet());
@@ -367,4 +373,21 @@ void CategoryForm::unsetStyles()
 
     ui->lineEditName->setProperty("validationError",false);
     ui->lineEditName->setStyleSheet(styleSheet());
+}
+
+bool CategoryForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->lineEditCode)
+    {
+        if(event->type() == QEvent::FocusIn)
+            CategoryForm::codeValid();
+        return false;
+    }
+    else if (obj == ui->lineEditName)
+    {
+        if(event->type() == QEvent::FocusIn)
+            CategoryForm::nameValid();
+        return false;
+    }
+    return CategoryForm::eventFilter(obj, event);
 }

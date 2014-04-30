@@ -232,6 +232,7 @@ void ProductForm::setModel(ProductsModel *model){
 // validate the code field
 bool ProductForm::codeValid(){
     bool status = false;
+    ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text()!=0)
     {
         if (uniqueValid(ui->lineEditCode->text(),"code"))
@@ -243,6 +244,7 @@ bool ProductForm::codeValid(){
         }
         else
         {
+            ui->flashMsgUp->setText("This Product Code has been already taken. Please select some other code for this Product.");
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setStyleSheet(styleSheet());
             //ui->labelCodeValid->show();
@@ -251,6 +253,7 @@ bool ProductForm::codeValid(){
     }
     else
     {
+        ui->flashMsgUp->setText("Product Code is empty. Please select any code for this Product.");
         //ui->labelCodeValid->show();
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setStyleSheet(styleSheet());
@@ -262,6 +265,7 @@ bool ProductForm::codeValid(){
 // validate the name field
 bool ProductForm::nameValid(){
     bool status= false;
+    ui->lineEditName->installEventFilter(this);
     if(ui->lineEditName->text()!=0)
     {
         if(uniqueValid(ui->lineEditName->text(),"name"))
@@ -273,6 +277,7 @@ bool ProductForm::nameValid(){
         }
         else
         {
+            ui->flashMsgUp->setText("This Product Name has been already taken. Please select some other name for this Product.");
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setStyleSheet(styleSheet());
             //ui->labelNameValid->show();
@@ -281,6 +286,7 @@ bool ProductForm::nameValid(){
     }
     else
     {
+        ui->flashMsgUp->setText("Product Name is empty. Please select any name for this Product.");
         ui->lineEditName->setProperty("validationError",true);
         ui->lineEditName->setStyleSheet(styleSheet());
         //ui->labelNameValid->show();
@@ -290,9 +296,11 @@ bool ProductForm::nameValid(){
 }
 
 //validate the mrp field
-bool ProductForm::mrpValid(){
+bool ProductForm::mrpValid()
+{
     FormValidation formValidation;
     bool status = false;
+    ui->lineEditMrp->installEventFilter(this);
     if(formValidation.isDouble(ui->lineEditMrp->text()))
     {
         ui->lineEditMrp->setProperty("validationError",false);
@@ -302,6 +310,7 @@ bool ProductForm::mrpValid(){
     }
     else
     {
+        ui->flashMsgUp->setText("Mrp field is empty. You have to fix some price for this Product.");
         ui->lineEditMrp->setProperty("validationError",true);
         ui->lineEditMrp->setStyleSheet(styleSheet());
         //ui->labelMrpValid->show();
@@ -311,23 +320,37 @@ bool ProductForm::mrpValid(){
 }
 
 //validate the sale price field
-bool ProductForm::salePriceValid(){
+bool ProductForm::salePriceValid()
+{
     FormValidation formValidation;
     bool status = false;
-    if(formValidation.isDouble(ui->lineEditSalePrice->text()))
-    {
-        ui->lineEditSalePrice->setProperty("validationError",false);
-        ui->lineEditSalePrice->setStyleSheet(styleSheet());
-        //ui->labelSalePriceValid->hide();
-        status = true;
+    ui->lineEditSalePrice->installEventFilter(this);
+    if(ui->lineEditSalePrice->text().length() != 0){
+        if(formValidation.isDouble(ui->lineEditSalePrice->text()))
+        {
+            ui->lineEditSalePrice->setProperty("validationError",false);
+            ui->lineEditSalePrice->setStyleSheet(styleSheet());
+            //ui->labelSalePriceValid->hide();
+            status = true;
+        }
+        else
+        {
+            ui->flashMsgUp->setText("Sale Price is not a number. You have to fix price in number.");
+            ui->lineEditSalePrice->setProperty("validationError",true);
+            ui->lineEditSalePrice->setStyleSheet(styleSheet());
+            //ui->labelSalePriceValid->show();
+            status = false;
+        }
     }
     else
     {
+        ui->flashMsgUp->setText("Sale Price is empty. You have to fix some price for this Product.");
         ui->lineEditSalePrice->setProperty("validationError",true);
         ui->lineEditSalePrice->setStyleSheet(styleSheet());
         //ui->labelSalePriceValid->show();
         status = false;
     }
+
     return status;
 }
 
@@ -335,6 +358,7 @@ bool ProductForm::salePriceValid(){
 bool ProductForm::wholeSalePriceValid(){
     FormValidation formValidation;
     bool status = false;
+    ui->lineEditWholeSalePrice->installEventFilter(this);
     if(ui->lineEditWholeSalePrice->text()!=0)
     {
         if(formValidation.isDouble(ui->lineEditWholeSalePrice->text()))
@@ -346,6 +370,7 @@ bool ProductForm::wholeSalePriceValid(){
         }
         else
         {
+            ui->flashMsgUp->setText("Whole Sale Price is not a number. Please fix the price in number.");
             ui->lineEditWholeSalePrice->setProperty("validationError",true);
             ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
             //ui->labelWholeSalePriceValid->show();
@@ -472,4 +497,39 @@ bool ProductForm::uniqueValid(QString text, QString field)
         status = false;
     }
     return status;
+}
+
+bool ProductForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->lineEditCode)
+    {
+        if (event->type() == QEvent::FocusIn)
+            ProductForm::codeValid();
+        return false;
+    }
+    else if (obj == ui->lineEditMrp)
+    {
+        if (event->type() == QEvent::FocusIn)
+            ProductForm::mrpValid();
+        return false;
+    }
+    else if (obj == ui->lineEditName)
+    {
+        if (event->type() == QEvent::FocusIn)
+            ProductForm::nameValid();
+        return false;
+    }
+    else if (obj == ui->lineEditSalePrice)
+    {
+        if (event->type() == QEvent::FocusIn)
+            ProductForm::salePriceValid();
+        return false;
+    }
+    else if (obj == ui->lineEditWholeSalePrice)
+    {
+        if (event->type() == QEvent::FocusIn)
+            ProductForm::wholeSalePriceValid();
+        return false;
+    }
+    return ProductForm::eventFilter(obj, event);
 }

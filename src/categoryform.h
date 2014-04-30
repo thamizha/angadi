@@ -10,6 +10,7 @@
 #include <QIntValidator>
 #include <QDataWidgetMapper>
 #include <QDateTime>
+#include <QEvent>
 
 namespace Ui {
 class CategoryForm;
@@ -57,6 +58,8 @@ private slots:
     void setSignalFromCategoryForm();
     void setFieldMaxLength();
     void unsetStyles();
+    bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // CategoryForm_H
