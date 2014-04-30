@@ -61,7 +61,7 @@
          <widget class="QPushButton" name="pushButtonDelete">
           <property name="geometry">
            <rect>
-            <x>370</x>
+            <x>340</x>
             <y>270</y>
             <width>80</width>
             <height>23</height>
@@ -165,19 +165,6 @@
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButtonAdd">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>270</y>
-            <width>80</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="labelManufacturer">
           <property name="geometry">
            <rect>
@@ -210,7 +197,7 @@
          <widget class="QPushButton" name="pushButtonSave">
           <property name="geometry">
            <rect>
-            <x>280</x>
+            <x>240</x>
             <y>270</y>
             <width>80</width>
             <height>23</height>
@@ -375,7 +362,7 @@
          <widget class="QPushButton" name="pushButtonCancel">
           <property name="geometry">
            <rect>
-            <x>190</x>
+            <x>140</x>
             <y>270</y>
             <width>80</width>
             <height>23</height>

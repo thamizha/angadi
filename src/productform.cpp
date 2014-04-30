@@ -33,6 +33,7 @@
 #include <QSqlRelationalDelegate>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QDoubleValidator>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -171,7 +172,7 @@ void ProductForm::save()
         }
         productsModel->select();
         dataMapper->toLast();
-        ui->pushButtonAdd->setEnabled(true);
+        //ui->pushButtonAdd->setEnabled(true);
         ui->pushButtonCancel->setEnabled(false);
         setCodeFocus();
     }
@@ -294,20 +295,21 @@ bool ProductForm::nameValid(){
 bool ProductForm::mrpValid(){
     FormValidation formValidation;
     bool status = false;
-//    if(formValidation.intValid(ui->lineEditMrp->text()))
-//    {
-//        ui->lineEditMrp->setProperty("validationError",false);
-//        ui->lineEditMrp->setStyleSheet(styleSheet());
-//        //ui->labelMrpValid->hide();
-//        status = true;
-//    }
-//    else
-//    {
-//        ui->lineEditMrp->setProperty("validationError",true);
-//        ui->lineEditMrp->setStyleSheet(styleSheet());
-//        //ui->labelMrpValid->show();
-//        status = false;
-//    }
+    qDebug() << rsValid();
+    if(formValidation.intValid(ui->lineEditMrp->text()))
+    {
+        ui->lineEditMrp->setProperty("validationError",false);
+        ui->lineEditMrp->setStyleSheet(styleSheet());
+        //ui->labelMrpValid->hide();
+        status = true;
+    }
+    else
+    {
+        ui->lineEditMrp->setProperty("validationError",true);
+        ui->lineEditMrp->setStyleSheet(styleSheet());
+        //ui->labelMrpValid->show();
+        status = false;
+    }
     return status;
 }
 
@@ -360,7 +362,7 @@ void ProductForm::setMapperIndex(QModelIndex index)
 }
 
 
-void ProductForm::on_pushButtonAdd_clicked()
+/*void ProductForm::on_pushButtonAdd_clicked()
 {
     ui->pushButtonSave->setText("Save");
     ui->pushButtonSave->setEnabled(true);
@@ -369,15 +371,15 @@ void ProductForm::on_pushButtonAdd_clicked()
     ui->pushButtonCancel->setEnabled(true);
     clear();
     setCodeFocus();
-}
+}*/
 
 void ProductForm::on_pushButtonCancel_clicked()
 {
     hideValidationErrors();
 
-    ui->pushButtonAdd->setEnabled(true);
+    //ui->pushButtonAdd->setEnabled(true);
     ui->pushButtonCancel->setEnabled(false);
-    ui->pushButtonSave->setText("Update");
+    //ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
 
 //    dataMapper->toLast();
@@ -386,6 +388,17 @@ void ProductForm::on_pushButtonCancel_clicked()
         ui->pushButtonSave->setEnabled(false);
         ui->pushButtonDelete->setEnabled(false);
     }
+    if(this->ui->pushButtonSave->text() == "Save"){
+        clear();
+
+//        this->ui->pushButtonSave->setText("Update");
+//        dataMapper->toLast();
+
+    }else if(this->ui->pushButtonSave->text() == "Update"){
+        dataMapper->setCurrentIndex(dataMapper->currentIndex());
+
+    }
+    setCodeFocus();
 }
 
 void ProductForm::on_pushButtonDelete_clicked()
