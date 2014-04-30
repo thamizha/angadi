@@ -41,6 +41,13 @@
 	border-style: outset;
     border-width: 2px;
     border-color: red;
+}
+
+*[validationSuccess=&quot;true&quot;] 
+{ 
+	border-style: outset;
+    border-width: 2px;
+    border-color: green;
 }</string>
       </property>
       <property name="tabShape">

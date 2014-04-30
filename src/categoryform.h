@@ -3,6 +3,7 @@
 
 #include "models/formvalidation.h"
 #include "models/categoriesmodel.h"
+#include "models/formvalidation.h"
 
 #include <QWidget>
 #include <QValidator>
@@ -41,6 +42,7 @@ private:
     QDataWidgetMapper *dataMapper;
     void clear();
     QDateTime m_modifiedDate;
+    FormValidation *formValidation;
 
 private slots:
     void save();
@@ -53,6 +55,8 @@ private slots:
     void onNameChanged(QString str);
     bool uniqueValid(QString text, QString field);
     void setSignalFromCategoryForm();
+    void setFieldMaxLength();
+    void unsetStyles();
 };
 
 #endif // CategoryForm_H

@@ -38,11 +38,9 @@ CategoryForm::CategoryForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->pushButtonAdd->hide();
-//    ui->pushButtonSave->setText("Update");
+    formValidation = new FormValidation;
 
-    ui->labelCodeValid->hide();
-    ui->labelNameValid->hide();
+    ui->pushButtonAdd->hide();
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
@@ -56,6 +54,9 @@ CategoryForm::CategoryForm(QWidget *parent) :
     connect(ui->lineEditName,SIGNAL(returnPressed()),ui->pushButtonSave,SLOT(setFocus()));*/
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+
+    setFieldMaxLength();
+    unsetStyles();
 }
 
 CategoryForm::~CategoryForm()
@@ -151,10 +152,9 @@ void CategoryForm::save()
 
 void CategoryForm::setCodeFocus()
 {
-    ui->lineEditCode->styleSheet().append("background-color: rgb(95, 164, 209);");
-//    ui->lineEditCode->setFocus();
-    ui->lineEditName->setFocus();
-    ui->lineEditName->selectAll();
+//    ui->lineEditCode->styleSheet().append("background-color: rgb(95, 164, 209);");
+    ui->lineEditCode->setFocus();
+    ui->lineEditCode->selectAll();
 }
 
 void CategoryForm::clear()
@@ -182,31 +182,24 @@ void CategoryForm::setModel(CategoriesModel *model){
 
 // function to validate code field
 bool CategoryForm::codeValid(){
-    bool status =false;
-    if(ui->lineEditCode->text()!=0)
-    {
-        if(uniqueValid(ui->lineEditCode->text(),"code"))
-        {
+    bool status = false;
+    if(ui->lineEditCode->text().length() > 0){
+        if(uniqueValid(ui->lineEditCode->text(), "code")){
             ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setProperty("validationSuccess",true);
             ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->hide();
             status = true;
-        }
-        else
-        {
+        }else{
             ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
-            //ui->labelCodeValid->show();
-            status= false;
+            status = false;
         }
-
-    }
-    else
-    {
+    }else{
         ui->lineEditCode->setProperty("validationError",true);
+        ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
-        //ui->labelCodeValid->show();
-        status= false;
+        status = false;
     }
     return status;
 }
@@ -214,29 +207,46 @@ bool CategoryForm::codeValid(){
 //function to validate name field
 bool CategoryForm::nameValid(){
     bool status = false;
-    if(ui->lineEditName->text()!=0)
-    {
-        if(uniqueValid(ui->lineEditName->text(),"name"))
-        {
+    if(ui->lineEditName->text().length() > 0){
+        if(uniqueValid(ui->lineEditName->text(),"name")){
             status = true;
-            //ui->labelNameValid->hide();
             ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setProperty("validationSuccess",true);
             ui->lineEditName->setStyleSheet(styleSheet());
-        }
-        else
-        {
+        }else{
             status = false;
-            //ui->labelNameValid->show();
             ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
         }
-    }
-    else
-    {
+    }else{
         status = false;
-        //ui->labelNameValid->show();
         ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setProperty("validationSuccess",false);
         ui->lineEditName->setStyleSheet(styleSheet());
+    }
+    return status;
+}
+
+bool CategoryForm::uniqueValid(QString text,QString field)
+{
+    bool status = false;
+    FormValidation formValidation;
+    QString id;
+    QSqlRecord cRecord;
+    if(dataMapper->currentIndex() < 0){
+        id = "0";
+
+    }else{
+        cRecord = categoriesModel->record(dataMapper->currentIndex());
+        id = cRecord.value("id").toString();
+
+    }
+    int count = formValidation.uniqueValid(id, text, "categories", field);
+    if(count <= 0){
+        status = true;
+    }else{
+        status = false;
     }
     return status;
 }
@@ -271,8 +281,8 @@ void CategoryForm::on_pushButtonAdd_clicked()
 
 void CategoryForm::on_pushButtonCancel_clicked()
 {
-    ui->pushButtonAdd->setEnabled(true);
-    ui->pushButtonDelete->setEnabled(true);
+//    ui->pushButtonAdd->setEnabled(true);
+//    ui->pushButtonDelete->setEnabled(true);
 
     if(this->ui->pushButtonSave->text() == "Save"){
         clear();
@@ -284,6 +294,8 @@ void CategoryForm::on_pushButtonCancel_clicked()
         dataMapper->setCurrentIndex(dataMapper->currentIndex());
 
     }
+    clear();
+    unsetStyles();
     setCodeFocus();
 }
 
@@ -337,32 +349,22 @@ void CategoryForm::onNameChanged(QString str)
     emit signalName(str);
 }
 
-bool CategoryForm::uniqueValid(QString text,QString field)
-{
-    bool status = false;
-    FormValidation formValidation;
-    QString id;
-    QSqlRecord cRecord;
-    if(ui->pushButtonSave->text()=="Save")
-        id = "0";
-    else
-    {
-        cRecord = categoriesModel->record(dataMapper->currentIndex());
-        id = cRecord.value("id").toString();
-    }
-    int count = formValidation.uniqueValid(id,text,"categories",field);
-    if(count <= 0)
-    {
-        status = true;
-    }
-    else
-    {
-        status = false;
-    }
-    return status;
-}
-
 void CategoryForm::setSignalFromCategoryForm()
 {
     emit signalFromCategoryForm();
+}
+
+void CategoryForm::setFieldMaxLength()
+{
+    ui->lineEditCode->setMaxLength(100);
+    ui->lineEditName->setMaxLength(200);
+}
+
+void CategoryForm::unsetStyles()
+{
+    ui->lineEditCode->setProperty("validationError",false);
+    ui->lineEditCode->setStyleSheet(styleSheet());
+
+    ui->lineEditName->setProperty("validationError",false);
+    ui->lineEditName->setStyleSheet(styleSheet());
 }
