@@ -47,6 +47,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
 
     connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),this,SLOT(setSignalFromCustomerForm()));
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -210,4 +211,9 @@ void CustomerForm::onNameChanged(QString str)
 void CustomerForm::hideValidationErrors()
 {
 
+}
+
+void CustomerForm::setSignalFromCustomerForm()
+{
+    emit signalFromCustomerForm();
 }

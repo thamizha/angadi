@@ -56,6 +56,7 @@ public:
 
 signals:
     void signalName(QString str);
+    void signalFromCustomerForm();
 
 private:
     Ui::CustomerForm *ui;
@@ -71,6 +72,8 @@ private slots:
     void on_pushButtonCancel_clicked();
     void onNameChanged(QString str);
     void hideValidationErrors();
+    void setSignalFromCustomerForm();
+
 };
 
 #endif // CUSTOMERFORM_H

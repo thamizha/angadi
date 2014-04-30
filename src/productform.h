@@ -52,6 +52,7 @@ public:
 
 signals:
     void signalName(QString str);
+    void signalFromProductForm();
 
 private:
     Ui::ProductForm *ui;
@@ -71,6 +72,8 @@ private slots:
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
     void hideValidationErrors();
+    void setSignalFromProductForm();
+
 };
 
 #endif // PRODUCTFORM_H

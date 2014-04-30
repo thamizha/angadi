@@ -169,6 +169,7 @@ void AngadiMainWindow::openProductTab()
         lssbar->lineEditSearch->setText("");
     }
     connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
 
     productForm->setModel(productsModel);
     ui->mainTab->setCurrentWidget (productForm);
@@ -190,6 +191,7 @@ void AngadiMainWindow::openCustomerTab()
         lssbar->lineEditSearch->setText("");
     }
     connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
 
     customerForm->setModel(customersModel);
     ui->mainTab->setCurrentWidget (customerForm);
@@ -269,16 +271,19 @@ void AngadiMainWindow::onTabChanged(int index){
         categoryForm->setModel(categoriesModel);
         lssbar->setModel(categoriesModel);
         showRightDock(true);
+        lssbar->lineEditSearch->setText(categoryTabSearchTerm);
 
     }else if(tabName == "product"){
         productForm->setModel(productsModel);
         lssbar->setModel(productsModel);
         showRightDock(true);
+        lssbar->lineEditSearch->setText(productTabSearchTerm);
 
     }else if(tabName == "customer"){
         customerForm->setModel(customersModel);
         lssbar->setModel(customersModel);
         showRightDock(true);
+        lssbar->lineEditSearch->setText(customerTabSearchTerm);
     }
 }
 
@@ -290,9 +295,11 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 
      }else if(currentTab == "product"){
         productForm->setMapperIndex(index);
+        productForm->setCodeFocus();
 
      }else if(currentTab == "customer"){
         customerForm->setMapperIndex(index);
+        customerForm->setCodeFocus();
 
      }
 }
@@ -307,6 +314,7 @@ void AngadiMainWindow::search(QString value)
         proxyIndex = categoriesProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
         index = categoriesProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+        categoryTabSearchTerm = value;
 
      }else if(currentTab == "product"){
         productsProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te products proxy model
@@ -315,6 +323,7 @@ void AngadiMainWindow::search(QString value)
         proxyIndex = productsProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
         index = productsProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+        productTabSearchTerm = value;
 
      }else if(currentTab == "customer"){
         customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
@@ -323,6 +332,7 @@ void AngadiMainWindow::search(QString value)
         proxyIndex = customersProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
         index = customersProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+        customerTabSearchTerm = value;
 
      }
 }

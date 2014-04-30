@@ -59,6 +59,7 @@ ProductForm::ProductForm(QWidget *parent) :
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
+    connect(ui->lineEditName,SIGNAL(returnPressed()),this,SLOT(setSignalFromProductForm()));
 
     connect(ui->lineEditCode,SIGNAL(editingFinished()),SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),SLOT(nameValid()));
@@ -382,4 +383,9 @@ void ProductForm::hideValidationErrors()
     ui->labelMrpValid->hide();
     ui->labelSalePriceValid->hide();
     ui->labelWholeSalePriceValid->hide();
+}
+
+void ProductForm::setSignalFromProductForm()
+{
+    emit signalFromProductForm();
 }
