@@ -224,26 +224,85 @@ void CustomerForm::setSignalFromCustomerForm()
 
 void CustomerForm::on_lineEditCode_editingFinished()
 {
-    if(formValidation->isInteger(ui->lineEditCode->text())){
-        ui->lineEditCode->setProperty("validationError",false);
-        ui->lineEditCode->setStyleSheet(styleSheet());
-
-    }else{
+    bool status = false;
+    if(ui->lineEditCode->text()!=0)
+    {
+        if (uniqueValid(ui->lineEditCode->text(),"code"))
+        {
+            ui->lineEditCode->setProperty("validationError",false);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->hide();
+            status = true;
+        }
+        else
+        {
+            ui->lineEditCode->setProperty("validationError",true);
+            ui->lineEditCode->setStyleSheet(styleSheet());
+            //ui->labelCodeValid->show();
+            status = false;
+        }
+    }
+    else
+    {
+        //ui->labelCodeValid->show();
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setStyleSheet(styleSheet());
-
+        status = false;
     }
+    return status;
 }
 
 void CustomerForm::on_lineEditName_editingFinished()
 {
-//    if(formValidation->textValid(ui->lineEditName->text(),200)){
-//        ui->lineEditName->setProperty("validationError",false);
-//        ui->lineEditName->setStyleSheet(styleSheet());
+    bool status= false;
+    if(ui->lineEditName->text()!=0)
+    {
+        if(uniqueValid(ui->lineEditName->text(),"name"))
+        {
+            ui->lineEditName->setProperty("validationError",false);
+            ui->lineEditName->setStyleSheet(styleSheet());
+            //ui->labelNameValid->hide();
+            status= true;
+        }
+        else
+        {
+            ui->lineEditName->setProperty("validationError",true);
+            ui->lineEditName->setStyleSheet(styleSheet());
+            //ui->labelNameValid->show();
+            status= false;
+        }
+    }
+    else
+    {
+        ui->lineEditName->setProperty("validationError",true);
+        ui->lineEditName->setStyleSheet(styleSheet());
+        //ui->labelNameValid->show();
+        status= false;
+    }
+    return status;
+}
 
-//    }else{
-//        ui->lineEditName->setProperty("validationError",true);
-//        ui->lineEditName->setStyleSheet(styleSheet());
-
-//    }
+bool CustomerForm::uniqueValid(QString text, QString field)
+{
+    bool status = false;
+    FormValidation formValidation;
+    QString id;
+    QSqlRecord cRecord;
+    if(ui->pushButtonSave->text()=="Save")
+        id = "0";
+    else
+    {
+        cRecord=productsModel->record(dataMapper->currentIndex());
+        id = cRecord.value("id").toString();
+    }
+    int count = formValidation.uniqueValid(id,text,"customers",field);
+    if(count <= 0)
+    {
+        status = true;
+    }
+    else
+    {
+        status = false;
+    }
+    return status;
 }

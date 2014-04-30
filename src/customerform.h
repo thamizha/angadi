@@ -75,6 +75,7 @@ private slots:
     void onNameChanged(QString str);
     void hideValidationErrors();
     void setSignalFromCustomerForm();
+    void uniqueValid(QString text, QString field);
 
     void on_lineEditCode_editingFinished();
     void on_lineEditName_editingFinished();

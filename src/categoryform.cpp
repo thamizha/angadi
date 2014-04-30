@@ -183,8 +183,7 @@ void CategoryForm::setModel(CategoriesModel *model){
 // function to validate code field
 bool CategoryForm::codeValid(){
     bool status =false;
-    FormValidation formValidation;
-    if(formValidation.textValid(ui->lineEditCode->text(),20))
+    if(ui->lineEditCode->text()!=0)
     {
         if(uniqueValid(ui->lineEditCode->text(),"code"))
         {
@@ -215,8 +214,7 @@ bool CategoryForm::codeValid(){
 //function to validate name field
 bool CategoryForm::nameValid(){
     bool status = false;
-    FormValidation formValidation;
-    if(formValidation.textValid(ui->lineEditName->text(),20))
+    if(ui->lineEditName->text()!=0)
     {
         if(uniqueValid(ui->lineEditName->text(),"name"))
         {

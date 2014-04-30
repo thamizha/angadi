@@ -12,10 +12,12 @@ class FormValidation : public QObject
 public:
     explicit FormValidation(QObject *parent = 0);
     bool isInteger(QString value);
-    bool intRequired(QString value);
-    bool textRequired(QString value,int len);
+    //bool intRequired(QString value);
+    //bool isTextRequired(QString value,int len);
     bool emailValid(QString value);
     int uniqueValid(QString id, QString value, QString table, QString column);
+    bool isDouble(QString value);
+    //bool isRequired(QString value);
 
 signals:
 

@@ -11,7 +11,7 @@ bool FormValidation::isInteger(QString value)
     int pos=0;
     bool status = false;
     if(value.length() > 0){
-        QIntValidator v(1,10000,this);
+        QIntValidator v(1,1000000,this);
         qint8 vState= v.validate(value,pos);
         if(vState==2){
             status = true;
@@ -20,7 +20,7 @@ bool FormValidation::isInteger(QString value)
     return status;
 }
 
-bool FormValidation::intRequired(QString value)
+/*bool FormValidation::intRequired(QString value)
 {
     int pos=0;
     QIntValidator v(1,10000,this);
@@ -41,7 +41,7 @@ bool FormValidation::textRequired(QString value,int len)
         status = true;
     }
     return status;
-}
+}*/
 
 bool FormValidation::emailValid(QString value)
 {
@@ -50,11 +50,9 @@ bool FormValidation::emailValid(QString value)
     mailREX.setCaseSensitivity(Qt::CaseInsensitive);
     mailREX.setPatternSyntax(QRegExp::RegExp);
     qint8 vState= mailREX.exactMatch(value);
-    qDebug() << vState;
+    //qDebug() << vState;
     if(vState==1)
         status = true;
-    else
-        status = false;
     return status;
 }
 
@@ -74,4 +72,16 @@ int FormValidation::uniqueValid(QString id, QString value, QString table ,QStrin
     query.exec(queryText);
     size = query.size();
     return size;
+}
+
+bool FormValidation::isDouble(QString value)
+{
+    int pos = 0;
+    bool status=false;
+    QDoubleValidator *isDoubleValid = new QDoubleValidator(this);
+    isDoubleValid->setRange(0.00 , 1000000.00, 2);
+    qint8 state = rsvalidate->validate(value,pos);
+    if(state==2)
+        status=true;
+    return status;
 }
