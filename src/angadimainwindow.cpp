@@ -54,6 +54,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     showRightDock(false);
     ui->rightDock->setWidget(lssbar);
 
+
     //Set dynamic properties
     //TODO : Move the properties as ENUM insted of string
     ui->actionCreateCategory->setProperty("tabName","category");

@@ -32,6 +32,19 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QTextEdit" name="flashMsgUp">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -188,6 +201,19 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="flashMsgDown">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:transparent;</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
