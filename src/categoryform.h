@@ -29,6 +29,7 @@ public:
     void search(QString value);
     QDateTime modifiedDate() const;
     void setModifiedDate(QDateTime modifiedDate);
+    void clear();
 
 signals:
     void signalName(QString str);
@@ -40,7 +41,6 @@ private:
     Ui::CategoryForm *ui;
     CategoriesModel *categoriesModel;
     QDataWidgetMapper *dataMapper;
-    void clear();
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
 
@@ -56,7 +56,7 @@ private slots:
     bool uniqueValid(QString text, QString field);
     void setSignalFromCategoryForm();
     void setFieldMaxLength();
-    void unsetStyles();
+    void resetDataMapper();
 };
 
 #endif // CategoryForm_H
