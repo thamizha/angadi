@@ -27,12 +27,16 @@
 #include "ui_customerform.h"
 
 #include <QDateTime>
+#include <QMessageBox>
+#include <QPalette>
 
 CustomerForm::CustomerForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CustomerForm)
 {
     ui->setupUi(this);
+
+    formValidation = new FormValidation;
 
     ui->pushButtonSave->setText("Update");
 
@@ -216,4 +220,25 @@ void CustomerForm::hideValidationErrors()
 void CustomerForm::setSignalFromCustomerForm()
 {
     emit signalFromCustomerForm();
+}
+
+void CustomerForm::on_lineEditCode_editingFinished()
+{
+    bool status = formValidation->textValid(ui->lineEditCode->text(),3);
+    if(status == false){
+        ui->lineEditCode->setProperty("validationError",true);
+//        ui->lineEditCode->setStyleSheet("background-color : red");
+    }else{
+//        ui->lineEditCode->setStyleSheet("");
+    }
+}
+
+void CustomerForm::on_lineEditName_editingFinished()
+{
+    bool status = formValidation->textValid(ui->lineEditName->text(),200);
+    if(status == false){
+//        ui->lineEditName->setStyleSheet("background-color : red");
+    }else{
+//        ui->lineEditName->setStyleSheet("");
+    }
 }

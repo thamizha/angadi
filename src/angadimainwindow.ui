@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Angadi</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*[validationError=\&quot;true\&quot;] { background-color: red; color : white }</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">

@@ -26,8 +26,9 @@
 #ifndef CUSTOMERFORM_H
 #define CUSTOMERFORM_H
 
-#include "models/customersmodel.h"
 #include "lssbar.h"
+#include "models/customersmodel.h"
+#include "models/formvalidation.h"
 
 #include <QWidget>
 #include <QDataWidgetMapper>
@@ -47,6 +48,7 @@ class CustomerForm : public QWidget
 public:
     explicit CustomerForm(QWidget *parent = 0);
     ~CustomerForm();
+    FormValidation *formValidation;
     void setCodeFocus();
     void setModel(CustomersModel *model);
     void setMapperIndex(QModelIndex index);
@@ -74,6 +76,8 @@ private slots:
     void hideValidationErrors();
     void setSignalFromCustomerForm();
 
+    void on_lineEditCode_editingFinished();
+    void on_lineEditName_editingFinished();
 };
 
 #endif // CUSTOMERFORM_H
