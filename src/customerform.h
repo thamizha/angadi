@@ -35,6 +35,7 @@
 #include <QDateTime>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QSqlRecord>
 
 namespace Ui {
 class CustomerForm;
@@ -75,10 +76,10 @@ private slots:
     void onNameChanged(QString str);
     void hideValidationErrors();
     void setSignalFromCustomerForm();
-    void uniqueValid(QString text, QString field);
+    bool uniqueValid(QString text, QString field);
 
-    void on_lineEditCode_editingFinished();
-    void on_lineEditName_editingFinished();
+    bool on_lineEditCode_editingFinished();
+    bool on_lineEditName_editingFinished();
 };
 
 #endif // CUSTOMERFORM_H

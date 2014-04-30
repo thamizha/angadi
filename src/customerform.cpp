@@ -222,12 +222,12 @@ void CustomerForm::setSignalFromCustomerForm()
     emit signalFromCustomerForm();
 }
 
-void CustomerForm::on_lineEditCode_editingFinished()
+bool CustomerForm::on_lineEditCode_editingFinished()
 {
     bool status = false;
     if(ui->lineEditCode->text()!=0)
     {
-        if (uniqueValid(ui->lineEditCode->text(),"code"))
+        if(uniqueValid(ui->lineEditCode->text(),"code"))
         {
             ui->lineEditCode->setProperty("validationError",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
@@ -252,7 +252,7 @@ void CustomerForm::on_lineEditCode_editingFinished()
     return status;
 }
 
-void CustomerForm::on_lineEditName_editingFinished()
+bool CustomerForm::on_lineEditName_editingFinished()
 {
     bool status= false;
     if(ui->lineEditName->text()!=0)
@@ -292,7 +292,7 @@ bool CustomerForm::uniqueValid(QString text, QString field)
         id = "0";
     else
     {
-        cRecord=productsModel->record(dataMapper->currentIndex());
+        cRecord=customersModel->record(dataMapper->currentIndex());
         id = cRecord.value("id").toString();
     }
     int count = formValidation.uniqueValid(id,text,"customers",field);

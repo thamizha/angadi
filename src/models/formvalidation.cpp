@@ -80,7 +80,7 @@ bool FormValidation::isDouble(QString value)
     bool status=false;
     QDoubleValidator *isDoubleValid = new QDoubleValidator(this);
     isDoubleValid->setRange(0.00 , 1000000.00, 2);
-    qint8 state = rsvalidate->validate(value,pos);
+    qint8 state = isDoubleValid->validate(value,pos);
     if(state==2)
         status=true;
     return status;
