@@ -57,6 +57,7 @@ public:
     QDateTime modifiedDate();
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
+    int validCodeFlag, validNameFlag, validEmailFlag;
 
 signals:
     void signalName(QString str);
@@ -71,7 +72,6 @@ private:
 
 private slots:
     void save();
-    void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void onNameChanged(QString str);
     void hideValidationErrors();
@@ -82,6 +82,8 @@ private slots:
     bool on_lineEditName_editingFinished();
     bool on_lineEditEmail_editingFinished();
     void uninstallEventFilter();
+    void enableSave();
+    void setFieldMaxLength();
 };
 
 #endif // CUSTOMERFORM_H
