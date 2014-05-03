@@ -301,17 +301,28 @@ void AngadiMainWindow::onTabChanged(int index){
 void AngadiMainWindow::doubleClicked(QModelIndex index)
 {
     if(currentTab == "category"){
-        categoryForm->setMapperIndex(index);
-        categoryForm->setCodeFocus();
+        if(index.row() >= 0){
+            categoryForm->setMapperIndex(index);
+            categoryForm->setCodeFocus();
+        }else{
+            categoryForm->setNameFocus();
+        }
 
      }else if(currentTab == "product"){
-        productForm->setMapperIndex(index);
-        productForm->setCodeFocus();
+        if(index.row() >= 0){
+            productForm->setMapperIndex(index);
+            productForm->setCodeFocus();
+        }else{
+            productForm->setNameFocus();
+        }
 
      }else if(currentTab == "customer"){
-        customerForm->setMapperIndex(index);
-        customerForm->setCodeFocus();
-
+        if(index.row() >= 0){
+            customerForm->setMapperIndex(index);
+            customerForm->setCodeFocus();
+        }else{
+            customerForm->setNameFocus();
+        }
      }
 }
 
@@ -353,9 +364,10 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
 {
     if(currentTab == "category"){
         QModelIndex proxyIndex,index; //intialize the model index
-        qint8 rowCount = categoriesProxyModel->rowCount(); // get the proxy model total row count
+        //qint8 rowCount = categoriesProxyModel->rowCount(); // get the proxy model total row count
+        qint8 rowCount = categoriesModel->rowCount(); // get the proxy model total row count
         if(indexOffset < 0) // if the index model is less than 0, mark the index to the last row
-            indexOffset=rowCount-1;
+            indexOffset = rowCount-1;
         else if(indexOffset > rowCount-1) // if the indexmodel is greater than row count reset it to zero
             indexOffset = 0;
         else
@@ -368,7 +380,8 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
 
      }else if(currentTab == "product"){
         QModelIndex proxyIndex,index; //intialize the model index
-        qint8 rowCount = productsProxyModel->rowCount(); // get the proxy model total row count
+        //qint8 rowCount = productsProxyModel->rowCount(); // get the proxy model total row count
+        qint8 rowCount = productsModel->rowCount(); // get the proxy model total row count
         if(indexOffset < 0) // if the index model is less than 0, mark the index to the last row
             indexOffset=rowCount-1;
         else if(indexOffset > rowCount-1) // if the indexmodel is greater than row count reset it to zero
@@ -383,7 +396,8 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
 
      }else if(currentTab == "customer"){
         QModelIndex proxyIndex,index; //intialize the model index
-        qint8 rowCount = customersProxyModel->rowCount(); // get the proxy model total row count
+        //qint8 rowCount = customersProxyModel->rowCount(); // get the proxy model total row count
+        qint8 rowCount = customersModel->rowCount(); // get the proxy model total row count
         if(indexOffset < 0) // if the index model is less than 0, mark the index to the last row
             indexOffset=rowCount-1;
         else if(indexOffset > rowCount-1) // if the indexmodel is greater than row count reset it to zero

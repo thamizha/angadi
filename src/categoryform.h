@@ -24,6 +24,7 @@ public:
     explicit CategoryForm(QWidget *parent = 0);
     ~CategoryForm();
     void setCodeFocus();
+    void setNameFocus();
     void setModel(CategoriesModel *model);
     void setMapperIndex(QModelIndex index);
     void search(QString value);

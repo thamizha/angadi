@@ -83,21 +83,19 @@ void CategoryForm::save()
     msgBox.setDefaultButton(QMessageBox::Ok);
 
     // validate code field
-    if(!CategoryForm::codeValid())
-    {
-        validError=1;
-        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000 or this code already exit");
+    if(!CategoryForm::codeValid()){
+        validError = 1;
+        errors.append("\nThe Category Code field may be empty or already exit");
     }
 
     // validate name field
-    if(!CategoryForm::nameValid())
-    {
-        validError=1;
-        errors.append("\n\nThe Category Name field may be empty or exceeds the limit 20 characters or this name already exit");
+    if(!CategoryForm::nameValid()){
+        validError = 1;
+        errors.append("\n\nThe Category Name field may be empty or already exit");
     }
 
     // save the form if there is no errors
-    if(validError==0){
+    if(validError == 0){
         bool status;
 
         if(dataMapper->currentIndex() < 0){
@@ -145,6 +143,12 @@ void CategoryForm::setCodeFocus()
     ui->lineEditCode->selectAll();
 }
 
+void CategoryForm::setNameFocus()
+{
+    ui->lineEditName->setFocus();
+    ui->lineEditName->selectAll();
+}
+
 void CategoryForm::clear()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
@@ -182,7 +186,7 @@ bool CategoryForm::codeValid(){
             validCodeFlag = 1;
             status = true;
         }else{
-            flashMsg = "This Code has been already taken. Please select some other names.";
+            flashMsg = "This Code has been already taken. Please give some other code.";
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
@@ -216,7 +220,7 @@ bool CategoryForm::nameValid(){
             validNameFlag = 1;
         }else{
             status = false;
-            flashMsg = "This Name has been already taken. Please select some other names.";
+            flashMsg = "This Name has been already taken. Please give some other name.";
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
@@ -301,14 +305,9 @@ void CategoryForm::on_pushButtonDelete_clicked()
         record.setValue("modifiedDate", datetime);
         categoriesModel->setRecord(dataMapper->currentIndex(), record);
         categoriesModel->submit();
-
         categoriesModel->select();
-        dataMapper->toNext();
 
-        if(categoriesModel->rowCount() <= 0){
-            clear();
-            this->ui->pushButtonSave->setEnabled(false);
-        }
+        on_pushButtonCancel_clicked();
     }else{
         QMessageBox msgBox;
         msgBox.setText("Products found under this category. Cannot delete!!!");
@@ -353,14 +352,11 @@ void CategoryForm::resetDataMapper()
 
 bool CategoryForm::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == ui->lineEditCode)
-    {
+    if (obj == ui->lineEditCode){
         if(event->type() == QEvent::FocusIn)
             CategoryForm::codeValid();
         return false;
-    }
-    else if (obj == ui->lineEditName)
-    {
+    }else if (obj == ui->lineEditName){
         if(event->type() == QEvent::FocusIn)
             CategoryForm::nameValid();
         return false;

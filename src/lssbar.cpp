@@ -63,9 +63,9 @@ void Lssbar::setupUi()
     this->setLayout(vBox);
 
     connect(lineEditSearch,SIGNAL(textChanged(QString)),this,SLOT(search(QString)));
+    connect(lineEditSearch,SIGNAL(returnPressed()),this,SLOT(returnKeyPressed()));
     connect(tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(tableView,SIGNAL(activated(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
-    connect(lineEditSearch,SIGNAL(returnPressed()),this,SLOT(returnKeyPressed()));
     //connect(tableView->horizontalHeader(),SIGNAL(sectionClicked(int)), tableView, SLOT(sortByColumn(int)));
     connect(tableView->horizontalHeader(),SIGNAL(sectionClicked(int)), tableView, SLOT(sortByColumn(int)));
 }
@@ -133,14 +133,27 @@ bool Lssbar::eventFilter(QObject *obj, QEvent *event)
             QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event); //if it is keypress event in lineedit search assign a new keyevent variable
             if (keyEvent->key() == Qt::Key_Up) //to check if the keyevent is up
             {
-                indexOffset=indexOffset-1; //offset the index by -1
-                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+//                indexOffset = indexOffset - 1; //offset the index by -1
+//                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+                int currIndex = tableView->currentIndex().row() - 1;
+                if(currIndex < 0){
+                    setFilterSelect(tableView->model()->index(0,0),0);
+                }else{
+                    setFilterSelect(tableView->model()->index(currIndex,0),0);
+                }
                 return true;
             }
             else if(keyEvent->key() == Qt::Key_Down) // to check if the keyevent is down arrow
             {
-                indexOffset=indexOffset+1; //offset the index by +1
-                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+//                indexOffset = indexOffset + 1; //offset the index by +1
+//                emit signalMoveUpDown(indexOffset); //emit the signal moveup/down
+                int currIndex = tableView->currentIndex().row() + 1;
+                int modelRowCount = tableView->model()->rowCount() - 1;
+                if(currIndex > modelRowCount){
+                    setFilterSelect(tableView->model()->index(modelRowCount,0),0);
+                }else{
+                    setFilterSelect(tableView->model()->index(currIndex,0),0);
+                }
                 return true;
             }
         }

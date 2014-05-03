@@ -48,6 +48,7 @@ public:
     explicit ProductForm(QWidget *parent = 0);
     ~ProductForm();
     void setCodeFocus();
+    void setNameFocus();
     void setModel(ProductsModel *model);
     void setMapperIndex(QModelIndex index);
     void search(QString value);

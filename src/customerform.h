@@ -49,6 +49,7 @@ public:
     explicit CustomerForm(QWidget *parent = 0);
     ~CustomerForm();
     void setCodeFocus();
+    void setNameFocus();
     void setModel(CustomersModel *model);
     void setMapperIndex(QModelIndex index);
     void search(QString value);

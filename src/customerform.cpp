@@ -120,7 +120,7 @@ void CustomerForm::save()
     }
 
     // save the form if there is no errors
-    if(validError==0){
+    if(validError == 0){
         bool status = false;
 
         if(dataMapper->currentIndex() < 0){
@@ -183,6 +183,12 @@ void CustomerForm::setCodeFocus()
     ui->lineEditCode->selectAll();
 }
 
+void CustomerForm::setNameFocus()
+{
+    ui->lineEditName->setFocus();
+    ui->lineEditName->selectAll();
+}
+
 void CustomerForm::clear()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
@@ -228,17 +234,17 @@ void CustomerForm::setModel(CustomersModel *model){
 // function to validate code field
 bool CustomerForm::codeValid(){
     bool status = false;
+    QString flashMsg = "";
     ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text().length() > 0){
         if(uniqueValid(ui->lineEditCode->text(), "code")){
-            ui->flashMsgUp->setText("");
             ui->lineEditCode->setProperty("validationError",false);
             ui->lineEditCode->setProperty("validationSuccess",true);
             ui->lineEditCode->setStyleSheet(styleSheet());
             validCodeFlag = 1;
             status = true;
         }else{
-            ui->flashMsgUp->setText("This Code has been already taken. Please give some other code.");
+            flashMsg = "This Code has been already taken. Please give some other code.";
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
@@ -246,13 +252,14 @@ bool CustomerForm::codeValid(){
             status = false;
         }
     }else{
-        ui->flashMsgUp->setText("Code field is empty. Please give some values.");
+        flashMsg = "Code field is empty. Please give some values.";
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
         validCodeFlag = 0;
         status = false;
     }
+    ui->flashMsgUp->setText(flashMsg);
     enableSave();
     return status;
 }
@@ -409,6 +416,8 @@ void CustomerForm::on_pushButtonDelete_clicked()
     customersModel->setRecord(dataMapper->currentIndex(), record);
     customersModel->submitAll();
     customersModel->select();
+
+    on_pushButtonCancel_clicked();
 }
 
 QDateTime CustomerForm::modifiedDate()

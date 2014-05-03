@@ -82,7 +82,7 @@ ProductForm::~ProductForm()
 
 void ProductForm::enableSave()
 {
-    if(validCodeFlag == 1 && validNameFlag == 1)
+    if(validCodeFlag == 1 && validNameFlag == 1 && validMrpFlag == 1 && validSalePriceFlag == 1 && validWholeSalePrice == 1)
         ui->pushButtonSave->setEnabled(true);
     else
         ui->pushButtonSave->setEnabled(false);
@@ -105,31 +105,31 @@ void ProductForm::save()
     // validate code field
     if(!ProductForm::codeValid()){
         validError = 1;
-        errors.append("\nThe Category Code field may be empty or contains text or greater than 10000 or this code already exist");
+        errors.append("\nThe Category Code field may be empty or already exist");
     }
 
     // Validate Name field
     if(!ProductForm::nameValid()){
         validError = 1;
-        errors.append("\nThe Name field may be empty or exceed the 20 characters limit or this name already exist");
+        errors.append("\nThe Name field may be empty or already exist");
     }
 
     //Validate Mrp field
     if(!ProductForm::mrpValid()){
         validError = 1;
-        errors.append("\nThe MRP field may be empty or contains text or greater than 10000");
+        errors.append("\nThe MRP field may be empty or not a number");
     }
 
     //Validate Sale Price field
     if(!ProductForm::salePriceValid()){
         validError = 1;
-        errors.append("\nThe Sale Price field may be empty or contains text or greater than 10000");
+        errors.append("\nThe Sale Price field may be empty or not a number");
     }
 
     //Validate Whole Sale Price field
     if(!ProductForm::wholeSalePriceValid()){
         validError = 1;
-        errors.append("\nThe Whole Sale Price field may be empty or contains text or greater than 10000");
+        errors.append("\nThe Whole Sale Price field may be empty or not a number");
     }
 
     // save the form if there is no errors
@@ -198,6 +198,12 @@ void ProductForm::setCodeFocus(){
     ui->lineEditCode->selectAll();
 }
 
+void ProductForm::setNameFocus()
+{
+    ui->lineEditName->setFocus();
+    ui->lineEditName->selectAll();
+}
+
 void ProductForm::clear(){
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->clear();
@@ -243,7 +249,7 @@ bool ProductForm::codeValid(){
             validCodeFlag = 1;
             status = true;
         }else{
-            flashMsg = "This Product Code has been already taken. Please select some other code for this Product.";
+            flashMsg = "This Product Code has been already taken. Please give some other code.";
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
@@ -251,7 +257,7 @@ bool ProductForm::codeValid(){
             status = false;
         }
     }else{
-        flashMsg = "Product Code is empty. Please select any code for this Product.";
+        flashMsg = "Product Code is empty. Please give code.";
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
@@ -276,7 +282,7 @@ bool ProductForm::nameValid(){
             validNameFlag = 1;
             status= true;
         }else{
-            flashMsg = "This Product Name has been already taken. Please select some other name for this Product.";
+            flashMsg = "This Product Name has been already taken. Please give some other name.";
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
@@ -284,7 +290,7 @@ bool ProductForm::nameValid(){
             status= false;
         }
     }else{
-        flashMsg = "Product Name is empty. Please select any name for this Product.";
+        flashMsg = "Product Name is empty. Please give name.";
         ui->lineEditName->setProperty("validationError",true);
         ui->lineEditName->setProperty("validationSuccess",false);
         ui->lineEditName->setStyleSheet(styleSheet());
@@ -309,7 +315,7 @@ bool ProductForm::mrpValid(){
             validMrpFlag = 1;
             status = true;
         }else{
-            flashMsg = "Mrp is not a number. You have to fix some price for this Product in number.";
+            flashMsg = "Mrp is not a number. Please fix the price for this Product in number.";
             ui->lineEditMrp->setProperty("validationError",true);
             ui->lineEditMrp->setProperty("validationSuccess",false);
             ui->lineEditMrp->setStyleSheet(styleSheet());
@@ -317,7 +323,7 @@ bool ProductForm::mrpValid(){
             status = false;
         }
     }else{
-        flashMsg = "Mrp field is empty. You have to fix some price for this Product.";
+        flashMsg = "Mrp field is empty. Please fix the some price.";
         ui->lineEditMrp->setProperty("validationError",true);
         ui->lineEditMrp->setProperty("validationSuccess",false);
         ui->lineEditMrp->setStyleSheet(styleSheet());
@@ -343,7 +349,7 @@ bool ProductForm::salePriceValid(){
                 validSalePriceFlag = 1;
                 status = true;
             }else{
-                flashMsg = "Sale Price is not a number. You have to fix price in number.";
+                flashMsg = "Sale Price is not a number. Please fix the sale price for this Product in number.";
                 ui->lineEditSalePrice->setProperty("validationError",true);
                 ui->lineEditSalePrice->setProperty("validationSuccess",false);
                 ui->lineEditSalePrice->setStyleSheet(styleSheet());
@@ -352,7 +358,7 @@ bool ProductForm::salePriceValid(){
             }
         }
     }else{
-        flashMsg = "Sale Price is empty. You have to fix some price for this Product.";
+        flashMsg = "Sale Price is empty. Please fix the sale price.";
         ui->lineEditSalePrice->setProperty("validationError",true);
         ui->lineEditSalePrice->setProperty("validationSuccess",false);
         ui->lineEditSalePrice->setStyleSheet(styleSheet());
@@ -378,7 +384,7 @@ bool ProductForm::wholeSalePriceValid(){
                 validWholeSalePrice = 1;
                 status = true;
             }else{
-                flashMsg = "Whole Sale Price is not a number. Please fix the price in number.";
+                flashMsg = "Whole Sale Price is not a number. Please fix the whole sale price for this Product in number.";
                 ui->lineEditWholeSalePrice->setProperty("validationError",true);
                 ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
                 ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
@@ -386,7 +392,7 @@ bool ProductForm::wholeSalePriceValid(){
                 status = false;
             }
         }else{
-            flashMsg = "Whole Sale Price is empty. Please fix the price in number.";
+            flashMsg = "Whole Sale Price is empty. Please fix the whole sale price.";
             ui->lineEditWholeSalePrice->setProperty("validationError",true);
             ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
             ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
@@ -458,6 +464,8 @@ void ProductForm::on_pushButtonDelete_clicked()
     productsModel->setRecord(dataMapper->currentIndex(),record);
     productsModel->submitAll();
     productsModel->select();
+
+    on_pushButtonCancel_clicked();
 }
 
 QDateTime ProductForm::modifiedDate() const
