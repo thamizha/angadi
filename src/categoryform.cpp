@@ -250,6 +250,7 @@ void CategoryForm::setMapperIndex(QModelIndex index)
 {
 //    this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
+    setAllValidationSuccess();
 }
 
 void CategoryForm::search(QString value)
@@ -371,4 +372,13 @@ void CategoryForm::uninstallEventFilter()
     ui->lineEditCode->removeEventFilter(this);
     ui->lineEditName->removeEventFilter(this);
     ui->flashMsgUp->clear();
+}
+
+void CategoryForm::setAllValidationSuccess()
+{
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->setProperty("validationError",false);
+        widget->setProperty("validationSuccess",true);
+        widget->setStyleSheet(styleSheet());
+    }
 }

@@ -158,8 +158,9 @@ void CustomerForm::clear()
 
 void CustomerForm::setMapperIndex(QModelIndex index)
 {
-    this->ui->pushButtonSave->setText("Update");
+//    this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
+    setAllValidationSuccess();
 }
 
 void CustomerForm::search(QString value)
@@ -369,4 +370,13 @@ void CustomerForm::uninstallEventFilter()
     ui->lineEditName->removeEventFilter(this);
     ui->lineEditEmail->removeEventFilter(this);
     ui->flashMsgUp->clear();
+}
+
+void CustomerForm::setAllValidationSuccess()
+{
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->setProperty("validationError",false);
+        widget->setProperty("validationSuccess",true);
+        widget->setStyleSheet(styleSheet());
+    }
 }

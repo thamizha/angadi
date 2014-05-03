@@ -61,6 +61,7 @@ private slots:
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();
     void uninstallEventFilter();
+    void setAllValidationSuccess();
 };
 
 #endif // CategoryForm_H

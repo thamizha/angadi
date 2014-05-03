@@ -392,8 +392,9 @@ bool ProductForm::wholeSalePriceValid(){
 
 void ProductForm::setMapperIndex(QModelIndex index)
 {
-    this->ui->pushButtonSave->setText("Update");
+//    this->ui->pushButtonSave->setText("Update");
     dataMapper->setCurrentIndex(index.row());
+    setAllValidationSuccess();
 }
 
 void ProductForm::on_pushButtonCancel_clicked()
@@ -507,4 +508,13 @@ void ProductForm::uninstallEventFilter()
     ui->lineEditSalePrice->removeEventFilter(this);
     ui->lineEditWholeSalePrice->removeEventFilter(this);
     ui->flashMsgUp->clear();
+}
+
+void ProductForm::setAllValidationSuccess()
+{
+    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+        widget->setProperty("validationError",false);
+        widget->setProperty("validationSuccess",true);
+        widget->setStyleSheet(styleSheet());
+    }
 }
