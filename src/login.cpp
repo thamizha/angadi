@@ -21,20 +21,25 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_pushButtonEnter_clicked()
 {
-//    QByteArray inputPassword = ui->lineEditPassword->text().toUtf8().left(1000);
-//    QByteArray password = QString(QCryptographicHash::hash((inputPassword),QCryptographicHash::Md5)).toUtf8().left(1000);
-//    qDebug() << password.toHex();
-//    QSqlQueryModel model;
-//    QSqlQuery query;
-//    query.prepare("Select * from users where username=:username and password=:password");
-//    query.bindValue(":username", ui->lineEditUsername->text().trimmed());
-//    query.bindValue(":password", password);
-//    query.exec();
-//    model.setQuery(query);
+    QCryptographicHash hash(QCryptographicHash::Md5);
+    hash.addData(ui->lineEditPassword->text().toUtf8());
 
-//    if(model.rowCount() > 0){
+    QSqlQueryModel model;
+    QSqlQuery query;
+    query.prepare("Select * from users where username=:username and password=:password");
+    query.bindValue(":username", ui->lineEditUsername->text().trimmed());
+    query.bindValue(":password", hash.result().toHex());
+    query.exec();
+    model.setQuery(query);
+
+    if(model.rowCount() > 0){
         emit loggedIn();
-//    }else{
-//        qDebug() << "Login Failed";
-//    }
+    }else{
+        qDebug() << "Login Failed";
+    }
+}
+
+void LoginDialog::on_pushButtonExit_clicked()
+{
+    emit exitApp();
 }

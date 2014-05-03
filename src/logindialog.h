@@ -17,9 +17,11 @@ public:
 
 signals:
     void loggedIn();
+    void exitApp();
 
 private slots:
     void on_pushButtonEnter_clicked();
+    void on_pushButtonExit_clicked();
 
 private:
     Ui::LoginDialog *ui;
