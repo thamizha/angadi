@@ -24,6 +24,7 @@
  *****************************************************************************/
 
 #include "productsmodel.h"
+#include "connection.h"
 
 ProductsModel::ProductsModel(QObject *parent) :
     QSqlRelationalTableModel(parent)

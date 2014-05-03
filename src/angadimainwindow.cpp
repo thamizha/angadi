@@ -150,6 +150,7 @@ void AngadiMainWindow::openCategoryTab()
     connect(categoryForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(categoryForm,SIGNAL(signalFromCategoryForm()),lssbar,SLOT(setSearchFocus()));
 
+    setupModels();
     categoryForm->setModel(categoriesModel);
     categoryForm->clear();
     ui->mainTab->setCurrentWidget (categoryForm);
@@ -174,6 +175,7 @@ void AngadiMainWindow::openProductTab()
     connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
 
+    setupModels();
     productForm->setModel(productsModel);
     productForm->clear();
     ui->mainTab->setCurrentWidget (productForm);
@@ -199,6 +201,7 @@ void AngadiMainWindow::openCustomerTab()
     connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
 
+    setupModels();
     customerForm->setModel(customersModel);
     customerForm->clear();
     ui->mainTab->setCurrentWidget (customerForm);
@@ -269,6 +272,7 @@ void AngadiMainWindow::showRightDock(bool state)
 }
 
 void AngadiMainWindow::onTabChanged(int index){
+    setupModels();
     QWidget *widget = ui->mainTab->widget(index);
     QString tabName = widget->property("name").toString();
 
