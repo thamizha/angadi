@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>634</width>
-    <height>634</height>
+    <height>686</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -38,15 +38,21 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QTextEdit" name="flashMsgUp">
+        <widget class="QLabel" name="flashMsgUp">
          <property name="maximumSize">
           <size>
            <width>600</width>
-           <height>80</height>
+           <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background:transparent;	</string>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -415,19 +421,6 @@
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButtonAdd">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>450</y>
-            <width>80</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_13">
           <property name="geometry">
            <rect>
@@ -754,19 +747,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="flashMsgDown">
-         <property name="maximumSize">
-          <size>
-           <width>600</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background:transparent;</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>

@@ -38,7 +38,11 @@ CustomerForm::CustomerForm(QWidget *parent) :
 
     formValidation = new FormValidation;
 
-    ui->pushButtonSave->setText("Update");
+    validCodeFlag = validNameFlag = 0;
+    validEmailFlag = 1;
+
+    ui->pushButtonDelete->setEnabled(false);
+    ui->pushButtonSave->setEnabled(false);
 
     // populate customer type combo box
     ui->comboBoxType->addItem("Retailer");
@@ -55,6 +59,9 @@ CustomerForm::CustomerForm(QWidget *parent) :
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+
+    setFieldMaxLength();
+
 }
 
 CustomerForm::~CustomerForm()
@@ -66,6 +73,14 @@ void CustomerForm::setCodeFocus()
 {
 //    ui->lineEditCode->setFocus();
     ui->lineEditName->setFocus();
+}
+
+void CustomerForm::enableSave()
+{
+    if(validCodeFlag == 1 && validEmailFlag == 1 && validNameFlag == 1)
+        ui->pushButtonSave->setEnabled(true);
+    else
+        ui->pushButtonSave->setEnabled(false);
 }
 
 void CustomerForm::save()
@@ -170,20 +185,8 @@ void CustomerForm::search(QString value)
     customersModel->selectRow(1);
 }
 
-void CustomerForm::on_pushButtonAdd_clicked()
-{
-    this->ui->pushButtonSave->setText("Save");
-
-    ui->pushButtonAdd->setEnabled(false);
-    ui->pushButtonDelete->setEnabled(false);
-
-    clear();
-    setCodeFocus();
-}
-
 void CustomerForm::on_pushButtonCancel_clicked()
 {
-    ui->pushButtonAdd->setEnabled(true);
     ui->pushButtonDelete->setEnabled(true);
 
     if(this->ui->pushButtonSave->text() == "Save"){
@@ -236,6 +239,7 @@ bool CustomerForm::on_lineEditCode_editingFinished()
             ui->lineEditCode->setStyleSheet(styleSheet());
             //ui->labelCodeValid->hide();
             status = true;
+            validCodeFlag = 1;
         }
         else
         {
@@ -244,6 +248,7 @@ bool CustomerForm::on_lineEditCode_editingFinished()
             ui->lineEditCode->setStyleSheet(styleSheet());
             //ui->labelCodeValid->show();
             status = false;
+            validCodeFlag = 0;
         }
     }
     else
@@ -253,7 +258,9 @@ bool CustomerForm::on_lineEditCode_editingFinished()
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setStyleSheet(styleSheet());
         status = false;
+        validCodeFlag = 0;
     }
+    enableSave();
     return status;
 }
 
@@ -269,6 +276,7 @@ bool CustomerForm::on_lineEditName_editingFinished()
             ui->lineEditName->setStyleSheet(styleSheet());
             //ui->labelNameValid->hide();
             status= true;
+            validNameFlag = 1;
         }
         else
         {
@@ -277,6 +285,7 @@ bool CustomerForm::on_lineEditName_editingFinished()
             ui->lineEditName->setStyleSheet(styleSheet());
             //ui->labelNameValid->show();
             status= false;
+            validNameFlag = 0;
         }
     }
     else
@@ -286,7 +295,9 @@ bool CustomerForm::on_lineEditName_editingFinished()
         ui->lineEditName->setStyleSheet(styleSheet());
         //ui->labelNameValid->show();
         status= false;
+        validNameFlag = 0;
     }
+    enableSave();
     return status;
 }
 
@@ -348,19 +359,23 @@ bool CustomerForm::on_lineEditEmail_editingFinished()
             ui->lineEditEmail->setProperty("validationSuccess",true);
             ui->lineEditEmail->setStyleSheet(styleSheet());
             status = true;
+            validEmailFlag = 1;
         }else{
             ui->flashMsgUp->setText("This is not a valid Email Address");
             ui->lineEditEmail->setProperty("validationError",true);
             ui->lineEditEmail->setProperty("validationSuccess",false);
             ui->lineEditEmail->setStyleSheet(styleSheet());
             status = false;
+            validEmailFlag = 0;
         }
     }else{
         ui->lineEditEmail->setProperty("validationError",false);
         ui->lineEditEmail->setProperty("validationSuccess",true);
         ui->lineEditEmail->setStyleSheet(styleSheet());
         status = false;
+        validEmailFlag = 1;
     }
+    enableSave();
     return status;
 }
 
@@ -370,6 +385,12 @@ void CustomerForm::uninstallEventFilter()
     ui->lineEditName->removeEventFilter(this);
     ui->lineEditEmail->removeEventFilter(this);
     ui->flashMsgUp->clear();
+}
+
+void CustomerForm::setFieldMaxLength()
+{
+    ui->lineEditCode->setMaxLength(100);
+    ui->lineEditName->setMaxLength(200);
 }
 
 void CustomerForm::setAllValidationSuccess()

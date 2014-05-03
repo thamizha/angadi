@@ -31,6 +31,7 @@ public:
     QDateTime modifiedDate() const;
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
+    int validNameFlag , validCodeFlag;
 
 signals:
     void signalName(QString str);
@@ -47,7 +48,7 @@ private:
 
 private slots:
     void save();
-    void save1();
+    void enableSave();
     bool codeValid();
     bool nameValid();
     void on_pushButtonAdd_clicked();

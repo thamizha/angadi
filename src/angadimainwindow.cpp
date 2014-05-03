@@ -359,8 +359,9 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
         else
             indexOffset = indexOffset;
 
-        proxyIndex = categoriesProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
-        index = categoriesProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
+        index = categoriesModel->index(indexOffset,0);
+        //proxyIndex = categoriesProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
+        //index = categoriesProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
         lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }else if(currentTab == "product"){
@@ -373,8 +374,9 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
         else
             indexOffset = indexOffset;
 
-        proxyIndex = productsProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
-        index = productsProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
+        index = productsModel->index(indexOffset,0);
+        //proxyIndex = productsProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
+        //index = productsProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
         lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }else if(currentTab == "customer"){
@@ -387,8 +389,9 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
         else
             indexOffset = indexOffset;
 
-        proxyIndex = customersProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
-        index = customersProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
+        index = customersModel->index(indexOffset,0);
+        //proxyIndex = customersProxyModel->index(indexOffset,0); //move the index to the proxy model row specified by offset
+        //index = customersProxyModel->mapToSource(proxyIndex); //get the source index of the current proxy model index
         lssbar->setFilterSelect(index,indexOffset); // set the selection to the current source index
 
      }
