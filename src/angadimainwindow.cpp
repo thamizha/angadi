@@ -153,6 +153,7 @@ void AngadiMainWindow::openCategoryTab()
     categoryForm->setModel(categoriesModel);
     categoryForm->clear();
     ui->mainTab->setCurrentWidget (categoryForm);
+    categoryForm->setFieldMaxLength();
 //    categoryForm->setCodeFocus();
 
 //    lssbar->setModel(categoriesModel);
@@ -201,6 +202,7 @@ void AngadiMainWindow::openCustomerTab()
     customerForm->setModel(customersModel);
     customerForm->clear();
     ui->mainTab->setCurrentWidget (customerForm);
+    customerForm->setFieldMaxLength();
 //    customerForm->setCodeFocus();
 
 //    lssbar->setModel(customersModel);

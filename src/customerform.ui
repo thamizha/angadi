@@ -177,7 +177,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Cancel</string>
+           <string>Clear</string>
           </property>
           <property name="default">
            <bool>false</bool>
@@ -367,6 +367,9 @@
             <width>371</width>
             <height>51</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
          </widget>
          <widget class="QLabel" name="label_16">

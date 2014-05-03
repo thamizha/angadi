@@ -26,6 +26,7 @@
 
 #include "categoryform.h"
 #include "ui_categoryform.h"
+
 #include <QDebug>
 #include <QIntValidator>
 #include <QMessageBox>
@@ -43,7 +44,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     validCodeFlag = validNameFlag = 0;
 
-    ui->pushButtonAdd->hide();
     ui->pushButtonDelete->setEnabled(false);
     ui->pushButtonSave->setEnabled(false);
 
@@ -63,7 +63,7 @@ CategoryForm::~CategoryForm()
 
 void CategoryForm::enableSave()
 {
-    if(validCodeFlag == 1 && validNameFlag ==1)
+    if(validCodeFlag == 1 && validNameFlag == 1)
         ui->pushButtonSave->setEnabled(true);
     else
         ui->pushButtonSave->setEnabled(false);
@@ -141,7 +141,8 @@ void CategoryForm::save()
 
 void CategoryForm::setCodeFocus()
 {
-    ui->lineEditName->setFocus();
+    ui->lineEditCode->setFocus();
+    ui->lineEditCode->selectAll();
 }
 
 void CategoryForm::clear()
@@ -171,6 +172,7 @@ void CategoryForm::setModel(CategoriesModel *model){
 // function to validate code field
 bool CategoryForm::codeValid(){
     bool status = false;
+    QString flashMsg = "";
     ui->lineEditCode->installEventFilter(this);
     if(ui->lineEditCode->text().length() > 0){
         if(uniqueValid(ui->lineEditCode->text(), "code")){
@@ -180,7 +182,7 @@ bool CategoryForm::codeValid(){
             validCodeFlag = 1;
             status = true;
         }else{
-            ui->flashMsgUp->setText("This Code has been already taken. Please select some other names.");
+            flashMsg = "This Code has been already taken. Please select some other names.";
             ui->lineEditCode->setProperty("validationError",true);
             ui->lineEditCode->setProperty("validationSuccess",false);
             ui->lineEditCode->setStyleSheet(styleSheet());
@@ -188,13 +190,14 @@ bool CategoryForm::codeValid(){
             status = false;
         }
     }else{
-        ui->flashMsgUp->setText("Code field is empty. Please give some values.");
+        flashMsg = "Code field is empty. Please give some values.";
         ui->lineEditCode->setProperty("validationError",true);
         ui->lineEditCode->setProperty("validationSuccess",false);
         ui->lineEditCode->setStyleSheet(styleSheet());
         validCodeFlag = 0;
         status = false;
     }
+    ui->flashMsgUp->setText(flashMsg);
     enableSave();
     return status;
 }
@@ -202,6 +205,7 @@ bool CategoryForm::codeValid(){
 //function to validate name field
 bool CategoryForm::nameValid(){
     bool status = false;
+    QString flashMsg = "";
     ui->lineEditName->installEventFilter(this);
     if(ui->lineEditName->text().length() > 0){
         if(uniqueValid(ui->lineEditName->text(),"name")){
@@ -212,7 +216,7 @@ bool CategoryForm::nameValid(){
             validNameFlag = 1;
         }else{
             status = false;
-            ui->flashMsgUp->setText("This Name has been already taken. Please select some other names.");
+            flashMsg = "This Name has been already taken. Please select some other names.";
             ui->lineEditName->setProperty("validationError",true);
             ui->lineEditName->setProperty("validationSuccess",false);
             ui->lineEditName->setStyleSheet(styleSheet());
@@ -220,12 +224,13 @@ bool CategoryForm::nameValid(){
         }
     }else{
         status = false;
-        ui->flashMsgUp->setText("Name field is empty. Please give some values.");
+        flashMsg = "Name field is empty. Please give some values.";
         ui->lineEditName->setProperty("validationError",true);
         ui->lineEditName->setProperty("validationSuccess",false);
         ui->lineEditName->setStyleSheet(styleSheet());
-        validNameFlag =0;
+        validNameFlag = 0;
     }
+    ui->flashMsgUp->setText(flashMsg);
     enableSave();
     return status;
 }
@@ -257,11 +262,11 @@ void CategoryForm::setMapperIndex(QModelIndex index)
 {
     clear();
     dataMapper->setCurrentIndex(index.row());
-    setAllValidationSuccess();
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
     ui->pushButtonSave->setEnabled(false);
+    setAllValidationSuccess();
 }
 
 void CategoryForm::search(QString value)
@@ -269,21 +274,6 @@ void CategoryForm::search(QString value)
     QString searchValue = "code = ";
     searchValue.append(value);
     categoriesModel->selectRow(1);
-    qDebug() << categoriesModel->selectRow(1);
-    //categoriesModel->setFilter(searchValue);
-}
-
-void CategoryForm::on_pushButtonAdd_clicked()
-{
-    this->ui->pushButtonSave->setText("Save");
-
-    this->ui->pushButtonSave->setEnabled(true);
-
-    ui->pushButtonAdd->setEnabled(false);
-    ui->pushButtonDelete->setEnabled(false);
-
-    clear();
-    ui->lineEditCode->setFocus();
 }
 
 void CategoryForm::on_pushButtonCancel_clicked()
@@ -387,6 +377,9 @@ void CategoryForm::uninstallEventFilter()
 
 void CategoryForm::setAllValidationSuccess()
 {
+    validCodeFlag = 1;
+    validNameFlag = 1;
+    enableSave();
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);

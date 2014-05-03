@@ -26,14 +26,15 @@
 #ifndef PRODUCTFORM_H
 #define PRODUCTFORM_H
 
-#include <QWidget>
-#include <QErrorMessage>
-#include <QDataWidgetMapper>
-
-#include "lssbar.h"
+#include "models/formvalidation.h"
 #include "models/productsmodel.h"
-#include "models/formvalidation.h"
-#include "models/formvalidation.h"
+
+#include <QWidget>
+#include <QValidator>
+#include <QIntValidator>
+#include <QDataWidgetMapper>
+#include <QDateTime>
+#include <QEvent>
 
 namespace Ui {
 class ProductForm;
@@ -47,9 +48,13 @@ public:
     explicit ProductForm(QWidget *parent = 0);
     ~ProductForm();
     void setCodeFocus();
-    void clear();
     void setModel(ProductsModel *model);
     void setMapperIndex(QModelIndex index);
+    void search(QString value);
+    QDateTime modifiedDate() const;
+    void setModifiedDate(QDateTime modifiedDate);
+    void clear();
+    int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice;
     void setFieldMaxLength();
 
 signals:
@@ -60,11 +65,12 @@ private:
     Ui::ProductForm *ui;
     ProductsModel *productsModel;
     QDataWidgetMapper *dataMapper;
-    Lssbar *lssbar;
+    QDateTime m_modifiedDate;
     FormValidation *formValidation;
 
 private slots:
     void save();
+    void enableSave();
     bool codeValid();
     bool nameValid();
     bool mrpValid();
@@ -73,9 +79,10 @@ private slots:
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
-    void setSignalFromProductForm();
     bool uniqueValid(QString text, QString field);
+    void setSignalFromProductForm();
     bool eventFilter(QObject *obj, QEvent *event);
+    void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
 };

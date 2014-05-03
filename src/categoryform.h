@@ -3,7 +3,6 @@
 
 #include "models/formvalidation.h"
 #include "models/categoriesmodel.h"
-#include "models/formvalidation.h"
 
 #include <QWidget>
 #include <QValidator>
@@ -32,6 +31,7 @@ public:
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
     int validNameFlag , validCodeFlag;
+    void setFieldMaxLength();
 
 signals:
     void signalName(QString str);
@@ -51,14 +51,11 @@ private slots:
     void enableSave();
     bool codeValid();
     bool nameValid();
-    void on_pushButtonAdd_clicked();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
     bool uniqueValid(QString text, QString field);
     void setSignalFromCategoryForm();
-    void setFieldMaxLength();
-    //void unsetStyles();
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();
     void uninstallEventFilter();

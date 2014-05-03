@@ -26,16 +26,15 @@
 #ifndef CUSTOMERFORM_H
 #define CUSTOMERFORM_H
 
-#include "lssbar.h"
-#include "models/customersmodel.h"
 #include "models/formvalidation.h"
+#include "models/customersmodel.h"
 
 #include <QWidget>
+#include <QValidator>
+#include <QIntValidator>
 #include <QDataWidgetMapper>
 #include <QDateTime>
 #include <QEvent>
-#include <QKeyEvent>
-#include <QSqlRecord>
 
 namespace Ui {
 class CustomerForm;
@@ -49,7 +48,6 @@ class CustomerForm : public QWidget
 public:
     explicit CustomerForm(QWidget *parent = 0);
     ~CustomerForm();
-    FormValidation *formValidation;
     void setCodeFocus();
     void setModel(CustomersModel *model);
     void setMapperIndex(QModelIndex index);
@@ -57,7 +55,8 @@ public:
     QDateTime modifiedDate();
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
-    int validCodeFlag, validNameFlag, validEmailFlag;
+    int validCodeFlag, validNameFlag, validEmailFlag, validCreditLimitFlag;
+    void setFieldMaxLength();
 
 signals:
     void signalName(QString str);
@@ -67,24 +66,25 @@ private:
     Ui::CustomerForm *ui;
     CustomersModel *customersModel;
     QDataWidgetMapper *dataMapper;
-    Lssbar *lssbar;
     QDateTime m_modifiedDate;
+    FormValidation *formValidation;
 
 private slots:
     void save();
     void enableSave();
+    bool codeValid();
+    bool nameValid();
+    bool creditLimitValid();
+    bool emailValid();
     void on_pushButtonCancel_clicked();
+    void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
-    void hideValidationErrors();
-    void setSignalFromCustomerForm();
     bool uniqueValid(QString text, QString field);
+    void setSignalFromCustomerForm();
     bool eventFilter(QObject *obj, QEvent *event);
-    bool on_lineEditCode_editingFinished();
-    bool on_lineEditName_editingFinished();
-    bool on_lineEditEmail_editingFinished();
+    void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
-    void setFieldMaxLength();
 };
 
 #endif // CUSTOMERFORM_H

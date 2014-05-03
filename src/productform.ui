@@ -141,6 +141,9 @@
             <height>23</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
          </widget>
          <widget class="QLabel" name="label_7">
           <property name="geometry">
