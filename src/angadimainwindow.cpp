@@ -38,6 +38,8 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    timer = new QTimer;
+
     /*QDockWidget *dock = new QDockWidget(tr("Search Bar"), this);
     QLineEdit *lineEditCode= new QLineEdit(dock);
     QLineEdit *lineEditName= new QLineEdit(dock);
@@ -51,7 +53,10 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     connect(lssbar,SIGNAL(signalSearch(QString)),this,SLOT(search(QString)));
     connect(lssbar,SIGNAL(signalMoveUpDown(int)),this,SLOT(moveUpDown(int)));
 
-    //Hide rightdock widget on start
+    connect(ui->statusbar,SIGNAL(messageChanged(QString)),this,SLOT(changeStatusMsgToDefault()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(setStatusBarDefaultText()));
+
+    // Hide rightdock widget on start
     showRightDock(false);
     ui->rightDock->setWidget(lssbar);
 
@@ -178,6 +183,7 @@ void AngadiMainWindow::openCategoryTab()
     }
     connect(categoryForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(categoryForm,SIGNAL(signalFromCategoryForm()),lssbar,SLOT(setSearchFocus()));
+    connect(categoryForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
 
     setupModels();
     categoryForm->setModel(categoriesModel);
@@ -480,4 +486,20 @@ void AngadiMainWindow::moveUpDown(int indexOffset)
 void AngadiMainWindow::setSearchTerm(QString str)
 {
     lssbar->lineEditSearch->setText(str);
+}
+
+void AngadiMainWindow::setStatusBarText(QString statusBarText)
+{
+    this->statusBar()->showMessage(statusBarText);
+}
+
+void AngadiMainWindow::setStatusBarDefaultText()
+{
+    this->statusBar()->showMessage("Ready");
+}
+
+void AngadiMainWindow::changeStatusMsgToDefault()
+{
+    // Status bar message to default
+    timer->start(5000);
 }

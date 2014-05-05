@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
+#include <QTimer>
 
 #include "lssbar.h"
 #include "categoryform.h"
@@ -35,6 +36,8 @@ signals:
 private:
     bool tabLoadedStatus(QString tabName);
     Ui::AngadiMainWindow *ui;
+
+    QTimer *timer;
 
     // initialization of toolbar actions
     QAction *actionCategory;
@@ -81,6 +84,9 @@ private slots:
     void search(QString value);
     void moveUpDown(int indexOffset);
     void setSearchTerm(QString str);
+    void setStatusBarText(QString statusBarText);
+    void changeStatusMsgToDefault();
+    void setStatusBarDefaultText();
 };
 
 #endif // ANGADIMAINWINDOW_H
