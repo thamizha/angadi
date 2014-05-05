@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     models/categoriesmodel.cpp \
     models/productsmodel.cpp \
     models/formvalidation.cpp \
-    models/customersmodel.cpp
+    models/customersmodel.cpp \
+    billform.cpp
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
@@ -37,14 +38,16 @@ HEADERS  += \
     models/categoriesmodel.h \
     models/productsmodel.h \
     models/formvalidation.h \
-    models/customersmodel.h
+    models/customersmodel.h \
+    billform.h
 
 FORMS    += \
     angadimainwindow.ui \
     logindialog.ui \
     customerform.ui \
     categoryform.ui \
-    productform.ui
+    productform.ui \
+    billform.ui
 
 RESOURCES += \
     resource.qrc

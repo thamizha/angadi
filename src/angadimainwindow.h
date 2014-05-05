@@ -8,6 +8,7 @@
 #include "categoryform.h"
 #include "productform.h"
 #include "customerform.h"
+#include "billform.h"
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
@@ -43,6 +44,7 @@ private:
     CategoryForm *categoryForm;
     ProductForm *productForm;
     CustomerForm *customerForm;
+    BillForm *billForm;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -56,10 +58,12 @@ private:
     void openCustomerTab();
     void openProductTab();
     void openCategoryTab();
+    void openBillTab();
 
     void onCustomerTabClosed();
     void onProductTabClosed();
     void onCategoryTabClosed();
+    void onBillTabClosed();
 
     void setupProperties();
     void setupConnections();
