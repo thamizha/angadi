@@ -22,6 +22,7 @@
  * Authors :
  * gvijaydhanasekaran <vijay.kuruntham@gmail.com>
  * Selvam <vjpselvam@gmail.com>
+ * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
 #include "categoryform.h"

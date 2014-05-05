@@ -14,9 +14,15 @@ class BillForm : public QWidget
 public:
     explicit BillForm(QWidget *parent = 0);
     ~BillForm();
+    void clear();
+    void setCodeFocus();
 
 private:
     Ui::BillForm *ui;
+
+private slots:
+
+
 };
 
 #endif // BILLFORM_H

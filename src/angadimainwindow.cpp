@@ -272,14 +272,13 @@ void AngadiMainWindow::openBillTab()
     connect(billForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
 
 //    setupModels();
-//    billForm->setModel(customersModel);
-//    billForm->clear();
+//    billForm->setModel(billModel);
+    billForm->clear();
 //    ui->mainTab->setCurrentWidget (billForm);
-//    customerForm->setFieldMaxLength();
+//    billForm->setFieldMaxLength();
+    billForm->setCodeFocus();
 
-//    customerForm->setCodeFocus();
-
-//    lssbar->setModel(customersModel);
+    lssbar->setModel(productsModel);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -375,6 +374,13 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->setModel(customersModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
+
+    }else if(tabName == "bill"){
+        //customerForm->setModel(customersModel);
+        billForm->clear();
+        lssbar->setModel(productsModel);
+        showRightDock(true);
+        //lssbar->lineEditSearch->setText(billTabSearchTerm);
     }
 }
 
