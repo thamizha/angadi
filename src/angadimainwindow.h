@@ -43,6 +43,7 @@ private:
     QAction *actionCategory;
     QAction *actionProduct;
     QAction *actionCustomer;
+    QAction *actionBillEntry;
 
     CategoryForm *categoryForm;
     ProductForm *productForm;

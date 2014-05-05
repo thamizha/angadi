@@ -550,7 +550,7 @@ void ProductForm::setAllValidationSuccess()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
-        widget->setProperty("validationSuccess",true);
+        widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
 }

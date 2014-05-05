@@ -67,11 +67,14 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     actionCategory = new QAction(QIcon(":/images/toolbaricons/category.png"), "&Category", this);
     actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
     actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
+    actionBillEntry = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Bill", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);
     toolBar->addAction(actionProduct);
     toolBar->addAction(actionCustomer);
+    toolBar->addAction(actionBillEntry);
+
 
     this->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -97,6 +100,9 @@ void AngadiMainWindow::setupProperties()
 
     ui->actionCreateCustomer->setProperty("tabName","customer");
     actionCustomer->setProperty("tabName","customer");
+
+    ui->actionBillEntry->setProperty("tabName","bill");
+    actionBillEntry->setProperty("tabName","bill");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -109,6 +115,9 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(actionCustomer,SIGNAL(triggered()),this,SLOT(openTab()));
+
+    connect(ui->actionBillEntry, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(actionBillEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
@@ -152,20 +161,21 @@ void AngadiMainWindow::openTab()
 {
     QString tabName = sender()->property("tabName").toString();
 
-    if(tabName == "customer" ||
-       tabName == "category" ||
-       tabName == "product"){
-        showRightDock(true);
-    }else{
-        showRightDock(false);
-    }
+    showRightDock(false);
+
 
     if(tabName == "customer"){
         openCustomerTab();
+        showRightDock(true);
     }else if(tabName == "category"){
         openCategoryTab();
+        showRightDock(true);
     }else if(tabName == "product"){
         openProductTab();
+        showRightDock(true);
+    }else if(tabName == "bill"){
+        openBillTab();
+        showRightDock(true);
     }
 }
 
@@ -262,14 +272,13 @@ void AngadiMainWindow::openBillTab()
     connect(billForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
 
 //    setupModels();
-//    billForm->setModel(customersModel);
-//    billForm->clear();
+//    billForm->setModel(billModel);
+    billForm->clear();
 //    ui->mainTab->setCurrentWidget (billForm);
-//    customerForm->setFieldMaxLength();
+//    billForm->setFieldMaxLength();
+    billForm->setCodeFocus();
 
-//    customerForm->setCodeFocus();
-
-//    lssbar->setModel(customersModel);
+    lssbar->setModel(productsModel);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -365,6 +374,13 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->setModel(customersModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
+
+    }else if(tabName == "bill"){
+        //customerForm->setModel(customersModel);
+        billForm->clear();
+        lssbar->setModel(productsModel);
+        showRightDock(true);
+        //lssbar->lineEditSearch->setText(billTabSearchTerm);
     }
 }
 

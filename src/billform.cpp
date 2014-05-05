@@ -12,3 +12,13 @@ BillForm::~BillForm()
 {
     delete ui;
 }
+
+void BillForm::clear()
+{
+
+}
+
+void BillForm::setCodeFocus()
+{
+    ui->lineEditCustomerCode->setFocus();
+}
