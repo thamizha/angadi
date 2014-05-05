@@ -100,6 +100,8 @@ void CategoryForm::save()
             QDateTime datetime = QDateTime::currentDateTime();
             categoriesModel->setData(categoriesModel->index(row,categoriesModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
             categoriesModel->submit();
+            statusMsg = ui->lineEditName->text() + " saved successfully";
+            emit signalStatusBar(statusMsg);
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
@@ -108,6 +110,8 @@ void CategoryForm::save()
             if(status == true)
             {
                 categoriesModel->submit();
+                statusMsg = ui->lineEditName->text() + " updated successfully";
+                emit signalStatusBar(statusMsg);
             }
         }
         resetDataMapper();
@@ -289,6 +293,8 @@ void CategoryForm::on_pushButtonDelete_clicked()
     model.setQuery(query);
 
     if(model.rowCount() == 0){
+        statusMsg = ui->lineEditName->text() + " deleted successfully";
+
         QDateTime datetime = QDateTime::currentDateTime();
 
         record.setValue("status", "D");
@@ -305,6 +311,7 @@ void CategoryForm::on_pushButtonDelete_clicked()
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    emit signalStatusBar(statusMsg);
 }
 
 QDateTime CategoryForm::modifiedDate() const

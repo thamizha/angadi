@@ -19,6 +19,7 @@ class CategoryForm : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
+    QString statusMsg;
 
 public:
     explicit CategoryForm(QWidget *parent = 0);
@@ -37,6 +38,7 @@ public:
 signals:
     void signalName(QString str);
     void signalFromCategoryForm();
+    void signalStatusBar(QString str);
 
 public slots:
 
