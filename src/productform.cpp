@@ -48,7 +48,7 @@ ProductForm::ProductForm(QWidget *parent) :
     validCodeFlag = validNameFlag = validMrpFlag = validSalePriceFlag = validWholeSalePrice = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+  //  ui->pushButtonSave->setEnabled(false);
 
     // Hide the errors labels at the start
     ui->labelManufacturer->hide();
@@ -78,14 +78,6 @@ ProductForm::ProductForm(QWidget *parent) :
 ProductForm::~ProductForm()
 {
     delete ui;
-}
-
-void ProductForm::enableSave()
-{
-    if(validCodeFlag == 1 && validNameFlag == 1 && validMrpFlag == 1 && validSalePriceFlag == 1 && validWholeSalePrice == 1)
-        ui->pushButtonSave->setEnabled(true);
-    else
-        ui->pushButtonSave->setEnabled(false);
 }
 
 //save the product form
@@ -214,7 +206,7 @@ void ProductForm::clear(){
     uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+   // ui->pushButtonSave->setEnabled(false);
 }
 
 void ProductForm::setModel(ProductsModel *model){
@@ -265,7 +257,6 @@ bool ProductForm::codeValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -298,7 +289,6 @@ bool ProductForm::nameValid(){
         validNameFlag = 0;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -331,7 +321,6 @@ bool ProductForm::mrpValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -366,7 +355,6 @@ bool ProductForm::salePriceValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -401,7 +389,6 @@ bool ProductForm::wholeSalePriceValid(){
         }
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -435,7 +422,7 @@ void ProductForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
-    ui->pushButtonSave->setEnabled(false);
+   // ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 

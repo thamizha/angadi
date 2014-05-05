@@ -45,7 +45,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     validCodeFlag = validNameFlag = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+    //ui->pushButtonSave->setEnabled(false);
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
@@ -59,14 +59,6 @@ CategoryForm::CategoryForm(QWidget *parent) :
 CategoryForm::~CategoryForm()
 {
     delete ui;
-}
-
-void CategoryForm::enableSave()
-{
-    if(validCodeFlag == 1 && validNameFlag == 1)
-        ui->pushButtonSave->setEnabled(true);
-    else
-        ui->pushButtonSave->setEnabled(false);
 }
 
 void CategoryForm::save()
@@ -160,7 +152,7 @@ void CategoryForm::clear()
     uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+    //ui->pushButtonSave->setEnabled(false);
 }
 
 void CategoryForm::setModel(CategoriesModel *model){
@@ -202,7 +194,6 @@ bool CategoryForm::codeValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -235,7 +226,6 @@ bool CategoryForm::nameValid(){
         validNameFlag = 0;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -269,7 +259,7 @@ void CategoryForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
-    ui->pushButtonSave->setEnabled(false);
+    //ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 
@@ -375,7 +365,6 @@ void CategoryForm::setAllValidationSuccess()
 {
     validCodeFlag = 1;
     validNameFlag = 1;
-    enableSave();
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);
