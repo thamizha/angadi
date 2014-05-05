@@ -61,14 +61,6 @@ CategoryForm::~CategoryForm()
     delete ui;
 }
 
-void CategoryForm::enableSave()
-{
-    if(validCodeFlag == 1 && validNameFlag == 1)
-        ui->pushButtonSave->setEnabled(true);
-//    else
-//        ui->pushButtonSave->setEnabled(false);
-}
-
 void CategoryForm::save()
 {
     // Initialization of local variables
@@ -202,7 +194,6 @@ bool CategoryForm::codeValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -235,7 +226,6 @@ bool CategoryForm::nameValid(){
         validNameFlag = 0;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -375,7 +365,6 @@ void CategoryForm::setAllValidationSuccess()
 {
     validCodeFlag = 1;
     validNameFlag = 1;
-    enableSave();
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);

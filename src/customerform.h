@@ -72,7 +72,6 @@ private:
 
 private slots:
     void save();
-    void enableSave();
     bool codeValid();
     bool nameValid();
     bool creditLimitValid();

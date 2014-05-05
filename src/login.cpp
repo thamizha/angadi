@@ -26,12 +26,11 @@ void LoginDialog::on_pushButtonEnter_clicked()
 
     QSqlQueryModel model;
     QSqlQuery query;
-    query.prepare("Select * from users where username=:username and password=:password and status='A'");
+    query.prepare("Select * from users where username=:username and password=:password and status = 'A'");
     query.bindValue(":username", ui->lineEditUsername->text().trimmed());
     query.bindValue(":password", hash.result().toHex());
     query.exec();
     model.setQuery(query);
-
     if(model.rowCount() > 0){
         emit loggedIn();
     }else{

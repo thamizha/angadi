@@ -74,14 +74,6 @@ CustomerForm::~CustomerForm()
     delete ui;
 }
 
-void CustomerForm::enableSave()
-{
-    if(validCodeFlag == 1 && validEmailFlag == 1 && validNameFlag == 1 && validCreditLimitFlag == 1)
-        ui->pushButtonSave->setEnabled(true);
-//    else
-//        ui->pushButtonSave->setEnabled(false);
-}
-
 void CustomerForm::save()
 {
     // Initialization of local variables
@@ -260,7 +252,6 @@ bool CustomerForm::codeValid(){
         status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -293,7 +284,6 @@ bool CustomerForm::nameValid(){
         validNameFlag = 0;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -326,7 +316,6 @@ bool CustomerForm::creditLimitValid()
         validCreditLimitFlag = 0;
     }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -374,8 +363,14 @@ bool CustomerForm::emailValid()
             validEmailFlag = 0;
         }
     }
+    else{
+                ui->lineEditEmail->setProperty("validationError",false);
+                ui->lineEditEmail->setProperty("validationSuccess",true);
+                ui->lineEditEmail->setStyleSheet(styleSheet());
+                status = true;
+                validEmailFlag = 1;
+    }
     ui->flashMsgUp->setText(flashMsg);
-    enableSave();
     return status;
 }
 
@@ -511,7 +506,6 @@ void CustomerForm::uninstallEventFilter()
 void CustomerForm::setAllValidationSuccess()
 {
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 1;
-    enableSave();
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);
