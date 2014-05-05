@@ -49,6 +49,7 @@ FORMS    += \
     productform.ui \
     billform.ui
 
-RESOURCES +=
+RESOURCES += \
+    resource.qrc
 
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT

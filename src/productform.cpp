@@ -48,7 +48,7 @@ ProductForm::ProductForm(QWidget *parent) :
     validCodeFlag = validNameFlag = validMrpFlag = validSalePriceFlag = validWholeSalePrice = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-  //  ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 
     // Hide the errors labels at the start
     ui->labelManufacturer->hide();
@@ -203,10 +203,14 @@ void ProductForm::clear(){
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
+
+    ui->comboBoxUnit->setCurrentIndex(0);
+    ui->comboBoxcategoryId->setCurrentIndex(0);
+
     uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
-   // ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 }
 
 void ProductForm::setModel(ProductsModel *model){
@@ -338,13 +342,20 @@ bool ProductForm::salePriceValid(){
                 validSalePriceFlag = 1;
                 status = true;
             }else{
-                flashMsg = "Sale Price is not a number. Please fix the sale price for this Product in number.";
+                flashMsg = "Sale Price must be less than or equal to MRP. Please check.";
                 ui->lineEditSalePrice->setProperty("validationError",true);
                 ui->lineEditSalePrice->setProperty("validationSuccess",false);
                 ui->lineEditSalePrice->setStyleSheet(styleSheet());
                 validSalePriceFlag = 0;
                 status = false;
             }
+        }else{
+            flashMsg = "Sale Price is not a number. Please fix the sale price for this Product in number.";
+            ui->lineEditSalePrice->setProperty("validationError",true);
+            ui->lineEditSalePrice->setProperty("validationSuccess",false);
+            ui->lineEditSalePrice->setStyleSheet(styleSheet());
+            validSalePriceFlag = 0;
+            status = false;
         }
     }else{
         flashMsg = "Sale Price is empty. Please fix the sale price.";
@@ -372,7 +383,7 @@ bool ProductForm::wholeSalePriceValid(){
                 validWholeSalePrice = 1;
                 status = true;
             }else{
-                flashMsg = "Whole Sale Price is not a number. Please fix the whole sale price for this Product in number.";
+                flashMsg = "Whole Sale Price must be less than or equal to sale price. Please check.";
                 ui->lineEditWholeSalePrice->setProperty("validationError",true);
                 ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
                 ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
@@ -380,13 +391,20 @@ bool ProductForm::wholeSalePriceValid(){
                 status = false;
             }
         }else{
-            flashMsg = "Whole Sale Price is empty. Please fix the whole sale price.";
+            flashMsg = "Whole Sale Price is not a number. Please fix the whole sale price for this Product in number.";
             ui->lineEditWholeSalePrice->setProperty("validationError",true);
             ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
             ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
             validWholeSalePrice = 0;
             status = false;
         }
+    }else{
+        flashMsg = "Whole Sale Price is empty. Please fix the whole sale price.";
+        ui->lineEditWholeSalePrice->setProperty("validationError",true);
+        ui->lineEditWholeSalePrice->setProperty("validationSuccess",false);
+        ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+        validWholeSalePrice = 0;
+        status = false;
     }
     ui->flashMsgUp->setText(flashMsg);
     return status;
@@ -422,7 +440,7 @@ void ProductForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
-   // ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 

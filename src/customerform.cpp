@@ -46,7 +46,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-    //ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 
     // populate customer type combo box
     ui->comboBoxType->addItem("Retailer");
@@ -192,7 +192,7 @@ void CustomerForm::clear()
     uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
-   // ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 }
 
 void CustomerForm::setModel(CustomersModel *model){
@@ -381,7 +381,7 @@ void CustomerForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 1;
-   // ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 

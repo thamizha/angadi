@@ -45,7 +45,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     validCodeFlag = validNameFlag = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-    //ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
@@ -259,7 +259,7 @@ void CategoryForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
-    //ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 
