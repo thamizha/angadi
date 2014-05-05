@@ -46,6 +46,7 @@ FORMS    += \
     categoryform.ui \
     productform.ui
 
-RESOURCES +=
+RESOURCES += \
+    resource.qrc
 
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT

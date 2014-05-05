@@ -45,7 +45,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     validCodeFlag = validNameFlag = 0;
 
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
@@ -65,8 +65,8 @@ void CategoryForm::enableSave()
 {
     if(validCodeFlag == 1 && validNameFlag == 1)
         ui->pushButtonSave->setEnabled(true);
-    else
-        ui->pushButtonSave->setEnabled(false);
+//    else
+//        ui->pushButtonSave->setEnabled(false);
 }
 
 void CategoryForm::save()
@@ -160,7 +160,7 @@ void CategoryForm::clear()
     uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
-    ui->pushButtonSave->setEnabled(false);
+    //ui->pushButtonSave->setEnabled(false);
 }
 
 void CategoryForm::setModel(CategoriesModel *model){
@@ -269,7 +269,7 @@ void CategoryForm::setMapperIndex(QModelIndex index)
     this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
-    ui->pushButtonSave->setEnabled(false);
+//    ui->pushButtonSave->setEnabled(false);
     setAllValidationSuccess();
 }
 

@@ -35,6 +35,11 @@ private:
     bool tabLoadedStatus(QString tabName);
     Ui::AngadiMainWindow *ui;
 
+    // initialization of toolbar actions
+    QAction *actionCategory;
+    QAction *actionProduct;
+    QAction *actionCustomer;
+
     CategoryForm *categoryForm;
     ProductForm *productForm;
     CustomerForm *customerForm;
@@ -56,6 +61,7 @@ private:
     void onProductTabClosed();
     void onCategoryTabClosed();
 
+    void setupProperties();
     void setupConnections();
     void setupModels();
 

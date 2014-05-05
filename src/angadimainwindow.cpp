@@ -30,6 +30,7 @@
 #include <QMetaProperty>
 #include <QDebug>
 #include <QMessageBox>
+#include <QToolBar>
 
 AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -54,13 +55,22 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     showRightDock(false);
     ui->rightDock->setWidget(lssbar);
 
+    ui->actionCreateCategory->setIcon(QIcon(":/images/toolbaricons/category.png"));
+    ui->actionCreateProduct->setIcon(QIcon(":/images/toolbaricons/products.gif"));
+    ui->actionCreateCustomer->setIcon(QIcon(":/images/toolbaricons/customer.png"));
 
-    //Set dynamic properties
-    //TODO : Move the properties as ENUM insted of string
-    ui->actionCreateCategory->setProperty("tabName","category");
-    ui->actionCreateCustomer->setProperty("tabName","customer");
-    ui->actionCreateProduct->setProperty("tabName","product");
+    actionCategory = new QAction(QIcon(":/images/toolbaricons/category.png"), "&Category", this);
+    actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
+    actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
 
+    QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
+    toolBar->addAction(actionCategory);
+    toolBar->addAction(actionProduct);
+    toolBar->addAction(actionCustomer);
+
+    this->addToolBar(Qt::TopToolBarArea, toolBar);
+
+    setupProperties();
     setupConnections();
     setupModels();
 }
@@ -70,11 +80,30 @@ AngadiMainWindow::~AngadiMainWindow()
     delete ui;
 }
 
+void AngadiMainWindow::setupProperties()
+{
+    //Set dynamic properties
+    //TODO : Move the properties as ENUM insted of string
+    ui->actionCreateCategory->setProperty("tabName","category");
+    actionCategory->setProperty("tabName","category");
+
+    ui->actionCreateProduct->setProperty("tabName","product");
+    actionProduct->setProperty("tabName","product");
+
+    ui->actionCreateCustomer->setProperty("tabName","customer");
+    actionCustomer->setProperty("tabName","customer");
+}
+
 void AngadiMainWindow::setupConnections()
 {
     connect(ui->actionCreateCategory, SIGNAL(triggered()), this, SLOT(openTab()));
-    connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(actionCategory,SIGNAL(triggered()),this,SLOT(openTab()));
+
     connect(ui->actionCreateProduct,SIGNAL(triggered()),this,SLOT(openTab()));
+    connect(actionProduct,SIGNAL(triggered()),this,SLOT(openTab()));
+
+    connect(ui->actionCreateCustomer, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(actionCustomer,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
