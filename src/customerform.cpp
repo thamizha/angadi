@@ -63,6 +63,13 @@ CustomerForm::CustomerForm(QWidget *parent) :
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
     connect(ui->lineEditCreditLimit,SIGNAL(editingFinished()),this,SLOT(creditLimitValid()));
+    connect(ui->lineEditAddress1,SIGNAL(editingFinished()),this,SLOT(address1Valid()));
+    connect(ui->lineEditAddress2,SIGNAL(editingFinished()),this,SLOT(address2Valid()));
+    connect(ui->lineEditCity,SIGNAL(editingFinished()),this,SLOT(cityValid()));
+    connect(ui->lineEditState,SIGNAL(editingFinished()),this,SLOT(stateValid()));
+    connect(ui->lineEditCountry,SIGNAL(editingFinished()),this,SLOT(countryValid()));
+    connect(ui->lineEditPincode,SIGNAL(editingFinished()),this,SLOT(pincodeValid()));
+    connect(ui->lineEditPhone1,SIGNAL(editingFinished()),this,SLOT(phone1Valid()));
     connect(ui->lineEditEmail,SIGNAL(editingFinished()),this,SLOT(emailValid()));
 
     setFieldMaxLength();
@@ -73,6 +80,69 @@ CustomerForm::~CustomerForm()
 {
     delete ui;
 }
+
+bool CustomerForm::address1Valid()
+{
+    if(ui->lineEditAddress1->text().length()>0){
+        ui->lineEditAddress1->setProperty("validationError",false);
+        ui->lineEditAddress1->setProperty("validationSuccess",true);
+        ui->lineEditAddress1->setStyleSheet(styleSheet());
+    }
+        return true;
+}
+
+bool CustomerForm::address2Valid()
+{
+    if(ui->lineEditAddress2->text().length()>0){
+        ui->lineEditAddress2->setProperty("validationError",false);
+        ui->lineEditAddress2->setProperty("validationSuccess",true);
+        ui->lineEditAddress2->setStyleSheet(styleSheet());
+    }
+        return true;
+}
+
+bool CustomerForm::cityValid()
+{
+  if(ui->lineEditCity->text().length()>0){
+    ui->lineEditCity->setProperty("validationError",false);
+    ui->lineEditCity->setProperty("validationSuccess",true);
+    ui->lineEditCity->setStyleSheet(styleSheet());\
+  }
+    return true;
+}
+
+bool CustomerForm::stateValid()
+{
+    ui->lineEditState->setProperty("validationError",false);
+    ui->lineEditState->setProperty("validationSuccess",true);
+    ui->lineEditState->setStyleSheet(styleSheet());\
+    return true;
+}
+
+bool CustomerForm::countryValid()
+{
+    ui->lineEditCountry->setProperty("validationError",false);
+    ui->lineEditCountry->setProperty("validationSuccess",true);
+    ui->lineEditCountry->setStyleSheet(styleSheet());\
+    return true;
+}
+
+bool CustomerForm::pincodeValid()
+{
+    ui->lineEditPincode->setProperty("validationError",false);
+    ui->lineEditPincode->setProperty("validationSuccess",true);
+    ui->lineEditPincode->setStyleSheet(styleSheet());\
+    return true;
+}
+
+bool CustomerForm::phone1Valid()
+{
+    ui->lineEditPhone1->setProperty("validationError",false);
+    ui->lineEditPhone1->setProperty("validationSuccess",true);
+    ui->lineEditPhone1->setStyleSheet(styleSheet());\
+    return true;
+}
+
 
 void CustomerForm::save()
 {
@@ -453,7 +523,7 @@ void CustomerForm::setFieldMaxLength()
     ui->lineEditEmail->setMaxLength(80);
     ui->lineEditWebsite->setMaxLength(80);
 
-    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+    /*foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         if(widget != ui->lineEditCode && widget != ui->lineEditName && widget != ui->lineEditCreditLimit){
             widget->setProperty("validationError",false);
             widget->setProperty("validationSuccess",true);
@@ -462,7 +532,7 @@ void CustomerForm::setFieldMaxLength()
     }
     ui->textEditNote->setProperty("validationError",false);
     ui->textEditNote->setProperty("validationSuccess",true);
-    ui->textEditNote->setStyleSheet(styleSheet());
+    ui->textEditNote->setStyleSheet(styleSheet());*/
 }
 
 void CustomerForm::resetDataMapper()

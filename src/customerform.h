@@ -76,6 +76,13 @@ private slots:
     bool nameValid();
     bool creditLimitValid();
     bool emailValid();
+    bool address1Valid();
+    bool address2Valid();
+    bool cityValid();
+    bool stateValid();
+    bool countryValid();
+    bool pincodeValid();
+    bool phone1Valid();
     void on_pushButtonCancel_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
