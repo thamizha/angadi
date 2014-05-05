@@ -211,6 +211,32 @@ void AngadiMainWindow::openCustomerTab()
 //    lssbar->setModel(customersModel);
 }
 
+void AngadiMainWindow::openBillTab()
+{
+    QString tabName = "Bill";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        billForm = new BillForm();
+        billForm->setProperty("name", tabName);
+        ui->mainTab->addTab(billForm, "Bill");
+        lssbar->lineEditSearch->setText("");
+    }
+    connect(billForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(billForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
+
+//    setupModels();
+//    billForm->setModel(customersModel);
+//    billForm->clear();
+//    ui->mainTab->setCurrentWidget (billForm);
+//    customerForm->setFieldMaxLength();
+
+//    customerForm->setCodeFocus();
+
+//    lssbar->setModel(customersModel);
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;        
@@ -264,6 +290,11 @@ void AngadiMainWindow::onCategoryTabClosed()
 void AngadiMainWindow::onProductTabClosed()
 {
     //qDebug() << "On Product Tab closed called ";
+}
+
+void AngadiMainWindow::onBillTabClosed()
+{
+    //qDebug() << "On Bill Tab closed called ";
 }
 
 void AngadiMainWindow::showRightDock(bool state)
