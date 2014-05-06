@@ -46,6 +46,12 @@ BillForm::BillForm(QWidget *parent) :
     customerDataMapper = new QDataWidgetMapper;
     customerDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
+    ui->tableViewProductList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
+    ui->tableViewProductList->verticalHeader()->setVisible(false);
+    ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
+
 //    validCodeFlag = validNameFlag = 0;
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
@@ -54,6 +60,8 @@ BillForm::BillForm(QWidget *parent) :
 
     connect(ui->lineEditProductName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
     connect(ui->lineEditProductName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
+
+    connect(ui->lineEditQty,SIGNAL(textChanged(QString)),this,SLOT(setProductTotal()));
 
 //    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
@@ -76,9 +84,11 @@ void BillForm::save(){
 
 void BillForm::setCodeFocus()
 {
+    uninstallEventFilter();
     ui->lineEditCustomerCode->setFocus();
     ui->lineEditCustomerCode->selectAll();
     ui->lineEditCustomerName->installEventFilter(this);
+    ui->lineEditProductName->installEventFilter(this);
 }
 
 void BillForm::setProductFocus()
@@ -134,6 +144,9 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     customerDataMapper->addMapping(ui->lineEditCustomerName,customersModel->fieldIndex("name"));
     customerDataMapper->addMapping(ui->lineEditCustomerAddress,customersModel->fieldIndex("address1"));
 
+    ui->tableViewProductList->setModel(billItemModel);
+    ui->tableViewProductList->setColumnHidden(0,true);
+    ui->tableViewProductList->setColumnHidden(1,true);
     setCodeFocus();
 }
 
@@ -273,6 +286,12 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
             emit signalCustomerNameFocused();
         }
         return false;
+    }else if (obj == ui->lineEditProductName){
+        if(event->type() == QEvent::FocusIn){
+            modelFlag = 2;
+            emit signalCustomerNameFocused();
+        }
+        return false;
     }
     return BillForm::eventFilter(obj, event);
 }
@@ -295,7 +314,6 @@ void BillForm::setAllValidationSuccess()
     }
 }
 
-
 void BillForm::generateInvoiceNumber()
 {
     QSqlQueryModel model;
@@ -316,4 +334,12 @@ void BillForm::generateInvoiceNumber()
         invoiceNo = QString::number(maxInvoiceNo);
     }
     ui->lineEditInvoiceNo->setText(invoiceNo);
+}
+
+void BillForm::setProductTotal()
+{
+    int qty = ui->lineEditQty->text().toInt();
+    int rate = ui->lineEditRate->text().toInt();
+    QString productTotal = QString::number(qty*rate);
+    ui->lineEditTotal->setText(productTotal);
 }

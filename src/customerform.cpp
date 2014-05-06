@@ -442,8 +442,8 @@ bool CustomerForm::emailValid()
 //        ui->lineEditEmail->setProperty("validationError",false);
 //        ui->lineEditEmail->setProperty("validationSuccess",true);
 //        ui->lineEditEmail->setStyleSheet(styleSheet());
-//        status = true;
-//        validEmailFlag = 1;
+        status = true;
+        validEmailFlag = 1;
     }
     ui->flashMsgUp->setText(flashMsg);
     return status;

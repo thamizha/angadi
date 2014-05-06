@@ -475,15 +475,24 @@ void AngadiMainWindow::search(QString value)
         customerTabSearchTerm = value;
 
     }else if(currentTab == "bill"){
-       customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
-       int indexOffset = 0; //reset the indexOffset
-       QModelIndex proxyIndex, index; //Initialization of new index
-       proxyIndex = customersProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
-       index = customersProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
-       lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
-       billTabSearchTerm = value;
-
-     }
+        if(billForm->modelFlag == 1){
+            customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
+            int indexOffset = 0; //reset the indexOffset
+            QModelIndex proxyIndex, index; //Initialization of new index
+            proxyIndex = customersProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
+            index = customersProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
+            lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+            billTabCustomerSearchTerm = value;
+        }else if(billForm->modelFlag == 2){
+            productsProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te products proxy model
+            int indexOffset = 0; //reset the indexOffset
+            QModelIndex proxyIndex, index; //Initialization of new index
+            proxyIndex = productsProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
+            index = productsProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
+            lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+            billTabCustomerSearchTerm = value;
+        }
+    }
 }
 
 // move the selection up/down within the filtered proxy model
@@ -563,7 +572,11 @@ void AngadiMainWindow::changeStatusMsgToDefault()
 
 void AngadiMainWindow::changeLssBarSource()
 {
-    lssbar->setModel(customersModel);
+    if(billForm->modelFlag==1){
+        lssbar->setModel(customersModel);
+    }else if(billForm->modelFlag == 2){
+        lssbar->setModel(productsModel);
+    }
     showRightDock(true);
     lssbar->lineEditSearch->setText(billTabSearchTerm);
 }

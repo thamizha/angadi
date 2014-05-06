@@ -104,6 +104,7 @@ private slots:
     void setAllValidationSuccess();
     void uninstallEventFilter();
     void generateInvoiceNumber();
+    void setProductTotal();
 };
 
 #endif // BILLFORM_H
