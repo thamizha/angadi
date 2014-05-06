@@ -21,6 +21,7 @@
  *
  * Authors :
  * Manikk <manikk.h@gmail.com>
+ * Selvam <vjpselvam@gmail.com>
  *****************************************************************************/
 
 #include "angadimainwindow.h"
@@ -279,13 +280,13 @@ void AngadiMainWindow::openBillTab()
     QString tabName = "bill";
     currentTab = tabName;
 
-    bool found = tabLoadedStatus(tabName);
-    if(found == false){
-        billForm = new BillForm();
-        billForm->setProperty("name", tabName);
-        ui->mainTab->addTab(billForm, "Bill");
-        lssbar->lineEditSearch->setText("");
-    }
+//    bool found = tabLoadedStatus(tabName);
+//    if(found == false){
+    billForm = new BillForm();
+    billForm->setProperty("name", tabName);
+    ui->mainTab->addTab(billForm, "Bill");
+    lssbar->lineEditSearch->setText("");
+//    }
     connect(billForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billForm,SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
 //    connect(billForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
@@ -395,11 +396,15 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
 
     }else if(tabName == "bill"){
-        //billForm->setModel(billModel,billItemModel,productsModel,customersModel);
+        billForm->setModel(billModel, billItemModel, productsModel, customersModel);
         billForm->clear();
-        lssbar->setModel(productsModel);
+        if(billForm->modelFlag == 1){
+            lssbar->setModel(customersModel);
+        }else{
+            lssbar->setModel(productsModel);
+        }
         showRightDock(true);
-        //lssbar->lineEditSearch->setText(billTabSearchTerm);
+        lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     }
 }
 
@@ -432,7 +437,7 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
     }else if(currentTab == "bill"){
         if(index.row() >= 0){
            billForm->setMapperIndex(index);
-           billForm->setCodeFocus();
+           billForm->setProductFocus();
         }else{
            billForm->setCodeFocus();
         }
