@@ -109,6 +109,7 @@ private slots:
     void addProductItem();
     void setGrandTotal();
     void productUpdate(QModelIndex index);
+    void productFormClear();
 
 };
 

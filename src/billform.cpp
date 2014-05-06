@@ -134,9 +134,10 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     billDataMapper->addMapping(ui->lineEditTooBePaid,billModel->fieldIndex("totalAmount"));
 
     billItemDataMapper->addMapping(ui->lineEditProductName,billItemModel->fieldIndex("product_id"));
-    billItemDataMapper->addMapping(ui->lineEditUnit,billItemModel->fieldIndex("unit_price"));
+    billItemDataMapper->addMapping(ui->lineEditRate,billItemModel->fieldIndex("unitPrice"));
     billItemDataMapper->addMapping(ui->lineEditQty,billItemModel->fieldIndex("quantity"));
     billItemDataMapper->addMapping(ui->lineEditTotal,billItemModel->fieldIndex("total"));
+    billItemDataMapper->addMapping(ui->lineEditUnit,billItemModel->fieldIndex("unit"));
 
     productDataMapper->addMapping(ui->lineEditProductCode,productsModel->fieldIndex("code"));
     productDataMapper->addMapping(ui->lineEditProductName,productsModel->fieldIndex("name"));
@@ -146,6 +147,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     customerDataMapper->addMapping(ui->lineEditCustomerCode,customersModel->fieldIndex("code"));
     customerDataMapper->addMapping(ui->lineEditCustomerName,customersModel->fieldIndex("name"));
     customerDataMapper->addMapping(ui->lineEditCustomerAddress,customersModel->fieldIndex("address1"));
+    customerDataMapper->addMapping(ui->lineEditLimit,customersModel->fieldIndex("creditLimit"));
 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
@@ -383,6 +385,7 @@ void BillForm::addProductItem()
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("total")),ui->lineEditTotal->text());
     }
     setGrandTotal();
+    productFormClear();
 }
 
 void BillForm::setGrandTotal()
@@ -402,4 +405,15 @@ void BillForm::setGrandTotal()
 void BillForm::productUpdate(QModelIndex index)
 {
     billItemDataMapper->setCurrentIndex(index.row());
+}
+
+void BillForm::productFormClear()
+{
+    ui->lineEditProductCode->clear();
+    ui->lineEditProductName->clear();
+    ui->lineEditQty->clear();
+    ui->lineEditRate->clear();
+    ui->lineEditUnit->clear();
+    ui->lineEditTotal->clear();
+    ui->lineEditProductName->setFocus();
 }
