@@ -44,8 +44,8 @@ BillForm::BillForm(QWidget *parent) :
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditCustomerName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
-    connect(ui->lineEditCustomerName,SIGNAL(returnPressed()),this,SLOT(setSignalFromCategoryForm()));
-    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
+    connect(ui->lineEditCustomerName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
+//    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
 
@@ -98,6 +98,38 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2)
     billItemDataMapper->addMapping(ui->lineEditTotal,billItemModel->fieldIndex("total"));
 
     setCodeFocus();
+}
+
+//function to validate name field
+bool BillForm::nameValid(){
+    bool status = false;
+//    QString flashMsg = "";
+    ui->lineEditCustomerName->installEventFilter(this);
+//    if(ui->lineEditName->text().length() > 0){
+//        if(uniqueValid(ui->lineEditName->text(),"name")){
+//            status = true;
+//            ui->lineEditName->setProperty("validationError",false);
+//            ui->lineEditName->setProperty("validationSuccess",true);
+//            ui->lineEditName->setStyleSheet(styleSheet());
+//            validNameFlag = 1;
+//        }else{
+//            status = false;
+//            flashMsg = "This Name has been already taken. Please give some other name.";
+//            ui->lineEditName->setProperty("validationError",true);
+//            ui->lineEditName->setProperty("validationSuccess",false);
+//            ui->lineEditName->setStyleSheet(styleSheet());
+//            validNameFlag = 0;
+//        }
+//    }else{
+//        status = false;
+//        flashMsg = "Name field is empty. Please give some values.";
+//        ui->lineEditName->setProperty("validationError",true);
+//        ui->lineEditName->setProperty("validationSuccess",false);
+//        ui->lineEditName->setStyleSheet(styleSheet());
+//        validNameFlag = 0;
+//    }
+//    ui->flashMsgUp->setText(flashMsg);
+    return status;
 }
 
 void BillForm::setMapperIndex(QModelIndex index)
@@ -193,16 +225,14 @@ void BillForm::resetDataMapper()
 
 bool BillForm::eventFilter(QObject *obj, QEvent *event)
 {
-//    if (obj == ui->lineEditCode){
-//        if(event->type() == QEvent::FocusIn)
-//            BillForm::codeValid();
-//        return false;
-//    }else if (obj == ui->lineEditName){
-//        if(event->type() == QEvent::FocusIn)
-//            CategoryForm::nameValid();
-//        return false;
-//    }
-//    return BillForm::eventFilter(obj, event);
+    if (obj == ui->lineEditCustomerName){
+        if(event->type() == QEvent::FocusIn){
+            BillForm::nameValid();
+            emit signalCustomerNameFocused();
+        }
+        return false;
+    }
+    return BillForm::eventFilter(obj, event);
 }
 
 void BillForm::uninstallEventFilter()

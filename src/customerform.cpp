@@ -212,6 +212,9 @@ void CustomerForm::save()
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
             customersModel->submit();
 
+            statusMsg = ui->lineEditName->text() + " saved successfully";
+            emit signalStatusBar(statusMsg);
+
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
@@ -220,6 +223,8 @@ void CustomerForm::save()
             if(status == true){
                 customersModel->submit();
             }
+            statusMsg = ui->lineEditName->text() + " updated successfully";
+            emit signalStatusBar(statusMsg);
         }
         resetDataMapper();
         clear();
@@ -473,6 +478,7 @@ void CustomerForm::on_pushButtonCancel_clicked()
 void CustomerForm::on_pushButtonDelete_clicked()
 {
     QSqlRecord record = customersModel->record(dataMapper->currentIndex());
+    statusMsg = ui->lineEditName->text() + " deleted successfully";
 
     QDateTime datetime = QDateTime::currentDateTime();
     QChar t_status = 'D';
@@ -481,6 +487,8 @@ void CustomerForm::on_pushButtonDelete_clicked()
     customersModel->setRecord(dataMapper->currentIndex(), record);
     customersModel->submitAll();
     customersModel->select();
+
+    emit signalStatusBar(statusMsg);
 
     on_pushButtonCancel_clicked();
 }

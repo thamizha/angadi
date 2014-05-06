@@ -33,6 +33,7 @@
 #include <QMessageBox>
 #include <QSqlRecord>
 #include <QSqlQuery>
+#include <QEvent>
 
 CategoryForm::CategoryForm(QWidget *parent) :
     QWidget(parent),

@@ -44,6 +44,7 @@ class CustomerForm : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
+    QString statusMsg;
 
 public:
     explicit CustomerForm(QWidget *parent = 0);
@@ -62,6 +63,7 @@ public:
 signals:
     void signalName(QString str);
     void signalFromCustomerForm();
+    void signalStatusBar(QString str);
 
 private:
     Ui::CustomerForm *ui;

@@ -43,6 +43,8 @@ class ProductForm;
 class ProductForm : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
+    QString statusMsg;
 
 public:
     explicit ProductForm(QWidget *parent = 0);
@@ -61,6 +63,7 @@ public:
 signals:
     void signalName(QString str);
     void signalFromProductForm();
+    void signalStatusBar(QString str);
 
 private:
     Ui::ProductForm *ui;

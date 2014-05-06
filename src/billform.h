@@ -65,6 +65,7 @@ signals:
     void signalName(QString str);
     void signalFromBillForm();
     void signalStatusBar(QString str);
+    void signalCustomerNameFocused();
 
 private:
     Ui::BillForm *ui;
@@ -80,7 +81,7 @@ private:
 private slots:
     void save();
 //    bool codeValid();
-//    bool nameValid();
+    bool nameValid();
     void on_pushButtonClear_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);

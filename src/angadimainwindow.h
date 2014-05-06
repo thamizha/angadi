@@ -24,7 +24,7 @@ class AngadiMainWindow : public QMainWindow
 {
     Q_OBJECT
     QString currentTab;
-    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm;
+    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm, billTabCustomerSearchTerm;
 
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);
@@ -92,6 +92,7 @@ private slots:
     void setStatusBarText(QString statusBarText);
     void changeStatusMsgToDefault();
     void setStatusBarDefaultText();
+    void changeLssBarSource();
 };
 
 #endif // ANGADIMAINWINDOW_H

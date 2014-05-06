@@ -156,6 +156,8 @@ void ProductForm::save()
 
             productsModel->submitAll();
 
+            statusMsg = ui->lineEditName->text() + " saved successfully";
+            emit signalStatusBar(statusMsg);
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
@@ -165,7 +167,10 @@ void ProductForm::save()
             if(status == true){
                 productsModel->submitAll();
             }
+            statusMsg = ui->lineEditName->text() + " updated successfully";
+            emit signalStatusBar(statusMsg);
         }
+
         resetDataMapper();
         clear();
         setCodeFocus();
@@ -461,6 +466,7 @@ void ProductForm::on_pushButtonCancel_clicked()
 void ProductForm::on_pushButtonDelete_clicked()
 {
     QSqlRecord record = productsModel->record(dataMapper->currentIndex());
+    statusMsg = ui->lineEditName->text() + " deleted successfully";
 
     QDateTime datetime = QDateTime::currentDateTime();
     QChar t_status = 'D';
@@ -469,6 +475,8 @@ void ProductForm::on_pushButtonDelete_clicked()
     productsModel->setRecord(dataMapper->currentIndex(),record);
     productsModel->submitAll();
     productsModel->select();
+
+    emit signalStatusBar(statusMsg);
 
     on_pushButtonCancel_clicked();
 }
