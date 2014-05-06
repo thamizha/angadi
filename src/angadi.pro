@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     models/productsmodel.cpp \
     models/formvalidation.cpp \
     models/customersmodel.cpp \
-    billform.cpp
+    billform.cpp \
+    models/billmodel.cpp \
+    models/billitemmodel.cpp
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
@@ -39,7 +41,9 @@ HEADERS  += \
     models/productsmodel.h \
     models/formvalidation.h \
     models/customersmodel.h \
-    billform.h
+    billform.h \
+    models/billmodel.h \
+    models/billitemmodel.h
 
 FORMS    += \
     angadimainwindow.ui \

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * productsmodel.cpp
+ * productsmodel.h
  *
  * Created: 22/04/2014 by vijay
  *
@@ -23,44 +23,25 @@
  * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
-#ifndef BILLFORM_H
-#define BILLFORM_H
+#ifndef BILLITEMMODEL_H
+#define BILLITEMMODEL_H
 
-#include "models/billitemmodel.h"
-#include "models/billmodel.h"
+#include <QObject>
+#include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
+#include <QDebug>
 
-#include <QWidget>
-#include <QDateTime>
-#include <QEvent>
-#include <QDataWidgetMapper>
-#include <QSqlRelationalDelegate>
 
-namespace Ui {
-class BillForm;
-}
-
-class BillForm : public QWidget
+class BillItemModel : public QSqlRelationalTableModel
 {
     Q_OBJECT
-
 public:
-    explicit BillForm(QWidget *parent = 0);
-    ~BillForm();
-    void clear();
-    void setCodeFocus();
-    void setModel(BillModel *billModel, BillItemModel *billItemModel);
+    explicit BillItemModel(QObject *parent = 0);
 
-private:
-    Ui::BillForm *ui;
-    BillItemModel *billItemModel;
-    BillModel *billModel;
+signals:
 
-    QDataWidgetMapper *billDataMapper;
-    QDataWidgetMapper *billItemDataMapper;
-
-private slots:
-    void save();
+public slots:
 
 };
 
-#endif // BILLFORM_H
+#endif // BILLITEMMODEL_H

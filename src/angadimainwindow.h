@@ -13,6 +13,8 @@
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
+#include "models/billitemmodel.h"
+#include "models/billmodel.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -53,6 +55,8 @@ private:
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
     CustomersModel *customersModel;
+    BillModel *billModel;
+    BillItemModel *billItemModel;
 
     // initialization of sort filter proxy model for all models.
     QSortFilterProxyModel *categoriesProxyModel;

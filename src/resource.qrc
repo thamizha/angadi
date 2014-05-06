@@ -3,5 +3,6 @@
         <file>category.png</file>
         <file>products.gif</file>
         <file>customer.png</file>
+        <file>bill.png</file>
     </qresource>
 </RCC>

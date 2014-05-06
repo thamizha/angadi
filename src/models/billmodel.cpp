@@ -23,44 +23,19 @@
  * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
-#ifndef BILLFORM_H
-#define BILLFORM_H
+#include "billmodel.h"
+#include "connection.h"
 
-#include "models/billitemmodel.h"
-#include "models/billmodel.h"
-
-#include <QWidget>
-#include <QDateTime>
-#include <QEvent>
-#include <QDataWidgetMapper>
-#include <QSqlRelationalDelegate>
-
-namespace Ui {
-class BillForm;
-}
-
-class BillForm : public QWidget
+BillModel::BillModel(QObject *parent) :
+    QSqlRelationalTableModel(parent)
 {
-    Q_OBJECT
-
-public:
-    explicit BillForm(QWidget *parent = 0);
-    ~BillForm();
-    void clear();
-    void setCodeFocus();
-    void setModel(BillModel *billModel, BillItemModel *billItemModel);
-
-private:
-    Ui::BillForm *ui;
-    BillItemModel *billItemModel;
-    BillModel *billModel;
-
-    QDataWidgetMapper *billDataMapper;
-    QDataWidgetMapper *billItemDataMapper;
-
-private slots:
-    void save();
-
-};
-
-#endif // BILLFORM_H
+    setTable("bill");
+    setRelation(3, QSqlRelation("customers", "id", "name"));
+    setEditStrategy(QSqlTableModel::OnManualSubmit);
+    setHeaderData(fieldIndex("date"), Qt::Horizontal,QObject::tr("Date"));
+    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
+    setFilter("bill.status = 'A'");
+    relationModel(3)->setFilter("status = 'A'");
+    setSort(fieldIndex("id"),Qt::AscendingOrder);
+    select();
+}
