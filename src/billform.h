@@ -105,6 +105,12 @@ private slots:
     void uninstallEventFilter();
     void generateInvoiceNumber();
     void setProductTotal();
+    void setBillId();
+    void addProductItem();
+    void setGrandTotal();
+    void productUpdate(QModelIndex index);
+    void productFormClear();
+
 };
 
 #endif // BILLFORM_H

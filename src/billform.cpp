@@ -26,6 +26,9 @@
 
 #include "billform.h"
 #include "ui_billform.h"
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QSqlRecord>
 
 BillForm::BillForm(QWidget *parent) :
     QWidget(parent),
@@ -62,6 +65,10 @@ BillForm::BillForm(QWidget *parent) :
     connect(ui->lineEditProductName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
 
     connect(ui->lineEditQty,SIGNAL(textChanged(QString)),this,SLOT(setProductTotal()));
+    connect(ui->lineEditQty,SIGNAL(returnPressed()),this,SLOT(addProductItem()));
+
+    connect(ui->tableViewProductList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
+    connect(ui->tableViewProductList,SIGNAL(activated(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
 
 //    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
@@ -126,10 +133,11 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     billDataMapper->addMapping(ui->lineEditDiscount,billModel->fieldIndex("discount"));
     billDataMapper->addMapping(ui->lineEditTooBePaid,billModel->fieldIndex("totalAmount"));
 
-    billItemDataMapper->addMapping(ui->lineEditProductName, 2);
-    billItemDataMapper->addMapping(ui->lineEditUnit,billItemModel->fieldIndex("unit_price"));
+    billItemDataMapper->addMapping(ui->lineEditProductName,billItemModel->fieldIndex("product_id"));
+    billItemDataMapper->addMapping(ui->lineEditRate,billItemModel->fieldIndex("unitPrice"));
     billItemDataMapper->addMapping(ui->lineEditQty,billItemModel->fieldIndex("quantity"));
     billItemDataMapper->addMapping(ui->lineEditTotal,billItemModel->fieldIndex("total"));
+    billItemDataMapper->addMapping(ui->lineEditUnit,billItemModel->fieldIndex("unit"));
 
     productDataMapper->addMapping(ui->lineEditProductCode,productsModel->fieldIndex("code"));
     productDataMapper->addMapping(ui->lineEditProductName,productsModel->fieldIndex("name"));
@@ -139,11 +147,13 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     customerDataMapper->addMapping(ui->lineEditCustomerCode,customersModel->fieldIndex("code"));
     customerDataMapper->addMapping(ui->lineEditCustomerName,customersModel->fieldIndex("name"));
     customerDataMapper->addMapping(ui->lineEditCustomerAddress,customersModel->fieldIndex("address1"));
+    customerDataMapper->addMapping(ui->lineEditLimit,customersModel->fieldIndex("creditLimit"));
 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
     ui->tableViewProductList->setColumnHidden(1,true);
     setCodeFocus();
+    setBillId();
 }
 
 //function to validate name field
@@ -342,4 +352,68 @@ void BillForm::setProductTotal()
     int rate = ui->lineEditRate->text().toInt();
     QString productTotal = QString::number(qty*rate);
     ui->lineEditTotal->setText(productTotal);
+}
+
+void BillForm::setBillId()
+{
+//    int billId = ui->lineEditInvoiceNo->text().toInt();
+    billItemModel->setFilter("bill_item.bill_id = -1");
+}
+
+void BillForm::addProductItem()
+{
+    if(billItemDataMapper->currentIndex() >= 0){
+        qDebug() << billDataMapper->currentIndex();
+    }else{
+        int row = billItemModel->rowCount();
+        billItemModel->insertRows(row, 1);
+
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("bill_id")),-1);
+        QSqlQueryModel model;
+        QSqlQuery query;
+        query.prepare("Select id from products where name = :product_name");
+        query.bindValue(":product_name", ui->lineEditProductName->text());
+        query.exec();
+        model.setQuery(query);
+        QSqlRecord record = model.record(0);
+        int product_id = record.value("id").toInt();
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("product_id")),product_id);
+
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unit")),ui->lineEditUnit->text());
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unitPrice")),ui->lineEditRate->text());
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("quantity")),ui->lineEditQty->text());
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("total")),ui->lineEditTotal->text());
+    }
+    setGrandTotal();
+    productFormClear();
+}
+
+void BillForm::setGrandTotal()
+{
+    QSqlRecord record;
+    QString grandTotalValue;
+    int grandTotal = 0;
+    int rowCount = billItemModel->rowCount();
+    for (int i=0; i < rowCount; i++){
+        record = billItemModel->record(i);
+        grandTotal = grandTotal + record.value("total").toInt();
+    }
+    grandTotalValue = QString::number(grandTotal);
+    ui->lineEditGrandTotal->setText(grandTotalValue);
+}
+
+void BillForm::productUpdate(QModelIndex index)
+{
+    billItemDataMapper->setCurrentIndex(index.row());
+}
+
+void BillForm::productFormClear()
+{
+    ui->lineEditProductCode->clear();
+    ui->lineEditProductName->clear();
+    ui->lineEditQty->clear();
+    ui->lineEditRate->clear();
+    ui->lineEditUnit->clear();
+    ui->lineEditTotal->clear();
+    ui->lineEditProductName->setFocus();
 }
