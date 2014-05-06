@@ -49,7 +49,7 @@ class BillForm : public QWidget
     Q_OBJECT
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
     QString statusMsg;
-    int modelFlag;
+
 
 public:
     explicit BillForm(QWidget *parent = 0);
@@ -63,6 +63,7 @@ public:
     void clear();
 //    int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
+    int modelFlag;
 
 signals:
     void signalName(QString str);
@@ -98,6 +99,7 @@ private slots:
     void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
+    void setProductTotal();
 
 };
 
