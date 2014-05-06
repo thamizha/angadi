@@ -56,7 +56,7 @@
          <property name="minimumSize">
           <size>
            <width>800</width>
-           <height>600</height>
+           <height>530</height>
           </size>
          </property>
          <property name="title">
@@ -65,49 +65,58 @@
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
-            <x>80</x>
+            <x>20</x>
             <y>30</y>
-            <width>71</width>
-            <height>21</height>
+            <width>120</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="text">
            <string>Invoice No</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLabel" name="label_3">
           <property name="geometry">
            <rect>
-            <x>50</x>
-            <y>70</y>
-            <width>101</width>
-            <height>21</height>
+            <x>20</x>
+            <y>60</y>
+            <width>120</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="text">
            <string>Customer Code</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLabel" name="label_4">
           <property name="geometry">
            <rect>
-            <x>30</x>
-            <y>110</y>
-            <width>121</width>
-            <height>21</height>
+            <x>20</x>
+            <y>90</y>
+            <width>120</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="text">
            <string>Customer Address</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QTableView" name="tableViewProductList">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>140</y>
+            <y>120</y>
             <width>781</width>
-            <height>221</height>
+            <height>152</height>
            </rect>
           </property>
          </widget>
@@ -115,7 +124,7 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>370</y>
+            <y>280</y>
             <width>91</width>
             <height>23</height>
            </rect>
@@ -131,7 +140,7 @@
           <property name="geometry">
            <rect>
             <x>110</x>
-            <y>370</y>
+            <y>280</y>
             <width>321</width>
             <height>23</height>
            </rect>
@@ -141,7 +150,7 @@
           <property name="geometry">
            <rect>
             <x>710</x>
-            <y>370</y>
+            <y>280</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -151,7 +160,7 @@
           <property name="geometry">
            <rect>
             <x>620</x>
-            <y>370</y>
+            <y>280</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -161,7 +170,7 @@
           <property name="geometry">
            <rect>
             <x>530</x>
-            <y>370</y>
+            <y>280</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -171,7 +180,7 @@
           <property name="geometry">
            <rect>
             <x>440</x>
-            <y>370</y>
+            <y>280</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -191,7 +200,7 @@
           <property name="geometry">
            <rect>
             <x>150</x>
-            <y>70</y>
+            <y>60</y>
             <width>113</width>
             <height>23</height>
            </rect>
@@ -200,7 +209,7 @@
          <widget class="QLineEdit" name="lineEditInvoiceDate">
           <property name="geometry">
            <rect>
-            <x>680</x>
+            <x>520</x>
             <y>30</y>
             <width>111</width>
             <height>23</height>
@@ -210,34 +219,40 @@
          <widget class="QLabel" name="label_5">
           <property name="geometry">
            <rect>
-            <x>590</x>
+            <x>390</x>
             <y>30</y>
-            <width>91</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
            <string>Invoice Date</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLabel" name="label_6">
           <property name="geometry">
            <rect>
-            <x>410</x>
-            <y>70</y>
-            <width>111</width>
+            <x>390</x>
+            <y>60</y>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
           <property name="text">
            <string>Customer Name</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditCustomerName">
           <property name="geometry">
            <rect>
             <x>520</x>
-            <y>70</y>
+            <y>60</y>
             <width>271</width>
             <height>23</height>
            </rect>
@@ -247,7 +262,7 @@
           <property name="geometry">
            <rect>
             <x>-3</x>
-            <y>390</y>
+            <y>305</y>
             <width>801</width>
             <height>16</height>
            </rect>
@@ -260,7 +275,7 @@
           <property name="geometry">
            <rect>
             <x>230</x>
-            <y>400</y>
+            <y>313</y>
             <width>20</width>
             <height>161</height>
            </rect>
@@ -273,7 +288,7 @@
           <property name="geometry">
            <rect>
             <x>470</x>
-            <y>400</y>
+            <y>313</y>
             <width>20</width>
             <height>161</height>
            </rect>
@@ -285,8 +300,8 @@
          <widget class="QLabel" name="label_7">
           <property name="geometry">
            <rect>
-            <x>30</x>
-            <y>420</y>
+            <x>20</x>
+            <y>320</y>
             <width>201</width>
             <height>20</height>
            </rect>
@@ -306,7 +321,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>300</x>
-            <y>410</y>
+            <y>320</y>
             <width>57</width>
             <height>21</height>
            </rect>
@@ -319,7 +334,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>250</x>
-            <y>440</y>
+            <y>350</y>
             <width>221</width>
             <height>111</height>
            </rect>
@@ -329,7 +344,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>490</x>
-            <y>410</y>
+            <y>320</y>
             <width>51</width>
             <height>21</height>
            </rect>
@@ -345,7 +360,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>490</x>
-            <y>530</y>
+            <y>440</y>
             <width>51</width>
             <height>21</height>
            </rect>
@@ -361,7 +376,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>550</x>
-            <y>410</y>
+            <y>320</y>
             <width>71</width>
             <height>23</height>
            </rect>
@@ -371,7 +386,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>550</x>
-            <y>530</y>
+            <y>440</y>
             <width>71</width>
             <height>23</height>
            </rect>
@@ -381,17 +396,17 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>360</x>
-            <y>410</y>
+            <y>320</y>
             <width>113</width>
             <height>23</height>
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButtonClear">
           <property name="geometry">
            <rect>
-            <x>490</x>
-            <y>570</y>
+            <x>500</x>
+            <y>490</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -400,11 +415,11 @@ font: bold;</string>
            <string>Clear</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="pushButtonSave">
           <property name="geometry">
            <rect>
-            <x>590</x>
-            <y>570</y>
+            <x>600</x>
+            <y>490</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -413,11 +428,11 @@ font: bold;</string>
            <string>Save</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="pushButtonDelete">
           <property name="geometry">
            <rect>
-            <x>690</x>
-            <y>570</y>
+            <x>700</x>
+            <y>490</y>
             <width>81</width>
             <height>23</height>
            </rect>
@@ -430,7 +445,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>150</x>
-            <y>110</y>
+            <y>90</y>
             <width>641</width>
             <height>23</height>
            </rect>
@@ -440,7 +455,7 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>550</y>
+            <y>466</y>
             <width>801</width>
             <height>16</height>
            </rect>
@@ -449,11 +464,11 @@ font: bold;</string>
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>620</x>
-            <y>410</y>
+            <y>320</y>
             <width>73</width>
             <height>141</height>
            </rect>
@@ -511,11 +526,11 @@ font: bold;</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>700</x>
-            <y>410</y>
+            <y>320</y>
             <width>91</width>
             <height>141</height>
            </rect>
@@ -538,11 +553,11 @@ font: bold;</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
-            <x>100</x>
-            <y>440</y>
+            <x>90</x>
+            <y>340</y>
             <width>131</width>
             <height>121</height>
            </rect>
@@ -559,11 +574,11 @@ font: bold;</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
-            <x>30</x>
-            <y>440</y>
+            <x>20</x>
+            <y>340</y>
             <width>61</width>
             <height>121</height>
            </rect>

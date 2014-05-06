@@ -258,7 +258,7 @@ void AngadiMainWindow::openCustomerTab()
 
 void AngadiMainWindow::openBillTab()
 {
-    QString tabName = "Bill";
+    QString tabName = "bill";
     currentTab = tabName;
 
     bool found = tabLoadedStatus(tabName);
@@ -274,7 +274,7 @@ void AngadiMainWindow::openBillTab()
 //    setupModels();
 //    billForm->setModel(billModel);
     billForm->clear();
-//    ui->mainTab->setCurrentWidget (billForm);
+    ui->mainTab->setCurrentWidget (billForm);
 //    billForm->setFieldMaxLength();
     billForm->setCodeFocus();
 
