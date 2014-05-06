@@ -265,7 +265,7 @@ void CategoryForm::setMapperIndex(QModelIndex index)
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
-    setAllValidationSuccess();
+//    setAllValidationSuccess();
 }
 
 void CategoryForm::search(QString value)

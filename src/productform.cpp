@@ -441,7 +441,7 @@ void ProductForm::setMapperIndex(QModelIndex index)
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
-    setAllValidationSuccess();
+//    setAllValidationSuccess();
 }
 
 void ProductForm::search(QString value)
@@ -498,9 +498,9 @@ void ProductForm::setFieldMaxLength()
     ui->lineEditCode->setMaxLength(100);
     ui->lineEditName->setMaxLength(200);
 
-    ui->lineEditWholeSalePrice->setProperty("validationError",false);
-    ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
-    ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
+//    ui->lineEditWholeSalePrice->setProperty("validationError",false);
+//    ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
+//    ui->lineEditWholeSalePrice->setStyleSheet(styleSheet());
 }
 
 void ProductForm::resetDataMapper()
