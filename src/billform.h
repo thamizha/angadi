@@ -100,6 +100,10 @@ private slots:
     void uninstallEventFilter();
     void setAllValidationSuccess();
     void setProductTotal();
+    void setBillId();
+    void addProductItem();
+    void setGrandTotal();
+    void productUpdate(QModelIndex index);
 
 };
 

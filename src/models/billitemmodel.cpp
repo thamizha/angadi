@@ -30,11 +30,11 @@ BillItemModel::BillItemModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
     setTable("bill_item");
-    setRelation(1, QSqlRelation("bill", "id", "id"));
-    setRelation(2, QSqlRelation("products", "id", "name"));
+//    setRelation(1, QSqlRelation("bill", "id", "id"));
+//    setRelation(2, QSqlRelation("products", "id", "name"));
     setEditStrategy(QSqlTableModel::OnManualSubmit);
 //    setHeaderData(fieldIndex("date"), Qt::Horizontal,QObject::tr("Date"));
-//    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
+//    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");
 //    relationModel(3)->setFilter("status = 'A'");
 //    setSort(fieldIndex("id"),Qt::AscendingOrder);
