@@ -434,11 +434,11 @@ bool CustomerForm::emailValid()
         }
     }
     else{
-                ui->lineEditEmail->setProperty("validationError",false);
-                ui->lineEditEmail->setProperty("validationSuccess",true);
-                ui->lineEditEmail->setStyleSheet(styleSheet());
-                status = true;
-                validEmailFlag = 1;
+//        ui->lineEditEmail->setProperty("validationError",false);
+//        ui->lineEditEmail->setProperty("validationSuccess",true);
+//        ui->lineEditEmail->setStyleSheet(styleSheet());
+//        status = true;
+//        validEmailFlag = 1;
     }
     ui->flashMsgUp->setText(flashMsg);
     return status;
@@ -452,7 +452,7 @@ void CustomerForm::setMapperIndex(QModelIndex index)
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
-    setAllValidationSuccess();
+//    setAllValidationSuccess();
 }
 
 void CustomerForm::search(QString value)
@@ -523,17 +523,16 @@ void CustomerForm::setFieldMaxLength()
     ui->lineEditEmail->setMaxLength(80);
     ui->lineEditWebsite->setMaxLength(80);
 
-    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
-        if(widget != ui->lineEditCode && widget != ui->lineEditName && widget != ui->lineEditCreditLimit){
-            widget->setProperty("validationError",false);
-            widget->setProperty("validationSuccess",false);
-            widget->setStyleSheet(styleSheet());
-        }
-    }
-    ui->textEditNote->setProperty("validationError",false);
-    ui->textEditNote->setProperty("validationSuccess",false);
-    ui->textEditNote->setStyleSheet(styleSheet());
-
+//    foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
+//        if(widget != ui->lineEditCode && widget != ui->lineEditName && widget != ui->lineEditCreditLimit){
+//            widget->setProperty("validationError",false);
+//            widget->setProperty("validationSuccess",false);
+//            widget->setStyleSheet(styleSheet());
+//        }
+//    }
+//    ui->textEditNote->setProperty("validationError",false);
+//    ui->textEditNote->setProperty("validationSuccess",false);
+//    ui->textEditNote->setStyleSheet(styleSheet());
 }
 
 void CustomerForm::resetDataMapper()
