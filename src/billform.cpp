@@ -66,10 +66,6 @@ BillForm::BillForm(QWidget *parent) :
 //    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 
-    QDate date = QDate::currentDate();
-    ui->dateEditInvoiceDate->setDate(date);
-    ui->dateEditInvoiceDate->clearFocus();
-
     generateInvoiceNumber();
 }
 
@@ -316,6 +312,10 @@ void BillForm::setAllValidationSuccess()
 
 void BillForm::generateInvoiceNumber()
 {
+    QDate date = QDate::currentDate();
+    ui->dateEditInvoiceDate->setDate(date);
+    ui->dateEditInvoiceDate->setSelectedSection(QDateEdit::DaySection);
+
     QSqlQueryModel model;
     QSqlQuery query;
     query.prepare("Select * from bill");

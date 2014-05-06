@@ -404,7 +404,7 @@ void AngadiMainWindow::onTabChanged(int index){
             lssbar->setModel(productsModel);
         }
         showRightDock(true);
-        lssbar->lineEditSearch->setText(billTabSearchTerm);
+        lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     }
 }
 
@@ -578,5 +578,5 @@ void AngadiMainWindow::changeLssBarSource()
         lssbar->setModel(productsModel);
     }
     showRightDock(true);
-    lssbar->lineEditSearch->setText(billTabSearchTerm);
+    lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
 }
