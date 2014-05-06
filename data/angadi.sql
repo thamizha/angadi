@@ -26,7 +26,8 @@ DROP TABLE IF EXISTS `bill`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bill` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
+  `invoiceNo` int(11) NOT NULL,
+  `invoiceDate` datetime NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `actualAmount` double NOT NULL DEFAULT '0',
   `discount` double NOT NULL DEFAULT '0',
@@ -188,4 +189,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-06 16:30:45
+-- Dump completed on 2014-05-06 17:42:28
