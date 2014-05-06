@@ -40,11 +40,19 @@ BillForm::BillForm(QWidget *parent) :
     billItemDataMapper = new QDataWidgetMapper;
     billItemDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
+    productDataMapper = new QDataWidgetMapper;
+    productDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+
+    customerDataMapper = new QDataWidgetMapper;
+    customerDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+
 //    validCodeFlag = validNameFlag = 0;
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditCustomerName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
-    connect(ui->lineEditCustomerName,SIGNAL(returnPressed()),this,SLOT(setSignalFromCategoryForm()));
+    connect(ui->lineEditCustomerName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
+    connect(ui->lineEditProductName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
+    connect(ui->lineEditProductName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
     connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
@@ -78,13 +86,17 @@ void BillForm::clear()
     //ui->pushButtonSave->setEnabled(false);
 }
 
-void BillForm::setModel(BillModel *model1, BillItemModel *model2)
+void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel *model3, CustomersModel *model4)
 {
     billModel = model1;
     billItemModel = model2;
+    productsModel = model3;
+    customersModel = model4;
 
     billDataMapper->setModel(billModel);
     billItemDataMapper->setModel(billItemModel);
+    productDataMapper->setModel(productsModel);
+    customerDataMapper->setModel(customersModel);
 
     billDataMapper->addMapping(ui->lineEditInvoiceDate,billModel->fieldIndex("date"));
     billDataMapper->addMapping(ui->lineEditInvoiceNo,billModel->fieldIndex("id"));
@@ -96,6 +108,15 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2)
     billItemDataMapper->addMapping(ui->lineEditUnit,billItemModel->fieldIndex("unit_price"));
     billItemDataMapper->addMapping(ui->lineEditQty,billItemModel->fieldIndex("quantity"));
     billItemDataMapper->addMapping(ui->lineEditTotal,billItemModel->fieldIndex("total"));
+
+    productDataMapper->addMapping(ui->lineEditProductCode,productsModel->fieldIndex("code"));
+    productDataMapper->addMapping(ui->lineEditProductName,productsModel->fieldIndex("name"));
+    productDataMapper->addMapping(ui->lineEditRate,productsModel->fieldIndex("sprice"));
+    productDataMapper->addMapping(ui->lineEditUnit,productsModel->fieldIndex("unit"));
+
+    customerDataMapper->addMapping(ui->lineEditCustomerCode,customersModel->fieldIndex("code"));
+    customerDataMapper->addMapping(ui->lineEditCustomerName,customersModel->fieldIndex("name"));
+    customerDataMapper->addMapping(ui->lineEditCustomerAddress,customersModel->fieldIndex("address1"));
 
     setCodeFocus();
 }
@@ -188,7 +209,7 @@ void BillForm::resetDataMapper()
 {
     billDataMapper = new QDataWidgetMapper(this);
     billDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    setModel(billModel, billItemModel);
+    setModel(billModel, billItemModel, productsModel, customersModel);
 }
 
 bool BillForm::eventFilter(QObject *obj, QEvent *event)

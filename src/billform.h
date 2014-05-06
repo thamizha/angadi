@@ -29,6 +29,8 @@
 
 #include "models/billitemmodel.h"
 #include "models/billmodel.h"
+#include "models/customersmodel.h"
+#include "models/productsmodel.h"
 #include "models/formvalidation.h"
 
 #include <QWidget>
@@ -52,7 +54,7 @@ public:
     explicit BillForm(QWidget *parent = 0);
     ~BillForm();
     void setCodeFocus();
-    void setModel(BillModel *model1, BillItemModel *model2);
+    void setModel(BillModel *model1, BillItemModel *model2, ProductsModel *model3, CustomersModel *model4);
     void setMapperIndex(QModelIndex index);
     void search(QString value);
     QDateTime modifiedDate() const;
@@ -70,9 +72,13 @@ private:
     Ui::BillForm *ui;
     BillItemModel *billItemModel;
     BillModel *billModel;
+    ProductsModel *productsModel;
+    CustomersModel *customersModel;
 
     QDataWidgetMapper *billDataMapper;
     QDataWidgetMapper *billItemDataMapper;
+    QDataWidgetMapper *productDataMapper;
+    QDataWidgetMapper *customerDataMapper;
 
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
