@@ -49,6 +49,7 @@ class BillForm : public QWidget
     Q_OBJECT
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
     QString statusMsg;
+    int modelFlag;
 
 public:
     explicit BillForm(QWidget *parent = 0);

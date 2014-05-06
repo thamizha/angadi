@@ -235,6 +235,7 @@ void AngadiMainWindow::openProductTab()
     }
     connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
+    connect(productForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
 
     setupModels();
     productForm->setModel(productsModel);
@@ -261,6 +262,7 @@ void AngadiMainWindow::openCustomerTab()
     }
     connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
+    connect(customerForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
 
     setupModels();
     customerForm->setModel(customersModel);
@@ -286,6 +288,7 @@ void AngadiMainWindow::openBillTab()
     }
     connect(billForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billForm,SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
+//    connect(billForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
     connect(billForm,SIGNAL(signalCustomerNameFocused()),this,SLOT(changeLssBarSource()));
 
     setupModels();
@@ -425,7 +428,15 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
         }else{
             customerForm->setNameFocus();
         }
-     }
+
+    }else if(currentTab == "bill"){
+        if(index.row() >= 0){
+           billForm->setMapperIndex(index);
+           billForm->setCodeFocus();
+        }else{
+           billForm->setCodeFocus();
+        }
+    }
 }
 
 // search the model for the given string
@@ -542,13 +553,12 @@ void AngadiMainWindow::setStatusBarDefaultText()
 void AngadiMainWindow::changeStatusMsgToDefault()
 {
     // Status bar message to default
-    timer->start(5000);
+    timer->start(3000);
 }
 
 void AngadiMainWindow::changeLssBarSource()
 {
     qDebug() << "Called";
-    customerForm->setModel(customersModel);
     lssbar->setModel(customersModel);
     showRightDock(true);
     lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);

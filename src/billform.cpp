@@ -55,7 +55,7 @@ BillForm::BillForm(QWidget *parent) :
     connect(ui->lineEditProductName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
     connect(ui->lineEditProductName,SIGNAL(returnPressed()),this,SLOT(setSignalFromBillForm()));
 
-    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
+//    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 }
 
@@ -72,6 +72,7 @@ void BillForm::setCodeFocus()
 {
     ui->lineEditCustomerCode->setFocus();
     ui->lineEditCustomerCode->selectAll();
+    ui->lineEditCustomerName->installEventFilter(this);
 }
 
 void BillForm::clear()
@@ -127,7 +128,6 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
 bool BillForm::nameValid(){
     bool status = false;
 //    QString flashMsg = "";
-    ui->lineEditCustomerName->installEventFilter(this);
 //    if(ui->lineEditName->text().length() > 0){
 //        if(uniqueValid(ui->lineEditName->text(),"name")){
 //            status = true;
@@ -157,13 +157,19 @@ bool BillForm::nameValid(){
 
 void BillForm::setMapperIndex(QModelIndex index)
 {
-    clear();
-    billDataMapper->setCurrentIndex(index.row());
-    this->ui->pushButtonSave->setText("Update");
-    ui->pushButtonDelete->setEnabled(true);
-//    validCodeFlag = validNameFlag = 1;
-//    ui->pushButtonSave->setEnabled(false);
-    setAllValidationSuccess();
+    if(modelFlag == 1){
+        customerDataMapper->setCurrentIndex(index.row());
+
+    }else if(modelFlag == 2){
+        productDataMapper->setCurrentIndex(index.row());
+
+    }
+//    clear();
+//    this->ui->pushButtonSave->setText("Update");
+//    ui->pushButtonDelete->setEnabled(true);
+////    validCodeFlag = validNameFlag = 1;
+////    ui->pushButtonSave->setEnabled(false);
+//    setAllValidationSuccess();
 }
 
 void BillForm::search(QString value)
@@ -250,7 +256,7 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == ui->lineEditCustomerName){
         if(event->type() == QEvent::FocusIn){
-            BillForm::nameValid();
+            modelFlag = 1;
             emit signalCustomerNameFocused();
         }
         return false;
