@@ -35,12 +35,12 @@ public:
     int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
 
+public slots:
+
 signals:
     void signalName(QString str);
     void signalFromCategoryForm();
     void signalStatusBar(QString str);
-
-public slots:
 
 private:
     Ui::CategoryForm *ui;

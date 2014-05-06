@@ -30,7 +30,8 @@ BillItemModel::BillItemModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
     setTable("bill_item");
-    setRelation(3, QSqlRelation("product_id", "id", "name"));
+    setRelation(1, QSqlRelation("bill", "id", "id"));
+    setRelation(2, QSqlRelation("products", "id", "name"));
     setEditStrategy(QSqlTableModel::OnManualSubmit);
 //    setHeaderData(fieldIndex("date"), Qt::Horizontal,QObject::tr("Date"));
 //    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));

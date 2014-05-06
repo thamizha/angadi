@@ -150,6 +150,22 @@ void AngadiMainWindow::setupModels()
     customersProxyModel->setSourceModel(customersModel); //set the source model to categories model
     customersProxyModel->setFilterKeyColumn(2); // set the filter to the name column
     customersProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    billModel = new BillModel;
+
+    // Create new billproxy model to filter sort functionalities
+//    billProxyModel = new QSortFilterProxyModel; //initialization
+//    billProxyModel->setSourceModel(billModel); //set the source model to categories model
+//    billProxyModel->setFilterKeyColumn(2); // set the filter to the name column
+//    billProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    billItemModel = new BillItemModel;
+
+    // Create new billItemproxy model to filter sort functionalities
+//    billItemProxyModel = new QSortFilterProxyModel; //initialization
+//    billItemProxyModel->setSourceModel(billItemModel); //set the source model to categories model
+//    billItemProxyModel->setFilterKeyColumn(2); // set the filter to the name column
+//    billItemProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 void AngadiMainWindow::exitApp()
@@ -269,10 +285,10 @@ void AngadiMainWindow::openBillTab()
         lssbar->lineEditSearch->setText("");
     }
     connect(billForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
-    connect(billForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
+    connect(billForm,SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
 
-//    setupModels();
-//    billForm->setModel(billModel);
+    setupModels();
+    billForm->setModel(billModel, billItemModel);
     billForm->clear();
     ui->mainTab->setCurrentWidget (billForm);
 //    billForm->setFieldMaxLength();

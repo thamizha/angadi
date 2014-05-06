@@ -21,6 +21,7 @@
  *
  * Authors :
  * D.Mohan Raj <mohanraj.hunk@live.com>
+ * Selvam <vjpselvam@gmail.com>
  *****************************************************************************/
 
 #ifndef BILLFORM_H
@@ -28,12 +29,14 @@
 
 #include "models/billitemmodel.h"
 #include "models/billmodel.h"
+#include "models/formvalidation.h"
 
 #include <QWidget>
+#include <QValidator>
+#include <QIntValidator>
+#include <QDataWidgetMapper>
 #include <QDateTime>
 #include <QEvent>
-#include <QDataWidgetMapper>
-#include <QSqlRelationalDelegate>
 
 namespace Ui {
 class BillForm;
@@ -42,13 +45,26 @@ class BillForm;
 class BillForm : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
+    QString statusMsg;
 
 public:
     explicit BillForm(QWidget *parent = 0);
     ~BillForm();
-    void clear();
     void setCodeFocus();
-    void setModel(BillModel *billModel, BillItemModel *billItemModel);
+    void setModel(BillModel *model1, BillItemModel *model2);
+    void setMapperIndex(QModelIndex index);
+    void search(QString value);
+    QDateTime modifiedDate() const;
+    void setModifiedDate(QDateTime modifiedDate);
+    void clear();
+//    int validNameFlag , validCodeFlag;
+    void setFieldMaxLength();
+
+signals:
+    void signalName(QString str);
+    void signalFromBillForm();
+    void signalStatusBar(QString str);
 
 private:
     Ui::BillForm *ui;
@@ -58,8 +74,22 @@ private:
     QDataWidgetMapper *billDataMapper;
     QDataWidgetMapper *billItemDataMapper;
 
+    QDateTime m_modifiedDate;
+    FormValidation *formValidation;
+
 private slots:
     void save();
+//    bool codeValid();
+//    bool nameValid();
+    void on_pushButtonClear_clicked();
+    void on_pushButtonDelete_clicked();
+    void onNameChanged(QString str);
+//    bool uniqueValid(QString text, QString field);
+    void setSignalFromBillForm();
+    bool eventFilter(QObject *obj, QEvent *event);
+    void resetDataMapper();
+    void uninstallEventFilter();
+    void setAllValidationSuccess();
 
 };
 
