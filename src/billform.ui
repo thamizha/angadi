@@ -10,6 +10,9 @@
     <height>655</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::TabFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -202,16 +205,6 @@
             <x>150</x>
             <y>60</y>
             <width>113</width>
-            <height>23</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEditInvoiceDate">
-          <property name="geometry">
-           <rect>
-            <x>520</x>
-            <y>30</y>
-            <width>111</width>
             <height>23</height>
            </rect>
           </property>
@@ -616,6 +609,43 @@ font: bold;</string>
            </item>
           </layout>
          </widget>
+         <widget class="QDateEdit" name="dateEditInvoiceDate">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>520</x>
+            <y>30</y>
+            <width>100</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::TabFocus</enum>
+          </property>
+          <property name="wrapping">
+           <bool>false</bool>
+          </property>
+          <property name="frame">
+           <bool>false</bool>
+          </property>
+          <property name="accelerated">
+           <bool>false</bool>
+          </property>
+          <property name="keyboardTracking">
+           <bool>true</bool>
+          </property>
+          <property name="displayFormat">
+           <string>dd/MM/yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+          <property name="timeSpec">
+           <enum>Qt::LocalTime</enum>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
@@ -650,6 +680,35 @@ font: bold;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditInvoiceNo</tabstop>
+  <tabstop>dateEditInvoiceDate</tabstop>
+  <tabstop>lineEditCustomerCode</tabstop>
+  <tabstop>lineEditCustomerName</tabstop>
+  <tabstop>lineEditCustomerAddress</tabstop>
+  <tabstop>lineEditProductCode</tabstop>
+  <tabstop>lineEditProductName</tabstop>
+  <tabstop>lineEditQty</tabstop>
+  <tabstop>lineEditUnit</tabstop>
+  <tabstop>lineEditRate</tabstop>
+  <tabstop>lineEditTotal</tabstop>
+  <tabstop>lineEditTax</tabstop>
+  <tabstop>lineEditChange</tabstop>
+  <tabstop>lineEditBalance</tabstop>
+  <tabstop>pushButtonClear</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonDelete</tabstop>
+  <tabstop>tableViewProductList</tabstop>
+  <tabstop>lineEditGrandTotal</tabstop>
+  <tabstop>lineEditDiscount</tabstop>
+  <tabstop>lineEditRoundOff</tabstop>
+  <tabstop>lineEditTooBePaid</tabstop>
+  <tabstop>lineEditGiven</tabstop>
+  <tabstop>lineEditLimit</tabstop>
+  <tabstop>lineEditUsed</tabstop>
+  <tabstop>lineEditAvailable</tabstop>
+  <tabstop>tableViewCustomerBalance</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -63,6 +63,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
     connect(ui->lineEditCreditLimit,SIGNAL(editingFinished()),this,SLOT(creditLimitValid()));
+    connect(ui->lineEditContactPerson,SIGNAL(editingFinished()),this,SLOT(contactPersonValid()));
     connect(ui->lineEditAddress1,SIGNAL(editingFinished()),this,SLOT(address1Valid()));
     connect(ui->lineEditAddress2,SIGNAL(editingFinished()),this,SLOT(address2Valid()));
     connect(ui->lineEditCity,SIGNAL(editingFinished()),this,SLOT(cityValid()));
@@ -70,6 +71,10 @@ CustomerForm::CustomerForm(QWidget *parent) :
     connect(ui->lineEditCountry,SIGNAL(editingFinished()),this,SLOT(countryValid()));
     connect(ui->lineEditPincode,SIGNAL(editingFinished()),this,SLOT(pincodeValid()));
     connect(ui->lineEditPhone1,SIGNAL(editingFinished()),this,SLOT(phone1Valid()));
+    connect(ui->lineEditPhone2,SIGNAL(editingFinished()),this,SLOT(phone2Valid()));
+    connect(ui->lineEditMobile1,SIGNAL(editingFinished()),this,SLOT(mobile1Valid()));
+    connect(ui->lineEditMobile2,SIGNAL(editingFinished()),this,SLOT(mobile2Valid()));
+    connect(ui->lineEditWebsite,SIGNAL(editingFinished()),this,SLOT(WebsiteValid()));
     connect(ui->lineEditEmail,SIGNAL(editingFinished()),this,SLOT(emailValid()));
 
     setFieldMaxLength();
@@ -79,6 +84,16 @@ CustomerForm::CustomerForm(QWidget *parent) :
 CustomerForm::~CustomerForm()
 {
     delete ui;
+}
+
+bool CustomerForm::contactPersonValid()
+{
+    if(ui->lineEditContactPerson->text().length()>0){
+        ui->lineEditContactPerson->setProperty("validationError",false);
+        ui->lineEditContactPerson->setProperty("validationSuccess",true);
+        ui->lineEditContactPerson->setStyleSheet(styleSheet());
+    }
+        return true;
 }
 
 bool CustomerForm::address1Valid()
@@ -113,36 +128,84 @@ bool CustomerForm::cityValid()
 
 bool CustomerForm::stateValid()
 {
+  if(ui->lineEditState->text().length()>0){
     ui->lineEditState->setProperty("validationError",false);
     ui->lineEditState->setProperty("validationSuccess",true);
     ui->lineEditState->setStyleSheet(styleSheet());\
+  }
     return true;
 }
 
 bool CustomerForm::countryValid()
 {
+   if(ui->lineEditCountry->text().length()>0){
     ui->lineEditCountry->setProperty("validationError",false);
     ui->lineEditCountry->setProperty("validationSuccess",true);
     ui->lineEditCountry->setStyleSheet(styleSheet());\
+   }
     return true;
 }
 
 bool CustomerForm::pincodeValid()
 {
+  if(ui->lineEditPincode->text().length()>0){
     ui->lineEditPincode->setProperty("validationError",false);
     ui->lineEditPincode->setProperty("validationSuccess",true);
     ui->lineEditPincode->setStyleSheet(styleSheet());\
+  }
     return true;
 }
 
 bool CustomerForm::phone1Valid()
 {
+   if(ui->lineEditPhone1->text().length()>0){
     ui->lineEditPhone1->setProperty("validationError",false);
     ui->lineEditPhone1->setProperty("validationSuccess",true);
     ui->lineEditPhone1->setStyleSheet(styleSheet());\
+   }
     return true;
 }
 
+bool CustomerForm::phone2Valid()
+{
+   if(ui->lineEditPhone2->text().length()>0){
+    ui->lineEditPhone2->setProperty("validationError",false);
+    ui->lineEditPhone2->setProperty("validationSuccess",true);
+    ui->lineEditPhone2->setStyleSheet(styleSheet());\
+   }
+    return true;
+}
+
+
+bool CustomerForm::mobile1Valid()
+{
+   if(ui->lineEditMobile1->text().length()>0){
+    ui->lineEditMobile1->setProperty("validationError",false);
+    ui->lineEditMobile1->setProperty("validationSuccess",true);
+    ui->lineEditMobile1->setStyleSheet(styleSheet());\
+   }
+    return true;
+}
+
+bool CustomerForm::mobile2Valid()
+{
+   if(ui->lineEditMobile2->text().length()>0){
+    ui->lineEditMobile2->setProperty("validationError",false);
+    ui->lineEditMobile2->setProperty("validationSuccess",true);
+    ui->lineEditMobile2->setStyleSheet(styleSheet());\
+   }
+    return true;
+}
+
+bool CustomerForm::WebsiteValid()
+{
+   if(ui->lineEditWebsite->text().length()>0){
+    ui->lineEditWebsite->setProperty("validationError",false);
+    ui->lineEditWebsite->setProperty("validationSuccess",true);
+    ui->lineEditWebsite->setStyleSheet(styleSheet());\
+   }
+    return true;
+}
 
 void CustomerForm::save()
 {
