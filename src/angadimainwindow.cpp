@@ -218,7 +218,6 @@ void AngadiMainWindow::openCategoryTab()
     ui->mainTab->setCurrentWidget (categoryForm);
     categoryForm->setFieldMaxLength();
 //    categoryForm->setCodeFocus();
-
 //    lssbar->setModel(categoriesModel);
 }
 
@@ -376,21 +375,21 @@ void AngadiMainWindow::onTabChanged(int index){
     showRightDock(false);
     if(tabName == "category"){
         categoryForm->setModel(categoriesModel);
-        categoryForm->clear();
+//        categoryForm->clear();
         lssbar->setModel(categoriesModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(categoryTabSearchTerm);
 
     }else if(tabName == "product"){
         productForm->setModel(productsModel);
-        productForm->clear();
+//        productForm->clear();
         lssbar->setModel(productsModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(productTabSearchTerm);
 
     }else if(tabName == "customer"){
         customerForm->setModel(customersModel);
-        customerForm->clear();
+//        customerForm->clear();
         lssbar->setModel(customersModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
