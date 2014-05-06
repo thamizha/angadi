@@ -39,6 +39,10 @@
 #include <QDataWidgetMapper>
 #include <QDateTime>
 #include <QEvent>
+#include <QDate>
+#include <QSqlQueryModel>
+#include <QSqlQuery>
+#include <QSqlRecord>
 
 namespace Ui {
 class BillForm;
@@ -49,12 +53,12 @@ class BillForm : public QWidget
     Q_OBJECT
     Q_PROPERTY(QDateTime modifiedDate READ modifiedDate WRITE setModifiedDate)
     QString statusMsg;
-    int modelFlag;
 
 public:
     explicit BillForm(QWidget *parent = 0);
     ~BillForm();
     void setCodeFocus();
+    void setProductFocus();
     void setModel(BillModel *model1, BillItemModel *model2, ProductsModel *model3, CustomersModel *model4);
     void setMapperIndex(QModelIndex index);
     void search(QString value);
@@ -63,6 +67,7 @@ public:
     void clear();
 //    int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
+    int modelFlag;
 
 signals:
     void signalName(QString str);
@@ -96,9 +101,9 @@ private slots:
     void setSignalFromBillForm();
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();
-    void uninstallEventFilter();
     void setAllValidationSuccess();
-
+    void uninstallEventFilter();
+    void generateInvoiceNumber();
 };
 
 #endif // BILLFORM_H

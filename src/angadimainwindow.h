@@ -24,7 +24,7 @@ class AngadiMainWindow : public QMainWindow
 {
     Q_OBJECT
     QString currentTab;
-    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm, billTabCustomerSearchTerm;
+    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm, billTabSearchTerm;
 
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);

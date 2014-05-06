@@ -57,6 +57,12 @@ BillForm::BillForm(QWidget *parent) :
 
 //    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+
+    QDate date = QDate::currentDate();
+    ui->dateEditInvoiceDate->setDate(date);
+    ui->dateEditInvoiceDate->clearFocus();
+
+    generateInvoiceNumber();
 }
 
 BillForm::~BillForm()
@@ -75,6 +81,12 @@ void BillForm::setCodeFocus()
     ui->lineEditCustomerName->installEventFilter(this);
 }
 
+void BillForm::setProductFocus()
+{
+    ui->lineEditProductName->setFocus();
+    ui->lineEditProductCode->selectAll();
+}
+
 void BillForm::clear()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
@@ -87,6 +99,7 @@ void BillForm::clear()
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);
+    generateInvoiceNumber();
 }
 
 void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel *model3, CustomersModel *model4)
@@ -101,7 +114,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     productDataMapper->setModel(productsModel);
     customerDataMapper->setModel(customersModel);
 
-    billDataMapper->addMapping(ui->lineEditInvoiceDate,billModel->fieldIndex("date"));
+    billDataMapper->addMapping(ui->dateEditInvoiceDate,billModel->fieldIndex("date"));
     billDataMapper->addMapping(ui->lineEditInvoiceNo,billModel->fieldIndex("id"));
     billDataMapper->addMapping(ui->lineEditTotal,billModel->fieldIndex("actualAmount"));
     billDataMapper->addMapping(ui->lineEditDiscount,billModel->fieldIndex("discount"));
@@ -280,4 +293,27 @@ void BillForm::setAllValidationSuccess()
         widget->setProperty("validationSuccess",true);
         widget->setStyleSheet(styleSheet());
     }
+}
+
+
+void BillForm::generateInvoiceNumber()
+{
+    QSqlQueryModel model;
+    QSqlQuery query;
+    query.prepare("Select * from bill");
+    query.exec();
+    model.setQuery(query);
+
+    QString invoiceNo;
+    if(model.rowCount() == 0){
+        invoiceNo = "1";
+    }else{
+        query.prepare("Select max(invoiceNo) from bill");
+        query.exec();
+        model.setQuery(query);
+
+        int maxInvoiceNo = model.record(0).value(0).toInt() + 1;
+        invoiceNo = QString::number(maxInvoiceNo);
+    }
+    ui->lineEditInvoiceNo->setText(invoiceNo);
 }
