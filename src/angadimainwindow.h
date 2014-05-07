@@ -93,6 +93,7 @@ private slots:
     void changeStatusMsgToDefault();
     void setStatusBarDefaultText();
     void changeLssBarSource();
+
 };
 
 #endif // ANGADIMAINWINDOW_H

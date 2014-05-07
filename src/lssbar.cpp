@@ -72,6 +72,7 @@ void Lssbar::setupUi()
 
 void Lssbar::setModel(QSqlTableModel *tableModel)
 {
+    tableModel->select();
     tableView->setModel(tableModel);
 
     //set all columns hidden
