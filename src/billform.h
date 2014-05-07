@@ -59,6 +59,7 @@ public:
     ~BillForm();
     void setCodeFocus();
     void setProductFocus();
+    void setQuantityFocus();
     void setModel(BillModel *model1, BillItemModel *model2, ProductsModel *model3, CustomersModel *model4);
     void setMapperIndex(QModelIndex index);
     void search(QString value);

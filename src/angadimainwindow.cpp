@@ -41,13 +41,6 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 
     timer = new QTimer;
 
-    /*QDockWidget *dock = new QDockWidget(tr("Search Bar"), this);
-    QLineEdit *lineEditCode= new QLineEdit(dock);
-    QLineEdit *lineEditName= new QLineEdit(dock);
-    dock->setWidget(lineEditCode);
-    dock->setWidget(lineEditName);
-    addDockWidget(Qt::RightDockWidgetArea, dock);*/
-
     lssbar = new Lssbar;
 
     connect(lssbar,SIGNAL(signalEdit(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
@@ -180,7 +173,6 @@ void AngadiMainWindow::openTab()
 
     showRightDock(false);
 
-
     if(tabName == "customer"){
         openCustomerTab();
         showRightDock(true);
@@ -217,8 +209,6 @@ void AngadiMainWindow::openCategoryTab()
     categoryForm->clear();
     ui->mainTab->setCurrentWidget (categoryForm);
     categoryForm->setFieldMaxLength();
-//    categoryForm->setCodeFocus();
-//    lssbar->setModel(categoriesModel);
 }
 
 void AngadiMainWindow::openProductTab()
@@ -242,10 +232,6 @@ void AngadiMainWindow::openProductTab()
     productForm->clear();
     ui->mainTab->setCurrentWidget (productForm);
     productForm->setFieldMaxLength();
-
-//    productForm->setCodeFocus();
-
-//    lssbar->setModel(productsModel);
 }
 
 void AngadiMainWindow::openCustomerTab()
@@ -269,9 +255,6 @@ void AngadiMainWindow::openCustomerTab()
     customerForm->clear();
     ui->mainTab->setCurrentWidget (customerForm);
     customerForm->setFieldMaxLength();
-//    customerForm->setCodeFocus();
-
-//    lssbar->setModel(customersModel);
 }
 
 void AngadiMainWindow::openBillTab()
@@ -292,11 +275,10 @@ void AngadiMainWindow::openBillTab()
     connect(billForm,SIGNAL(signalCustomerNameFocused()),this,SLOT(changeLssBarSource()));
 
     setupModels();
+    billForm->setModel(billModel, billItemModel, productsModel, customersModel);
     billForm->clear();
     ui->mainTab->setCurrentWidget (billForm);
-//    billForm->setFieldMaxLength();
     billForm->setCodeFocus();
-    billForm->setModel(billModel, billItemModel, productsModel, customersModel);
     lssbar->setModel(productsModel);
 }
 
@@ -435,8 +417,12 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 
     }else if(currentTab == "bill"){
         if(index.row() >= 0){
-           billForm->setMapperIndex(index);
-           billForm->setProductFocus();
+            billForm->setMapperIndex(index);
+            if(billForm->modelFlag == 1){
+                billForm->setProductFocus();
+            }else{
+                billForm->setQuantityFocus();
+            }
         }else{
            billForm->setCodeFocus();
         }

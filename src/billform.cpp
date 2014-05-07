@@ -100,6 +100,12 @@ void BillForm::setProductFocus()
     ui->lineEditProductCode->selectAll();
 }
 
+void BillForm::setQuantityFocus()
+{
+    ui->lineEditQty->setFocus();
+    ui->lineEditQty->selectAll();
+}
+
 void BillForm::clear()
 {
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
@@ -196,12 +202,6 @@ void BillForm::setMapperIndex(QModelIndex index)
         productDataMapper->setCurrentIndex(index.row());
 
     }
-//    clear();
-//    this->ui->pushButtonSave->setText("Update");
-//    ui->pushButtonDelete->setEnabled(true);
-////    validCodeFlag = validNameFlag = 1;
-////    ui->pushButtonSave->setEnabled(false);
-//    setAllValidationSuccess();
 }
 
 void BillForm::search(QString value)
@@ -324,7 +324,7 @@ void BillForm::generateInvoiceNumber()
 {
     QDate date = QDate::currentDate();
     ui->dateEditInvoiceDate->setDate(date);
-    ui->dateEditInvoiceDate->setSelectedSection(QDateEdit::DaySection);
+    ui->dateEditInvoiceDate->setSelectedSection(QDateEdit::NoSection);
 
     QSqlQueryModel model;
     QSqlQuery query;

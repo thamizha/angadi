@@ -621,6 +621,9 @@ font: bold;</string>
             <height>24</height>
            </rect>
           </property>
+          <property name="mouseTracking">
+           <bool>false</bool>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::TabFocus</enum>
           </property>
