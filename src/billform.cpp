@@ -29,6 +29,10 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
+#include <QSqlError>
+#include <QModelIndex>
+#include <QKeyEvent>
+#include <QSqlRelationalDelegate>
 
 BillForm::BillForm(QWidget *parent) :
     QWidget(parent),
@@ -83,6 +87,58 @@ BillForm::~BillForm()
 
 void BillForm::save(){
 
+    QDateTime datetime = QDateTime::currentDateTime();
+    QDateTime invoiceDateTime = ui->dateEditInvoiceDate->dateTime();
+    int row = billModel->rowCount();
+    billModel->insertRows(row, 1);
+    billModel->setData(billModel->index(row,billModel->fieldIndex("invoiceNo")),ui->lineEditInvoiceNo->text());
+    billModel->setData(billModel->index(row,billModel->fieldIndex("invoiceDate")),invoiceDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+
+    QSqlQuery customerQuery;
+    int customer_id;
+    customerQuery.prepare("Select id from customers where name = :customer_name");
+    customerQuery.bindValue(":customer_name", ui->lineEditCustomerName->text());
+    customerQuery.exec();
+    while(customerQuery.next())
+        customer_id = customerQuery.value(0).toInt();
+    QModelIndex idx = billModel->index(row,3);
+    billModel->setData(idx, customer_id, Qt::EditRole);
+    billModel->setData(billModel->index(row,billModel->fieldIndex("actualAmount")),ui->lineEditTotal->text());
+    billModel->setData(billModel->index(row,billModel->fieldIndex("discount")),ui->lineEditDiscount->text());
+    billModel->setData(billModel->index(row,billModel->fieldIndex("totalAmount")),ui->lineEditTooBePaid->text());
+    billModel->setData(billModel->index(row,billModel->fieldIndex("dueAmount")),ui->lineEditChange->text());
+    billModel->setData(billModel->index(row,billModel->fieldIndex("paidStatus")),"P");
+    billModel->setData(billModel->index(row,billModel->fieldIndex("status")),"A");
+    billModel->setData(billModel->index(row,billModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+    bool billStatus = billModel->submitAll();
+    if(billStatus){
+        QString productName;
+        QSqlQuery itemQuery;
+        QSqlRecord itemRecord;
+        QSqlRecord billrecord = billModel->record(row);
+        int bill_id = billrecord.value("id").toInt();
+        for (int i = 0; i < billItemModel->rowCount(); ++i) {
+            itemRecord = billItemModel->record(i);
+
+            productName = itemRecord.value("product_id").toString();
+            itemQuery.prepare("Select id from products where name = :product_name");
+            itemQuery.bindValue(":product_name", productName);
+            itemQuery.exec();
+            itemQuery.value(0);
+            while(itemQuery.next())
+                productName = itemQuery.value(0).toString();
+
+            itemRecord.setValue("bill_id", bill_id);
+            itemRecord.setValue("product_id", productName);
+            billItemModel->setRecord(i, itemRecord);
+        }
+        bool billItemStatus = billItemModel->submitAll();
+        if(billItemStatus){
+            statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
+            emit signalStatusBar(statusMsg);
+            clear();
+        }
+    }
 }
 
 void BillForm::setCodeFocus()
@@ -92,6 +148,7 @@ void BillForm::setCodeFocus()
     ui->lineEditCustomerCode->selectAll();
     ui->lineEditCustomerName->installEventFilter(this);
     ui->lineEditProductName->installEventFilter(this);
+    ui->tableViewProductList->installEventFilter(this);
 }
 
 void BillForm::setProductFocus()
@@ -158,6 +215,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
     ui->tableViewProductList->setColumnHidden(1,true);
+    //ui->tableViewProductList->setItemDelegate(new QSqlRelationalDelegate(ui->tableViewProductList));
     setCodeFocus();
     setBillId();
 }
@@ -298,6 +356,17 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
             emit signalCustomerNameFocused();
         }
         return false;
+    }else if (obj == ui->tableViewProductList){
+        if(event->type() == QEvent::KeyPress){
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            if(keyEvent->key() == Qt::Key_Delete){
+                QModelIndex index = ui->tableViewProductList->currentIndex();
+                billItemModel->removeRows(index.row(),1);
+                productFormClear();
+                return false;
+            }
+        }
+        return false;
     }
     return BillForm::eventFilter(obj, event);
 }
@@ -306,6 +375,7 @@ void BillForm::uninstallEventFilter()
 {
     ui->lineEditCustomerCode->removeEventFilter(this);
     ui->lineEditCustomerName->removeEventFilter(this);
+    ui->tableViewProductList->removeEventFilter(this);
     ui->flashMsgUp->clear();
 }
 
@@ -362,30 +432,25 @@ void BillForm::setBillId()
 
 void BillForm::addProductItem()
 {
-    if(billItemDataMapper->currentIndex() >= 0){
-        qDebug() << billDataMapper->currentIndex();
+    if(productUpdateFlag == 1){
+        bool status = billItemDataMapper->submit();
+        if(status){
+            billItemModel->submit();
+            ui->tableViewProductList->clearSelection();
+        }
     }else{
         int row = billItemModel->rowCount();
         billItemModel->insertRows(row, 1);
 
-        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("bill_id")),-1);
-        QSqlQueryModel model;
-        QSqlQuery query;
-        query.prepare("Select id from products where name = :product_name");
-        query.bindValue(":product_name", ui->lineEditProductName->text());
-        query.exec();
-        model.setQuery(query);
-        QSqlRecord record = model.record(0);
-        int product_id = record.value("id").toInt();
-        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("product_id")),product_id);
-
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("bill_id")),-1);billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("product_id")),ui->lineEditProductName->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unit")),ui->lineEditUnit->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unitPrice")),ui->lineEditRate->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("quantity")),ui->lineEditQty->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("total")),ui->lineEditTotal->text());
+        billItemModel->submit();
     }
-    setGrandTotal();
     productFormClear();
+    setGrandTotal();
 }
 
 void BillForm::setGrandTotal()
@@ -405,6 +470,8 @@ void BillForm::setGrandTotal()
 void BillForm::productUpdate(QModelIndex index)
 {
     billItemDataMapper->setCurrentIndex(index.row());
+    ui->tableViewProductList->setCurrentIndex(index);
+    productUpdateFlag = 1;
 }
 
 void BillForm::productFormClear()
@@ -416,4 +483,5 @@ void BillForm::productFormClear()
     ui->lineEditUnit->clear();
     ui->lineEditTotal->clear();
     ui->lineEditProductName->setFocus();
+    productUpdateFlag = 0;
 }

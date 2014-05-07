@@ -69,6 +69,7 @@ public:
 //    int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
     int modelFlag;
+    int productUpdateFlag;
 
 signals:
     void signalName(QString str);
