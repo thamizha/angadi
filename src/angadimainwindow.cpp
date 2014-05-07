@@ -199,16 +199,20 @@ void AngadiMainWindow::openCategoryTab()
         categoryForm->setProperty("name", tabName);
         ui->mainTab->addTab(categoryForm, "Category");
         lssbar->lineEditSearch->setText("");
+
+        setupModels();
+        categoryForm->setModel(categoriesModel);
+        categoryForm->clear();
+        categoryForm->setFieldMaxLength();
+        categoryTabSearchTerm = "";
+        lssbar->lineEditSearch->setText(categoryTabSearchTerm);
     }
     connect(categoryForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(categoryForm,SIGNAL(signalFromCategoryForm()),lssbar,SLOT(setSearchFocus()));
     connect(categoryForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
+    connect(categoryForm,SIGNAL(signalUpdated()),this,SLOT(changeLssBarSource()));
 
-    setupModels();
-    categoryForm->setModel(categoriesModel);
-    categoryForm->clear();
     ui->mainTab->setCurrentWidget (categoryForm);
-    categoryForm->setFieldMaxLength();
 }
 
 void AngadiMainWindow::openProductTab()
@@ -222,16 +226,19 @@ void AngadiMainWindow::openProductTab()
         productForm->setProperty("name", tabName);
         ui->mainTab->addTab(productForm, "Product");
         lssbar->lineEditSearch->setText("");
+
+        setupModels();
+        productForm->setModel(productsModel);
+        productForm->clear();
+        productForm->setFieldMaxLength();
+        productTabSearchTerm = "";
+        lssbar->lineEditSearch->setText(productTabSearchTerm);
     }
     connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
     connect(productForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
 
-    setupModels();
-    productForm->setModel(productsModel);
-    productForm->clear();
     ui->mainTab->setCurrentWidget (productForm);
-    productForm->setFieldMaxLength();
 }
 
 void AngadiMainWindow::openCustomerTab()
@@ -245,16 +252,19 @@ void AngadiMainWindow::openCustomerTab()
         customerForm->setProperty("name", tabName);
         ui->mainTab->addTab(customerForm, "Customer");
         lssbar->lineEditSearch->setText("");
+
+        setupModels();
+        customerForm->setModel(customersModel);
+        customerForm->clear();
+        customerForm->setFieldMaxLength();
+        customerTabSearchTerm = "";
+        lssbar->lineEditSearch->setText(customerTabSearchTerm);
     }
     connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
     connect(customerForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
 
-    setupModels();
-    customerForm->setModel(customersModel);
-    customerForm->clear();
     ui->mainTab->setCurrentWidget (customerForm);
-    customerForm->setFieldMaxLength();
 }
 
 void AngadiMainWindow::openBillTab()
@@ -356,7 +366,7 @@ void AngadiMainWindow::onTabChanged(int index){
 
     showRightDock(false);
     if(tabName == "category"){
-        categoryForm->setModel(categoriesModel);
+//        categoryForm->setModel(categoriesModel);
 //        categoryForm->clear();
         lssbar->setModel(categoriesModel);
         showRightDock(true);
@@ -557,11 +567,16 @@ void AngadiMainWindow::changeStatusMsgToDefault()
 
 void AngadiMainWindow::changeLssBarSource()
 {
-    if(billForm->modelFlag==1){
-        lssbar->setModel(customersModel);
-    }else if(billForm->modelFlag == 2){
-        lssbar->setModel(productsModel);
+    if(currentTab == "category"){
+        lssbar->setModel(categoriesModel);
+
+    }else if(currentTab == "bill"){
+        if(billForm->modelFlag==1){
+            lssbar->setModel(customersModel);
+        }else if(billForm->modelFlag == 2){
+            lssbar->setModel(productsModel);
+        }
+        showRightDock(true);
+        lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     }
-    showRightDock(true);
-    lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
 }

@@ -41,6 +41,7 @@ signals:
     void signalName(QString str);
     void signalFromCategoryForm();
     void signalStatusBar(QString str);
+    void signalUpdated();
 
 private:
     Ui::CategoryForm *ui;

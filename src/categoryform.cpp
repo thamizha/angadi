@@ -115,6 +115,7 @@ void CategoryForm::save()
                 statusMsg = ui->lineEditName->text() + " updated successfully";
                 emit signalStatusBar(statusMsg);
             }
+            emit signalUpdated();
         }
         resetDataMapper();
         clear();
@@ -162,6 +163,7 @@ void CategoryForm::clear()
 }
 
 void CategoryForm::setModel(CategoriesModel *model){
+    model->select();
     categoriesModel = model;
     dataMapper->setModel(categoriesModel);
 
