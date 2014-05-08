@@ -59,7 +59,7 @@ public:
     void clear();
     int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice;
     void setFieldMaxLength();
-
+    void setComboSource();
 signals:
     void signalName(QString str);
     void signalFromProductForm();

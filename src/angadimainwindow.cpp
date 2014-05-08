@@ -377,6 +377,7 @@ void AngadiMainWindow::onTabChanged(int index){
     }else if(tabName == "product"){
 //        productForm->setModel(productsModel);
 //        productForm->clear();
+        productForm->setComboSource();
         lssbar->setModel(productsModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(productTabSearchTerm);
