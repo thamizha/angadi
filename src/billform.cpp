@@ -768,6 +768,7 @@ void BillForm::reverseRelation()
         ui->lineEditCustomerName->setText(customerQuery.value(2).toString());
         ui->lineEditCustomerCode->setText(customerQuery.value(1).toString());
         ui->lineEditCustomerAddress->setText(customerQuery.value(6).toString());
+        ui->lineEditLimit->setText(customerQuery.value(4).toString());
     }
     QString productName;
     QSqlQuery itemQuery;
