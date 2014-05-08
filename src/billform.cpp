@@ -40,6 +40,8 @@ BillForm::BillForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    modelFlag = 0;
+
     formValidation = new FormValidation;
     billDataMapper = new QDataWidgetMapper;
     billDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -55,7 +57,7 @@ BillForm::BillForm(QWidget *parent) :
 
     ui->tableViewProductList->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
-    ui->tableViewProductList->verticalHeader()->setVisible(false);
+    ui->tableViewProductList->verticalHeader()->setVisible(true);
     ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -149,6 +151,7 @@ void BillForm::setCodeFocus()
     ui->lineEditCustomerName->installEventFilter(this);
     ui->lineEditProductName->installEventFilter(this);
     ui->tableViewProductList->installEventFilter(this);
+    emit signalCustomerNameFocused();
 }
 
 void BillForm::setProductFocus()
@@ -171,7 +174,7 @@ void BillForm::clear()
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
-    uninstallEventFilter();
+    //uninstallEventFilter();
     ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);

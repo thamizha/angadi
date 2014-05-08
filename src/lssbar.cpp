@@ -95,6 +95,10 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
     }else if(tableModel->tableName() == "customers"){
         tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
         tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+    }else if(tableModel->tableName() == "bill"){
+        tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
+        tableView->setColumnHidden(tableModel->fieldIndex("invoiceNo"),false);
+        tableView->setColumnHidden(tableModel->fieldIndex("invoiceDate"),false);
     }
 }
 

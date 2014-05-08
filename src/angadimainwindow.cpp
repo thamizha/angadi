@@ -289,7 +289,7 @@ void AngadiMainWindow::openBillTab()
     billForm->clear();
     ui->mainTab->setCurrentWidget (billForm);
     billForm->setCodeFocus();
-    lssbar->setModel(productsModel);
+    lssbar->setModel(billModel);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -391,8 +391,10 @@ void AngadiMainWindow::onTabChanged(int index){
         billForm->clear();
         if(billForm->modelFlag == 1){
             lssbar->setModel(customersModel);
-        }else{
+        }else if(billForm->modelFlag == 2){
             lssbar->setModel(productsModel);
+        }else {
+            lssbar->setModel(billModel);
         }
         showRightDock(true);
         lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
@@ -575,6 +577,8 @@ void AngadiMainWindow::changeLssBarSource()
             lssbar->setModel(customersModel);
         }else if(billForm->modelFlag == 2){
             lssbar->setModel(productsModel);
+        }else{
+            lssbar->setModel(billModel);
         }
         showRightDock(true);
         lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);

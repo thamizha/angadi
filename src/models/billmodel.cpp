@@ -30,12 +30,12 @@ BillModel::BillModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
     setTable("bill");
-    setRelation(3, QSqlRelation("customers", "id", "name"));
     setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setHeaderData(fieldIndex("date"), Qt::Horizontal,QObject::tr("Date"));
-    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
-    setFilter("bill.status = 'A'");
-    relationModel(3)->setFilter("status = 'A'");
-    setSort(fieldIndex("id"),Qt::AscendingOrder);
+    setRelation(3, QSqlRelation("customers", "id", "name"));
+    setHeaderData(1, Qt::Horizontal,QObject::tr("Invoice No"));
+    setHeaderData(3, Qt::Horizontal, QObject::tr("Customer Name"));
+//    setFilter("bill.status = 'A'");
+//    relationModel(3)->setFilter("status = 'A'");
+//    setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
 }
