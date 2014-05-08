@@ -289,6 +289,8 @@ void AngadiMainWindow::openBillTab()
     setupModels();
     billForm->setModel(billModel, billItemModel, productsModel, customersModel);
     billForm->clear();
+    billTabCustomerSearchTerm = "";
+    lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     ui->mainTab->setCurrentWidget (billForm);
     billForm->setCodeFocus();
     lssbar->setModel(billModel);
@@ -439,7 +441,9 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
                 billForm->setQuantityFocus();
             }
         }else{
-           billForm->setCodeFocus();
+//           billForm->setCodeFocus();
+            billForm->productFormClearForSearch();
+            billForm->setProductFocus();
         }
     }
 }

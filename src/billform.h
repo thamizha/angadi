@@ -66,10 +66,12 @@ public:
     QDateTime modifiedDate() const;
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
-//    int validNameFlag , validCodeFlag;
+    int validInvoiceNoFlag, validCustomerCodeFlag, validCustomerNameFlag;
+    int validProductCodeFlag, validProductNameFlag;
     void setFieldMaxLength();
     int modelFlag;
     int productUpdateFlag;
+    void productFormClearForSearch();
 
 signals:
     void signalName(QString str);
@@ -94,12 +96,15 @@ private:
 
 private slots:
     void save();
-//    bool codeValid();
-    bool nameValid();
+    bool invoiceNoValid();
+    bool customerCodeValid();
+    bool customerNameValid();
+    bool productCodeValid();
+    bool productNameValid();
     void on_pushButtonClear_clicked();
     void on_pushButtonDelete_clicked();
     void onNameChanged(QString str);
-//    bool uniqueValid(QString text, QString field);
+    bool uniqueValid(QString text, QString field);
     void setSignalFromBillForm();
     bool eventFilter(QObject *obj, QEvent *event);
     void resetDataMapper();

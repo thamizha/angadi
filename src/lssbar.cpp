@@ -111,8 +111,8 @@ void Lssbar::setFilterSelect(QModelIndex index, int update)
         tableView->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows); //select the row given by index
         tableView->scrollTo(index, QAbstractItemView::EnsureVisible); //scroll to that row so that its visible
         tableView->setColumnHidden(0, true); // hide the primary key column
-        tableView->setCurrentIndex(index); //set the current index of the table view to the current index
     }
+    tableView->setCurrentIndex(index); //set the current index of the table view to the current index
 }
 
 //to emit the double clicked on the table view row signal
@@ -124,7 +124,6 @@ void Lssbar::doubleClicked(QModelIndex index)
 //to emit the search signal for the typed value on the lineeditsearch
 void Lssbar::search(QString value)
 {
-//    qDebug() << value;
     emit signalSearch(value);
 }
 
@@ -170,8 +169,15 @@ bool Lssbar::eventFilter(QObject *obj, QEvent *event)
 // to emit the return key press signal on the lineedit search so that the selected index data is moved to the form
 void Lssbar::returnKeyPressed()
 {
-    QModelIndex index = tableView->currentIndex(); //get the current index of the table view
-    emit signalEdit(index); //emit the signal edit so that the data is moved to the form
+    if(lineEditSearch->text().length() > 0){
+        QModelIndex index = tableView->currentIndex(); //get the current index of the table view
+        emit signalEdit(index); //emit the signal edit so that the data is moved to the form
+
+    }else{
+        tableView->clearSelection();
+        QModelIndex index;
+        emit signalEdit(index);
+    }
 }
 
 void Lssbar::setSearchFocus()

@@ -256,7 +256,7 @@
            <rect>
             <x>-3</x>
             <y>305</y>
-            <width>801</width>
+            <width>802</width>
             <height>16</height>
            </rect>
           </property>
@@ -627,6 +627,9 @@ font: bold;</string>
           <property name="focusPolicy">
            <enum>Qt::TabFocus</enum>
           </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="wrapping">
            <bool>false</bool>
           </property>
@@ -647,6 +650,32 @@ font: bold;</string>
           </property>
           <property name="timeSpec">
            <enum>Qt::LocalTime</enum>
+          </property>
+         </widget>
+         <widget class="Line" name="line_5">
+          <property name="geometry">
+           <rect>
+            <x>-9</x>
+            <y>312</y>
+            <width>20</width>
+            <height>164</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+         <widget class="Line" name="line_6">
+          <property name="geometry">
+           <rect>
+            <x>789</x>
+            <y>312</y>
+            <width>20</width>
+            <height>164</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </widget>
