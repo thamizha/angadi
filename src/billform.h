@@ -122,6 +122,7 @@ private slots:
     void productUpdate(QModelIndex index);
     void productFormClear();
     void reverseRelation();
+    void updateToBeGiven();
 
 };
 
