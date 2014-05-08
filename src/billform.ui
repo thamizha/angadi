@@ -460,7 +460,7 @@ font: bold;</string>
          <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
-            <x>620</x>
+            <x>628</x>
             <y>320</y>
             <width>73</width>
             <height>141</height>
@@ -516,33 +516,6 @@ font: bold;</string>
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>700</x>
-            <y>320</y>
-            <width>91</width>
-            <height>141</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QLineEdit" name="lineEditGrandTotal"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEditDiscount"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEditRoundOff"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEditTooBePaid"/>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEditGiven"/>
            </item>
           </layout>
          </widget>
@@ -677,6 +650,33 @@ font: bold;</string>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+         </widget>
+         <widget class="QWidget" name="">
+          <property name="geometry">
+           <rect>
+            <x>710</x>
+            <y>321</y>
+            <width>83</width>
+            <height>141</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLineEdit" name="lineEditGrandTotal"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditDiscount"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditRoundOff"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditTooBePaid"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditGiven"/>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>

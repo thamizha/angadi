@@ -49,7 +49,8 @@ BillForm::BillForm(QWidget *parent) :
     customerDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     ui->tableViewProductList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
+//    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
+    ui->tableViewProductList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableViewProductList->verticalHeader()->setVisible(true);
     ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -65,6 +66,11 @@ BillForm::BillForm(QWidget *parent) :
 
     connect(ui->lineEditQty,SIGNAL(textChanged(QString)),this,SLOT(setProductTotal()));
     connect(ui->lineEditQty,SIGNAL(returnPressed()),this,SLOT(addProductItem()));
+
+    connect(ui->lineEditTax,SIGNAL(textEdited(QString)),this,SLOT(updateToBeGiven()));
+    connect(ui->lineEditDiscount,SIGNAL(textEdited(QString)),this,SLOT(updateToBeGiven()));
+    connect(ui->lineEditTax,SIGNAL(textEdited(QString)),this,SLOT(updateToBeGiven()));
+    connect(ui->lineEditGiven,SIGNAL(textEdited(QString)),this,SLOT(updateToBeGiven()));
 
     connect(ui->tableViewProductList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
     connect(ui->tableViewProductList,SIGNAL(activated(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
@@ -110,6 +116,11 @@ void BillForm::save(){
         errors.append("\nThe Customer Name may be empty");
     }
 
+    if(billItemModel->rowCount() < 1){
+        validError = 1;
+        errors.append("\n There are no products added for this bill. The product list seems to be empty.");
+    }
+
     if(validError == 0){
         if(billDataMapper->currentIndex() < 0){
             row = billModel->rowCount();
@@ -131,7 +142,7 @@ void BillForm::save(){
             customer_id = customerQuery.value(0).toInt();
         QModelIndex idx = billModel->index(row,3);
         billModel->setData(idx, customer_id, Qt::EditRole);
-        billModel->setData(billModel->index(row,billModel->fieldIndex("actualAmount")),ui->lineEditTotal->text());
+        billModel->setData(billModel->index(row,billModel->fieldIndex("actualAmount")),ui->lineEditGrandTotal->text());
         billModel->setData(billModel->index(row,billModel->fieldIndex("discount")),ui->lineEditDiscount->text());
         billModel->setData(billModel->index(row,billModel->fieldIndex("totalAmount")),ui->lineEditTooBePaid->text());
         billModel->setData(billModel->index(row,billModel->fieldIndex("dueAmount")),ui->lineEditChange->text());
@@ -189,6 +200,8 @@ void BillForm::setCodeFocus()
     ui->lineEditCustomerName->installEventFilter(this);
     ui->lineEditProductName->installEventFilter(this);
     ui->tableViewProductList->installEventFilter(this);
+    ui->lineEditTax->setText("0");
+    ui->lineEditDiscount->setText("0");
     emit signalCustomerNameFocused();
 }
 
@@ -235,7 +248,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
 
     billDataMapper->addMapping(ui->dateEditInvoiceDate,billModel->fieldIndex("invoiceDate"));
     billDataMapper->addMapping(ui->lineEditInvoiceNo,billModel->fieldIndex("invoiceNo"));
-    billDataMapper->addMapping(ui->lineEditTotal,billModel->fieldIndex("actualAmount"));
+    billDataMapper->addMapping(ui->lineEditGrandTotal,billModel->fieldIndex("actualAmount"));
     billDataMapper->addMapping(ui->lineEditDiscount,billModel->fieldIndex("discount"));
     billDataMapper->addMapping(ui->lineEditTooBePaid,billModel->fieldIndex("totalAmount"));
     billDataMapper->addMapping(ui->lineEditChange,billModel->fieldIndex("dueAmount"));
@@ -260,6 +273,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
     ui->tableViewProductList->setColumnHidden(1,true);
+
     //ui->tableViewProductList->setItemDelegate(new QSqlRelationalDelegate(ui->tableViewProductList));
     setCodeFocus();
     setBillId();
@@ -444,6 +458,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         billDataMapper->setCurrentIndex(index.row());
         setBillId();
         reverseRelation();
+        ui->lineEditGiven->setText(QString::number(ui->lineEditTooBePaid->text().toInt()+ui->lineEditChange->text().toInt()));
     }
 }
 
@@ -554,7 +569,7 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
 
     }else if (obj == ui->lineEditProductName){
         if(event->type() == QEvent::FocusIn){
-            BillForm::productNameValid();
+//            BillForm::productNameValid();
             modelFlag = 2;
             emit signalCustomerNameFocused();
         }
@@ -699,6 +714,7 @@ void BillForm::addProductItem()
         }
         productFormClear();
         setGrandTotal();
+        updateToBeGiven();
     }else{
         msgBox.setInformativeText(errors);
         int ret = msgBox.exec();
@@ -716,15 +732,13 @@ void BillForm::addProductItem()
 void BillForm::setGrandTotal()
 {
     QSqlRecord record;
-    QString grandTotalValue;
     double grandTotal = 0;
     int rowCount = billItemModel->rowCount();
     for (int i=0; i < rowCount; i++){
         record = billItemModel->record(i);
         grandTotal = grandTotal + record.value("total").toDouble();
     }
-    grandTotalValue = QString::number(grandTotal);
-    ui->lineEditGrandTotal->setText(grandTotalValue);
+    ui->lineEditGrandTotal->setText(QString::number(grandTotal));
 }
 
 void BillForm::productUpdate(QModelIndex index)
@@ -756,6 +770,7 @@ void BillForm::reverseRelation()
         ui->lineEditCustomerName->setText(customerQuery.value(2).toString());
         ui->lineEditCustomerCode->setText(customerQuery.value(1).toString());
         ui->lineEditCustomerAddress->setText(customerQuery.value(6).toString());
+        ui->lineEditLimit->setText(customerQuery.value(4).toString());
     }
     QString productName;
     QSqlQuery itemQuery;
@@ -786,4 +801,26 @@ void BillForm::productFormClearForSearch()
     ui->lineEditTotal->clear();
     ui->lineEditProductName->setFocus();
     productUpdateFlag = 0;
+}
+
+void BillForm::updateToBeGiven()
+{
+    double grandTotal = 0, discount = 0, tax = 0, roundOff = 0;
+    int toBePaid;
+    grandTotal = ui->lineEditGrandTotal->text().toDouble();
+    discount =grandTotal-ui->lineEditDiscount->text().toDouble()*grandTotal/100;
+    tax = discount+ui->lineEditTax->text().toDouble()*discount/100;
+    toBePaid = qRound(tax);
+    roundOff = toBePaid-tax;
+    qDebug() << roundOff;
+    if(roundOff >= 0){
+        ui->lineEditTooBePaid->setText(QString::number(toBePaid));
+        ui->lineEditRoundOff->setText(QString::number(roundOff));
+    }else{
+        toBePaid = toBePaid+1;
+        roundOff = 1+roundOff;
+        ui->lineEditTooBePaid->setText(QString::number(toBePaid));
+        ui->lineEditRoundOff->setText(QString::number(roundOff));
+    }
+    ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble()));
 }
