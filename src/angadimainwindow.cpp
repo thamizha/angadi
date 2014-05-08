@@ -432,14 +432,16 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
 
     }else if(currentTab == "bill"){
         if(index.row() >= 0){
-            billForm->setMapperIndex(index);
             if(billForm->modelFlag == 1){
+                billForm->setMapperIndex(index);
                 billForm->setProductFocus();
-            }else{
+            }else if(billForm->modelFlag == 2){
+                billForm->setMapperIndex(index);
                 billForm->setQuantityFocus();
+            }else{
+                billForm->setCodeFocus();
+                billForm->setMapperIndex(index);
             }
-        }else{
-           billForm->setCodeFocus();
         }
     }
 }

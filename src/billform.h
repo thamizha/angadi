@@ -112,6 +112,7 @@ private slots:
     void setGrandTotal();
     void productUpdate(QModelIndex index);
     void productFormClear();
+    void reverseRelation();
 
 };
 

@@ -31,7 +31,7 @@ BillModel::BillModel(QObject *parent) :
 {
     setTable("bill");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setRelation(3, QSqlRelation("customers", "id", "name"));
+//    setRelation(3, QSqlRelation("customers", "id", "name"));
     setHeaderData(1, Qt::Horizontal,QObject::tr("Invoice No"));
     setHeaderData(3, Qt::Horizontal, QObject::tr("Customer Name"));
 //    setFilter("bill.status = 'A'");

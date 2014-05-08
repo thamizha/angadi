@@ -88,11 +88,15 @@ BillForm::~BillForm()
 }
 
 void BillForm::save(){
-
     QDateTime datetime = QDateTime::currentDateTime();
     QDateTime invoiceDateTime = ui->dateEditInvoiceDate->dateTime();
-    int row = billModel->rowCount();
-    billModel->insertRows(row, 1);
+    int row;
+    if(billDataMapper->currentIndex() < 0){
+        row = billModel->rowCount();
+        billModel->insertRows(row, 1);
+    }else{
+        row = billDataMapper->currentIndex();
+    }
     billModel->setData(billModel->index(row,billModel->fieldIndex("invoiceNo")),ui->lineEditInvoiceNo->text());
     billModel->setData(billModel->index(row,billModel->fieldIndex("invoiceDate")),invoiceDateTime.toString("yyyy-MM-dd hh:mm:ss"));
 
@@ -141,6 +145,7 @@ void BillForm::save(){
             clear();
         }
     }
+    setBillId();
 }
 
 void BillForm::setCodeFocus()
@@ -179,6 +184,8 @@ void BillForm::clear()
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);
     generateInvoiceNumber();
+    modelFlag = 0;
+    emit signalCustomerNameFocused();
 }
 
 void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel *model3, CustomersModel *model4)
@@ -193,11 +200,13 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     productDataMapper->setModel(productsModel);
     customerDataMapper->setModel(customersModel);
 
-    billDataMapper->addMapping(ui->dateEditInvoiceDate,billModel->fieldIndex("date"));
-    billDataMapper->addMapping(ui->lineEditInvoiceNo,billModel->fieldIndex("id"));
+    billDataMapper->addMapping(ui->dateEditInvoiceDate,billModel->fieldIndex("invoiceDate"));
+    billDataMapper->addMapping(ui->lineEditInvoiceNo,billModel->fieldIndex("invoiceNo"));
     billDataMapper->addMapping(ui->lineEditTotal,billModel->fieldIndex("actualAmount"));
     billDataMapper->addMapping(ui->lineEditDiscount,billModel->fieldIndex("discount"));
     billDataMapper->addMapping(ui->lineEditTooBePaid,billModel->fieldIndex("totalAmount"));
+    billDataMapper->addMapping(ui->lineEditChange,billModel->fieldIndex("dueAmount"));
+    billDataMapper->addMapping(ui->lineEditCustomerName,billModel->fieldIndex("customer_id"));
 
     billItemDataMapper->addMapping(ui->lineEditProductName,billItemModel->fieldIndex("product_id"));
     billItemDataMapper->addMapping(ui->lineEditRate,billItemModel->fieldIndex("unitPrice"));
@@ -262,6 +271,10 @@ void BillForm::setMapperIndex(QModelIndex index)
     }else if(modelFlag == 2){
         productDataMapper->setCurrentIndex(index.row());
 
+    }else{
+        billDataMapper->setCurrentIndex(index.row());
+        setBillId();
+        reverseRelation();
     }
 }
 
@@ -429,8 +442,16 @@ void BillForm::setProductTotal()
 
 void BillForm::setBillId()
 {
-//    int billId = ui->lineEditInvoiceNo->text().toInt();
-    billItemModel->setFilter("bill_item.bill_id = -1");
+    QString bill_id;
+    if (billDataMapper->currentIndex() < 0){
+        bill_id = "-1";
+    }else{
+        QSqlRecord billrecord = billModel->record(billDataMapper->currentIndex());
+        bill_id = billrecord.value("id").toString();
+    }
+    QString filter = "bill_id = "+bill_id;
+    billItemModel->setFilter(filter);
+    billItemModel->select();
 }
 
 void BillForm::addProductItem()
@@ -443,9 +464,18 @@ void BillForm::addProductItem()
         }
     }else{
         int row = billItemModel->rowCount();
+        QString bill_id;
+        if (billDataMapper->currentIndex() < 0){
+            bill_id = "-1";
+        }else{
+            QSqlRecord billrecord = billModel->record(billDataMapper->currentIndex());
+            bill_id = billrecord.value("id").toString();
+        }
+
         billItemModel->insertRows(row, 1);
 
-        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("bill_id")),-1);billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("product_id")),ui->lineEditProductName->text());
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("bill_id")),bill_id);
+        billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("product_id")),ui->lineEditProductName->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unit")),ui->lineEditUnit->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("unitPrice")),ui->lineEditRate->text());
         billItemModel->setData(billItemModel->index(row,billItemModel->fieldIndex("quantity")),ui->lineEditQty->text());
@@ -487,4 +517,35 @@ void BillForm::productFormClear()
     ui->lineEditTotal->clear();
     ui->lineEditProductName->setFocus();
     productUpdateFlag = 0;
+}
+
+void BillForm::reverseRelation()
+{
+    QSqlQuery customerQuery;
+    customerQuery.prepare("Select * from customers where id = :customerId");
+    customerQuery.bindValue(":customerId", ui->lineEditCustomerName->text());
+    customerQuery.exec();
+    while(customerQuery.next()){
+        ui->lineEditCustomerName->setText(customerQuery.value(2).toString());
+        ui->lineEditCustomerCode->setText(customerQuery.value(1).toString());
+        ui->lineEditCustomerAddress->setText(customerQuery.value(6).toString());
+    }
+    QString productName;
+    QSqlQuery itemQuery;
+    QSqlRecord itemRecord;
+    for (int i = 0; i < billItemModel->rowCount(); ++i) {
+        itemRecord = billItemModel->record(i);
+
+        productName = itemRecord.value("product_id").toString();
+        itemQuery.prepare("Select name from products where id = :product_name");
+        itemQuery.bindValue(":product_name", productName);
+        itemQuery.exec();
+        itemQuery.value(0);
+        while(itemQuery.next())
+            productName = itemQuery.value(0).toString();
+
+        itemRecord.setValue("product_id", productName);
+        billItemModel->setRecord(i, itemRecord);
+    }
+    billItemModel->submit();
 }
