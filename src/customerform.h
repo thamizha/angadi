@@ -64,6 +64,7 @@ signals:
     void signalName(QString str);
     void signalFromCustomerForm();
     void signalStatusBar(QString str);
+    void signalUpdated();
 
 private:
     Ui::CustomerForm *ui;

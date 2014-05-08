@@ -285,9 +285,10 @@ void CustomerForm::save()
             status = dataMapper->submit();
             if(status == true){
                 customersModel->submit();
+                statusMsg = ui->lineEditName->text() + " updated successfully";
+                emit signalStatusBar(statusMsg);
             }
-            statusMsg = ui->lineEditName->text() + " updated successfully";
-            emit signalStatusBar(statusMsg);
+            emit signalUpdated();
         }
         resetDataMapper();
         clear();

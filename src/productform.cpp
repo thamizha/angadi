@@ -166,9 +166,10 @@ void ProductForm::save()
 
             if(status == true){
                 productsModel->submitAll();
+                statusMsg = ui->lineEditName->text() + " updated successfully";
+                emit signalStatusBar(statusMsg);
             }
-            statusMsg = ui->lineEditName->text() + " updated successfully";
-            emit signalStatusBar(statusMsg);
+            emit signalUpdated();
         }
 
         resetDataMapper();

@@ -237,6 +237,7 @@ void AngadiMainWindow::openProductTab()
     connect(productForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(productForm,SIGNAL(signalFromProductForm()),lssbar,SLOT(setSearchFocus()));
     connect(productForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
+    connect(productForm,SIGNAL(signalUpdated()),this,SLOT(changeLssBarSource()));
 
     ui->mainTab->setCurrentWidget (productForm);
 }
@@ -263,6 +264,7 @@ void AngadiMainWindow::openCustomerTab()
     connect(customerForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(customerForm,SIGNAL(signalFromCustomerForm()),lssbar,SLOT(setSearchFocus()));
     connect(customerForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
+    connect(customerForm,SIGNAL(signalUpdated()),this,SLOT(changeLssBarSource()));
 
     ui->mainTab->setCurrentWidget (customerForm);
 }
@@ -373,14 +375,14 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->lineEditSearch->setText(categoryTabSearchTerm);
 
     }else if(tabName == "product"){
-        productForm->setModel(productsModel);
+//        productForm->setModel(productsModel);
 //        productForm->clear();
         lssbar->setModel(productsModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(productTabSearchTerm);
 
     }else if(tabName == "customer"){
-        customerForm->setModel(customersModel);
+//        customerForm->setModel(customersModel);
 //        customerForm->clear();
         lssbar->setModel(customersModel);
         showRightDock(true);
@@ -569,6 +571,12 @@ void AngadiMainWindow::changeLssBarSource()
 {
     if(currentTab == "category"){
         lssbar->setModel(categoriesModel);
+
+    }else if(currentTab == "product"){
+        lssbar->setModel(productsModel);
+
+    }else if(currentTab == "customer"){
+        lssbar->setModel(customersModel);
 
     }else if(currentTab == "bill"){
         if(billForm->modelFlag==1){
