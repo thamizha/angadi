@@ -513,7 +513,7 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
 
     }else if (obj == ui->lineEditProductName){
         if(event->type() == QEvent::FocusIn){
-            BillForm::productNameValid();
+//            BillForm::productNameValid();
             modelFlag = 2;
             emit signalCustomerNameFocused();
         }
