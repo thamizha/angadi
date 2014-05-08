@@ -49,7 +49,8 @@ BillForm::BillForm(QWidget *parent) :
     customerDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     ui->tableViewProductList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
+//    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
+    //ui->tableViewProductList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableViewProductList->verticalHeader()->setVisible(true);
     ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -272,6 +273,7 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
     ui->tableViewProductList->setColumnHidden(1,true);
+
     //ui->tableViewProductList->setItemDelegate(new QSqlRelationalDelegate(ui->tableViewProductList));
     setCodeFocus();
     setBillId();
