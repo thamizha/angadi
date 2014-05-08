@@ -166,9 +166,10 @@ void ProductForm::save()
 
             if(status == true){
                 productsModel->submitAll();
+                statusMsg = ui->lineEditName->text() + " updated successfully";
+                emit signalStatusBar(statusMsg);
             }
-            statusMsg = ui->lineEditName->text() + " updated successfully";
-            emit signalStatusBar(statusMsg);
+            emit signalUpdated();
         }
 
         resetDataMapper();
@@ -222,6 +223,7 @@ void ProductForm::setModel(ProductsModel *model){
     productsModel = model;
     dataMapper->setModel(productsModel);
 
+    productsModel->relationModel(4)->select();
     ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
     ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
 
@@ -561,4 +563,11 @@ void ProductForm::setAllValidationSuccess()
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
+}
+
+void ProductForm::setComboSource()
+{
+    productsModel->relationModel(4)->select();
+    ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
+    ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
 }

@@ -59,11 +59,12 @@ public:
     void clear();
     int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice;
     void setFieldMaxLength();
-
+    void setComboSource();
 signals:
     void signalName(QString str);
     void signalFromProductForm();
     void signalStatusBar(QString str);
+    void signalUpdated();
 
 private:
     Ui::ProductForm *ui;
