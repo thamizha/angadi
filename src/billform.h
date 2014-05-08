@@ -43,6 +43,10 @@
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QMessageBox>
+#include <QModelIndex>
+#include <QKeyEvent>
+#include <QSqlRelationalDelegate>
 
 namespace Ui {
 class BillForm;
