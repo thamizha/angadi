@@ -15,6 +15,7 @@ public:
     bool emailValid(QString value);
     int uniqueValid(QString id, QString value, QString table, QString column);
     bool isDouble(QString value);
+    bool isRecordFound(QString table, QString column, QString value);
 
 signals:
 

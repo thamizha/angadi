@@ -61,7 +61,7 @@ BillForm::BillForm(QWidget *parent) :
     ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
 
-//    validCodeFlag = validNameFlag = 0;
+    validInvoiceNoFlag = 0;
 
     connect(ui->pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->lineEditCustomerName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
@@ -76,8 +76,13 @@ BillForm::BillForm(QWidget *parent) :
     connect(ui->tableViewProductList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
     connect(ui->tableViewProductList,SIGNAL(activated(QModelIndex)),this,SLOT(productUpdate(QModelIndex)));
 
-//    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
-    connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
+    connect(ui->lineEditInvoiceNo,SIGNAL(editingFinished()),this,SLOT(invoiceNoValid()));
+    connect(ui->lineEditCustomerCode,SIGNAL(textChanged(QString)),this,SLOT(customerCodeValid()));
+    connect(ui->lineEditCustomerCode,SIGNAL(editingFinished()),this,SLOT(customerCodeValid()));
+    connect(ui->lineEditCustomerName,SIGNAL(editingFinished()),this,SLOT(customerNameValid()));
+
+    connect(ui->lineEditProductCode,SIGNAL(editingFinished()),this,SLOT(productCodeValid()));
+    connect(ui->lineEditProductName,SIGNAL(editingFinished()),this,SLOT(productNameValid()));
 
     generateInvoiceNumber();
 }
@@ -232,34 +237,169 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     setBillId();
 }
 
-//function to validate name field
-bool BillForm::nameValid(){
+// function to validate invoice no field
+bool BillForm::invoiceNoValid(){
     bool status = false;
-//    QString flashMsg = "";
-//    if(ui->lineEditName->text().length() > 0){
-//        if(uniqueValid(ui->lineEditName->text(),"name")){
-//            status = true;
-//            ui->lineEditName->setProperty("validationError",false);
-//            ui->lineEditName->setProperty("validationSuccess",true);
-//            ui->lineEditName->setStyleSheet(styleSheet());
-//            validNameFlag = 1;
-//        }else{
-//            status = false;
-//            flashMsg = "This Name has been already taken. Please give some other name.";
-//            ui->lineEditName->setProperty("validationError",true);
-//            ui->lineEditName->setProperty("validationSuccess",false);
-//            ui->lineEditName->setStyleSheet(styleSheet());
-//            validNameFlag = 0;
-//        }
-//    }else{
-//        status = false;
-//        flashMsg = "Name field is empty. Please give some values.";
-//        ui->lineEditName->setProperty("validationError",true);
-//        ui->lineEditName->setProperty("validationSuccess",false);
-//        ui->lineEditName->setStyleSheet(styleSheet());
-//        validNameFlag = 0;
-//    }
-//    ui->flashMsgUp->setText(flashMsg);
+    QString flashMsg = "";
+    ui->lineEditInvoiceNo->installEventFilter(this);
+    if(ui->lineEditInvoiceNo->text().length() > 0){
+        if(uniqueValid(ui->lineEditInvoiceNo->text(), "invoiceNo")){
+            ui->lineEditInvoiceNo->setProperty("validationError",false);
+            ui->lineEditInvoiceNo->setProperty("validationSuccess",true);
+            ui->lineEditInvoiceNo->setStyleSheet(styleSheet());
+            validInvoiceNoFlag = 1;
+            status = true;
+        }else{
+            flashMsg = "This Invoice No. has been already taken. Please give some other invoice no.";
+            ui->lineEditInvoiceNo->setProperty("validationError",true);
+            ui->lineEditInvoiceNo->setProperty("validationSuccess",false);
+            ui->lineEditInvoiceNo->setStyleSheet(styleSheet());
+            validInvoiceNoFlag = 0;
+            status = false;
+        }
+    }else{
+        flashMsg = "Invoice No. field is empty. Please give some values.";
+        ui->lineEditInvoiceNo->setProperty("validationError",true);
+        ui->lineEditInvoiceNo->setProperty("validationSuccess",false);
+        ui->lineEditInvoiceNo->setStyleSheet(styleSheet());
+        validInvoiceNoFlag = 0;
+        status = false;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
+}
+
+// function to validate customer code field
+bool BillForm::customerCodeValid(){
+    bool status = false;
+    QString flashMsg = "";
+    ui->lineEditCustomerCode->installEventFilter(this);
+    if(ui->lineEditCustomerCode->text().length() > 0){
+        ui->lineEditCustomerCode->setProperty("validationError",false);
+        ui->lineEditCustomerCode->setProperty("validationSuccess",true);
+        ui->lineEditCustomerCode->setStyleSheet(styleSheet());
+        validCustomerCodeFlag = 1;
+        status = true;
+    }else{
+        flashMsg = "Customer Code field is empty. Please give some values.";
+        ui->lineEditCustomerCode->setProperty("validationError",true);
+        ui->lineEditCustomerCode->setProperty("validationSuccess",false);
+        ui->lineEditCustomerCode->setStyleSheet(styleSheet());
+        validCustomerCodeFlag = 0;
+        status = false;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
+}
+
+//function to validate customer name field
+bool BillForm::customerNameValid(){
+    bool status = false;
+    QString flashMsg = "";
+    if(ui->lineEditCustomerName->text().length() > 0){
+        status = true;
+        ui->lineEditCustomerName->setProperty("validationError",false);
+        ui->lineEditCustomerName->setProperty("validationSuccess",true);
+        ui->lineEditCustomerName->setStyleSheet(styleSheet());
+        validCustomerNameFlag = 1;
+    }else{
+        status = false;
+        flashMsg = "Customer Name field is empty. Please give some values.";
+        ui->lineEditCustomerName->setProperty("validationError",true);
+        ui->lineEditCustomerName->setProperty("validationSuccess",false);
+        ui->lineEditCustomerName->setStyleSheet(styleSheet());
+        validCustomerNameFlag = 0;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
+}
+
+// function to validate product code field
+bool BillForm::productCodeValid(){
+    bool status = false;
+    QString flashMsg = "";
+    FormValidation formValidation;
+    ui->lineEditProductCode->installEventFilter(this);
+    if(ui->lineEditProductCode->text().length() > 0){
+        if(formValidation.isRecordFound("products", "code", ui->lineEditProductCode->text())){
+            ui->lineEditProductCode->setProperty("validationError",false);
+            ui->lineEditProductCode->setProperty("validationSuccess",true);
+            ui->lineEditProductCode->setStyleSheet(styleSheet());
+            validProductCodeFlag = 1;
+            status = true;
+        }else{
+            flashMsg = "This Product not found. Please give some product code";
+            ui->lineEditProductCode->setProperty("validationError",true);
+            ui->lineEditProductCode->setProperty("validationSuccess",false);
+            ui->lineEditProductCode->setStyleSheet(styleSheet());
+            validProductCodeFlag = 0;
+            status = false;
+        }
+    }else{
+        flashMsg = "Product Code field is empty. Please give some values.";
+        ui->lineEditProductCode->setProperty("validationError",true);
+        ui->lineEditProductCode->setProperty("validationSuccess",false);
+        ui->lineEditProductCode->setStyleSheet(styleSheet());
+        validProductCodeFlag = 0;
+        status = false;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
+}
+
+// function to validate product name field
+bool BillForm::productNameValid(){
+    bool status = false;
+    QString flashMsg = "";
+    FormValidation formValidation;
+    ui->lineEditProductName->installEventFilter(this);
+    if(ui->lineEditProductName->text().length() > 0){
+        if(formValidation.isRecordFound("products", "name", ui->lineEditProductName->text())){
+            ui->lineEditProductName->setProperty("validationError",false);
+            ui->lineEditProductName->setProperty("validationSuccess",true);
+            ui->lineEditProductName->setStyleSheet(styleSheet());
+            validProductNameFlag = 1;
+            status = true;
+        }else{
+            flashMsg = "This Product not found. Please give some product code";
+            ui->lineEditProductName->setProperty("validationError",true);
+            ui->lineEditProductName->setProperty("validationSuccess",false);
+            ui->lineEditProductName->setStyleSheet(styleSheet());
+            validProductNameFlag = 0;
+            status = false;
+        }
+    }else{
+        flashMsg = "Product Name field is empty. Please give some values.";
+        ui->lineEditProductName->setProperty("validationError",true);
+        ui->lineEditProductName->setProperty("validationSuccess",false);
+        ui->lineEditProductName->setStyleSheet(styleSheet());
+        validProductNameFlag = 0;
+        status = false;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
+}
+
+bool BillForm::uniqueValid(QString text, QString field)
+{
+    bool status = false;
+    FormValidation formValidation;
+    QString id;
+    QSqlRecord cRecord;
+    if(billDataMapper->currentIndex() < 0){
+        id = "0";
+
+    }else{
+        cRecord = billModel->record(billDataMapper->currentIndex());
+        id = cRecord.value("id").toString();
+
+    }
+    int count = formValidation.uniqueValid(id, text, "bill", field);
+    if(count <= 0){
+        status = true;
+    }else{
+        status = false;
+    }
     return status;
 }
 
@@ -269,6 +409,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         customerDataMapper->setCurrentIndex(index.row());
 
     }else if(modelFlag == 2){
+        productFormClear();
         productDataMapper->setCurrentIndex(index.row());
 
     }else{
@@ -360,18 +501,37 @@ void BillForm::resetDataMapper()
 
 bool BillForm::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == ui->lineEditCustomerName){
+    if (obj == ui->lineEditInvoiceNo){
+        if(event->type() == QEvent::FocusIn)
+            BillForm::invoiceNoValid();
+        return false;
+
+    }else if (obj == ui->lineEditCustomerCode){
+        if(event->type() == QEvent::FocusIn)
+            BillForm::customerCodeValid();
+        return false;
+
+    }else if (obj == ui->lineEditCustomerName){
         if(event->type() == QEvent::FocusIn){
+            BillForm::customerNameValid();
             modelFlag = 1;
             emit signalCustomerNameFocused();
         }
         return false;
+
+    }else if (obj == ui->lineEditProductCode){
+        if(event->type() == QEvent::FocusIn)
+            BillForm::productCodeValid();
+        return false;
+
     }else if (obj == ui->lineEditProductName){
         if(event->type() == QEvent::FocusIn){
+            BillForm::productNameValid();
             modelFlag = 2;
             emit signalCustomerNameFocused();
         }
         return false;
+
     }else if (obj == ui->tableViewProductList){
         if(event->type() == QEvent::KeyPress){
             QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
@@ -389,16 +549,18 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
 
 void BillForm::uninstallEventFilter()
 {
+    ui->lineEditInvoiceNo->removeEventFilter(this);
     ui->lineEditCustomerCode->removeEventFilter(this);
     ui->lineEditCustomerName->removeEventFilter(this);
+    ui->lineEditProductCode->removeEventFilter(this);
+    ui->lineEditProductName->removeEventFilter(this);
     ui->tableViewProductList->removeEventFilter(this);
     ui->flashMsgUp->clear();
 }
 
 void BillForm::setAllValidationSuccess()
 {
-//    validCodeFlag = 1;
-//    validNameFlag = 1;
+    validInvoiceNoFlag = validCustomerCodeFlag = validCustomerNameFlag = validProductCodeFlag = 1;
     foreach(QLineEdit *widget, this->findChildren<QLineEdit*>()) {
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);
@@ -548,4 +710,15 @@ void BillForm::reverseRelation()
         billItemModel->setRecord(i, itemRecord);
     }
     billItemModel->submit();
+}
+
+void BillForm::productFormClearForSearch()
+{
+    ui->lineEditProductCode->clear();
+    ui->lineEditQty->clear();
+    ui->lineEditRate->clear();
+    ui->lineEditUnit->clear();
+    ui->lineEditTotal->clear();
+    ui->lineEditProductName->setFocus();
+    productUpdateFlag = 0;
 }

@@ -61,3 +61,24 @@ bool FormValidation::isDouble(QString value)
         status = true;
     return status;
 }
+
+bool FormValidation::isRecordFound(QString table, QString column, QString value)
+{
+    bool status = false;
+    int size;
+    QSqlQuery query;
+    QString queryText;
+    queryText = "SELECT * FROM ";
+    queryText.append(table);
+    queryText.append(" WHERE ");
+    queryText.append(column);
+    queryText.append(" like '%");
+    queryText.append(value);
+    queryText.append("%' AND status = 'A'");
+    query.exec(queryText);
+    size = query.size();
+    if(size > 0){
+        status = true;
+    }
+    return status;
+}
