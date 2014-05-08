@@ -115,8 +115,8 @@ void CategoryForm::save()
                 statusMsg = ui->lineEditName->text() + " updated successfully";
                 emit signalStatusBar(statusMsg);
             }
-            emit signalUpdated();
         }
+        emit signalUpdated();
         resetDataMapper();
         clear();
         setCodeFocus();
@@ -306,7 +306,7 @@ void CategoryForm::on_pushButtonDelete_clicked()
         categoriesModel->setRecord(dataMapper->currentIndex(), record);
         categoriesModel->submit();
         categoriesModel->select();
-
+        emit signalUpdated();
         on_pushButtonCancel_clicked();
     }else{
         QMessageBox msgBox;

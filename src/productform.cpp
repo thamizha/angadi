@@ -158,9 +158,27 @@ void ProductForm::save()
 
             statusMsg = ui->lineEditName->text() + " saved successfully";
             emit signalStatusBar(statusMsg);
+            emit signalUpdated();
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
+//            QModelIndex date_index = productsModel->index(dataMapper->currentIndex(),11);
+//            productsModel->setData(date_index,datetime, Qt::EditRole);
+
+
+            QSqlQueryModel model;
+            QSqlQuery query;
+            query.prepare("Select id from categories where name = :category_name");
+            query.bindValue(":category_name", ui->comboBoxcategoryId->currentText());
+            query.exec();
+            model.setQuery(query);
+            QSqlRecord record = model.record(0);
+            int category_id = record.value("id").toInt();
+
+            //this->setProperty("category_id", category_id);
+            QModelIndex idx = productsModel->index(dataMapper->currentIndex(),4);
+            productsModel->setData(idx, category_id, Qt::EditRole);
+
 
             status = dataMapper->submit();
 
@@ -479,7 +497,7 @@ void ProductForm::on_pushButtonDelete_clicked()
     productsModel->select();
 
     emit signalStatusBar(statusMsg);
-
+    emit signalUpdated();
     on_pushButtonCancel_clicked();
 }
 

@@ -66,8 +66,7 @@ void Lssbar::setupUi()
     connect(lineEditSearch,SIGNAL(returnPressed()),this,SLOT(returnKeyPressed()));
     connect(tableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(tableView,SIGNAL(activated(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
-    //connect(tableView->horizontalHeader(),SIGNAL(sectionClicked(int)), tableView, SLOT(sortByColumn(int)));
-    connect(tableView->horizontalHeader(),SIGNAL(sectionClicked(int)), tableView, SLOT(sortByColumn(int)));
+    //connect(tableView->horizontalHeader(),SIGNAL(sectionClicked(int)), tableView, SLOT(sortByColumn(int)));  //sorting signal
 }
 
 void Lssbar::setModel(QSqlTableModel *tableModel)
