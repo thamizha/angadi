@@ -43,6 +43,9 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 
     lssbar = new Lssbar;
 
+    billTabs = new QHash<QString,BillForm*>();
+    billTabnumber = 0;
+
     connect(lssbar,SIGNAL(signalEdit(QModelIndex)),this,SLOT(doubleClicked(QModelIndex)));
     connect(lssbar,SIGNAL(signalSearch(QString)),this,SLOT(search(QString)));
     connect(lssbar,SIGNAL(signalMoveUpDown(int)),this,SLOT(moveUpDown(int)));
@@ -155,11 +158,6 @@ void AngadiMainWindow::setupModels()
 
     billItemModel = new BillItemModel;
 
-    // Create new billItemproxy model to filter sort functionalities
-//    billItemProxyModel = new QSortFilterProxyModel; //initialization
-//    billItemProxyModel->setSourceModel(billItemModel); //set the source model to categories model
-//    billItemProxyModel->setFilterKeyColumn(2); // set the filter to the name column
-//    billItemProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 void AngadiMainWindow::exitApp()
@@ -271,29 +269,30 @@ void AngadiMainWindow::openCustomerTab()
 
 void AngadiMainWindow::openBillTab()
 {
-    QString tabName = "bill";
+    QString tabName;
+
+    billTabnumber = billTabnumber+1;
+    tabName = "bill#"+QString::number(billTabnumber);
     currentTab = tabName;
 
-//    bool found = tabLoadedStatus(tabName);
-//    if(found == false){
-    billForm = new BillForm();
-    billForm->setProperty("name", tabName);
-    ui->mainTab->addTab(billForm, "Bill");
-    lssbar->lineEditSearch->setText("");
-//    }
-    connect(billForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
-    connect(billForm,SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
-//    connect(billForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
-    connect(billForm,SIGNAL(signalCustomerNameFocused()),this,SLOT(changeLssBarSource()));
+    billTabs->insert(tabName,new BillForm());
+    billTabs->value(tabName)->setProperty("name",tabName);
+    ui->mainTab->addTab(billTabs->value(tabName),tabName);
+
+    connect(billTabs->value(tabName),SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(billTabs->value(tabName),SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
+    connect(billTabs->value(tabName),SIGNAL(signalCustomerNameFocused()),this,SLOT(changeLssBarSource()));
 
     setupModels();
-    billForm->setModel(billModel, billItemModel, productsModel, customersModel);
-    billForm->clear();
+    billTabs->value(tabName)->setModel(billModel, billItemModel, productsModel, customersModel);
+    billTabs->value(tabName)->clear();
+
     billTabCustomerSearchTerm = "";
     lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
-    ui->mainTab->setCurrentWidget (billForm);
-    billForm->setCodeFocus();
     lssbar->setModel(billModel);
+
+    ui->mainTab->setCurrentWidget (billTabs->value(tabName));
+    billTabs->value(tabName)->setCodeFocus();
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
@@ -331,7 +330,8 @@ void AngadiMainWindow::onCloseTab(int index)
 
         }else if(tabName == "product"){
             onProductTabClosed();
-
+        }else if(tabName.contains("bill#", Qt::CaseInsensitive)){
+            billTabs->remove(tabName);
         }
     }
 }
@@ -391,18 +391,20 @@ void AngadiMainWindow::onTabChanged(int index){
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
 
-    }else if(tabName == "bill"){
-        billForm->setModel(billModel, billItemModel, productsModel, customersModel);
-        billForm->clear();
-        if(billForm->modelFlag == 1){
-            lssbar->setModel(customersModel);
-        }else if(billForm->modelFlag == 2){
-            lssbar->setModel(productsModel);
-        }else {
-            lssbar->setModel(billModel);
+    }else{
+        if(tabName.contains("bill#", Qt::CaseInsensitive)){
+//            billTabs->value(tabName)->setModel(billModel, productsModel, customersModel);
+//            billTabs->value(tabName)->clear();
+            if(billTabs->value(tabName)->modelFlag == 1){
+                lssbar->setModel(customersModel);
+            }else if(billTabs->value(tabName)->modelFlag == 2){
+                lssbar->setModel(productsModel);
+            }else {
+                lssbar->setModel(billModel);
+            }
+            showRightDock(true);
+            lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
         }
-        showRightDock(true);
-        lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     }
 }
 
@@ -432,22 +434,22 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
             customerForm->setNameFocus();
         }
 
-    }else if(currentTab == "bill"){
+    }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
         if(index.row() >= 0){
-            if(billForm->modelFlag == 1){
-                billForm->setMapperIndex(index);
-                billForm->setProductFocus();
-            }else if(billForm->modelFlag == 2){
-                billForm->setMapperIndex(index);
-                billForm->setQuantityFocus();
+            if(billTabs->value(currentTab)->modelFlag == 1){
+                billTabs->value(currentTab)->setMapperIndex(index);
+                billTabs->value(currentTab)->setProductFocus();
+            }else if(billTabs->value(currentTab)->modelFlag == 2){
+                billTabs->value(currentTab)->setMapperIndex(index);
+                billTabs->value(currentTab)->setQuantityFocus();
             }else{
-                billForm->setCodeFocus();
-                billForm->setMapperIndex(index);
+                billTabs->value(currentTab)->setCodeFocus();
+                billTabs->value(currentTab)->setMapperIndex(index);
             }
         }else{
 //           billForm->setCodeFocus();
-            billForm->productFormClearForSearch();
-            billForm->setProductFocus();
+            billTabs->value(currentTab)->productFormClearForSearch();
+            billTabs->value(currentTab)->setProductFocus();
         }
     }
 }
@@ -482,8 +484,8 @@ void AngadiMainWindow::search(QString value)
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
         customerTabSearchTerm = value;
 
-    }else if(currentTab == "bill"){
-        if(billForm->modelFlag == 1){
+    }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
+        if(billTabs->value(currentTab)->modelFlag == 1){
             customersProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te customers proxy model
             int indexOffset = 0; //reset the indexOffset
             QModelIndex proxyIndex, index; //Initialization of new index
@@ -491,7 +493,7 @@ void AngadiMainWindow::search(QString value)
             index = customersProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
             lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
             billTabCustomerSearchTerm = value;
-        }else if(billForm->modelFlag == 2){
+        }else if(billTabs->value(currentTab)->modelFlag == 2){
             productsProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on te products proxy model
             int indexOffset = 0; //reset the indexOffset
             QModelIndex proxyIndex, index; //Initialization of new index
@@ -589,10 +591,10 @@ void AngadiMainWindow::changeLssBarSource()
     }else if(currentTab == "customer"){
         lssbar->setModel(customersModel);
 
-    }else if(currentTab == "bill"){
-        if(billForm->modelFlag==1){
+    }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
+        if(billTabs->value(currentTab)->modelFlag==1){
             lssbar->setModel(customersModel);
-        }else if(billForm->modelFlag == 2){
+        }else if(billTabs->value(currentTab)->modelFlag == 2){
             lssbar->setModel(productsModel);
         }else{
             lssbar->setModel(billModel);
