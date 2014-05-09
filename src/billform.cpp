@@ -123,6 +123,7 @@ void BillForm::save(){
 
     if(validError == 0){
         if(billDataMapper->currentIndex() < 0){
+            billModel->select();
             row = billModel->rowCount();
             billModel->insertRows(row, 1);
             billModel->setData(billModel->index(row,billModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));

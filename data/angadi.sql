@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `angadi` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE  IF NOT EXISTS `angadi` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `angadi`;
 -- MySQL dump 10.13  Distrib 5.5.34, for debian-linux-gnu (i686)
 --
@@ -50,8 +50,18 @@ CREATE TABLE `customers` (
   `modifiedDate` varchar(45) DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customers`
+--
+
+LOCK TABLES `customers` WRITE;
+/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (4,'1','arun','Retailer',10000,'','','','','','','','','','','','','','','A','2014-05-06 18:02:07',NULL,NULL),(5,'2','bharat','Retailer',1000,'','','','','','','','','','','','','','','A','2014-05-06 18:02:18',NULL,NULL);
+/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `products`
@@ -74,8 +84,18 @@ CREATE TABLE `products` (
   `modifiedDate` datetime DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (2,'1','soap','Nos',7,10,10,9,'A','2014-05-06 18:10:05',NULL,NULL);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -98,6 +118,15 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -107,6 +136,7 @@ DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `paidAmount` double NOT NULL DEFAULT '0',
   `paidOn` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `paidBy` varchar(150) DEFAULT NULL,
@@ -118,6 +148,15 @@ CREATE TABLE `transactions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transactions`
+--
+
+LOCK TABLES `transactions` WRITE;
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `bill`
@@ -141,8 +180,18 @@ CREATE TABLE `bill` (
   `modifiedDate` datetime DEFAULT NULL,
   `modifiedBy` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bill`
+--
+
+LOCK TABLES `bill` WRITE;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+INSERT INTO `bill` VALUES (1,1,'2014-05-09 00:00:00',5,10,0,10,-10,'P','A','2014-05-09 18:03:34',NULL,NULL),(2,2,'2014-05-09 00:00:00',4,20,0,20,-20,'P','A','2014-05-09 18:03:40',NULL,NULL),(3,3,'2014-05-09 00:00:00',4,30,0,30,-30,'P','A','2014-05-09 18:03:46',NULL,NULL);
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `categories`
@@ -159,8 +208,18 @@ CREATE TABLE `categories` (
   `createdDate` datetime DEFAULT NULL,
   `modifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (7,'1','test','A','2014-05-06 18:09:47',NULL);
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `bill_item`
@@ -178,8 +237,18 @@ CREATE TABLE `bill_item` (
   `quantity` double NOT NULL DEFAULT '0',
   `total` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bill_item`
+--
+
+LOCK TABLES `bill_item` WRITE;
+/*!40000 ALTER TABLE `bill_item` DISABLE KEYS */;
+INSERT INTO `bill_item` VALUES (1,1,2,'Nos',10,1,10),(2,2,2,'Nos',10,2,20),(3,3,2,'Nos',10,3,30);
+/*!40000 ALTER TABLE `bill_item` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -190,4 +259,4 @@ CREATE TABLE `bill_item` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-09 19:06:04
+-- Dump completed on 2014-05-09 18:11:05
