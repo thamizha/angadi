@@ -256,6 +256,7 @@ void CustomerForm::save()
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("name")),ui->lineEditName->text());
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("type")),ui->comboBoxType->currentText());
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("creditLimit")),ui->lineEditCreditLimit->text());
+            customersModel->setData(customersModel->index(row,customersModel->fieldIndex("gender")),ui->comboBoxGender->currentText());
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("contactPerson")),ui->lineEditContactPerson->text());
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("address1")),ui->lineEditAddress1->text());
             customersModel->setData(customersModel->index(row,customersModel->fieldIndex("address2")),ui->lineEditAddress2->text());
@@ -288,8 +289,8 @@ void CustomerForm::save()
                 statusMsg = ui->lineEditName->text() + " updated successfully";
                 emit signalStatusBar(statusMsg);
             }
-            emit signalUpdated();
         }
+        emit signalUpdated();
         resetDataMapper();
         clear();
         setCodeFocus();
@@ -343,6 +344,7 @@ void CustomerForm::setModel(CustomersModel *model){
 
     dataMapper->addMapping(ui->comboBoxType,customersModel->fieldIndex("type"));
     dataMapper->addMapping(ui->lineEditCreditLimit,customersModel->fieldIndex("creditLimit"));
+    dataMapper->addMapping(ui->comboBoxGender,customersModel->fieldIndex("gender"));
     dataMapper->addMapping(ui->lineEditContactPerson,customersModel->fieldIndex("contactPerson"));
     dataMapper->addMapping(ui->lineEditAddress1,customersModel->fieldIndex("address1"));
     dataMapper->addMapping(ui->lineEditAddress2,customersModel->fieldIndex("address2"));
@@ -551,6 +553,7 @@ void CustomerForm::on_pushButtonDelete_clicked()
     customersModel->setRecord(dataMapper->currentIndex(), record);
     customersModel->submitAll();
     customersModel->select();
+    emit signalUpdated();
 
     emit signalStatusBar(statusMsg);
 

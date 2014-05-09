@@ -170,9 +170,6 @@ void ProductForm::save()
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
-//            QModelIndex date_index = productsModel->index(dataMapper->currentIndex(),11);
-//            productsModel->setData(date_index,datetime, Qt::EditRole);
-
 
             QSqlQueryModel model;
             QSqlQuery query;
@@ -265,6 +262,7 @@ void ProductForm::setModel(ProductsModel *model){
     dataMapper->addMapping(ui->lineEditMrp,productsModel->fieldIndex("mrp"));
     dataMapper->addMapping(ui->lineEditSalePrice,productsModel->fieldIndex("sprice"));
     dataMapper->addMapping(ui->lineEditWholeSalePrice,productsModel->fieldIndex("wholeSalePrice"));
+    dataMapper->addMapping(this,productsModel->fieldIndex("modifiedDate"), "modifiedDate");
 
     setCodeFocus();
 }
