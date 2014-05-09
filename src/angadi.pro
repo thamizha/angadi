@@ -4,13 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql xml script
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = angadicpp
 TEMPLATE = app
 
+DESTDIR = $$PWD
 
 SOURCES += main.cpp\
         login.cpp \
@@ -27,7 +28,8 @@ SOURCES += main.cpp\
     models/customersmodel.cpp \
     billform.cpp \
     models/billmodel.cpp \
-    models/billitemmodel.cpp
+    models/billitemmodel.cpp \
+    qtrpt.cpp
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
@@ -43,7 +45,8 @@ HEADERS  += \
     models/customersmodel.h \
     billform.h \
     models/billmodel.h \
-    models/billitemmodel.h
+    models/billitemmodel.h \
+    qtrpt.h
 
 FORMS    += \
     angadimainwindow.ui \

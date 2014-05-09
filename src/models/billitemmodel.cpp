@@ -32,6 +32,10 @@ BillItemModel::BillItemModel(QObject *parent) :
     setTable("bill_item");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
     setHeaderData(fieldIndex("product_id"), Qt::Horizontal, QObject::tr("Product Name"));
+    setHeaderData(fieldIndex("unit"), Qt::Horizontal, QObject::tr("Unit"));
+    setHeaderData(fieldIndex("unitPrice"), Qt::Horizontal, QObject::tr("Unit Price"));
+    setHeaderData(fieldIndex("quantity"), Qt::Horizontal, QObject::tr("Quantity"));
+    setHeaderData(fieldIndex("total"), Qt::Horizontal, QObject::tr("Total"));
 //    setRelation(fieldIndex("product_id"), QSqlRelation("products", "id", "name"));
 //    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");
