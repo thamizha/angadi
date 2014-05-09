@@ -72,7 +72,6 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     toolBar->addAction(actionCustomer);
     toolBar->addAction(actionBillEntry);
 
-
     this->addToolBar(Qt::TopToolBarArea, toolBar);
 
     setupProperties();
@@ -115,6 +114,8 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionBillEntry, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(actionBillEntry,SIGNAL(triggered()),this,SLOT(openTab()));
+
+    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
@@ -413,7 +414,7 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
     if(currentTab == "category"){
         if(index.row() >= 0){
             categoryForm->setMapperIndex(index);
-            categoryForm->setCodeFocus();
+            categoryForm->setNameFocus();
         }else{
             categoryForm->setNameFocus();
         }
@@ -602,4 +603,50 @@ void AngadiMainWindow::changeLssBarSource()
         showRightDock(true);
         lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
     }
+}
+
+void AngadiMainWindow::showPeriodWiseReport()
+{
+    QString fileName = "./reports/product_list.xml";
+    report = new QtRPT(this);
+//    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
+
+//    report->recordCount << tableWidget->rowCount();
+    report->recordCount << productsModel->rowCount();
+    if (report->loadReport(fileName) == false) {
+        qDebug()<<"Report's file not found";
+    }
+    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
+                     this, SLOT(setProductValue(int&, QString&, QVariant&, int)));
+//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+//                     this, SLOT(setProductValueImage(int&, QString&, QImage&, int)));
+    //report->setCallbackFunc(getReportValue);
+    report->printExec(true);
+}
+
+void AngadiMainWindow::setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage)
+{
+    Q_UNUSED(reportPage);
+//    if (paramName == "customer")
+//        paramValue = ui->edtCustomer->text();
+//    if (paramName == "date")
+//        paramValue = ui->dtp->date().toString();
+//    if (paramName == "NN")
+//        paramValue = recNo+1;
+    if (paramName == "Code") {
+        if (tableWidget->item(recNo,0) == 0) return;
+        paramValue = tableWidget->item(recNo,0)->text();
+    }
+    if (paramName == "Name") {
+        if (tableWidget->item(recNo,1) == 0) return;
+        paramValue = tableWidget->item(recNo,1)->text();
+    }
+//    if (paramName == "Price") {
+//        if (ui->tableWidget->item(recNo,2) == 0) return;
+//        paramValue = ui->tableWidget->item(recNo,2)->text();
+//    }
+//    if (paramName == "Sum") {
+//        if (ui->tableWidget->item(recNo,3) == 0) return;
+//        paramValue = ui->tableWidget->item(recNo,3)->text();
+//    }
 }

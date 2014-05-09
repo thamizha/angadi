@@ -170,9 +170,6 @@ void ProductForm::save()
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
-//            QModelIndex date_index = productsModel->index(dataMapper->currentIndex(),11);
-//            productsModel->setData(date_index,datetime, Qt::EditRole);
-
 
             QSqlQueryModel model;
             QSqlQuery query;
@@ -236,8 +233,8 @@ void ProductForm::clear(){
         widget->setStyleSheet(styleSheet());
     }
 
-    ui->comboBoxcategoryId->setProperty("validationError",false);
-    ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+    ui->comboBoxcategoryId->setProperty("cValidationError",false);
+    ui->comboBoxcategoryId->setProperty("cValidationSuccess",false);
     ui->comboBoxcategoryId->setStyleSheet(styleSheet());
 
     ui->comboBoxUnit->setCurrentIndex(0);
@@ -265,6 +262,7 @@ void ProductForm::setModel(ProductsModel *model){
     dataMapper->addMapping(ui->lineEditMrp,productsModel->fieldIndex("mrp"));
     dataMapper->addMapping(ui->lineEditSalePrice,productsModel->fieldIndex("sprice"));
     dataMapper->addMapping(ui->lineEditWholeSalePrice,productsModel->fieldIndex("wholeSalePrice"));
+    dataMapper->addMapping(this,productsModel->fieldIndex("modifiedDate"), "modifiedDate");
 
     setCodeFocus();
 }
@@ -573,7 +571,7 @@ bool ProductForm::eventFilter(QObject *obj, QEvent *event)
             ProductForm::wholeSalePriceValid();
         return false;
     }else if (obj == ui->comboBoxcategoryId){
-        if (event->type() == QEvent::FocusOut)
+        if (event->type() == QEvent::FocusOut || event->type() == QEvent::FocusIn)
             ProductForm::categoryValid();
         return false;
     }
@@ -597,8 +595,8 @@ void ProductForm::setAllValidationSuccess()
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
-    ui->comboBoxcategoryId->setProperty("validationError",false);
-    ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+    ui->comboBoxcategoryId->setProperty("cValidationError",false);
+    ui->comboBoxcategoryId->setProperty("cValidationSuccess",false);
     ui->comboBoxcategoryId->setStyleSheet(styleSheet());
 }
 
@@ -615,23 +613,23 @@ bool ProductForm::categoryValid()
     QString flashMsg = "";
     if(ui->comboBoxcategoryId->currentText().length() > 0){
         if(formValidation->isRecordFound("categories", "name", ui->comboBoxcategoryId->currentText())){
-            ui->comboBoxcategoryId->setProperty("validationError",false);
-            ui->comboBoxcategoryId->setProperty("validationSuccess",true);
+            ui->comboBoxcategoryId->setProperty("cValidationError",false);
+            ui->comboBoxcategoryId->setProperty("cValidationSuccess",true);
             ui->comboBoxcategoryId->setStyleSheet(styleSheet());
             validCategory = 1;
             status = true;
         }else{
             flashMsg = "This category is not found in the list. Please select a valid category.";
-            ui->comboBoxcategoryId->setProperty("validationError",true);
-            ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+            ui->comboBoxcategoryId->setProperty("cValidationError",true);
+            ui->comboBoxcategoryId->setProperty("cValidationSuccess",false);
             ui->comboBoxcategoryId->setStyleSheet(styleSheet());
             validCategory = 0;
             status = false;
         }
     }else{
         flashMsg = "Category cannot be empty. Please select a category";
-        ui->comboBoxcategoryId->setProperty("validationError",true);
-        ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+        ui->comboBoxcategoryId->setProperty("cValidationError",true);
+        ui->comboBoxcategoryId->setProperty("cValidationSuccess",false);
         ui->comboBoxcategoryId->setStyleSheet(styleSheet());
         validCategory = 0;
         status = false;

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
 #include <QTimer>
+#include <QTableWidget>
 
 #include "lssbar.h"
 #include "categoryform.h"
@@ -16,6 +17,8 @@
 #include "models/billitemmodel.h"
 #include "models/billmodel.h"
 #include <QHash>
+
+#include "qtrpt.h"
 
 namespace Ui {
 class AngadiMainWindow;
@@ -66,6 +69,9 @@ private:
     QSortFilterProxyModel *productsProxyModel;
     QSortFilterProxyModel *customersProxyModel;
 
+    QtRPT *report;
+    QTableWidget *tableWidget;
+
     void openCustomerTab();
     void openProductTab();
     void openCategoryTab();
@@ -96,7 +102,8 @@ private slots:
     void changeStatusMsgToDefault();
     void setStatusBarDefaultText();
     void changeLssBarSource();
-
+    void showPeriodWiseReport();
+    void setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
 };
 
 #endif // ANGADIMAINWINDOW_H

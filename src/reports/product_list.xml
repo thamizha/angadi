@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports email="aliks-os@yandex.ru" programmer="Aleksey Osipov" lib="QtRPT">
+  <Report pageNo="1" pageHeight="1188" marginsTop="40" marginsRight="40" marginsBottom="40" marginsLeft="40" orientation="0" pageWidth="840">
+    <ReportBand name="RepTitleBand" height="47" left="40" width="760" top="40" type="ReportTitle">
+      <TContainerField borderRight="rgba(0,0,0,255)" fontUnderline="0" fontFamily="Sans Serif" borderLeft="rgba(0,0,0,255)" height="30" value="Products" fontColor="rgba(0,0,0,255)" borderColor="rgba(0,0,0,255)" borderStyle="solid" aligmentV="vCenter" top="10" backgroundColor="rgba(255,255,255,0)" type="label" borderTop="rgba(0,0,0,255)" highlighting="" name="field1" fontSize="12" borderBottom="rgba(0,0,0,255)" left="308" printing="1" borderWidth="1px" aligmentH="hCenter" width="140" fontBold="1" fontItalic="0"/>
+    </ReportBand>
+    <ReportBand name="PageHeaderBand" height="47" left="40" width="760" top="108" type="PageHeader">
+      <TContainerField borderRight="rgba(0,0,0,255)" fontUnderline="0" fontFamily="Sans Serif" borderLeft="rgba(0,0,0,255)" height="30" value="Code" fontColor="rgba(0,0,0,255)" borderColor="rgba(0,0,0,255)" borderStyle="solid" aligmentV="vCenter" top="7" backgroundColor="rgba(255,255,255,0)" type="label" borderTop="rgba(0,0,0,255)" highlighting="" name="field2" fontSize="9" borderBottom="rgba(0,0,0,255)" left="38" printing="1" borderWidth="1px" aligmentH="hLeft" width="140" fontBold="0" fontItalic="0"/>
+      <TContainerField borderRight="rgba(0,0,0,255)" fontUnderline="0" fontFamily="Sans Serif" borderLeft="rgba(0,0,0,255)" height="30" value="Name" fontColor="rgba(0,0,0,255)" borderColor="rgba(0,0,0,255)" borderStyle="solid" aligmentV="vCenter" top="9" backgroundColor="rgba(255,255,255,0)" type="label" borderTop="rgba(0,0,0,255)" highlighting="" name="field3" fontSize="9" borderBottom="rgba(0,0,0,255)" left="239" printing="1" borderWidth="1px" aligmentH="hLeft" width="140" fontBold="0" fontItalic="0"/>
+    </ReportBand>
+    <ReportBand name="MasterDataBand" height="47" left="40" width="760" top="176" type="MasterData">
+      <TContainerField borderRight="rgba(0,0,0,255)" fontUnderline="0" fontFamily="Sans Serif" borderLeft="rgba(0,0,0,255)" height="30" value="[Code]" fontColor="rgba(0,0,0,255)" borderColor="rgba(0,0,0,255)" borderStyle="solid" aligmentV="vCenter" top="8" backgroundColor="rgba(255,255,255,0)" type="label" borderTop="rgba(0,0,0,255)" highlighting="" name="field4" fontSize="9" borderBottom="rgba(0,0,0,255)" left="76" printing="1" borderWidth="1px" aligmentH="hLeft" width="140" fontBold="0" fontItalic="0"/>
+      <TContainerField borderRight="rgba(0,0,0,255)" fontUnderline="0" fontFamily="Sans Serif" borderLeft="rgba(0,0,0,255)" height="30" value="[Name]" fontColor="rgba(0,0,0,255)" borderColor="rgba(0,0,0,255)" borderStyle="solid" aligmentV="vCenter" top="5" backgroundColor="rgba(255,255,255,0)" type="label" borderTop="rgba(0,0,0,255)" highlighting="" name="field5" fontSize="9" borderBottom="rgba(0,0,0,255)" left="258" printing="1" borderWidth="1px" aligmentH="hLeft" width="140" fontBold="0" fontItalic="0"/>
+    </ReportBand>
+    <ReportBand name="PageFooterBand" height="47" left="40" width="760" top="244" type="PageFooter"/>
+  </Report>
+</Reports>
