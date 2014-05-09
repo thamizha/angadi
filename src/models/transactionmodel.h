@@ -23,19 +23,24 @@
  * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
-#include "billitemmodel.h"
-#include "../connection.h"
+#ifndef TRANSACTIONMODEL_H
+#define TRANSACTIONMODEL_H
 
-BillItemModel::BillItemModel(QObject *parent) :
-    QSqlRelationalTableModel(parent)
+#include <QObject>
+#include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
+#include <QDebug>
+
+class TransactionModel : public QSqlRelationalTableModel
 {
-    setTable("bill_item");
-    setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setHeaderData(fieldIndex("product_id"), Qt::Horizontal, QObject::tr("Product Name"));
-//    setRelation(fieldIndex("product_id"), QSqlRelation("products", "id", "name"));
-//    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
-//    setFilter("bill.status = 'A'");
-//    relationModel(3)->setFilter("status = 'A'");
-//    setSort(fieldIndex("id"),Qt::AscendingOrder);
-    select();
-}
+    Q_OBJECT
+public:
+    explicit TransactionModel(QObject *parent = 0);
+
+signals:
+
+public slots:
+
+};
+
+#endif // TRANSACTIONMODEL_H

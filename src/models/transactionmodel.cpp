@@ -23,15 +23,16 @@
  * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
-#include "billitemmodel.h"
+#include "transactionmodel.h"
 #include "../connection.h"
 
-BillItemModel::BillItemModel(QObject *parent) :
+TransactionModel::TransactionModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
-    setTable("bill_item");
+    setTable("transactions");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setHeaderData(fieldIndex("product_id"), Qt::Horizontal, QObject::tr("Product Name"));
+    setHeaderData(fieldIndex("bill_id"), Qt::Horizontal, QObject::tr("Invoice Number"));
+    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
 //    setRelation(fieldIndex("product_id"), QSqlRelation("products", "id", "name"));
 //    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");

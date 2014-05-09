@@ -32,6 +32,7 @@
 #include "models/customersmodel.h"
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
+#include "models/transactionmodel.h"
 
 #include <QWidget>
 #include <QValidator>
@@ -89,6 +90,7 @@ private:
     BillModel *billModel;
     ProductsModel *productsModel;
     CustomersModel *customersModel;
+    TransactionModel *transactionModel;
 
     QDataWidgetMapper *billDataMapper;
     QDataWidgetMapper *billItemDataMapper;
@@ -123,6 +125,7 @@ private slots:
     void productFormClear();
     void reverseRelation();
     void updateToBeGiven();
+    void setTransactionTableView();
 
 };
 

@@ -31,7 +31,6 @@
 #include <QSqlRelationalTableModel>
 #include <QDebug>
 
-
 class BillModel : public QSqlRelationalTableModel
 {
     Q_OBJECT

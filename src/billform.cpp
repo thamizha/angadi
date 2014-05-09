@@ -26,6 +26,7 @@
 
 #include "billform.h"
 #include "ui_billform.h"
+#include <QSqlError>
 
 BillForm::BillForm(QWidget *parent) :
     QWidget(parent),
@@ -38,6 +39,7 @@ BillForm::BillForm(QWidget *parent) :
     formValidation = new FormValidation;
     billDataMapper = new QDataWidgetMapper;
     billDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    transactionModel = new TransactionModel;
 
     billItemDataMapper = new QDataWidgetMapper;
     billItemDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -49,11 +51,16 @@ BillForm::BillForm(QWidget *parent) :
     customerDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 
     ui->tableViewProductList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewProductList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//    ui->tableViewProductList->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewProductList->verticalHeader()->setVisible(true);
     ui->tableViewProductList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableViewProductList->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    ui->tableViewCustomerBalance->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableViewCustomerBalance->verticalHeader()->setVisible(true);
+    ui->tableViewCustomerBalance->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableViewCustomerBalance->setSelectionMode(QAbstractItemView::SingleSelection);
 
     validInvoiceNoFlag = 0;
 
@@ -173,6 +180,19 @@ void BillForm::save(){
             }
             bool billItemStatus = billItemModel->submitAll();
             if(billItemStatus){
+                if(ui->lineEditChange->text().toInt() < 0){
+                    int transrow = transactionModel->rowCount();
+                    transactionModel->insertRows(transrow, 1);
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("bill_id")),bill_id);
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("customer_id")),customer_id);
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("paidAmount")),ui->lineEditChange->text());
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("paidOn")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("status")),"A");
+                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("mode")),"cash");
+                    transactionModel->submitAll();
+                    qDebug() << transactionModel->lastError();
+                }
                 statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
                 emit signalStatusBar(statusMsg);
                 clear();
@@ -345,6 +365,7 @@ bool BillForm::customerNameValid(){
         ui->lineEditCustomerName->setProperty("validationSuccess",true);
         ui->lineEditCustomerName->setStyleSheet(styleSheet());
         validCustomerNameFlag = 1;
+        setTransactionTableView();
     }else{
         status = false;
         flashMsg = "Customer Name field is empty. Please give some values.";
@@ -450,6 +471,7 @@ void BillForm::setMapperIndex(QModelIndex index)
 {
     if(modelFlag == 1){
         customerDataMapper->setCurrentIndex(index.row());
+        setTransactionTableView();
 
     }else if(modelFlag == 2){
         productFormClear();
@@ -460,6 +482,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         setBillId();
         reverseRelation();
         ui->lineEditGiven->setText(QString::number(ui->lineEditTooBePaid->text().toInt()+ui->lineEditChange->text().toInt()));
+        setTransactionTableView();
     }
 }
 
@@ -813,7 +836,6 @@ void BillForm::updateToBeGiven()
     tax = discount+ui->lineEditTax->text().toDouble()*discount/100;
     toBePaid = qRound(tax);
     roundOff = toBePaid-tax;
-    qDebug() << roundOff;
     if(roundOff >= 0){
         ui->lineEditTooBePaid->setText(QString::number(toBePaid));
         ui->lineEditRoundOff->setText(QString::number(roundOff));
@@ -824,4 +846,38 @@ void BillForm::updateToBeGiven()
         ui->lineEditRoundOff->setText(QString::number(roundOff));
     }
     ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble()));
+}
+
+void BillForm::setTransactionTableView()
+{
+    if(ui->lineEditCustomerName->text().size() > 1){
+        QString customerName, filter;
+        QSqlQuery customerQuery;
+        QSqlRecord transactionRecord;
+        int balance = 0;
+        customerName = ui->lineEditCustomerName->text();
+        customerQuery.prepare("Select id from customers where name = :customer_name");
+        customerQuery.bindValue(":customer_name", customerName);
+        customerQuery.exec();
+        while(customerQuery.next())
+            customerName = customerQuery.value(0).toString();
+        filter = "customer_id = "+customerName;
+        transactionModel->select();
+        transactionModel->setFilter(filter);
+        transactionModel->setSort(0,Qt::DescendingOrder);
+        ui->tableViewCustomerBalance->setModel(transactionModel);
+        for(int i=0; i < transactionModel->columnCount(); i++){
+            ui->tableViewCustomerBalance->setColumnHidden(i,true);
+        }
+        ui->tableViewCustomerBalance->setColumnHidden(3,false);
+        ui->tableViewCustomerBalance->setColumnHidden(4,false);
+        ui->tableViewCustomerBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        for(int j=0; j < transactionModel->rowCount(); j++){
+            transactionRecord = transactionModel->record(j);
+            balance = balance + transactionRecord.value("paidAmount").toInt();
+        }
+        ui->lineEditBalance->setText(QString::number(balance));
+        ui->lineEditUsed->setText(QString::number(balance));
+        ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toInt()+balance));
+    }
 }
