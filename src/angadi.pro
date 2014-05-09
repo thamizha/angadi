@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     billform.cpp \
     models/billmodel.cpp \
     models/billitemmodel.cpp \
-    models/transactionmodel.cpp
+    models/transactionmodel.cpp \
+    qtrpt.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -48,7 +49,8 @@ HEADERS  += \
     billform.h \
     models/billmodel.h \
     models/billitemmodel.h \
-    models/transactionmodel.h
+    models/transactionmodel.h \
+    qtrpt.h
     qtrpt.h
 
 FORMS    += \
