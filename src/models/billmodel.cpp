@@ -34,7 +34,7 @@ BillModel::BillModel(QObject *parent) :
 //    setRelation(3, QSqlRelation("customers", "id", "name"));
     setHeaderData(fieldIndex("invoiceNo"), Qt::Horizontal,QObject::tr("Invoice No"));
     setHeaderData(fieldIndex("invoiceDate"), Qt::Horizontal, QObject::tr("Invoice Date"));
-//    setFilter("bill.status = 'A'");
+    setFilter("bill.status = 'A'");
 //    relationModel(3)->setFilter("status = 'A'");
 //    setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();

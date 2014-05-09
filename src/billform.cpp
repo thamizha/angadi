@@ -483,6 +483,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         reverseRelation();
         ui->lineEditGiven->setText(QString::number(ui->lineEditTooBePaid->text().toInt()+ui->lineEditChange->text().toInt()));
         setTransactionTableView();
+        ui->pushButtonDelete->setEnabled(true);
     }
 }
 
@@ -502,35 +503,18 @@ void BillForm::on_pushButtonClear_clicked()
 
 void BillForm::on_pushButtonDelete_clicked()
 {
-//    QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
+    QSqlRecord record = billModel->record(billDataMapper->currentIndex());
+    QDateTime datetime = QDateTime::currentDateTime();
 
-//    QSqlQueryModel model;
-//    QSqlQuery query;
-//    query.prepare("Select * from products where category_id = :category_id");
-//    query.bindValue(":category_id", record.value("id").toInt());
-//    query.exec();
-//    model.setQuery(query);
+    record.setValue("status", "D");
+    record.setValue("modifiedDate", datetime);
+    billModel->setRecord(billDataMapper->currentIndex(), record);
+    billModel->submitAll();
+    billModel->select();
+    on_pushButtonClear_clicked();
 
-//    if(model.rowCount() == 0){
-//        statusMsg = ui->lineEditName->text() + " deleted successfully";
-
-//        QDateTime datetime = QDateTime::currentDateTime();
-
-//        record.setValue("status", "D");
-//        record.setValue("modifiedDate", datetime);
-//        categoriesModel->setRecord(dataMapper->currentIndex(), record);
-//        categoriesModel->submit();
-//        categoriesModel->select();
-
-//        on_pushButtonCancel_clicked();
-//    }else{
-//        QMessageBox msgBox;
-//        msgBox.setText("Products found under this category. Cannot delete!!!");
-//        msgBox.setStandardButtons(QMessageBox::Ok);
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        msgBox.exec();
-//    }
-//    emit signalStatusBar(statusMsg);
+    statusMsg = ui->lineEditInvoiceNo->text() + " deleted successfully";
+    emit signalStatusBar(statusMsg);
 }
 
 QDateTime BillForm::modifiedDate() const
