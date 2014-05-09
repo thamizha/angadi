@@ -16,6 +16,7 @@
 #include "models/customersmodel.h"
 #include "models/billitemmodel.h"
 #include "models/billmodel.h"
+#include <QHash>
 
 #include "qtrpt.h"
 
@@ -44,6 +45,8 @@ private:
 
     QTimer *timer;
 
+    int billTabnumber;
+
     // initialization of toolbar actions
     QAction *actionCategory;
     QAction *actionProduct;
@@ -53,7 +56,7 @@ private:
     CategoryForm *categoryForm;
     ProductForm *productForm;
     CustomerForm *customerForm;
-    BillForm *billForm;
+    QHash<QString,BillForm*> *billTabs;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
