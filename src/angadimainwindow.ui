@@ -41,6 +41,7 @@
 	border-style: outset;
     border-width: 2px;
     border-color: red;
+	selection-background-color: red;
 }
 
 *[validationSuccess=&quot;true&quot;] 
@@ -48,6 +49,7 @@
 	border-style: outset;
     border-width: 2px;
     border-color: green;
+	selection-background-color: green;
 }</string>
       </property>
       <property name="tabShape">
