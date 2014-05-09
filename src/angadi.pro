@@ -29,11 +29,9 @@ SOURCES += main.cpp\
     billform.cpp \
     models/billmodel.cpp \
     models/billitemmodel.cpp \
-<<<<<<< HEAD
     models/transactionmodel.cpp
-=======
     qtrpt.cpp
->>>>>>> 9c961f3a3849ba3c7f232f55b0a22b972d26b8a0
+
 HEADERS  += \
     angadiapp.h \
     angadimainwindow.h \
@@ -50,11 +48,8 @@ HEADERS  += \
     billform.h \
     models/billmodel.h \
     models/billitemmodel.h \
-<<<<<<< HEAD
     models/transactionmodel.h
-=======
     qtrpt.h
->>>>>>> 9c961f3a3849ba3c7f232f55b0a22b972d26b8a0
 
 FORMS    += \
     angadimainwindow.ui \
