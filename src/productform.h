@@ -57,7 +57,7 @@ public:
     QDateTime modifiedDate() const;
     void setModifiedDate(QDateTime modifiedDate);
     void clear();
-    int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice;
+    int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice, validCategory;
     void setFieldMaxLength();
     void setComboSource();
 signals:
@@ -89,6 +89,7 @@ private slots:
     void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
+    bool categoryValid();
 };
 
 #endif // PRODUCTFORM_H

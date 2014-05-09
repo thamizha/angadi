@@ -45,7 +45,7 @@ ProductForm::ProductForm(QWidget *parent) :
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setItemDelegate(new QSqlRelationalDelegate(this));
     dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    validCodeFlag = validNameFlag = validMrpFlag = validSalePriceFlag = validWholeSalePrice = 0;
+    validCodeFlag = validNameFlag = validMrpFlag = validSalePriceFlag = validWholeSalePrice = validCategory = 0;
 
     ui->pushButtonDelete->setEnabled(false);
 //    ui->pushButtonSave->setEnabled(false);
@@ -58,6 +58,8 @@ ProductForm::ProductForm(QWidget *parent) :
     ui->comboBoxManufacturer->addItem("Manufacturer 2");
     ui->comboBoxManufacturer->addItem("Manufacturer 3");
 
+    ui->comboBoxcategoryId->setEditable(true);
+    ui->comboBoxcategoryId->installEventFilter(this);
     ui->comboBoxUnit->addItem("Nos");
     ui->comboBoxUnit->addItem("Kgs");
     ui->comboBoxUnit->addItem("Bundles");
@@ -104,6 +106,12 @@ void ProductForm::save()
     if(!ProductForm::nameValid()){
         validError = 1;
         errors.append("\nThe Name field may be empty or already exist");
+    }
+
+    // Category validation
+    if(!ProductForm::categoryValid()){
+        validError = 1;
+        errors.append("\nThe category may be empty or invalid");
     }
 
     //Validate Mrp field
@@ -227,6 +235,10 @@ void ProductForm::clear(){
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
+
+    ui->comboBoxcategoryId->setProperty("validationError",false);
+    ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+    ui->comboBoxcategoryId->setStyleSheet(styleSheet());
 
     ui->comboBoxUnit->setCurrentIndex(0);
     ui->comboBoxcategoryId->setCurrentIndex(0);
@@ -560,6 +572,10 @@ bool ProductForm::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::FocusIn)
             ProductForm::wholeSalePriceValid();
         return false;
+    }else if (obj == ui->comboBoxcategoryId){
+        if (event->type() == QEvent::FocusOut)
+            ProductForm::categoryValid();
+        return false;
     }
     return ProductForm::eventFilter(obj, event);
 }
@@ -581,6 +597,9 @@ void ProductForm::setAllValidationSuccess()
         widget->setProperty("validationSuccess",false);
         widget->setStyleSheet(styleSheet());
     }
+    ui->comboBoxcategoryId->setProperty("validationError",false);
+    ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+    ui->comboBoxcategoryId->setStyleSheet(styleSheet());
 }
 
 void ProductForm::setComboSource()
@@ -588,4 +607,35 @@ void ProductForm::setComboSource()
     productsModel->relationModel(4)->select();
     ui->comboBoxcategoryId->setModel(productsModel->relationModel(4));
     ui->comboBoxcategoryId->setModelColumn(productsModel->relationModel(4)->fieldIndex("name"));
+}
+
+bool ProductForm::categoryValid()
+{
+    bool status = false;
+    QString flashMsg = "";
+    if(ui->comboBoxcategoryId->currentText().length() > 0){
+        if(formValidation->isRecordFound("categories", "name", ui->comboBoxcategoryId->currentText())){
+            ui->comboBoxcategoryId->setProperty("validationError",false);
+            ui->comboBoxcategoryId->setProperty("validationSuccess",true);
+            ui->comboBoxcategoryId->setStyleSheet(styleSheet());
+            validCategory = 1;
+            status = true;
+        }else{
+            flashMsg = "This category is not found in the list. Please select a valid category.";
+            ui->comboBoxcategoryId->setProperty("validationError",true);
+            ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+            ui->comboBoxcategoryId->setStyleSheet(styleSheet());
+            validCategory = 0;
+            status = false;
+        }
+    }else{
+        flashMsg = "Category cannot be empty. Please select a category";
+        ui->comboBoxcategoryId->setProperty("validationError",true);
+        ui->comboBoxcategoryId->setProperty("validationSuccess",false);
+        ui->comboBoxcategoryId->setStyleSheet(styleSheet());
+        validCategory = 0;
+        status = false;
+    }
+    ui->flashMsgUp->setText(flashMsg);
+    return status;
 }
