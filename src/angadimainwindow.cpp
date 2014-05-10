@@ -32,11 +32,30 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QToolBar>
-
+#include <qtranslator.h>
+#include <QApplication>
 AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AngadiMainWindow)
 {
+
+    QTranslator translator;
+      translator.load("angadi_la");
+    if(translator.load("angadi_la"))
+        qDebug() << translator.load("angadi_la");
+    else
+        qDebug() << "xxxxxxxxxxxxxx";
+
+    QApplication::installTranslator(&translator);
+
+    if(QApplication::installTranslator(&translator))
+        qDebug() << QApplication::installTranslator(&translator);
+    else
+        qDebug() << "xxxxxxxxxxxxxx";
+
+    //ui->pushButton->setText(AngadiMainWindow::tr("home"));
+     //ui->mainTab->addTab(categoryForm, AngadiMainWindow::tr("Category"));
+
     ui->setupUi(this);
 
     timer = new QTimer;
