@@ -171,14 +171,18 @@ void ProductForm::save()
             QDateTime datetime = QDateTime::currentDateTime();
             this->setProperty("modifiedDate", datetime);
 
-            QSqlQueryModel model;
+//            QSqlQueryModel model;
             QSqlQuery query;
             query.prepare("Select id from categories where name = :category_name");
             query.bindValue(":category_name", ui->comboBoxcategoryId->currentText());
             query.exec();
-            model.setQuery(query);
-            QSqlRecord record = model.record(0);
-            int category_id = record.value("id").toInt();
+            int category_id;
+            while(query.next()){
+                category_id = query.value("id").toInt();
+            }
+//            model.setQuery(query);
+//            QSqlRecord record = model.record(0);
+//            int category_id = record.value("id").toInt();
 
             //this->setProperty("category_id", category_id);
             QModelIndex idx = productsModel->index(dataMapper->currentIndex(),4);

@@ -123,6 +123,7 @@
      <string>Reports</string>
     </property>
     <addaction name="actionPeriod_Wise"/>
+    <addaction name="actionProduct_List"/>
    </widget>
    <widget class="QMenu" name="menuUpdate">
     <property name="title">
@@ -260,6 +261,11 @@
   <action name="actionCreateProduct">
    <property name="text">
     <string>Product</string>
+   </property>
+  </action>
+  <action name="actionProduct_List">
+   <property name="text">
+    <string>Product List</string>
    </property>
   </action>
  </widget>

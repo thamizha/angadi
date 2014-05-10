@@ -5,6 +5,7 @@
 #include <QSortFilterProxyModel>
 #include <QTimer>
 #include <QTableWidget>
+#include <QPrinter>
 
 #include "lssbar.h"
 #include "categoryform.h"
@@ -64,13 +65,15 @@ private:
     BillModel *billModel;
     BillItemModel *billItemModel;
 
+    QSqlTableModel *reportModel;
+
     // initialization of sort filter proxy model for all models.
     QSortFilterProxyModel *categoriesProxyModel;
     QSortFilterProxyModel *productsProxyModel;
     QSortFilterProxyModel *customersProxyModel;
 
     QtRPT *report;
-    QTableWidget *tableWidget;
+    QPrinter *printer;
 
     void openCustomerTab();
     void openProductTab();
@@ -102,7 +105,7 @@ private slots:
     void changeStatusMsgToDefault();
     void setStatusBarDefaultText();
     void changeLssBarSource();
-    void showPeriodWiseReport();
+    void showProductListReport();
     void setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
 };
 
