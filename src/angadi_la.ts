@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>AngadiMainWindow</name>
+    <name>QPushButton</name>
     <message>
-        <source>Angadi</source>
-        <translation type="unfinished"></translation>
+        <source>Hello world!</source>
+        <translation>diage</translation>
     </message>
     <message>
         <source>Home</source>
