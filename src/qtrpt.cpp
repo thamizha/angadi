@@ -610,7 +610,7 @@ void QtRPT::setPageSettings(QPrinter *printer, QDomElement docElem) {
     paperSize.setHeight(ph/4);
     printer->setPaperSize(paperSize,QPrinter::Millimeter);
     printer->setPageMargins(ml/4+0.01, mt/4+0.01, mr/4+0.01, mb/4+0.01, QPrinter::Millimeter);
-    //qDebug()<<ph<<' '<<pw<<' '<<ml<<' '<<mr<<' '<<mt<<' '<<mb;
+//    qDebug()<<ph<<' '<<pw<<' '<<ml<<' '<<mr<<' '<<mt<<' '<<mb;
 
     int orientation = docElem.attribute("orientation").toInt();
     if (orientation == 1) {

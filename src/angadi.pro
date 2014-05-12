@@ -67,4 +67,6 @@ FORMS    += \
 RESOURCES += \
     resource.qrc
 
+TRANSLATIONS = \ angadi_la.ts
+
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT

@@ -32,11 +32,30 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QToolBar>
-
+#include <qtranslator.h>
+#include <QApplication>
 AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AngadiMainWindow)
 {
+
+    QTranslator translator;
+      translator.load("angadi_la");
+    if(translator.load("angadi_la"))
+        qDebug() << translator.load("angadi_la");
+    else
+        qDebug() << "xxxxxxxxxxxxxx";
+
+    QApplication::installTranslator(&translator);
+
+    if(QApplication::installTranslator(&translator))
+        qDebug() << QApplication::installTranslator(&translator);
+    else
+        qDebug() << "xxxxxxxxxxxxxx";
+
+    //ui->pushButton->setText(AngadiMainWindow::tr("home"));
+     //ui->mainTab->addTab(categoryForm, AngadiMainWindow::tr("Category"));
+
     ui->setupUi(this);
 
     timer = new QTimer;
@@ -124,6 +143,7 @@ void AngadiMainWindow::setupConnections()
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
+    connect(ui->actionProduct_List,SIGNAL(triggered()),this, SLOT(showProductListReport()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
@@ -681,14 +701,19 @@ void AngadiMainWindow::changeLssBarSource()
     }
 }
 
-void AngadiMainWindow::showPeriodWiseReport()
+void AngadiMainWindow::showProductListReport()
 {
     QString fileName = "./reports/product_list.xml";
     report = new QtRPT(this);
 //    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
 
-//    report->recordCount << tableWidget->rowCount();
-    report->recordCount << productsModel->rowCount();
+    reportModel = new QSqlTableModel;
+    reportModel->setTable("categories");
+    reportModel->setFilter("categories.status = 'A'");
+    reportModel->setSort(reportModel->fieldIndex("code"),Qt::AscendingOrder);
+    reportModel->select();
+    report->recordCount << reportModel->rowCount();
+
     if (report->loadReport(fileName) == false) {
         qDebug()<<"Report's file not found";
     }
@@ -697,6 +722,13 @@ void AngadiMainWindow::showPeriodWiseReport()
 //    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
 //                     this, SLOT(setProductValueImage(int&, QString&, QImage&, int)));
     //report->setCallbackFunc(getReportValue);
+
+    printer = new QPrinter;
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOrientation(QPrinter::Portrait);
+    printer->setPaperSize(QPrinter::Custom);
+    printer->setFullPage(true);
+
     report->printExec(true);
 }
 
@@ -709,20 +741,13 @@ void AngadiMainWindow::setProductValue(int &recNo, QString &paramName, QVariant 
 //        paramValue = ui->dtp->date().toString();
 //    if (paramName == "NN")
 //        paramValue = recNo+1;
+    QSqlRecord record = reportModel->record(recNo);
     if (paramName == "Code") {
-        if (tableWidget->item(recNo,0) == 0) return;
-        paramValue = tableWidget->item(recNo,0)->text();
+        if (record.value("code").toString().length() == 0) return;
+        paramValue = record.value("code").toString();
     }
     if (paramName == "Name") {
-        if (tableWidget->item(recNo,1) == 0) return;
-        paramValue = tableWidget->item(recNo,1)->text();
+        if (record.value("name").toString().length() == 0) return;
+        paramValue = record.value("name").toString();
     }
-//    if (paramName == "Price") {
-//        if (ui->tableWidget->item(recNo,2) == 0) return;
-//        paramValue = ui->tableWidget->item(recNo,2)->text();
-//    }
-//    if (paramName == "Sum") {
-//        if (ui->tableWidget->item(recNo,3) == 0) return;
-//        paramValue = ui->tableWidget->item(recNo,3)->text();
-//    }
 }
