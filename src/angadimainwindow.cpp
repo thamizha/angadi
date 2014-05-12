@@ -26,6 +26,7 @@
 
 #include "angadimainwindow.h"
 #include "ui_angadimainwindow.h"
+#include "angadiapp.h"
 
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -39,22 +40,22 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui(new Ui::AngadiMainWindow)
 {
 
-    QTranslator translator;
-      translator.load("angadi_la");
-    if(translator.load("angadi_la"))
-        qDebug() << translator.load("angadi_la");
-    else
-        qDebug() << "xxxxxxxxxxxxxx";
 
-    QApplication::installTranslator(&translator);
 
-    if(QApplication::installTranslator(&translator))
-        qDebug() << QApplication::installTranslator(&translator);
-    else
-        qDebug() << "xxxxxxxxxxxxxx";
+//    QTranslator translator;
+//      translator.load("angadi_la");
+//    if(translator.load("angadi_la"))
+//        qDebug() << translator.load("angadi_la");
+//    else
+//        qDebug() << "xxxxxxxxxxxxxx";
 
-    //ui->pushButton->setText(AngadiMainWindow::tr("home"));
-    //ui->mainTab->addTab(categoryForm, AngadiMainWindow::tr("Category"));
+//    QApplication::installTranslator(&translator);
+
+//    if(QApplication::installTranslator(&translator))
+//        qDebug() << QApplication::installTranslator(&translator);
+//    else
+//        qDebug() << "xxxxxxxxxxxxxx";
+
 
     ui->setupUi(this);
 
@@ -149,6 +150,25 @@ void AngadiMainWindow::setupConnections()
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
+
+    connect(ui->actionTamil, SIGNAL(triggered()),this, SLOT(settamil()));
+}
+
+
+void AngadiMainWindow::settamil()
+{
+
+    QTranslator translator;
+      translator.load("angadi_la");
+    //QApplication::installTranslator(&translator);
+    QApplication::instance()->installTranslator(&translator);
+
+
+    ui->actionExit->setText(AngadiMainWindow::tr("Exit"));
+    qDebug() << ui->actionExit->text();
+
+    //ui->retranslateUi(this);
+    //ui->retranslateUi(this);
 }
 
 void AngadiMainWindow::setupModels()

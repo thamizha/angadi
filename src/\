@@ -2,108 +2,139 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>QPushButton</name>
+    <name>AngadiMainWindow</name>
     <message>
-        <source>Hello world!</source>
-        <translation>diage</translation>
+        <location filename="angadimainwindow.ui" line="14"/>
+        <source>Angadi</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="82"/>
         <source>Home</source>
-        <translation type="unfinished">புதிய</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="100"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="109"/>
         <source>Bill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="118"/>
+        <location filename="angadimainwindow.ui" line="218"/>
+        <location filename="angadimainwindow.cpp" line="152"/>
         <source>Exit</source>
-        <translation type="unfinished">out</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="124"/>
         <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="131"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="139"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="145"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bill Entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Customer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Due Bills</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Angadi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bill Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Home Page Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Period Wise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View Bills</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Product</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bill Transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Product List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="angadimainwindow.ui" line="149"/>
         <source>language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="195"/>
+        <location filename="angadimainwindow.ui" line="228"/>
+        <source>Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="203"/>
+        <location filename="angadimainwindow.ui" line="233"/>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="208"/>
+        <source>Bill Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="213"/>
+        <location filename="angadimainwindow.ui" line="238"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="223"/>
+        <source>Due Bills</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="243"/>
+        <source>About Angadi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="248"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="253"/>
+        <source>Bill Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="258"/>
+        <source>Home Page Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="263"/>
+        <source>Period Wise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="268"/>
+        <source>View Bills</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="273"/>
+        <source>Product</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="278"/>
+        <source>Bill Transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="283"/>
+        <source>Product List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="angadimainwindow.ui" line="288"/>
         <source>Tamil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="angadimainwindow.ui" line="293"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,94 +142,117 @@
 <context>
     <name>BillForm</name>
     <message>
+        <location filename="billform.ui" line="17"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="40"/>
         <source>Error Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="78"/>
         <source>Invoice No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="94"/>
         <source>Customer Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="110"/>
         <source>Customer Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="222"/>
         <source>Invoice Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="238"/>
         <source>Customer Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="307"/>
         <source>Customer Credit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="323"/>
         <source>Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="346"/>
         <source>Tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="362"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="408"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="421"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="434"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="473"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="483"/>
         <source>Discount %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="493"/>
         <source>Round Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="503"/>
         <source>Too Be Paid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="513"/>
         <source>Given</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="556"/>
         <source>Limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="566"/>
         <source>Used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="576"/>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="billform.ui" line="619"/>
         <source>dd/MM/yyyy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,30 +260,38 @@
 <context>
     <name>CategoryForm</name>
     <message>
+        <location filename="categoryform.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="75"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="106"/>
+        <location filename="categoryform.cpp" line="59"/>
         <source>Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="132"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="148"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="161"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="categoryform.ui" line="180"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,102 +299,127 @@
 <context>
     <name>CustomerForm</name>
     <message>
+        <location filename="customerform.ui" line="20"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="49"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="81"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="93"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="129"/>
         <source>Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="161"/>
         <source>Credit Limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="180"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="199"/>
         <source>Country</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="231"/>
         <source>City</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="260"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="299"/>
         <source>Contact person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="321"/>
         <source>Mobile 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="343"/>
         <source>Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="388"/>
         <source>Mobile 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="440"/>
         <source>Phone 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="482"/>
         <source>Phone 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="514"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="546"/>
         <source>State</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="578"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="600"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="622"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="644"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="676"/>
         <source>Address 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="698"/>
         <source>Address 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="customerform.ui" line="730"/>
         <source>Pincode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -340,77 +427,95 @@
 <context>
     <name>LoginDialog</name>
     <message>
+        <location filename="logindialog.ui" line="17"/>
         <source>Angadi Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="logindialog.ui" line="47"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="logindialog.ui" line="83"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="logindialog.ui" line="96"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="logindialog.ui" line="115"/>
         <source>Exit</source>
-        <translation type="unfinished">out</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ProductForm</name>
     <message>
+        <location filename="productform.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="78"/>
         <source>Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="90"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="113"/>
         <source>MRP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="129"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="158"/>
         <source>Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="184"/>
         <source>Manufacturer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="197"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="213"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="249"/>
         <source>Whole Sale Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="275"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="301"/>
         <source>Sale Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="productform.ui" line="317"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -418,46 +523,61 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="models/billitemmodel.cpp" line="34"/>
         <source>Product Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billitemmodel.cpp" line="35"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billitemmodel.cpp" line="36"/>
         <source>Unit Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billitemmodel.cpp" line="37"/>
         <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billitemmodel.cpp" line="38"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billmodel.cpp" line="35"/>
         <source>Invoice No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/billmodel.cpp" line="36"/>
         <source>Invoice Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/categoriesmodel.cpp" line="32"/>
+        <location filename="models/customersmodel.cpp" line="32"/>
+        <location filename="models/productsmodel.cpp" line="35"/>
         <source>Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/categoriesmodel.cpp" line="33"/>
+        <location filename="models/customersmodel.cpp" line="33"/>
+        <location filename="models/productsmodel.cpp" line="36"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/transactionmodel.cpp" line="34"/>
         <source>Invoice Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="models/transactionmodel.cpp" line="35"/>
         <source>Customer Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -465,6 +585,7 @@
 <context>
     <name>QPushButton</name>
     <message>
+        <location filename="categoryform.cpp" line="61"/>
         <source>Hello world!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -472,42 +593,52 @@
 <context>
     <name>TransactionForm</name>
     <message>
+        <location filename="transactionform.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="70"/>
         <source>GroupBox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="82"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="105"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="118"/>
         <source>Payment Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="144"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="167"/>
         <source>Paid Amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="183"/>
         <source>Pay Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="199"/>
         <source>Paid By</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="transactionform.ui" line="225"/>
         <source>Invoice No</source>
         <translation type="unfinished"></translation>
     </message>
