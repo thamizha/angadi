@@ -23,6 +23,7 @@ ui_*.h
 Makefile*
 *-build-*
 .directory
+src/angadicpp
 
 build/
 

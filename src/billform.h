@@ -90,7 +90,7 @@ private:
     BillModel *billModel;
     ProductsModel *productsModel;
     CustomersModel *customersModel;
-    TransactionModel *transactionModel;
+    QSqlTableModel *transactionModel;
 
     QDataWidgetMapper *billDataMapper;
     QDataWidgetMapper *billItemDataMapper;
@@ -125,6 +125,7 @@ private slots:
     void productFormClear();
     void reverseRelation();
     void updateToBeGiven();
+    void addTransaction();
     void setTransactionTableView();
 
 };
