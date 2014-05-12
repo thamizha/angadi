@@ -54,7 +54,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
         qDebug() << "xxxxxxxxxxxxxx";
 
     //ui->pushButton->setText(AngadiMainWindow::tr("home"));
-     //ui->mainTab->addTab(categoryForm, AngadiMainWindow::tr("Category"));
+    //ui->mainTab->addTab(categoryForm, AngadiMainWindow::tr("Category"));
 
     ui->setupUi(this);
 
@@ -142,7 +142,7 @@ void AngadiMainWindow::setupConnections()
     connect(ui->actionTransactionEntry, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
-    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
+//    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
     connect(ui->actionProduct_List,SIGNAL(triggered()),this, SLOT(showProductListReport()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
@@ -726,7 +726,7 @@ void AngadiMainWindow::showProductListReport()
     printer = new QPrinter;
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setOrientation(QPrinter::Portrait);
-    printer->setPaperSize(QPrinter::A4);
+    printer->setPaperSize(QPrinter::Letter);
     //qDebug() << printer->paperSize();
     printer->setFullPage(true);
 
