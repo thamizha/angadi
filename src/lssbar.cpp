@@ -75,29 +75,42 @@ void Lssbar::setModel(QSqlTableModel *tableModel)
     tableView->setModel(tableModel);
 
     //set all columns hidden
-    for(int i=0;i<tableModel->columnCount();i++){
-        tableView->setColumnHidden(i,true);
-    }
-
-    if(tableModel->tableName() == "categories"){
-        int codeIndex = tableModel->fieldIndex("code");
-        int nameIndex = tableModel->fieldIndex("name");
-        tableView->setColumnHidden(codeIndex,false);
-        tableView->setColumnHidden(nameIndex,false);
-
-    }else if(tableModel->tableName() == "products"){
+    if(tableModel->tableName() == "transactions"){
         tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
+        for(int i=0;i<tableModel->columnCount();i++){
+            if(i>=1 && i<=3)
+                tableView->setColumnHidden(i,false);
+            else
+                tableView->setColumnHidden(i,true);
+            tableView->setColumnHidden(2,true);
+        }
 
-        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
-        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+    }else{
+        for(int i=0;i<tableModel->columnCount();i++){
+            tableView->setColumnHidden(i,true);
+        }
 
-    }else if(tableModel->tableName() == "customers"){
-        tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
-        tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
-    }else if(tableModel->tableName() == "bill"){
-        tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
-        tableView->setColumnHidden(tableModel->fieldIndex("invoiceNo"),false);
-        tableView->setColumnHidden(tableModel->fieldIndex("invoiceDate"),false);
+        if(tableModel->tableName() == "categories"){
+            int codeIndex = tableModel->fieldIndex("code");
+            int nameIndex = tableModel->fieldIndex("name");
+            tableView->setColumnHidden(codeIndex,false);
+            tableView->setColumnHidden(nameIndex,false);
+
+        }else if(tableModel->tableName() == "products"){
+            tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
+
+            tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
+            tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+
+        }else if(tableModel->tableName() == "customers"){
+            tableView->setColumnHidden(tableModel->fieldIndex("code"),false);
+            tableView->setColumnHidden(tableModel->fieldIndex("name"),false);
+
+        }else if(tableModel->tableName() == "bill"){
+            tableView->setItemDelegate(new QSqlRelationalDelegate(tableView));
+            tableView->setColumnHidden(tableModel->fieldIndex("invoiceNo"),false);
+            tableView->setColumnHidden(tableModel->fieldIndex("invoiceDate"),false);
+        }
     }
 }
 

@@ -111,6 +111,7 @@
     <addaction name="actionBillEntry"/>
     <addaction name="actionDueBill"/>
     <addaction name="actionViewBills"/>
+    <addaction name="actionTransactionEntry"/>
    </widget>
    <widget class="QMenu" name="menuExit">
     <property name="title">
@@ -260,6 +261,11 @@
   <action name="actionCreateProduct">
    <property name="text">
     <string>Product</string>
+   </property>
+  </action>
+  <action name="actionTransactionEntry">
+   <property name="text">
+    <string>Bill Transactions</string>
    </property>
   </action>
  </widget>

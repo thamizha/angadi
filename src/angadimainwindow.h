@@ -11,11 +11,13 @@
 #include "productform.h"
 #include "customerform.h"
 #include "billform.h"
+#include "transactionform.h"
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
 #include "models/billitemmodel.h"
 #include "models/billmodel.h"
+#include "models/transactionmodel.h"
 #include <QHash>
 
 #include "qtrpt.h"
@@ -28,7 +30,7 @@ class AngadiMainWindow : public QMainWindow
 {
     Q_OBJECT
     QString currentTab;
-    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm, billTabCustomerSearchTerm;
+    QString categoryTabSearchTerm, productTabSearchTerm, customerTabSearchTerm, billTabCustomerSearchTerm, transactionTabSearchTerm;
 
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);
@@ -52,22 +54,26 @@ private:
     QAction *actionProduct;
     QAction *actionCustomer;
     QAction *actionBillEntry;
+    QAction *actionTransactionEntry;
 
     CategoryForm *categoryForm;
     ProductForm *productForm;
     CustomerForm *customerForm;
     QHash<QString,BillForm*> *billTabs;
+    TransactionForm *transactionForm;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
     CustomersModel *customersModel;
     BillModel *billModel;
     BillItemModel *billItemModel;
+    TransactionModel *transactionModel;
 
     // initialization of sort filter proxy model for all models.
     QSortFilterProxyModel *categoriesProxyModel;
     QSortFilterProxyModel *productsProxyModel;
     QSortFilterProxyModel *customersProxyModel;
+    QSortFilterProxyModel *transactionProxyModel;
 
     QtRPT *report;
     QTableWidget *tableWidget;
@@ -76,11 +82,13 @@ private:
     void openProductTab();
     void openCategoryTab();
     void openBillTab();
+    void openTransactionTab();
 
     void onCustomerTabClosed();
     void onProductTabClosed();
     void onCategoryTabClosed();
     void onBillTabClosed();
+    void onTransactionTabClosed();
 
     void setupProperties();
     void setupConnections();

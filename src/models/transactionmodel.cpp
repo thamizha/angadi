@@ -33,7 +33,9 @@ TransactionModel::TransactionModel(QObject *parent) :
     setEditStrategy(QSqlTableModel::OnManualSubmit);
     setHeaderData(fieldIndex("bill_id"), Qt::Horizontal, QObject::tr("Invoice Number"));
     setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
-//    setRelation(fieldIndex("product_id"), QSqlRelation("products", "id", "name"));
+    setRelation(fieldIndex("bill_id"), QSqlRelation("bill", "id", "invoiceNo"));
+    setRelation(fieldIndex("customer_id"), QSqlRelation("customers", "id", "name"));
+    relationModel(1)->setFilter("paidStatus = 'U' and status = 'A'");
 //    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");
 //    relationModel(3)->setFilter("status = 'A'");

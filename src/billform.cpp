@@ -178,25 +178,9 @@ void BillForm::save(){
                 itemRecord.setValue("product_id", productName);
                 billItemModel->setRecord(i, itemRecord);
             }
-            bool billItemStatus = billItemModel->submitAll();
-            if(billItemStatus){
-                if(ui->lineEditChange->text().toInt() < 0){
-                    int transrow = transactionModel->rowCount();
-                    transactionModel->insertRows(transrow, 1);
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("createdDate")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("bill_id")),bill_id);
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("customer_id")),customer_id);
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("paidAmount")),ui->lineEditChange->text());
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("paidOn")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("status")),"A");
-                    transactionModel->setData(transactionModel->index(transrow,transactionModel->fieldIndex("mode")),"cash");
-                    transactionModel->submitAll();
-                    qDebug() << transactionModel->lastError();
-                }
-                statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
-                emit signalStatusBar(statusMsg);
-                clear();
-            }
+            statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
+            emit signalStatusBar(statusMsg);
+            clear();
         }
         setBillId();
     }else{

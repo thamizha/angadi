@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     models/billmodel.cpp \
     models/billitemmodel.cpp \
     models/transactionmodel.cpp \
-    qtrpt.cpp
+    qtrpt.cpp \
+    transactionform.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -50,7 +51,8 @@ HEADERS  += \
     models/billmodel.h \
     models/billitemmodel.h \
     models/transactionmodel.h \
-    qtrpt.h
+    qtrpt.h \
+    transactionform.h
     qtrpt.h
 
 FORMS    += \
@@ -59,7 +61,8 @@ FORMS    += \
     customerform.ui \
     categoryform.ui \
     productform.ui \
-    billform.ui
+    billform.ui \
+    transactionform.ui
 
 RESOURCES += \
     resource.qrc

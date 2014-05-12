@@ -65,12 +65,14 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
     actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
     actionBillEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
+    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);
     toolBar->addAction(actionProduct);
     toolBar->addAction(actionCustomer);
     toolBar->addAction(actionBillEntry);
+    toolBar->addAction(actionTransactionEntry);
 
     this->addToolBar(Qt::TopToolBarArea, toolBar);
 
@@ -99,6 +101,9 @@ void AngadiMainWindow::setupProperties()
 
     ui->actionBillEntry->setProperty("tabName","bill");
     actionBillEntry->setProperty("tabName","bill");
+
+    ui->actionTransactionEntry->setProperty("tabName","transaction");
+    actionTransactionEntry->setProperty("tabName","transaction");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -114,6 +119,9 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionBillEntry, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(actionBillEntry,SIGNAL(triggered()),this,SLOT(openTab()));
+
+    connect(ui->actionTransactionEntry, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
 
@@ -159,6 +167,12 @@ void AngadiMainWindow::setupModels()
 
     billItemModel = new BillItemModel;
 
+    transactionModel = new TransactionModel;
+    transactionProxyModel = new QSortFilterProxyModel; //initialization
+    transactionProxyModel->setSourceModel(billModel); //set the source model to categories model
+    transactionProxyModel->setFilterKeyColumn(1); // set the filter to the name column
+    transactionProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
 }
 
 void AngadiMainWindow::exitApp()
@@ -183,6 +197,9 @@ void AngadiMainWindow::openTab()
         showRightDock(true);
     }else if(tabName == "bill"){
         openBillTab();
+        showRightDock(true);
+    }else if(tabName == "transaction"){
+        openTransactionTab();
         showRightDock(true);
     }
 }
@@ -296,6 +313,33 @@ void AngadiMainWindow::openBillTab()
     billTabs->value(tabName)->setCodeFocus();
 }
 
+void AngadiMainWindow::openTransactionTab()
+{
+    QString tabName = "transaction";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        transactionForm = new TransactionForm();
+        transactionForm->setProperty("name", tabName);
+        ui->mainTab->addTab(transactionForm, "Transaction");
+        lssbar->lineEditSearch->setText("");
+
+        setupModels();
+        transactionForm->setModel(transactionModel);
+        transactionForm->clear();
+        transactionForm->setFieldMaxLength();
+        transactionTabSearchTerm = "";
+        lssbar->lineEditSearch->setText(customerTabSearchTerm);
+    }
+    connect(transactionForm,SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
+    connect(transactionForm,SIGNAL(signalFromTransactionForm()),lssbar,SLOT(setSearchFocus()));
+    connect(transactionForm,SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
+    connect(transactionForm,SIGNAL(signalUpdated()),this,SLOT(changeLssBarSource()));
+
+    ui->mainTab->setCurrentWidget (transactionForm);
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;        
@@ -333,6 +377,8 @@ void AngadiMainWindow::onCloseTab(int index)
             onProductTabClosed();
         }else if(tabName.contains("bill#", Qt::CaseInsensitive)){
             billTabs->remove(tabName);
+        }else if(tabName == "transaction"){
+            onTransactionTabClosed();
         }
     }
 }
@@ -355,6 +401,11 @@ void AngadiMainWindow::onProductTabClosed()
 void AngadiMainWindow::onBillTabClosed()
 {
     //qDebug() << "On Bill Tab closed called ";
+}
+
+void AngadiMainWindow::onTransactionTabClosed()
+{
+    //qDebug() << "On Transaction Tab closed called ";
 }
 
 void AngadiMainWindow::showRightDock(bool state)
@@ -391,6 +442,11 @@ void AngadiMainWindow::onTabChanged(int index){
         lssbar->setModel(customersModel);
         showRightDock(true);
         lssbar->lineEditSearch->setText(customerTabSearchTerm);
+
+    }else if(tabName == "transaction"){
+        lssbar->setModel(transactionModel);
+        showRightDock(true);
+        lssbar->lineEditSearch->setText(transactionTabSearchTerm);
 
     }else{
         if(tabName.contains("bill#", Qt::CaseInsensitive)){
@@ -433,6 +489,14 @@ void AngadiMainWindow::doubleClicked(QModelIndex index)
             customerForm->setCodeFocus();
         }else{
             customerForm->setNameFocus();
+        }
+
+    }else if(currentTab == "transaction"){
+        if(index.row() >= 0){
+            transactionForm->setMapperIndex(index);
+            transactionForm->setCodeFocus();
+        }else{
+            transactionForm->setNameFocus();
         }
 
     }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
@@ -484,6 +548,15 @@ void AngadiMainWindow::search(QString value)
         index = customersProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
         lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
         customerTabSearchTerm = value;
+
+    }else if(currentTab == "transaction"){
+       transactionProxyModel->setFilterRegExp(QString("%2").arg(value)); // set the filter on the customers proxy model
+       int indexOffset = 0; //reset the indexOffset
+       QModelIndex proxyIndex, index; //Initialization of new index
+       proxyIndex = transactionProxyModel->index(indexOffset,0); // get the index of the first row on the filtered proxy model
+       index = transactionProxyModel->mapToSource(proxyIndex); // get the source index of the current filtered proxy model
+       lssbar->setFilterSelect(index,indexOffset); //set the selection to the current filtered proxy model by sending corresponding source model index
+       transactionTabSearchTerm = value;
 
     }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
         if(billTabs->value(currentTab)->modelFlag == 1){
@@ -591,6 +664,9 @@ void AngadiMainWindow::changeLssBarSource()
 
     }else if(currentTab == "customer"){
         lssbar->setModel(customersModel);
+
+    }else if(currentTab == "transaction"){
+        lssbar->setModel(transactionModel);
 
     }else if(currentTab.contains("bill#", Qt::CaseInsensitive)){
         if(billTabs->value(currentTab)->modelFlag==1){
