@@ -630,7 +630,8 @@ void AngadiMainWindow::showProductListReport()
     printer = new QPrinter;
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setOrientation(QPrinter::Portrait);
-    printer->setPaperSize(QPrinter::Custom);
+    printer->setPaperSize(QPrinter::A4);
+    //qDebug() << printer->paperSize();
     printer->setFullPage(true);
 
     report->printExec(true);

@@ -1,6 +1,6 @@
 /*
 Name: QtRpt
-Version: 1.3.3
+Version: 1.3.4
 Programmer: Aleksey Osipov
 e-mail: aliks-os@yandex.ru
 2012-2014
@@ -541,31 +541,35 @@ QImage QtRPT::sectionValueImage(QString paramName) {
     callbackFunc=func;
 }*/
 
-void QtRPT::printExec(bool maximum) {
+void QtRPT::printExec(bool maximum, bool direct) {
 #ifndef QT_NO_PRINTER
     QPrinter printer(QPrinter::HighResolution);
-    QPrintPreviewDialog preview(&printer, this, Qt::Window);
+    if (!direct) {
+        QPrintPreviewDialog preview(&printer, this, Qt::Window);
 
-    if (maximum) {
-        QList<QPrintPreviewWidget *> list = preview.findChildren<QPrintPreviewWidget *>();
-        if(!list.isEmpty()) // paranoiac safety check
-            list.first()->setZoomMode(QPrintPreviewWidget::FitToWidth);
-    }
+        if (maximum) {
+            QList<QPrintPreviewWidget *> list = preview.findChildren<QPrintPreviewWidget *>();
+            if(!list.isEmpty()) // paranoiac safety check
+                //list.first()->setZoomMode(QPrintPreviewWidget::FitToWidth);
+                list.first()->setZoomFactor(1);
+        }
 
-    connect(&preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printPreview(QPrinter*)));
-    //preview.setWindowState(Qt::WindowMaximized); //Qt BUG https://bugreports.qt-project.org/browse/QTBUG-14517
-    QRect geom = QApplication::desktop()->availableGeometry();
-    geom.setTop(30);
-    geom.setLeft(5);
-    geom.setHeight(geom.height()-6);
-    geom.setWidth(geom.width()-6);
-    preview.setGeometry(geom);
+        connect(&preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printPreview(QPrinter*)));
+        //preview.setWindowState(Qt::WindowMaximized); //Qt BUG https://bugreports.qt-project.org/browse/QTBUG-14517
+        QRect geom = QApplication::desktop()->availableGeometry();
+        geom.setTop(30);
+        geom.setLeft(5);
+        geom.setHeight(geom.height()-6);
+        geom.setWidth(geom.width()-6);
+        preview.setGeometry(geom);
 
-    pr = preview.findChild<QPrintPreviewWidget *>();
-    lst = preview.findChildren<QAction *>();
-    pr->installEventFilter(this);
-    //curPage = 1;
-    preview.exec();
+        pr = preview.findChild<QPrintPreviewWidget *>();
+        lst = preview.findChildren<QAction *>();
+        pr->installEventFilter(this);
+        //curPage = 1;
+        preview.exec();
+    } else
+        printPreview(&printer);  ///print without preview dialog
 #endif
 }
 
@@ -573,7 +577,11 @@ void QtRPT::printPreview(QPrinter *printer) {
 #ifdef QT_NO_PRINTER
     Q_UNUSED(printer);
 #else
+    setPageSettings(printer,0);
     painter.begin(printer);
+    fromPage = printer->fromPage();
+    toPage =   printer->toPage();
+
     /*Make a two pass report
      *First pass calculate total pages
      *Second pass draw a report
@@ -598,7 +606,8 @@ void QtRPT::printPreview(QPrinter *printer) {
 #endif
 }
 
-void QtRPT::setPageSettings(QPrinter *printer, QDomElement docElem) {
+void QtRPT::setPageSettings(QPrinter *printer, int pageReport) {
+    QDomElement docElem = xmlDoc->documentElement().childNodes().at(pageReport).toElement();
     ph = docElem.attribute("pageHeight").toInt();
     pw = docElem.attribute("pageWidth").toInt();
     ml = docElem.attribute("marginsLeft").toInt();
@@ -608,9 +617,12 @@ void QtRPT::setPageSettings(QPrinter *printer, QDomElement docElem) {
     QSizeF paperSize;
     paperSize.setWidth(pw/4);
     paperSize.setHeight(ph/4);
-    printer->setPaperSize(paperSize,QPrinter::Millimeter);
+    if (printer->printerState() != QPrinter::Active) {
+        printer->setPaperSize(paperSize,QPrinter::Millimeter);
+        //qDebug() << printer->paperSize();
+    }
     printer->setPageMargins(ml/4+0.01, mt/4+0.01, mr/4+0.01, mb/4+0.01, QPrinter::Millimeter);
-//    qDebug()<<ph<<' '<<pw<<' '<<ml<<' '<<mr<<' '<<mt<<' '<<mb;
+    //qDebug()<<ph<<' '<<pw;
 
     int orientation = docElem.attribute("orientation").toInt();
     if (orientation == 1) {
@@ -633,8 +645,8 @@ void QtRPT::setPageSettings(QPrinter *printer, QDomElement docElem) {
 }
 
 void QtRPT::processReport(QPrinter *printer, bool draw, int pageReport) {
-    QDomElement docElem = xmlDoc->documentElement().childNodes().at(pageReport).toElement();
-    setPageSettings(printer, docElem);
+
+    setPageSettings(printer, pageReport);
     int y = 0;
 
     drawBackground(painter);
@@ -651,7 +663,6 @@ void QtRPT::processReport(QPrinter *printer, bool draw, int pageReport) {
     processMFooter(printer,y,draw);
 
     processRSummary(printer,y,draw);
-    //proccessPFooter(y,draw);
 }
 
 bool QtRPT::eventFilter(QObject *obj, QEvent *e) {
@@ -667,9 +678,31 @@ bool QtRPT::eventFilter(QObject *obj, QEvent *e) {
     return QWidget::eventFilter(obj,e);
 }
 
-void QtRPT::newPage(QPrinter *printer, int &y, bool draw) {
+bool QtRPT::allowPrintPage(bool draw, int curPage_) {
     if (draw) {
-        printer->newPage();
+        if (curPage_ < fromPage )
+            draw = false;
+        if ((toPage!=0) && (curPage_ > toPage ))
+            draw = false;
+        return draw;
+    } else return false;
+}
+
+bool QtRPT::allowNewPage(bool draw, int curPage_) {
+    if (draw) {
+        if (curPage-fromPage < 0) return false;
+        if (curPage_ < fromPage )
+            draw = false;
+        if ((toPage!=0) && (curPage_ > toPage ))
+            draw = false;
+        return draw;
+    } else return false;
+}
+
+void QtRPT::newPage(QPrinter *printer, int &y, bool draw) {    
+    //curPage += 1;
+    if (allowNewPage(draw, curPage+1)) {
+        printer->newPage();        
         drawBackground(painter);
     }
     curPage += 1;
@@ -717,7 +750,7 @@ void QtRPT::processMasterData(QPrinter *printer, int &y, bool draw, int pageRepo
                         processMHeader(y,draw);
                     }
 
-                    if (draw) drawField(masterData,y);
+                    if (allowPrintPage(draw,curPage)) drawField(masterData,y);
                     else fillListOfValue(masterData);
                     y += e.attribute("height").toInt();
                     //painter.drawLine(0,y*koefRes_h,r.width(),y*koefRes_h);
@@ -730,7 +763,7 @@ void QtRPT::processMasterData(QPrinter *printer, int &y, bool draw, int pageRepo
 void QtRPT::processMHeader(int &y, bool draw) {
     if (masterHeader.isNull()) return;
     QDomElement e = masterHeader.toElement();
-    if (draw) drawField(masterHeader,y);
+    if (allowPrintPage(draw,curPage)) drawField(masterHeader,y);
     y += e.attribute("height").toInt();
     //painter.drawLine(0,y*koefRes_h,r.width(),y*koefRes_h);
 }
@@ -738,7 +771,7 @@ void QtRPT::processMHeader(int &y, bool draw) {
 void QtRPT::processRTitle(int &y, bool draw) {
     if (reportTitle.isNull()) return;
     QDomElement e = reportTitle.toElement();
-    if (draw) drawField(reportTitle,y);
+    if (allowPrintPage(draw,curPage)) drawField(reportTitle,y);
     y += e.attribute("height").toInt();
     //painter.drawLine(0,y*koefRes_h,r.width(),y*koefRes_h);
 }
@@ -746,7 +779,7 @@ void QtRPT::processRTitle(int &y, bool draw) {
 void QtRPT::processPHeader(int &y, bool draw) {
     if (pageHeader.isNull()) return;
     QDomElement e = pageHeader.toElement();
-    if (draw) drawField(pageHeader,y);
+    if (allowPrintPage(draw,curPage)) drawField(pageHeader,y);
     y += e.attribute("height").toInt();
     //painter.drawLine(0,y*koefRes_h,pw*koefRes_h,y*koefRes_h);
 }
@@ -757,7 +790,7 @@ void QtRPT::processMFooter(QPrinter *printer, int &y, bool draw) {
     //if (y + e.attribute("height").toInt() > ph-mb-mt-e.attribute("height").toInt())
     if (y > ph-mb-mt-e.attribute("height").toInt())
         newPage(printer, y, draw);
-    if (draw) drawField(masterFooter,y);
+    if (allowPrintPage(draw,curPage)) drawField(masterFooter,y);
     y += e.attribute("height").toInt();
 }
 
@@ -765,9 +798,7 @@ void QtRPT::processPFooter(bool draw) {
     if (pageFooter.isNull()) return;
     QDomElement e = pageFooter.toElement();
     int y1 = ph-mb-mt-e.attribute("height").toInt();
-    if (draw) {
-        drawField(pageFooter,y1);
-    }
+    if (allowPrintPage(draw,curPage)) drawField(pageFooter,y1);
     //painter.drawLine(0,y1*koefRes_h,pw*koefRes_h,y1*koefRes_h);
 }
 
@@ -776,7 +807,7 @@ void QtRPT::processRSummary(QPrinter *printer, int &y, bool draw) {
     QDomElement e = reportSummary.toElement();
     if (y + e.attribute("height").toInt() > ph-mb-mt-e.attribute("height").toInt())
         newPage(printer, y, draw);
-    if (draw) drawField(reportSummary,y);
+    if (allowPrintPage(draw,curPage)) drawField(reportSummary,y);
     y += e.attribute("height").toInt();
     //painter.drawLine(0,y*koefRes_h,pw*koefRes_h,y*koefRes_h);
 }
