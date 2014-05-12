@@ -115,6 +115,7 @@ private slots:
     void changeLssBarSource();
     void showProductListReport();
     void setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
+    void settamil();
 };
 
 #endif // ANGADIMAINWINDOW_H

@@ -144,9 +144,18 @@
     <property name="title">
      <string>Settings</string>
     </property>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>language</string>
+     </property>
+     <addaction name="actionTamil"/>
+     <addaction name="actionEnglish"/>
+    </widget>
     <addaction name="actionPreferences"/>
     <addaction name="actionBill_Settings"/>
     <addaction name="actionHome_Page_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="menuLanguage"/>
    </widget>
    <addaction name="menuCreate"/>
    <addaction name="menuUpdate"/>
@@ -267,11 +276,21 @@
   <action name="actionTransactionEntry">
    <property name="text">
     <string>Bill Transactions</string>
-  </property>
+   </property>
   </action>
   <action name="actionProduct_List">
    <property name="text">
     <string>Product List</string>
+   </property>
+  </action>
+  <action name="actionTamil">
+   <property name="text">
+    <string>Tamil</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>
