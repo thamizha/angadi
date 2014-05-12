@@ -1,6 +1,6 @@
 /*
 Name: QtRpt
-Version: 1.3.3
+Version: 1.3.4
 Programmer: Aleksey Osipov
 e-mail: aliks-os@yandex.ru
 2012-2014
@@ -15,7 +15,7 @@ class QWidget;
 #include <QScriptEngine>
 #include <QPrintPreviewWidget>
 #include <QtScript>
-
+#include <QPrintDialog>
 enum BandType {
     ReportTitle,
     PageHeader,
@@ -50,7 +50,7 @@ public:
     QList<int> recordCount;
     explicit QtRPT(QWidget *parent = 0);    
     bool loadReport(QString fileName);
-    void printExec(bool maximum = false);
+    void printExec(bool maximum = false, bool direct = false);
     //void setCallbackFunc(void (*func)(int &recNo, QString &paramName, QVariant &paramValue));
     void setBackgroundImage(QPixmap image);
 
@@ -95,10 +95,14 @@ private:
     void processRTitle(int &y, bool draw);
     void processMHeader(int &y, bool draw);
     void processMasterData(QPrinter *printer, int &y, bool draw, int pageReport);
-    void setPageSettings(QPrinter *printer, QDomElement docElem);
+    void setPageSettings(QPrinter *printer, int pageReport);
     void drawBackground(QPainter &painter);
     bool isFieldVisible(const QDomElement &e);
-    QVariant processHighligthing(QDomElement e, HiType type);    
+    QVariant processHighligthing(QDomElement e, HiType type);
+    bool allowPrintPage(bool draw, int curPage_);
+    bool allowNewPage(bool draw, int curPage_);
+    int fromPage;
+    int toPage;
 
 public:
 
