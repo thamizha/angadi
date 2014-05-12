@@ -267,6 +267,8 @@
   <action name="actionTransactionEntry">
    <property name="text">
     <string>Bill Transactions</string>
+  </property>
+  </action>
   <action name="actionProduct_List">
    <property name="text">
     <string>Product List</string>
