@@ -225,7 +225,9 @@ void BillForm::save(){
             for (int i = 0; i< transactionModel->rowCount(); ++i){
                 itemRecord = transactionModel->record(i);
                 itemRecord.setValue("paidOn",datetime);
+                itemRecord.setValue("createdDate",datetime);
                 itemRecord.setValue("bill_id",bill_id);
+                itemRecord.setValue("customer_id",customer_id);
                 transactionModel->setRecord(i,itemRecord);
             }
             transactionModel->submitAll();
@@ -970,6 +972,7 @@ void BillForm::addTransaction()
         transactionModel->insertRows(row, 1);
 
         transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("bill_id")),bill_id);
+        transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("customer_id")),ui->lineEditCustomerName->text());
         transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("paidAmount")),given);
         transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("paidOn")),datetime.toString("yyyy-MM-dd hh:mm:ss"));
         transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("paidBy")),"Self");

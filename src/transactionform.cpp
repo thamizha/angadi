@@ -25,6 +25,7 @@
 
 #include "transactionform.h"
 #include "ui_transactionform.h"
+#include <QSqlError>
 
 TransactionForm::TransactionForm(QWidget *parent) :
     QWidget(parent),
@@ -33,6 +34,8 @@ TransactionForm::TransactionForm(QWidget *parent) :
     ui->setupUi(this);
 
     formValidation = new FormValidation;
+
+    billModel = new BillModel;
 
     dataMapper = new QDataWidgetMapper(this);
     dataMapper->setItemDelegate(new QSqlRelationalDelegate(this));
@@ -77,6 +80,9 @@ void TransactionForm::save()
     // Initialization of local variables
     int validError = 0;
     QString errors = "";
+    QSqlRecord record;
+    QSqlQueryModel model;
+    QSqlQuery query;
 
     // Initialization of message box
     QMessageBox msgBox;
@@ -108,13 +114,11 @@ void TransactionForm::save()
             transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("paidAmount")),ui->lineEditPaidAmount->text());
             transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("paidBy")),ui->lineEditPaidBy->text());
 
-            QSqlQueryModel model;
-            QSqlQuery query;
             query.prepare("Select * from bill where invoiceNo = :invoiceNo");
             query.bindValue(":invoiceNo", ui->lineEditInvoiceNo->text());
             query.exec();
             model.setQuery(query);
-            QSqlRecord record = model.record(0);
+            record = model.record(0);
             int bill_id = record.value("id").toInt();
             int customer_id = record.value("customer_id").toInt();
 
@@ -133,21 +137,18 @@ void TransactionForm::save()
 
             transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("status")),"A");
 
-            transactionModel->submitAll();
-
+            status = transactionModel->submitAll();
             statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
             emit signalStatusBar(statusMsg);
             emit signalUpdated();
         }else{
             QDateTime datetime = QDateTime::currentDateTime();
 
-            QSqlQueryModel model;
-            QSqlQuery query;
             query.prepare("Select * from bill where invoiceNo = :bill_no");
             query.bindValue(":bill_no", ui->lineEditInvoiceNo->text());
             query.exec();
             model.setQuery(query);
-            QSqlRecord record = model.record(0);
+            record = model.record(0);
             int bill_id = record.value("id").toInt();
             int customer_id = record.value("customer_id").toInt();
 
@@ -159,13 +160,27 @@ void TransactionForm::save()
             transactionModel->setData(transactionModel->index(dataMapper->currentIndex(),transactionModel->fieldIndex("modifiedDate")),datetime);
 
             if(status == true){
-                transactionModel->submitAll();
+                status = transactionModel->submitAll();
                 statusMsg = ui->lineEditInvoiceNo->text() + " updated successfully";
                 emit signalStatusBar(statusMsg);
             }
             emit signalUpdated();
         }
-
+        if(status == true){
+            int dueAmount = record.value("dueAmount").toInt();
+            QString id = record.value("id").toString();
+            QString paidStatus = "U";
+            dueAmount = dueAmount - ui->lineEditPaidAmount->text().toInt();
+            if(dueAmount == 0)
+                paidStatus = "P";
+            QString filter = "id = "+id;
+            billModel->setFilter(filter);
+            record = billModel->record(0);
+            record.setValue("dueAmount",dueAmount);
+            record.setValue("paidStatus",paidStatus);
+            billModel->setRecord(0,record);
+            billModel->submitAll();
+        }
         resetDataMapper();
         clear();
         setCodeFocus();
@@ -386,7 +401,6 @@ bool TransactionForm::billStatus()
             balance = billQuery.value(7).toInt();
             billId = billQuery.value(0).toInt();
         }
-        balance = -1*balance;
         transactionQuery.prepare("Select * from transactions where bill_id = :billId and status = 'A'");
         transactionQuery.bindValue(":billId",billId);
         transactionQuery.exec();

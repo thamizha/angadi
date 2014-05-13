@@ -25,6 +25,7 @@
 
 #include "transactionmodel.h"
 #include "../connection.h"
+#include <QDebug>
 
 TransactionModel::TransactionModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
@@ -35,10 +36,11 @@ TransactionModel::TransactionModel(QObject *parent) :
     setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
     setRelation(fieldIndex("bill_id"), QSqlRelation("bill", "id", "invoiceNo"));
     setRelation(fieldIndex("customer_id"), QSqlRelation("customers", "id", "name"));
-    relationModel(1)->setFilter("paidStatus = 'U' and status = 'A'");
+//    relationModel(1)->setFilter("paidStatus = 'U' and status = 'A'");
 //    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");
 //    relationModel(3)->setFilter("status = 'A'");
 //    setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
+    qDebug() << rowCount();
 }
