@@ -33,6 +33,8 @@
 #include <QSqlRelationalDelegate>
 #include <QSqlRecord>
 #include <QSqlQuery>
+#include <QTranslator>
+#include <QSettings>
 
 ProductForm::ProductForm(QWidget *parent) :
     QWidget(parent),
@@ -75,12 +77,39 @@ ProductForm::ProductForm(QWidget *parent) :
     connect(ui->lineEditWholeSalePrice,SIGNAL(editingFinished()),SLOT(wholeSalePriceValid()));
 
     setFieldMaxLength();
+
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
+
 }
 
 ProductForm::~ProductForm()
 {
     delete ui;
 }
+
+
+void ProductForm::settranslate()
+{
+    ui->retranslateUi(this);
+}
+
 
 //save the product form
 void ProductForm::save()

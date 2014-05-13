@@ -35,28 +35,13 @@
 #include <QToolBar>
 #include <qtranslator.h>
 #include <QApplication>
+
+#include <QSettings>
+
 AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AngadiMainWindow)
 {
-
-
-
-//    QTranslator translator;
-//      translator.load("angadi_la");
-//    if(translator.load("angadi_la"))
-//        qDebug() << translator.load("angadi_la");
-//    else
-//        qDebug() << "xxxxxxxxxxxxxx";
-
-//    QApplication::installTranslator(&translator);
-
-//    if(QApplication::installTranslator(&translator))
-//        qDebug() << QApplication::installTranslator(&translator);
-//    else
-//        qDebug() << "xxxxxxxxxxxxxx";
-
-
     ui->setupUi(this);
 
     timer = new QTimer;
@@ -99,6 +84,25 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     setupProperties();
     setupConnections();
     setupModels();
+
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 AngadiMainWindow::~AngadiMainWindow()
@@ -152,24 +156,33 @@ void AngadiMainWindow::setupConnections()
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
 
     connect(ui->actionTamil, SIGNAL(triggered()),this, SLOT(settamil()));
+    connect(ui->actionEnglish, SIGNAL(triggered()),this, SLOT(setenglish()));
 }
 
 
 void AngadiMainWindow::settamil()
 {
+ QString app_path;
+ app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+ QSettings settings(app_path,QSettings::NativeFormat);
+ QString s_string = "tamil_language";
+ settings.setValue("s_language",s_string);
+// QString str_val = settings.value("s_language","").toString();
 
-    QTranslator translator;
-      translator.load("angadi_la");
-    //QApplication::installTranslator(&translator);
-    QApplication::instance()->installTranslator(&translator);
-
-
-    ui->actionExit->setText(AngadiMainWindow::tr("Exit"));
-    qDebug() << ui->actionExit->text();
-
-    //ui->retranslateUi(this);
-    //ui->retranslateUi(this);
+// qDebug() <<QApplication::applicationDirPath();
+// qDebug() <<app_path;
+// qDebug() << str_val;
 }
+
+void AngadiMainWindow::setenglish()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString s_string = "english_language";
+    settings.setValue("s_language",s_string);
+}
+
 
 void AngadiMainWindow::setupModels()
 {

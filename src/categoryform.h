@@ -34,6 +34,7 @@ public:
     void clear();
     int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
+    void settranslate();
 
 public slots:
 

@@ -77,6 +77,7 @@ public:
     int modelFlag;
     int productUpdateFlag;
     void productFormClearForSearch();
+    void settranslate();
 
 signals:
     void signalName(QString str);

@@ -60,6 +60,7 @@ public:
     int validNameFlag , validCodeFlag, validMrpFlag, validSalePriceFlag, validWholeSalePrice, validCategory;
     void setFieldMaxLength();
     void setComboSource();
+    void settranslate();
 signals:
     void signalName(QString str);
     void signalFromProductForm();

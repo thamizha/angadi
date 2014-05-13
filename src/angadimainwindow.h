@@ -116,6 +116,7 @@ private slots:
     void showProductListReport();
     void setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void settamil();
+    void setenglish();
 };
 
 #endif // ANGADIMAINWINDOW_H

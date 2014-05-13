@@ -28,7 +28,6 @@
 
 #include "models/formvalidation.h"
 #include "models/customersmodel.h"
-
 #include <QWidget>
 #include <QValidator>
 #include <QIntValidator>
@@ -59,6 +58,7 @@ public:
     void clear();
     int validCodeFlag, validNameFlag, validEmailFlag, validCreditLimitFlag;
     void setFieldMaxLength();
+    void settranslate();
 
 signals:
     void signalName(QString str);

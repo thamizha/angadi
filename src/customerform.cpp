@@ -32,6 +32,10 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 
+#include <QTranslator>
+#include <QApplication>
+#include <QSettings>
+
 CustomerForm::CustomerForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CustomerForm)
@@ -79,12 +83,37 @@ CustomerForm::CustomerForm(QWidget *parent) :
 
     setFieldMaxLength();
 
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 CustomerForm::~CustomerForm()
 {
     delete ui;
 }
+
+
+void CustomerForm::settranslate()
+{
+    ui->retranslateUi(this);
+}
+
 
 bool CustomerForm::contactPersonValid()
 {

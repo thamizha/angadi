@@ -67,6 +67,8 @@ FORMS    += \
 RESOURCES += \
     resource.qrc
 
-TRANSLATIONS = \ angadi_la.ts
+TRANSLATIONS += \
+            tamilLanguage_la.ts \
+            englishLanguage_la.ts
 
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
