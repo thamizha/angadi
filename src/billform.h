@@ -33,6 +33,7 @@
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
 #include "models/transactionmodel.h"
+#include "qtrpt.h"
 
 #include <QWidget>
 #include <QValidator>
@@ -48,6 +49,7 @@
 #include <QModelIndex>
 #include <QKeyEvent>
 #include <QSqlRelationalDelegate>
+#include <QPrinter>
 
 namespace Ui {
 class BillForm;
@@ -100,6 +102,10 @@ private:
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
 
+    QtRPT *report;
+    QPrinter *printer;
+    QSqlTableModel *reportModel;
+
 private slots:
     void save();
     bool invoiceNoValid();
@@ -127,7 +133,8 @@ private slots:
     void updateToBeGiven();
     void addTransaction();
     void setTransactionTableView();
-
+    void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
+    void on_pushButtonPrint_clicked();
 };
 
 #endif // BILLFORM_H

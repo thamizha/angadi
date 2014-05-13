@@ -144,7 +144,9 @@ void AngadiMainWindow::setupConnections()
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
 //    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
+    connect(ui->actionCategories_List,SIGNAL(triggered()),this, SLOT(showCategoriesListReport()));
     connect(ui->actionProduct_List,SIGNAL(triggered()),this, SLOT(showProductListReport()));
+    connect(ui->actionCustomers_List,SIGNAL(triggered()),this, SLOT(showCustomersListReport()));
 
     connect(ui->mainTab,SIGNAL(tabCloseRequested(int)),SLOT(onCloseTab(int)));
     connect(ui->mainTab,SIGNAL(currentChanged(int)),SLOT(onTabChanged(int)));
@@ -335,7 +337,7 @@ void AngadiMainWindow::openBillTab()
 
     billTabs->insert(tabName,new BillForm());
     billTabs->value(tabName)->setProperty("name",tabName);
-    ui->mainTab->addTab(billTabs->value(tabName),tabName);
+    ui->mainTab->addTab(billTabs->value(tabName),"Bill");
 
     connect(billTabs->value(tabName),SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billTabs->value(tabName),SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
@@ -721,9 +723,9 @@ void AngadiMainWindow::changeLssBarSource()
     }
 }
 
-void AngadiMainWindow::showProductListReport()
+void AngadiMainWindow::showCategoriesListReport()
 {
-    QString fileName = "./reports/product_list.xml";
+    QString fileName = "./reports/categories_list.xml";
     report = new QtRPT(this);
 //    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
 
@@ -738,7 +740,7 @@ void AngadiMainWindow::showProductListReport()
         qDebug()<<"Report's file not found";
     }
     QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
-                     this, SLOT(setProductValue(int&, QString&, QVariant&, int)));
+                     this, SLOT(setReportValue(int&, QString&, QVariant&, int)));
 //    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
 //                     this, SLOT(setProductValueImage(int&, QString&, QImage&, int)));
     //report->setCallbackFunc(getReportValue);
@@ -746,22 +748,80 @@ void AngadiMainWindow::showProductListReport()
     printer = new QPrinter;
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setOrientation(QPrinter::Portrait);
-    printer->setPaperSize(QPrinter::Letter);
+    //printer->setPaperSize(QPrinter::B0);
     //qDebug() << printer->paperSize();
     printer->setFullPage(true);
 
     report->printExec(true);
 }
 
-void AngadiMainWindow::setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage)
+void AngadiMainWindow::showProductListReport()
+{
+    QString fileName = "./reports/product_list.xml";
+    report = new QtRPT(this);
+//    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
+
+    reportModel = new QSqlTableModel;
+    reportModel->setTable("products");
+    reportModel->setFilter("products.status = 'A'");
+    reportModel->setSort(reportModel->fieldIndex("code"),Qt::AscendingOrder);
+    reportModel->select();
+    report->recordCount << reportModel->rowCount();
+
+    if (report->loadReport(fileName) == false) {
+        qDebug()<<"Report's file not found";
+    }
+    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
+                     this, SLOT(setReportValue(int&, QString&, QVariant&, int)));
+//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+//                     this, SLOT(setProductValueImage(int&, QString&, QImage&, int)));
+    //report->setCallbackFunc(getReportValue);
+
+    printer = new QPrinter;
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOrientation(QPrinter::Portrait);
+    //printer->setPaperSize(QPrinter::B0);
+    //qDebug() << printer->paperSize();
+    printer->setFullPage(true);
+
+    report->printExec(true);
+}
+
+void AngadiMainWindow::showCustomersListReport()
+{
+    QString fileName = "./reports/customers_list.xml";
+    report = new QtRPT(this);
+//    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
+
+    reportModel = new QSqlTableModel;
+    reportModel->setTable("customers");
+    reportModel->setFilter("customers.status = 'A'");
+    reportModel->setSort(reportModel->fieldIndex("code"),Qt::AscendingOrder);
+    reportModel->select();
+    report->recordCount << reportModel->rowCount();
+
+    if (report->loadReport(fileName) == false) {
+        qDebug()<<"Report's file not found";
+    }
+    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
+                     this, SLOT(setReportValue(int&, QString&, QVariant&, int)));
+//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+//                     this, SLOT(setProductValueImage(int&, QString&, QImage&, int)));
+    //report->setCallbackFunc(getReportValue);
+
+    printer = new QPrinter;
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOrientation(QPrinter::Portrait);
+    //printer->setPaperSize(QPrinter::B0);
+    //qDebug() << printer->paperSize();
+    printer->setFullPage(true);
+
+    report->printExec(true);
+}
+
+void AngadiMainWindow::setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage)
 {
     Q_UNUSED(reportPage);
-//    if (paramName == "customer")
-//        paramValue = ui->edtCustomer->text();
-//    if (paramName == "date")
-//        paramValue = ui->dtp->date().toString();
-//    if (paramName == "NN")
-//        paramValue = recNo+1;
     QSqlRecord record = reportModel->record(recNo);
     if (paramName == "Code") {
         if (record.value("code").toString().length() == 0) return;

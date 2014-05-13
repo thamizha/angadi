@@ -593,7 +593,7 @@ bool BillForm::eventFilter(QObject *obj, QEvent *event)
             QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
             if(keyEvent->key() == Qt::Key_Delete){
                 QModelIndex index = ui->tableViewProductList->currentIndex();
-                int row = index.row();
+//                int row = index.row();
 //                billItemModel->deleteRowFromTable(row);
                 billItemModel->removeRows(index.row(),1);
                 billItemModel->submit();
@@ -963,5 +963,90 @@ void BillForm::addTransaction()
                // should never be reached
                break;
         }
+    }
+}
+
+void BillForm::on_pushButtonPrint_clicked()
+{
+    QString fileName = "./reports/bill.xml";
+    report = new QtRPT(this);
+
+//    reportModel = new QSqlRelationalTableModel;
+//    reportModel->setTable("bill_item");
+//    reportModel->setRelation(2, QSqlRelation("products", "id", "name"));
+    //QModelIndex index = billModel->index(billDataMapper->currentIndex());
+    QSqlRecord record = billModel->record(billDataMapper->currentIndex());
+
+    reportModel = new QSqlTableModel;
+    reportModel->setTable("bill_item");
+    QString condition = "bill_id = " + record.value("id").toString();
+    reportModel->setFilter(condition);
+    reportModel->select();
+    report->recordCount << reportModel->rowCount();
+
+    if (report->loadReport(fileName) == false) {
+        qDebug()<<"Report's file not found";
+    }
+    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
+                     this, SLOT(setReportValue(int&, QString&, QVariant&, int)));
+
+    printer = new QPrinter;
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOrientation(QPrinter::Portrait);
+    //printer->setPaperSize(QPrinter::B0);
+    printer->setFullPage(true);
+
+    report->printExec(true);
+}
+
+void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage)
+{
+    Q_UNUSED(reportPage);
+    QSqlQuery itemQuery;
+
+    QSqlRecord record = reportModel->record(recNo);
+    if (paramName == "InvoiceNo")
+        paramValue = ui->lineEditInvoiceNo->text();
+    if (paramName == "InvoiceD")
+        paramValue = ui->dateEditInvoiceDate->dateTime().toString("dd/MM/yyyy");
+
+    if (paramName == "TotalQuantity"){
+        QString billId = record.value("bill_id").toString();
+        itemQuery.prepare("Select count(*) from bill_item where bill_id = :billId");
+        itemQuery.bindValue(":billId", billId);
+        itemQuery.exec();
+        while(itemQuery.next())
+            paramValue = itemQuery.value(0).toDouble();
+    }
+
+    if (paramName == "TotalAmount"){
+        QString billId = record.value("bill_id").toString();
+        itemQuery.prepare("Select sum(total) from bill_item where bill_id = :billId");
+        itemQuery.bindValue(":billId", billId);
+        itemQuery.exec();
+        while(itemQuery.next())
+            paramValue = QString::number(itemQuery.value(0).toDouble(), 'f', 2);
+    }
+
+    if (paramName == "ProductName") {
+        if (record.value("product_id").toString().length() == 0) return;
+        QString productCode = record.value("product_id").toString();
+        itemQuery.prepare("Select name from products where id = :product_name");
+        itemQuery.bindValue(":product_name", productCode);
+        itemQuery.exec();
+        while(itemQuery.next())
+            paramValue = itemQuery.value(0).toString();
+    }
+    if (paramName == "Quantity") {
+        if (record.value("quantity").toString().length() == 0) return;
+        paramValue = QString::number(record.value("quantity").toDouble(), 'f', 3);
+    }
+    if (paramName == "Rate") {
+        if (record.value("unitPrice").toString().length() == 0) return;
+        paramValue = QString::number(record.value("unitPrice").toDouble(), 'f', 2);
+    }
+    if (paramName == "Amount") {
+        if (record.value("total").toString().length() == 0) return;
+        paramValue = QString::number(record.value("total").toDouble(), 'f', 2);
     }
 }

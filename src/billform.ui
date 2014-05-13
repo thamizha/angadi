@@ -651,7 +651,7 @@ font: bold;</string>
            <enum>Qt::Vertical</enum>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>710</x>
@@ -677,6 +677,19 @@ font: bold;</string>
             <widget class="QLineEdit" name="lineEditGiven"/>
            </item>
           </layout>
+         </widget>
+         <widget class="QPushButton" name="pushButtonPrint">
+          <property name="geometry">
+           <rect>
+            <x>396</x>
+            <y>490</y>
+            <width>81</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Print</string>
+          </property>
          </widget>
         </widget>
        </item>
