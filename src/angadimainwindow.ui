@@ -124,7 +124,9 @@
      <string>Reports</string>
     </property>
     <addaction name="actionPeriod_Wise"/>
+    <addaction name="actionCategories_List"/>
     <addaction name="actionProduct_List"/>
+    <addaction name="actionCustomers_List"/>
    </widget>
    <widget class="QMenu" name="menuUpdate">
     <property name="title">
@@ -291,6 +293,16 @@
   <action name="actionEnglish">
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionCategories_List">
+   <property name="text">
+    <string>Categories List</string>
+   </property>
+  </action>
+  <action name="actionCustomers_List">
+   <property name="text">
+    <string>Customers List</string>
    </property>
   </action>
  </widget>

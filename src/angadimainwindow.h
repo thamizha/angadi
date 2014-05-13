@@ -114,7 +114,9 @@ private slots:
     void setStatusBarDefaultText();
     void changeLssBarSource();
     void showProductListReport();
-    void setProductValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
+    void showCategoriesListReport();
+    void showCustomersListReport();
+    void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void settamil();
     void setenglish();
 };
