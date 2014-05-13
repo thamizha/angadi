@@ -163,6 +163,7 @@ void BillForm::save(){
     }
 
     if(validError == 0){
+        calBalance();
         if(billDataMapper->currentIndex() < 0){
             billModel->select();
             row = billModel->rowCount();
@@ -228,6 +229,7 @@ void BillForm::save(){
                 transactionModel->setRecord(i,itemRecord);
             }
             transactionModel->submitAll();
+            transactionModel->select();
             statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
             emit signalStatusBar(statusMsg);
             clear();
@@ -867,7 +869,8 @@ void BillForm::updateToBeGiven()
         ui->lineEditTooBePaid->setText(QString::number(toBePaid));
         ui->lineEditRoundOff->setText(QString::number(roundOff));
     }
-    ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble()));
+    if(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble() > 0)
+        ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble()));
 }
 
 void BillForm::setTransactionTableView()
@@ -980,7 +983,7 @@ void BillForm::addTransaction()
             balance = balance+transactionRecord.value(3).toInt();
         }
         ui->lineEditGiven->setText(given);
-        ui->lineEditBalance->setText(QString::number(ui->lineEditTooBePaid->text().toInt()-balance));
+        calBalance();
     }else{
         msgBox.setInformativeText(errors);
         int ret = msgBox.exec();
@@ -993,6 +996,20 @@ void BillForm::addTransaction()
                break;
         }
     }
+}
+
+void BillForm::calBalance()
+{
+    int paid = 0, balance =0;
+    QSqlRecord transactionRecord;
+    for(int i=0; i< transactionModel->rowCount(); ++i){
+        transactionRecord = transactionModel->record(i);
+        paid = paid+transactionRecord.value(3).toInt();
+    }
+    balance = ui->lineEditTooBePaid->text().toInt()-paid;
+    if (balance < 0)
+        balance = 0;
+    ui->lineEditBalance->setText(QString::number(balance));
 }
 
 void BillForm::on_pushButtonPrint_clicked()

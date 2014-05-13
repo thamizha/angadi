@@ -136,6 +136,7 @@ private slots:
     void setTransactionTableView();
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void on_pushButtonPrint_clicked();
+    void calBalance();
 };
 
 #endif // BILLFORM_H
