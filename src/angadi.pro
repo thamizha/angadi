@@ -76,7 +76,7 @@ FORMS    += \
     billform.ui \
     transactionform.ui \
     unpaidbillreport.ui \
-    periodwisesalesform.ui
+    periodwisesalesform.ui \
     settings.ui \
     billsettings.ui \
     unpaidbillreport.ui

@@ -147,7 +147,6 @@
     <property name="title">
      <string>Settings</string>
     </property>
-<<<<<<< HEAD
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
       <string>Language</string>
@@ -155,8 +154,6 @@
      <addaction name="actionTamil"/>
      <addaction name="actionEnglish"/>
     </widget>
-=======
->>>>>>> 574000e1ef8100fca48ccc53a52181f95d7e7e71
     <addaction name="actionPreferences"/>
     <addaction name="actionBill_Settings"/>
     <addaction name="separator"/>
