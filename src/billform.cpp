@@ -26,11 +26,14 @@
 
 #include "billform.h"
 #include "ui_billform.h"
+#include "timeeditdelegate.h"
+
 #include <QSqlError>
 
 #include <QTranslator>
 #include <QApplication>
 #include <QSettings>
+#include <QDate>
 
 BillForm::BillForm(QWidget *parent) :
     QWidget(parent),
@@ -46,6 +49,8 @@ BillForm::BillForm(QWidget *parent) :
     transactionModel = new QSqlTableModel;
     transactionModel->setTable("transactions");
     transactionModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    transactionModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Paid Date"));
+    transactionModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Paid Amount"));
 
     billItemDataMapper = new QDataWidgetMapper;
     billItemDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -777,6 +782,7 @@ void BillForm::addProductItem()
                break;
         }
     }
+    setRowHeight();
 }
 
 void BillForm::setGrandTotal()
@@ -901,6 +907,7 @@ void BillForm::setTransactionTableView()
             if(i!=3 && i!=4)
                 ui->tableViewCustomerBalance->setColumnHidden(i,true);
         }
+        ui->tableViewCustomerBalance->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
         ui->tableViewCustomerBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
         int balance = 0;
@@ -920,6 +927,7 @@ void BillForm::setTransactionTableView()
         ui->lineEditUsed->setText(QString::number(balance));
         ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toInt()-balance));
     }
+    setRowHeight();
 }
 
 void BillForm::addTransaction()
@@ -999,6 +1007,7 @@ void BillForm::addTransaction()
                break;
         }
     }
+    setRowHeight();
 }
 
 void BillForm::calBalance()
@@ -1098,4 +1107,10 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
         if (record.value("total").toString().length() == 0) return;
         paramValue = QString::number(record.value("total").toDouble(), 'f', 2);
     }
+}
+
+void BillForm::setRowHeight()
+{
+    ui->tableViewCustomerBalance->resizeRowsToContents();
+    ui->tableViewProductList->resizeRowsToContents();
 }

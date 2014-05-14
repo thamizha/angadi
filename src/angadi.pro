@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     models/billitemmodel.cpp \
     models/transactionmodel.cpp \
     qtrpt.cpp \
-    transactionform.cpp
+    transactionform.cpp \
+    timeeditdelegate.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -52,7 +53,8 @@ HEADERS  += \
     models/billitemmodel.h \
     models/transactionmodel.h \
     qtrpt.h \
-    transactionform.h
+    transactionform.h \
+    timeeditdelegate.h
     qtrpt.h
 
 FORMS    += \

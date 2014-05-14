@@ -137,6 +137,7 @@ private slots:
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void on_pushButtonPrint_clicked();
     void calBalance();
+    void setRowHeight();
 };
 
 #endif // BILLFORM_H

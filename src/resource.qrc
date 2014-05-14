@@ -4,5 +4,6 @@
         <file>products.gif</file>
         <file>customer.png</file>
         <file>bill.png</file>
+        <file>transaction.png</file>
     </qresource>
 </RCC>
