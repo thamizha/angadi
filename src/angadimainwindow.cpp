@@ -65,12 +65,14 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui->actionCreateCategory->setIcon(QIcon(":/images/toolbaricons/category.png"));
     ui->actionCreateProduct->setIcon(QIcon(":/images/toolbaricons/products.gif"));
     ui->actionCreateCustomer->setIcon(QIcon(":/images/toolbaricons/customer.png"));
+    ui->actionBillEntry->setIcon(QIcon(":/images/toolbaricons/bill.png"));
+    ui->actionTransactionEntry->setIcon(QIcon(":/images/toolbaricons/transaction.png"));
 
     actionCategory = new QAction(QIcon(":/images/toolbaricons/category.png"), "&Category", this);
     actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
     actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
     actionBillEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
-    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
+    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/transaction.png"), "&Transactions", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);
@@ -144,6 +146,8 @@ void AngadiMainWindow::setupProperties()
 
     ui->actionTransactionEntry->setProperty("tabName","transaction");
     actionTransactionEntry->setProperty("tabName","transaction");
+
+    ui->actionUnpaid_bills_List->setProperty("tabName","unpaidBillReport");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -162,6 +166,8 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionTransactionEntry, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
+
+    connect(ui->actionUnpaid_bills_List, SIGNAL(triggered()), this, SLOT(openTab()));
 
 //    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
     connect(ui->actionCategories_List,SIGNAL(triggered()),this, SLOT(showCategoriesListReport()));
@@ -296,6 +302,9 @@ void AngadiMainWindow::openTab()
     }else if(tabName == "transaction"){
         openTransactionTab();
         showRightDock(true);
+    }else if(tabName == "unpaidBillReport"){
+        openUnpaidBillReportTab();
+        showRightDock(false);
     }
 }
 
@@ -491,6 +500,20 @@ void AngadiMainWindow::openTransactionTab()
     ui->mainTab->setCurrentWidget (transactionForm);
 }
 
+void AngadiMainWindow::openUnpaidBillReportTab()
+{
+    QString tabName = "unpaidBillReport";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        unpaidBillReport = new UnpaidBillReport();
+        unpaidBillReport->setProperty("name", tabName);
+        ui->mainTab->addTab(unpaidBillReport, "UnPaid Bill Report");
+    }
+    ui->mainTab->setCurrentWidget (unpaidBillReport);
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;
@@ -599,8 +622,7 @@ void AngadiMainWindow::onTabChanged(int index){
         showRightDock(true);
         lssbar->lineEditSearch->setText(transactionTabSearchTerm);
 
-    }else{
-        if(tabName.contains("bill#", Qt::CaseInsensitive)){
+    }else if(tabName.contains("bill#", Qt::CaseInsensitive)){
 //            billTabs->value(tabName)->setModel(billModel, productsModel, customersModel);
 //            billTabs->value(tabName)->clear();
             if(billTabs->value(tabName)->modelFlag == 1){
@@ -612,7 +634,9 @@ void AngadiMainWindow::onTabChanged(int index){
             }
             showRightDock(true);
             lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
-        }
+
+    }else if(tabName == "unpaidBillReport"){
+        showRightDock(false);
     }
 }
 

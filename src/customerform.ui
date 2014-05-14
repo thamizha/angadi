@@ -78,12 +78,12 @@
           </size>
          </property>
          <property name="title">
-          <string>Customer</string>
+          <string/>
          </property>
          <widget class="QPushButton" name="pushButtonDelete">
           <property name="geometry">
            <rect>
-            <x>400</x>
+            <x>444</x>
             <y>450</y>
             <width>80</width>
             <height>23</height>
@@ -116,9 +116,9 @@
          <widget class="QLabel" name="label_19">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>361</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -148,10 +148,10 @@
          <widget class="QLabel" name="label_4">
           <property name="geometry">
            <rect>
-            <x>311</x>
+            <x>291</x>
             <y>93</y>
-            <width>71</width>
-            <height>16</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -159,6 +159,9 @@
           </property>
           <property name="text">
            <string>Credit Limit</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -170,7 +173,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>152</x>
             <y>450</y>
             <width>80</width>
             <height>23</height>
@@ -186,9 +189,9 @@
          <widget class="QLabel" name="label_11">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>242</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -218,10 +221,10 @@
          <widget class="QLabel" name="label_8">
           <property name="geometry">
            <rect>
-            <x>319</x>
-            <y>185</y>
-            <width>60</width>
-            <height>15</height>
+            <x>291</x>
+            <y>182</y>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -286,10 +289,10 @@
          <widget class="QLabel" name="label_5">
           <property name="geometry">
            <rect>
-            <x>40</x>
-            <y>122</y>
-            <width>100</width>
-            <height>20</height>
+            <x>13</x>
+            <y>116</y>
+            <width>131</width>
+            <height>30</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -302,16 +305,16 @@
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="wordWrap">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
          </widget>
          <widget class="QLabel" name="label_15">
           <property name="geometry">
            <rect>
-            <x>320</x>
+            <x>291</x>
             <y>300</y>
-            <width>60</width>
-            <height>15</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -330,9 +333,9 @@
          <widget class="QLabel" name="label">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>32</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -375,9 +378,9 @@
          <widget class="QLabel" name="label_16">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>300</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -427,10 +430,10 @@
          <widget class="QLabel" name="label_13">
           <property name="geometry">
            <rect>
-            <x>320</x>
+            <x>291</x>
             <y>270</y>
-            <width>60</width>
-            <height>15</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -469,9 +472,9 @@
          <widget class="QLabel" name="label_14">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>270</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -501,9 +504,9 @@
          <widget class="QLabel" name="label_6">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>150</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -533,10 +536,10 @@
          <widget class="QLabel" name="label_10">
           <property name="geometry">
            <rect>
-            <x>320</x>
+            <x>291</x>
             <y>211</y>
-            <width>60</width>
-            <height>15</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -565,9 +568,9 @@
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>62</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -587,10 +590,10 @@
          <widget class="QLabel" name="label_17">
           <property name="geometry">
            <rect>
-            <x>320</x>
+            <x>291</x>
             <y>331</y>
-            <width>60</width>
-            <height>15</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -609,9 +612,9 @@
          <widget class="QLabel" name="label_18">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>331</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -631,9 +634,9 @@
          <widget class="QLabel" name="label_3">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>90</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -663,9 +666,9 @@
          <widget class="QLabel" name="label_7">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>182</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -685,9 +688,9 @@
          <widget class="QLabel" name="label_9">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>24</x>
             <y>211</y>
-            <width>100</width>
+            <width>120</width>
             <height>20</height>
            </rect>
           </property>
@@ -717,10 +720,10 @@
          <widget class="QLabel" name="label_12">
           <property name="geometry">
            <rect>
-            <x>320</x>
+            <x>291</x>
             <y>242</y>
-            <width>60</width>
-            <height>15</height>
+            <width>93</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="layoutDirection">

@@ -389,8 +389,8 @@ bool TransactionForm::amountValid()
 bool TransactionForm::billStatus()
 {
     int invoiceNo = ui->lineEditInvoiceNo->text().toInt();
-    int balance, paid = 0, toBePaid, billId;
-    QSqlQuery billQuery, transactionQuery;
+    int balance, toBePaid, billId;
+    QSqlQuery billQuery;
     billQuery.prepare("Select * from bill where invoiceNo = :invoiceNo and status = 'A' and paidStatus = 'U'" );
     billQuery.bindValue(":invoiceNo", invoiceNo);
     billQuery.exec();
@@ -401,20 +401,9 @@ bool TransactionForm::billStatus()
             balance = billQuery.value(7).toInt();
             billId = billQuery.value(0).toInt();
         }
-        transactionQuery.prepare("Select * from transactions where bill_id = :billId and status = 'A'");
-        transactionQuery.bindValue(":billId",billId);
-        transactionQuery.exec();
-        if(transactionQuery.size() == 0){
-            toBePaid = balance - ui->lineEditPaidAmount->text().toInt();
-            if(toBePaid >= 0)
-                return true;
-        }else{
-            while(transactionQuery.next())
-                paid = paid+transactionQuery.value(3).toInt();
-            toBePaid = balance-paid-ui->lineEditPaidAmount->text().toInt();
-            if(toBePaid >= 0)
-                return true;
-        }
+        toBePaid = balance - ui->lineEditPaidAmount->text().toInt();
+        if(toBePaid >= 0)
+            return true;
     }
     return false;
 }
