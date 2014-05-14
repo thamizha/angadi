@@ -87,6 +87,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     setupConnections();
     setupModels();
 
+
     QString app_path;
     app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
@@ -98,6 +99,21 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     //  QApplication::installTranslator(&translator);
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
+
+        actionCategory->setText(AngadiMainWindow::tr("Category"));
+        actionProduct->setText(ProductForm::tr("Product"));
+        actionCustomer->setText(CustomerForm::tr("Customer"));
+        actionBillEntry->setText(BillForm::tr("Bill"));
+        actionTransactionEntry->setText(TransactionForm::tr("Transaction"));
+
+        languageFlag = "tamil";
+//        for(int i=0;i<ui->mainTab->count();i++)
+//        {
+//            if(ui->mainTab->widget(i)->property("Category").toString() == "Category")
+//                qDebug() << "yes";
+//        }
+
+
      }else{
         QTranslator translator;
         translator.load("englishLanguage_la");
@@ -165,8 +181,10 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
 
-    connect(ui->actionTamil, SIGNAL(triggered()),this, SLOT(settamil()));
-    connect(ui->actionEnglish, SIGNAL(triggered()),this, SLOT(setenglish()));
+//    connect(ui->actionTamil, SIGNAL(triggered()),this, SLOT(settamil()));
+//    connect(ui->actionEnglish, SIGNAL(triggered()),this, SLOT(setenglish()));
+    connect(ui->actionPreferences,SIGNAL(triggered()),this,SLOT(openPreference()));
+    connect(ui->actionBill_Settings,SIGNAL(triggered()),this,SLOT(openBillSettings()));
 }
 
 
@@ -191,6 +209,27 @@ void AngadiMainWindow::setenglish()
     QSettings settings(app_path,QSettings::NativeFormat);
     QString s_string = "english_language";
     settings.setValue("s_language",s_string);
+}
+
+QString AngadiMainWindow::checkLanguage()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+    return(content);
+}
+
+void AngadiMainWindow::openPreference()
+{
+    //qDebug() << "triggered";
+    //settings = new Settings(this);
+    settings.show();
+}
+
+void AngadiMainWindow::openBillSettings()
+{
+ billSettings.show();
 }
 
 void AngadiMainWindow::setupModels()
@@ -281,7 +320,18 @@ void AngadiMainWindow::openCategoryTab()
     if(found == false){
         categoryForm = new CategoryForm();
         categoryForm->setProperty("name", tabName);
-        ui->mainTab->addTab(categoryForm, "Category");
+
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(categoryForm, CategoryForm::tr("Category"));
+        }
+        else{
+            ui->mainTab->addTab(categoryForm, "Category");
+        }
+
         lssbar->lineEditSearch->setText("");
 
         setupModels();
@@ -308,7 +358,19 @@ void AngadiMainWindow::openProductTab()
     if(found == false){
         productForm = new ProductForm();
         productForm->setProperty("name", tabName);
-        ui->mainTab->addTab(productForm, "Product");
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(productForm, ProductForm::tr("Product"));
+        }
+        else{
+            ui->mainTab->addTab(productForm, "Product");
+        }
+
+
+
         lssbar->lineEditSearch->setText("");
 
         setupModels();
@@ -335,7 +397,17 @@ void AngadiMainWindow::openCustomerTab()
     if(found == false){
         customerForm = new CustomerForm();
         customerForm->setProperty("name", tabName);
-        ui->mainTab->addTab(customerForm, "Customer");
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(customerForm, CustomerForm::tr("Customer"));
+        }
+        else{
+            ui->mainTab->addTab(customerForm, "Customer");
+        }
+
         lssbar->lineEditSearch->setText("");
 
         setupModels();
@@ -363,7 +435,18 @@ void AngadiMainWindow::openBillTab()
 
     billTabs->insert(tabName,new BillForm());
     billTabs->value(tabName)->setProperty("name",tabName);
-    ui->mainTab->addTab(billTabs->value(tabName),"Bill");
+
+
+    if(checkLanguage() == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        ui->mainTab->addTab(billTabs->value(tabName),BillForm::tr("Bill"));
+    }
+    else{
+        ui->mainTab->addTab(billTabs->value(tabName),"Bill");
+    }
+
 
     connect(billTabs->value(tabName),SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billTabs->value(tabName),SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
@@ -390,7 +473,19 @@ void AngadiMainWindow::openTransactionTab()
     if(found == false){
         transactionForm = new TransactionForm();
         transactionForm->setProperty("name", tabName);
-        ui->mainTab->addTab(transactionForm, "Transaction");
+
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(transactionForm, TransactionForm::tr("Transaction"));
+        }
+        else{
+            ui->mainTab->addTab(transactionForm, "Transaction");
+        }
+
+
         lssbar->lineEditSearch->setText("");
 
         setupModels();
@@ -438,7 +533,7 @@ void AngadiMainWindow::openPeriodWiseSalesTab()
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
-    bool status = false;        
+    bool status = false;
     for(int i = 0; i < ui->mainTab->count(); i++)
     {
         if(ui->mainTab->widget(i)->property("name").toString() == tabName){

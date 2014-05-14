@@ -35,6 +35,7 @@ public:
     int validNameFlag , validCodeFlag;
     void setFieldMaxLength();
     void settranslate();
+//    void saveButtonText(qint8);
 
 public slots:
 

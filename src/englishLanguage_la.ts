@@ -107,6 +107,14 @@
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Categories List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customers List</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillForm</name>
@@ -200,6 +208,14 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -502,6 +518,10 @@
     </message>
     <message>
         <source>Invoice No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transaction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

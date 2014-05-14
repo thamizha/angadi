@@ -32,6 +32,8 @@ SOURCES += main.cpp\
     models/transactionmodel.cpp \
     qtrpt.cpp \
     transactionform.cpp \
+    settings.cpp \
+    billsettings.cpp \
     timeeditdelegate.cpp \
     rightaligndelegate.cpp \
     unpaidbillreport.cpp \
@@ -57,10 +59,12 @@ HEADERS  += \
     models/transactionmodel.h \
     qtrpt.h \
     transactionform.h \
+    settings.h \
+    billsettings.h \
     timeeditdelegate.h \
     rightaligndelegate.h \
     unpaidbillreport.h \
-    periodwisesalesform.h
+    periodwisesalesform.h \
     qtrpt.h
 
 FORMS    += \
@@ -73,6 +77,9 @@ FORMS    += \
     transactionform.ui \
     unpaidbillreport.ui \
     periodwisesalesform.ui
+    settings.ui \
+    billsettings.ui \
+    unpaidbillreport.ui
 
 RESOURCES += \
     resource.qrc

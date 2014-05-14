@@ -68,6 +68,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     //  QApplication::installTranslator(&translator);
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
+
      }else{
         QTranslator translator;
         translator.load("englishLanguage_la");
@@ -86,6 +87,29 @@ void CategoryForm::settranslate()
 {
     ui->retranslateUi(this);
 }
+
+//void CategoryForm::checkLanguage(qint8 flag)
+//{
+//    QString app_path;
+//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+//    QSettings settings(app_path,QSettings::NativeFormat);
+//    QString content = settings.value("s_language","").toString();
+
+//    if(content == "tamil_language"){                               //tab language settings
+//        QTranslator translator;
+//        translator.load("tamilLanguage_la");
+//        QApplication::instance()->installTranslator(&translator);
+//        if(flag == 0)
+//            ui->pushButtonSave->setText(CategoryForm::tr("Save"));
+//        else
+//            ui->pushButtonSave->setText(CategoryForm::tr("Save"));
+//    }
+//    else{
+//        ui->pushButtonSave->setText("Save");
+//    }
+//    return(content);
+//}
+
 
 void CategoryForm::save()
 {
