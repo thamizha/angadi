@@ -107,12 +107,24 @@
         <source>English</source>
         <translation type="unfinished">ஆங்கிலம்(English)</translation>
     </message>
+    <message>
+        <source>Categories List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customers List</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillForm</name>
     <message>
         <source>Error Notification</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill</source>
+        <translation type="unfinished">பில்</translation>
     </message>
     <message>
         <source>Invoice No</source>
@@ -202,6 +214,10 @@
         <source>Form</source>
         <translation type="unfinished">படிவம்</translation>
     </message>
+    <message>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CategoryForm</name>
@@ -231,6 +247,10 @@
     </message>
     <message>
         <source>Clear</source>
+        <translation type="unfinished">அழி</translation>
+    </message>
+    <message>
+        <source>Update</source>
         <translation type="unfinished">அழி</translation>
     </message>
 </context>
@@ -467,6 +487,10 @@
     <message>
         <source>Form</source>
         <translation type="unfinished">படிவம்</translation>
+    </message>
+    <message>
+        <source>Transaction</source>
+        <translation type="unfinished">பணம் பரிவர்த்தனை</translation>
     </message>
     <message>
         <source>GroupBox</source>

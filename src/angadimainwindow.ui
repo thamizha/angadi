@@ -146,18 +146,9 @@
     <property name="title">
      <string>Settings</string>
     </property>
-    <widget class="QMenu" name="menuLanguage">
-     <property name="title">
-      <string>language</string>
-     </property>
-     <addaction name="actionTamil"/>
-     <addaction name="actionEnglish"/>
-    </widget>
     <addaction name="actionPreferences"/>
     <addaction name="actionBill_Settings"/>
-    <addaction name="actionHome_Page_Settings"/>
     <addaction name="separator"/>
-    <addaction name="menuLanguage"/>
    </widget>
    <addaction name="menuCreate"/>
    <addaction name="menuUpdate"/>
