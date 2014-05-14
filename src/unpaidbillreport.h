@@ -3,8 +3,10 @@
 
 #include <QWidget>
 #include <QDateTime>
+#include <QDate>
 #include <QEvent>
 #include <QDebug>
+#include <QSqlRecord>
 #include <QSqlRelationalDelegate>
 #include <QSortFilterProxyModel>
 #include <QSqlRelationalTableModel>
@@ -35,13 +37,14 @@ private:
 
 private slots:
 
-    void on_dateEditFrom_userDateChanged(const QDate &date);
-    void on_dateEditTo_userDateChanged(const QDate &date);
+    void on_dateEditFrom_dateChanged(const QDate &date);
+    void on_dateEditTo_dateChanged(const QDate &date);
     void on_lineEditInvoice_textChanged(const QString &arg1);
     void on_lineEditCustomer_textChanged(const QString &arg1);
     void on_lineEditTotal_textChanged(const QString &arg1);
     void on_lineEditBalance_textChanged(const QString &arg1);
     void setModel();
+    void calTotal();
 };
 
 #endif // UNPAIDBILLREPORT_H
