@@ -32,13 +32,19 @@ PeriodWiseSalesForm::PeriodWiseSalesForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    fromFilter = "0";
-    toFilter = "0";
-    invoiceNoFilter = "0";
-    totalFilter = "0";
-    customerFilter = "0";
+//    QDate date = QDate::currentDate();
+//    ui->dateEditFrom->setDate(date);
+    //ui->dateEditFrom->setSelectedSection(QDateEdit::NoSection);
+    //ui->dateEditTo->setDate(date);
+    //ui->dateEditTo->setSelectedSection(QDateEdit::NoSection);
 
-//    filter = "paidStatus = 'U' and invoiceNo = "+invoiceNoFilter+" and totalAmount = "+totalFilter+" and customer_id = "+customerFilter;
+    fromFilter = "2014-01-01";
+    toFilter = "2015-01-01";
+    invoiceNoFilter = "";
+    totalFilter = "";
+    customerFilter = "";
+
+    //filter = "bill.status = 'A' and invoiceNo = "+invoiceNoFilter+" and totalAmount = "+totalFilter+" and customer_id = "+customerFilter;
 
     billModel = new QSqlRelationalTableModel();
     billModel->setTable("bill");
@@ -75,44 +81,38 @@ PeriodWiseSalesForm::~PeriodWiseSalesForm()
 
 void PeriodWiseSalesForm::on_lineEditInvoiceNo_textChanged(const QString &arg1)
 {
-    if(arg1.length() == 0)
-        invoiceNoFilter = "0";
-    else
-        invoiceNoFilter = arg1;
+    invoiceNoFilter = arg1;
     setModel();
 }
 
 void PeriodWiseSalesForm::on_dateEditFrom_dateChanged(const QDate &date)
 {
-
+    fromFilter = date.toString("yyyy-MM-dd");
+    setModel();
 }
 
 void PeriodWiseSalesForm::on_dateEditTo_dateChanged(const QDate &date)
 {
-
+    toFilter = date.toString("yyyy-MM-dd");
+    setModel();
 }
 
 void PeriodWiseSalesForm::on_lineEditCustomer_textChanged(const QString &arg1)
 {
-    if(arg1.length() == 0)
-        customerFilter = "0";
-    else
-        customerFilter = arg1;
+    customerFilter = arg1;
     setModel();
 }
 
 void PeriodWiseSalesForm::on_lineEditTotal_textChanged(const QString &arg1)
 {
-    if(arg1.length() == 0)
-        totalFilter = "0";
-    else
-        totalFilter = arg1;
+    totalFilter = arg1;
     setModel();
 }
 
 void PeriodWiseSalesForm::setModel()
 {
-    filter = "bill.status = 'A' and bill.invoiceNo like '%"+invoiceNoFilter+"%' and bill.totalAmount like '%"+totalFilter+"%' and bill.customer_id = '%"+customerFilter+"%'";
+    //filter = "bill.status = 'A' and bill.totalAmount like '%"+totalFilter+"%'";
+    filter = "bill.status = 'A' and invoiceNo like '%"+invoiceNoFilter+"%' and totalAmount like '%"+totalFilter+"%' and relTblAl_3.name like '%"+customerFilter+"%' and invoiceDate >= '"+fromFilter+"' and invoiceDate <= '"+toFilter+"'";
     billModel->setFilter(filter);
     billModel->select();
 }

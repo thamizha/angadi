@@ -88,7 +88,7 @@ void UnpaidBillReport::on_lineEditBalance_textChanged(const QString &arg1)
 
 void UnpaidBillReport::setModel()
 {
-    filter = "paidStatus = 'U' and invoiceNo like '%"+invoiceNoFilter+"%' and totalAmount like '%"+totalFilter+"%' and relTblAl_3.name = '"+customerFilter+"' and dueAmount like '%"+balanceFilter+"%' and invoiceDate >= '"+fromFilter+"' and invoiceDate <= '"+toFilter+"'";
+    filter = "paidStatus = 'U' and invoiceNo like '%"+invoiceNoFilter+"%' and totalAmount like '%"+totalFilter+"%' and relTblAl_3.name like '%"+customerFilter+"%' and dueAmount like '%"+balanceFilter+"%' and invoiceDate >= '"+fromFilter+"' and invoiceDate <= '"+toFilter+"'";
     billModel->setFilter(filter);
     billModel->select();
     calTotal();
