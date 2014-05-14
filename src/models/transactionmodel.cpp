@@ -42,5 +42,5 @@ TransactionModel::TransactionModel(QObject *parent) :
 //    relationModel(3)->setFilter("status = 'A'");
 //    setSort(fieldIndex("id"),Qt::AscendingOrder);
     select();
-    qDebug() << rowCount();
+//    qDebug() << rowCount();
 }

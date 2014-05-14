@@ -67,12 +67,12 @@
         <widget class="QGroupBox" name="groupBox">
          <property name="minimumSize">
           <size>
-           <width>500</width>
+           <width>400</width>
            <height>180</height>
           </size>
          </property>
          <property name="title">
-          <string>Category</string>
+          <string/>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -83,9 +83,9 @@
          <widget class="QLineEdit" name="lineEditCode">
           <property name="geometry">
            <rect>
-            <x>67</x>
+            <x>117</x>
             <y>40</y>
-            <width>80</width>
+            <width>91</width>
             <height>23</height>
            </rect>
           </property>
@@ -96,9 +96,9 @@
          <widget class="QLabel" name="label">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>40</x>
             <y>42</y>
-            <width>50</width>
+            <width>70</width>
             <height>20</height>
            </rect>
           </property>
@@ -112,9 +112,9 @@
          <widget class="QLineEdit" name="lineEditName">
           <property name="geometry">
            <rect>
-            <x>67</x>
+            <x>117</x>
             <y>70</y>
-            <width>150</width>
+            <width>191</width>
             <height>23</height>
            </rect>
           </property>
@@ -122,9 +122,9 @@
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>40</x>
             <y>71</y>
-            <width>50</width>
+            <width>70</width>
             <height>20</height>
            </rect>
           </property>
@@ -138,7 +138,7 @@
          <widget class="QPushButton" name="pushButtonDelete">
           <property name="geometry">
            <rect>
-            <x>340</x>
+            <x>280</x>
             <y>130</y>
             <width>80</width>
             <height>23</height>
@@ -151,7 +151,7 @@
          <widget class="QPushButton" name="pushButtonSave">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>160</x>
             <y>130</y>
             <width>80</width>
             <height>23</height>
@@ -170,7 +170,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>60</x>
+            <x>40</x>
             <y>130</y>
             <width>80</width>
             <height>23</height>
