@@ -101,12 +101,12 @@
            <string>Total</string>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>10</x>
             <y>30</y>
-            <width>951</width>
+            <width>941</width>
             <height>441</height>
            </rect>
           </property>
@@ -115,6 +115,12 @@
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_2">
+               <property name="maximumSize">
+                <size>
+                 <width>110</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
@@ -140,7 +146,7 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>86</width>
+                 <width>90</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -169,7 +175,7 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>86</width>
+                 <width>90</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -190,6 +196,12 @@
              </item>
              <item>
               <widget class="QLabel" name="label_5">
+               <property name="maximumSize">
+                <size>
+                 <width>270</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
@@ -207,6 +219,12 @@
              </item>
              <item>
               <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
@@ -224,6 +242,12 @@
              </item>
              <item>
               <widget class="QLabel" name="label_7">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
@@ -244,14 +268,27 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QLineEdit" name="lineEditInvoice"/>
+              <widget class="QLineEdit" name="lineEditInvoice">
+               <property name="maximumSize">
+                <size>
+                 <width>110</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QDateEdit" name="dateEditFrom">
                <property name="minimumSize">
                 <size>
-                 <width>84</width>
+                 <width>80</width>
                  <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>90</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="displayFormat">
@@ -273,8 +310,14 @@
               <widget class="QDateEdit" name="dateEditTo">
                <property name="minimumSize">
                 <size>
-                 <width>84</width>
+                 <width>80</width>
                  <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>90</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="displayFormat">
@@ -293,13 +336,34 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditCustomer"/>
+              <widget class="QLineEdit" name="lineEditCustomer">
+               <property name="maximumSize">
+                <size>
+                 <width>270</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditTotal"/>
+              <widget class="QLineEdit" name="lineEditTotal">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditBalance"/>
+              <widget class="QLineEdit" name="lineEditBalance">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
