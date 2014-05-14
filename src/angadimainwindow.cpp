@@ -65,12 +65,14 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui->actionCreateCategory->setIcon(QIcon(":/images/toolbaricons/category.png"));
     ui->actionCreateProduct->setIcon(QIcon(":/images/toolbaricons/products.gif"));
     ui->actionCreateCustomer->setIcon(QIcon(":/images/toolbaricons/customer.png"));
+    ui->actionBillEntry->setIcon(QIcon(":/images/toolbaricons/bill.png"));
+    ui->actionTransactionEntry->setIcon(QIcon(":/images/toolbaricons/transaction.png"));
 
     actionCategory = new QAction(QIcon(":/images/toolbaricons/category.png"), "&Category", this);
     actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
     actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
     actionBillEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
-    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Transaction", this);
+    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/transaction.png"), "&Transactions", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);

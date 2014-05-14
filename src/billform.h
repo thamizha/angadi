@@ -33,6 +33,8 @@
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
 #include "models/transactionmodel.h"
+#include "rightaligndelegate.h"
+
 #include "qtrpt.h"
 
 #include <QWidget>
@@ -137,6 +139,7 @@ private slots:
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void on_pushButtonPrint_clicked();
     void calBalance();
+    void setRowHeight();
 };
 
 #endif // BILLFORM_H
