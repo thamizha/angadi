@@ -123,7 +123,7 @@
     <property name="title">
      <string>Reports</string>
     </property>
-    <addaction name="actionPeriod_Wise"/>
+    <addaction name="actionPeriod_Wise_Sales"/>
     <addaction name="actionCategories_List"/>
     <addaction name="actionProduct_List"/>
     <addaction name="actionCustomers_List"/>
@@ -149,7 +149,7 @@
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
-      <string>language</string>
+      <string>Language</string>
      </property>
      <addaction name="actionTamil"/>
      <addaction name="actionEnglish"/>
@@ -261,9 +261,9 @@
     <string>Home Page Settings</string>
    </property>
   </action>
-  <action name="actionPeriod_Wise">
+  <action name="actionPeriod_Wise_Sales">
    <property name="text">
-    <string>Period Wise</string>
+    <string>Period Wise Sales</string>
    </property>
   </action>
   <action name="actionViewBills">

@@ -132,6 +132,7 @@ void AngadiMainWindow::setupProperties()
     actionTransactionEntry->setProperty("tabName","transaction");
 
     ui->actionUnpaid_bills_List->setProperty("tabName","unpaidBillReport");
+    ui->actionPeriod_Wise_Sales->setProperty("tabName","periodWiseSales");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -153,7 +154,8 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionUnpaid_bills_List, SIGNAL(triggered()), this, SLOT(openTab()));
 
-//    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
+    connect(ui->actionPeriod_Wise_Sales,SIGNAL(triggered()),this, SLOT(openTab()));
+
     connect(ui->actionCategories_List,SIGNAL(triggered()),this, SLOT(showCategoriesListReport()));
     connect(ui->actionProduct_List,SIGNAL(triggered()),this, SLOT(showProductListReport()));
     connect(ui->actionCustomers_List,SIGNAL(triggered()),this, SLOT(showCustomersListReport()));
@@ -190,7 +192,6 @@ void AngadiMainWindow::setenglish()
     QString s_string = "english_language";
     settings.setValue("s_language",s_string);
 }
-
 
 void AngadiMainWindow::setupModels()
 {
@@ -264,6 +265,9 @@ void AngadiMainWindow::openTab()
         showRightDock(true);
     }else if(tabName == "unpaidBillReport"){
         openUnpaidBillReportTab();
+        showRightDock(false);
+    }else if(tabName == "periodWiseSales"){
+        openPeriodWiseSalesTab();
         showRightDock(false);
     }
 }
@@ -416,6 +420,20 @@ void AngadiMainWindow::openUnpaidBillReportTab()
         ui->mainTab->addTab(unpaidBillReport, "UnPaid Bill Report");
     }
     ui->mainTab->setCurrentWidget (unpaidBillReport);
+}
+
+void AngadiMainWindow::openPeriodWiseSalesTab()
+{
+    QString tabName = "periodWiseSales";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        periodWiseSalesForm = new PeriodWiseSalesForm;
+        periodWiseSalesForm->setProperty("name", tabName);
+        ui->mainTab->addTab(periodWiseSalesForm, "Period Wise Sales");
+    }
+    ui->mainTab->setCurrentWidget (periodWiseSalesForm);
 }
 
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)

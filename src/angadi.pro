@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     transactionform.cpp \
     timeeditdelegate.cpp \
     rightaligndelegate.cpp \
-    unpaidbillreport.cpp
+    unpaidbillreport.cpp \
+    periodwisesalesform.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -58,7 +59,8 @@ HEADERS  += \
     transactionform.h \
     timeeditdelegate.h \
     rightaligndelegate.h \
-    unpaidbillreport.h
+    unpaidbillreport.h \
+    periodwisesalesform.h
     qtrpt.h
 
 FORMS    += \
@@ -69,7 +71,8 @@ FORMS    += \
     productform.ui \
     billform.ui \
     transactionform.ui \
-    unpaidbillreport.ui
+    unpaidbillreport.ui \
+    periodwisesalesform.ui
 
 RESOURCES += \
     resource.qrc
@@ -79,3 +82,6 @@ TRANSLATIONS += \
             englishLanguage_la.ts
 
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
+
+OTHER_FILES += \
+    angadicpp
