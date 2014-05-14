@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     qtrpt.cpp \
     transactionform.cpp \
     timeeditdelegate.cpp \
-    rightaligndelegate.cpp
+    rightaligndelegate.cpp \
+    unpaidbillreport.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -56,7 +57,8 @@ HEADERS  += \
     qtrpt.h \
     transactionform.h \
     timeeditdelegate.h \
-    rightaligndelegate.h
+    rightaligndelegate.h \
+    unpaidbillreport.h
     qtrpt.h
 
 FORMS    += \
@@ -66,7 +68,8 @@ FORMS    += \
     categoryform.ui \
     productform.ui \
     billform.ui \
-    transactionform.ui
+    transactionform.ui \
+    unpaidbillreport.ui
 
 RESOURCES += \
     resource.qrc

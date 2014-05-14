@@ -13,6 +13,7 @@
 #include "customerform.h"
 #include "billform.h"
 #include "transactionform.h"
+#include "unpaidbillreport.h"
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
@@ -62,6 +63,7 @@ private:
     CustomerForm *customerForm;
     QHash<QString,BillForm*> *billTabs;
     TransactionForm *transactionForm;
+    UnpaidBillReport *unpaidBillReport;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -86,6 +88,7 @@ private:
     void openCategoryTab();
     void openBillTab();
     void openTransactionTab();
+    void openUnpaidBillReportTab();
 
     void onCustomerTabClosed();
     void onProductTabClosed();
