@@ -1,5 +1,6 @@
 #include "unpaidbillreport.h"
 #include "ui_unpaidbillreport.h"
+#include <QSqlError>
 
 UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
     QWidget(parent),
@@ -7,11 +8,20 @@ UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    fromFilter = "0";
+    toFilter = "0";
+    invoiceNoFilter = "0";
+    totalFilter = "0";
+    customerFilter = "0";
+    balanceFilter = "0";
+
+    filter = "paidStatus = 'U' and invoiceNo = "+invoiceNoFilter+" and totalAmount = "+totalFilter+" and customer_id = "+customerFilter+" and dueAmount = "+balanceFilter;
+
     billModel = new QSqlRelationalTableModel();
     billModel->setTable("bill");
     billModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//    billModel->setRelation(3, QSqlRelation("customers", "id", "customer_id"));
-    filter = "paidStatus = U";
+    billModel->setRelation(3, QSqlRelation("customers", "id", "name"));
+    filter = "paidStatus = 'U'";
     billModel->setFilter(filter);
     billModel->select();
 
@@ -26,12 +36,11 @@ UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->resizeRowsToContents();
-    for (int i = 0; i<billProxy->columnCount(); ++i){
-        if(i==2 && i==3 && i==1 && i==6 && i==7)
-            ui->tableView->setColumnHidden(i,false);
-        else
-            ui->tableView->setColumnHidden(i,true);
-    }
+    ui->tableView->setColumnHidden(0,true);
+    ui->tableView->setColumnHidden(4,true);
+    ui->tableView->setColumnHidden(5,true);
+    for (int i = 8; i<billProxy->columnCount(); ++i)
+        ui->tableView->setColumnHidden(i,true);
 }
 
 UnpaidBillReport::~UnpaidBillReport()
@@ -39,3 +48,48 @@ UnpaidBillReport::~UnpaidBillReport()
     delete ui;
 }
 
+
+void UnpaidBillReport::on_dateEditFrom_userDateChanged(const QDate &date)
+{
+
+}
+
+void UnpaidBillReport::on_dateEditTo_userDateChanged(const QDate &date)
+{
+
+}
+
+void UnpaidBillReport::on_lineEditInvoice_textChanged(const QString &arg1)
+{
+
+}
+
+void UnpaidBillReport::on_lineEditCustomer_textChanged(const QString &arg1)
+{
+
+}
+
+void UnpaidBillReport::on_lineEditTotal_textChanged(const QString &arg1)
+{
+    if(arg1.length() == 0)
+        totalFilter = "0";
+    else
+        totalFilter = arg1;
+    setModel();
+}
+
+void UnpaidBillReport::on_lineEditBalance_textChanged(const QString &arg1)
+{
+    if(arg1.length() == 0)
+        balanceFilter = "0";
+    else
+        balanceFilter = arg1;
+    setModel();
+}
+
+void UnpaidBillReport::setModel()
+{
+    filter = "paidStatus = 'U' and invoiceNo >= "+invoiceNoFilter+" and totalAmount >= "+totalFilter+" and customer_id >= "+customerFilter+" and dueAmount >= "+balanceFilter;
+    billModel->setFilter(filter);
+    billModel->select();
+}

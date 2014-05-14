@@ -61,7 +61,7 @@
          <property name="title">
           <string>GroupBox</string>
          </property>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="lineEditInvoice">
           <property name="geometry">
            <rect>
             <x>220</x>
@@ -71,7 +71,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QDateEdit" name="dateEdit_2">
+         <widget class="QDateEdit" name="dateEditTo">
           <property name="geometry">
            <rect>
             <x>100</x>
@@ -91,7 +91,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="lineEditCustomer">
           <property name="geometry">
            <rect>
             <x>340</x>
@@ -101,7 +101,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_4">
+         <widget class="QLineEdit" name="lineEditTotal">
           <property name="geometry">
            <rect>
             <x>460</x>
@@ -111,7 +111,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QDateEdit" name="dateEdit">
+         <widget class="QDateEdit" name="dateEditFrom">
           <property name="geometry">
            <rect>
             <x>100</x>
@@ -121,7 +121,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_5">
+         <widget class="QLineEdit" name="lineEditBalance">
           <property name="geometry">
            <rect>
             <x>580</x>
