@@ -70,7 +70,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
     actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
     actionBillEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
-    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
+    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Transaction", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);
