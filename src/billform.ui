@@ -161,6 +161,9 @@
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditRate">
           <property name="geometry">
@@ -170,6 +173,9 @@
             <width>81</width>
             <height>23</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditUnit">
@@ -190,6 +196,9 @@
             <width>81</width>
             <height>23</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditInvoiceNo">
@@ -330,9 +339,9 @@ font: bold;</string>
           <property name="geometry">
            <rect>
             <x>220</x>
-            <y>360</y>
+            <y>364</y>
             <width>251</width>
-            <height>131</height>
+            <height>129</height>
            </rect>
           </property>
          </widget>
@@ -377,6 +386,9 @@ font: bold;</string>
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditChange">
           <property name="geometry">
@@ -387,6 +399,9 @@ font: bold;</string>
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditBalance">
           <property name="geometry">
@@ -396,6 +411,9 @@ font: bold;</string>
             <width>101</width>
             <height>23</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButtonClear">
@@ -673,6 +691,9 @@ font: bold;</string>
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditRoundOff">
           <property name="geometry">
@@ -682,6 +703,9 @@ font: bold;</string>
             <width>91</width>
             <height>23</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditTooBePaid">
@@ -693,6 +717,9 @@ font: bold;</string>
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditGiven">
           <property name="geometry">
@@ -702,6 +729,9 @@ font: bold;</string>
             <width>91</width>
             <height>23</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditDiscount">
@@ -713,6 +743,9 @@ font: bold;</string>
             <height>23</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditLimit">
           <property name="geometry">
@@ -722,6 +755,9 @@ font: bold;</string>
             <width>113</width>
             <height>30</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEditUsed">
@@ -733,6 +769,9 @@ font: bold;</string>
             <height>30</height>
            </rect>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
          </widget>
          <widget class="QLineEdit" name="lineEditAvailable">
           <property name="geometry">
@@ -742,6 +781,9 @@ font: bold;</string>
             <width>113</width>
             <height>30</height>
            </rect>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </widget>

@@ -337,6 +337,9 @@ void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel 
     ui->tableViewProductList->setModel(billItemModel);
     ui->tableViewProductList->setColumnHidden(0,true);
     ui->tableViewProductList->setColumnHidden(1,true);
+    ui->tableViewProductList->setItemDelegateForColumn(4, new RightAlignDelegate);
+    ui->tableViewProductList->setItemDelegateForColumn(5, new RightAlignDelegate);
+    ui->tableViewProductList->setItemDelegateForColumn(6, new RightAlignDelegate);
 
     //ui->tableViewProductList->setItemDelegate(new QSqlRelationalDelegate(ui->tableViewProductList));
     setCodeFocus();
@@ -907,6 +910,7 @@ void BillForm::setTransactionTableView()
             if(i!=3 && i!=4)
                 ui->tableViewCustomerBalance->setColumnHidden(i,true);
         }
+        ui->tableViewCustomerBalance->setItemDelegateForColumn(3, new RightAlignDelegate);
         ui->tableViewCustomerBalance->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
         ui->tableViewCustomerBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -1114,3 +1118,4 @@ void BillForm::setRowHeight()
     ui->tableViewCustomerBalance->resizeRowsToContents();
     ui->tableViewProductList->resizeRowsToContents();
 }
+

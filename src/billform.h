@@ -33,6 +33,8 @@
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
 #include "models/transactionmodel.h"
+#include "rightaligndelegate.h"
+
 #include "qtrpt.h"
 
 #include <QWidget>

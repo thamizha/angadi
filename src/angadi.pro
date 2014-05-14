@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     models/transactionmodel.cpp \
     qtrpt.cpp \
     transactionform.cpp \
-    timeeditdelegate.cpp
+    timeeditdelegate.cpp \
+    rightaligndelegate.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -54,7 +55,8 @@ HEADERS  += \
     models/transactionmodel.h \
     qtrpt.h \
     transactionform.h \
-    timeeditdelegate.h
+    timeeditdelegate.h \
+    rightaligndelegate.h
     qtrpt.h
 
 FORMS    += \
