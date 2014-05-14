@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BillSettings</class>
+ <widget class="QDialog" name="BillSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>293</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Bill settings</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>381</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2"/>
+  </widget>
+  <widget class="QLineEdit" name="lineEditPhoneNumber">
+   <property name="geometry">
+    <rect>
+     <x>167</x>
+     <y>103</y>
+     <width>220</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditCompanyName">
+   <property name="geometry">
+    <rect>
+     <x>167</x>
+     <y>43</y>
+     <width>220</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditCity">
+   <property name="geometry">
+    <rect>
+     <x>167</x>
+     <y>73</y>
+     <width>220</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>47</x>
+     <y>133</y>
+     <width>110</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Message</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>47</x>
+     <y>73</y>
+     <width>110</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>City/Town</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>47</x>
+     <y>43</y>
+     <width>110</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Company name</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonClose">
+   <property name="geometry">
+    <rect>
+     <x>197</x>
+     <y>183</y>
+     <width>81</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonSave">
+   <property name="geometry">
+    <rect>
+     <x>87</x>
+     <y>183</y>
+     <width>81</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditMessage">
+   <property name="geometry">
+    <rect>
+     <x>167</x>
+     <y>133</y>
+     <width>220</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>47</x>
+     <y>103</y>
+     <width>110</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Phone number</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>lineEditCompanyName</tabstop>
+  <tabstop>lineEditCity</tabstop>
+  <tabstop>lineEditPhoneNumber</tabstop>
+  <tabstop>lineEditMessage</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonClose</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

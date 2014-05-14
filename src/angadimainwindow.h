@@ -13,7 +13,11 @@
 #include "customerform.h"
 #include "billform.h"
 #include "transactionform.h"
+#include "settings.h"
+#include "billsettings.h"
 #include "unpaidbillreport.h"
+#include "periodwisesalesform.h"
+
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
 #include "models/customersmodel.h"
@@ -37,6 +41,8 @@ class AngadiMainWindow : public QMainWindow
 public:
     explicit AngadiMainWindow(QWidget *parent = 0);
     ~AngadiMainWindow();
+    QString languageFlag;
+    QString checkLanguage();
 
 public slots:
 
@@ -46,7 +52,8 @@ signals:
 private:
     bool tabLoadedStatus(QString tabName);
     Ui::AngadiMainWindow *ui;
-
+    Settings settings;
+    BillSettings billSettings;
     QTimer *timer;
 
     int billTabnumber;
@@ -64,6 +71,7 @@ private:
     QHash<QString,BillForm*> *billTabs;
     TransactionForm *transactionForm;
     UnpaidBillReport *unpaidBillReport;
+    PeriodWiseSalesForm *periodWiseSalesForm;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -122,6 +130,9 @@ private slots:
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void settamil();
     void setenglish();
+    void openPeriodWiseSalesTab();
+    void openPreference();
+    void openBillSettings();
 };
 
 #endif // ANGADIMAINWINDOW_H
