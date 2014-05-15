@@ -28,11 +28,17 @@
 Connection::Connection(QObject *parent) :
     QObject(parent)
 {
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("angadi");
-    db.setUserName("root");
-    db.setPassword("");
+//    Mysql
+//    db = QSqlDatabase::addDatabase("QMYSQL");
+//    db.setHostName("localhost");
+//    db.setDatabaseName("angadi");
+//    db.setUserName("root");
+//    db.setPassword("");
+//    db.open();
+
+//    Sqlite
+    db =  QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(QCoreApplication::applicationDirPath() + QDir::separator() + "angadi.sqlite");
     db.open();
 }
 

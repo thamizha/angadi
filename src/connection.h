@@ -42,7 +42,7 @@
 #include <QMetaProperty>
 #include <QDebug>
 #include <QSqlError>
-
+#include <QtSql/QtSql>
 
 class Connection : public QObject
 {
