@@ -95,3 +95,14 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 OTHER_FILES += \
     angadicpp
+
+CONFIG(debug, debug|release) {
+    DESTDIR = Angadi-V0.5/debug
+} else {
+    DESTDIR = Angadi-V0.5
+}
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.ui
