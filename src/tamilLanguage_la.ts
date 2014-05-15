@@ -5,7 +5,7 @@
     <name>AngadiMainWindow</name>
     <message>
         <source>Angadi</source>
-        <translation type="unfinished">Angadi</translation>
+        <translation type="unfinished">அங்காடி</translation>
     </message>
     <message>
         <source>Home</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">பற்றி தொடர்பு</translation>
+        <translation type="unfinished">எம்மை பற்றி</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Bill Entry</source>
-        <translation type="unfinished">பில் நுழைவு</translation>
+        <translation type="unfinished">புதிய பில்</translation>
     </message>
     <message>
         <source>Customer</source>
@@ -61,11 +61,11 @@
     </message>
     <message>
         <source>Due Bills</source>
-        <translation type="unfinished">பில்கள் காரணமாக</translation>
+        <translation type="unfinished">கடன் பில்கள்</translation>
     </message>
     <message>
         <source>About Angadi</source>
-        <translation type="unfinished">Angadi பற்றி தொடர்பு</translation>
+        <translation type="unfinished">அங்காடி பற்றி</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -77,62 +77,58 @@
     </message>
     <message>
         <source>Home Page Settings</source>
-        <translation type="unfinished">முகப்பு பக்க அமைப்புகள்</translation>
-    </message>
-    <message>
-        <source>Period Wise</source>
-        <translation type="obsolete">காலம் வைஸ்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View Bills</source>
-        <translation type="unfinished">காட்சி பில்கள்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Product</source>
-        <translation type="unfinished">விளைபொருள்</translation>
+        <translation type="unfinished">பொருள்</translation>
     </message>
     <message>
         <source>Bill Transactions</source>
-        <translation type="unfinished">பில் நடவடிக்கைகள்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Product List</source>
-        <translation type="unfinished">தயாரிப்பு பட்டியல்</translation>
+        <translation type="unfinished">பொருட்கள்</translation>
     </message>
     <message>
         <source>Tamil</source>
-        <translation type="unfinished">தமிழ்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">ஆங்கிலம்(English)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Categories List</source>
-        <translation type="unfinished">வகை பட்டியல்</translation>
+        <translation type="unfinished">வகைகள்</translation>
     </message>
     <message>
         <source>Customers List</source>
-        <translation type="unfinished">வாடிக்கையாளர்கள் பட்டியல்</translation>
+        <translation type="unfinished">வாடிக்கையாளர்கள்</translation>
     </message>
     <message>
         <source>Unpaid bills List</source>
-        <translation type="unfinished">செலுத்தப்படாத பில்கள் பட்டியல்</translation>
+        <translation type="unfinished">நிலுவை பில்கள்</translation>
     </message>
     <message>
         <source>Period Wise Sales</source>
-        <translation type="unfinished">விற்பனை காலத்தின் வாரியாக</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transaction Report</source>
-        <translation type="unfinished">பணம் பரிவர்த்தனை ரிப்போர்ட்</translation>
+        <translation type="unfinished">பரிவர்த்தன அறிக்கை</translation>
     </message>
 </context>
 <context>
     <name>BillForm</name>
     <message>
         <source>Error Notification</source>
-        <translation type="unfinished">பிழை அறிவித்தல்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bill</source>
@@ -140,11 +136,11 @@
     </message>
     <message>
         <source>Invoice No</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>Customer Code</source>
-        <translation type="unfinished">வாடிக்கையாளர் எண்code</translation>
+        <translation type="unfinished">வாடிக்கையாளர் எண்</translation>
     </message>
     <message>
         <source>Customer Address</source>
@@ -152,7 +148,7 @@
     </message>
     <message>
         <source>Invoice Date</source>
-        <translation type="unfinished">விலைப்பட்டியல் தேதி</translation>
+        <translation type="unfinished">பில் தேதி</translation>
     </message>
     <message>
         <source>Customer Name</source>
@@ -160,7 +156,7 @@
     </message>
     <message>
         <source>Customer Credit</source>
-        <translation type="unfinished">வாடிக்கையாளர் கடன்</translation>
+        <translation type="unfinished">கடன் விபரம்</translation>
     </message>
     <message>
         <source>Balance</source>
@@ -172,7 +168,7 @@
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished">சில்லறை</translation>
+        <translation type="unfinished">மீதம்</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -195,36 +191,36 @@
         <translation type="unfinished">மொத்தம்</translation>
     </message>
     <message>
-        <source>Discount %</source>
-        <translation type="obsolete">தள்ளுபடி%</translation>
+        <source>Discount</source>
+        <translation type="unfinished">தள்ளுபடி</translation>
     </message>
     <message>
         <source>Round Off</source>
-        <translation type="unfinished">முழுதாக்கல்</translation>
+        <translation type="unfinished">ரவுண்டாக</translation>
     </message>
     <message>
         <source>Too Be Paid</source>
-        <translation type="unfinished">செலுத்த வேண்டிய தொகை</translation>
+        <translation type="unfinished"> பில் தொகை</translation>
     </message>
     <message>
         <source>Given</source>
-        <translation type="unfinished">கொடுக்கப்பட்ட தொகை</translation>
+        <translation type="unfinished">வரவு</translation>
     </message>
     <message>
         <source>Limit</source>
-        <translation type="unfinished">கடன் வரம்பு</translation>
+        <translation type="unfinished">வரம்பு</translation>
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">பயன்படுத்தியவை</translation>
+        <translation type="unfinished">கடன்</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">பயன்படுத்தாதவை</translation>
+        <translation type="unfinished">மீதம்</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Form</source>
@@ -235,20 +231,16 @@
         <translation type="unfinished">அச்சிடு</translation>
     </message>
     <message>
-        <source>Discount</source>
-        <translation type="unfinished">தள்ளுபடி</translation>
-    </message>
-    <message>
         <source>Product Name</source>
-        <translation type="unfinished">விளைபொருள் பெயர்</translation>
+        <translation type="unfinished">பொருள் பெயர்</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished">அளவு</translation>
+        <translation type="unfinished">அலகு</translation>
     </message>
     <message>
         <source>Unit Price</source>
-        <translation type="unfinished">அலகு விலை</translation>
+        <translation type="unfinished">விலை</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -267,11 +259,11 @@
     </message>
     <message>
         <source>City/Town</source>
-        <translation type="unfinished">நகரம் / டவுன்</translation>
+        <translation type="unfinished">நகரம்</translation>
     </message>
     <message>
         <source>Company name</source>
-        <translation type="unfinished">நிறுவனத்தின் பெயர்</translation>
+        <translation type="unfinished">நிறுவனப் பெயர்</translation>
     </message>
     <message>
         <source>Close</source>
@@ -360,7 +352,7 @@
     </message>
     <message>
         <source>Credit Limit</source>
-        <translation type="unfinished">கடன் அளவு</translation>
+        <translation type="unfinished">கடன் வரம்பு</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -384,7 +376,7 @@
     </message>
     <message>
         <source>Contact person</source>
-        <translation type="unfinished">தொடர்புகொள்ள வேண்டிய​ நபர்</translation>
+        <translation type="unfinished">பொறுப்பாளர்</translation>
     </message>
     <message>
         <source>Mobile 2</source>
@@ -447,7 +439,7 @@
     <name>LoginDialog</name>
     <message>
         <source>Angadi Login</source>
-        <translation type="unfinished">Angadi புகுபதிகை</translation>
+        <translation type="unfinished">அங்காடி புகுபதிகை</translation>
     </message>
     <message>
         <source>Username</source>
@@ -482,7 +474,7 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -501,7 +493,7 @@
     </message>
     <message>
         <source>MRP</source>
-        <translation type="unfinished">அதிகபட்ச விலை</translation>
+        <translation type="unfinished">MRP</translation>
     </message>
     <message>
         <source>Category</source>
@@ -529,11 +521,11 @@
     </message>
     <message>
         <source>Whole Sale Price</source>
-        <translation type="unfinished">மொத்த விற்பனை விலை</translation>
+        <translation type="unfinished">மொத்த விலை</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished">அளவு</translation>
+        <translation type="unfinished">அலகு</translation>
     </message>
     <message>
         <source>Sale Price</source>
@@ -548,15 +540,15 @@
     <name>QObject</name>
     <message>
         <source>Product Name</source>
-        <translation type="obsolete">விளைபொருள் பெயர்</translation>
+        <translation type="obsolete">பொருள் பெயர்</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="obsolete">அளவு</translation>
+        <translation type="obsolete">அலகு</translation>
     </message>
     <message>
         <source>Unit Price</source>
-        <translation type="obsolete">அலகு விலை</translation>
+        <translation type="obsolete">விலை</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -568,11 +560,11 @@
     </message>
     <message>
         <source>Invoice No</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>Invoice Date</source>
-        <translation type="obsolete">விலைப்பட்டியல் தேதி</translation>
+        <translation type="obsolete">பில் தேதி</translation>
     </message>
     <message>
         <source>Code</source>
@@ -584,7 +576,7 @@
     </message>
     <message>
         <source>Invoice Number</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>Customer Name</source>
@@ -592,15 +584,15 @@
     </message>
     <message>
         <source>Paid Date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">வரவு தேதி</translation>
     </message>
     <message>
         <source>Paid Amount</source>
-        <translation type="unfinished">செலுத்தப்பட்ட தொகை</translation>
+        <translation type="unfinished">வரவு</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">தேதி</translation>
     </message>
     <message>
         <source>Bill Amount</source>
@@ -609,6 +601,10 @@
     <message>
         <source>Balance</source>
         <translation type="unfinished">இருப்பு</translation>
+    </message>
+    <message>
+        <source>Paid By</source>
+        <translation type="unfinished">செலுத்தியவர்</translation>
     </message>
 </context>
 <context>
@@ -619,11 +615,11 @@
     </message>
     <message>
         <source>Tin Number</source>
-        <translation type="unfinished">டின் எண்</translation>
+        <translation type="unfinished">Tin எண்</translation>
     </message>
     <message>
         <source>Company Name</source>
-        <translation type="unfinished">நிறுவனத்தின் பெயர்</translation>
+        <translation type="unfinished">நிறுவனப் பெயர்</translation>
     </message>
     <message>
         <source>Address</source>
@@ -643,7 +639,7 @@
     </message>
     <message>
         <source>Select Language</source>
-        <translation type="unfinished">மொழியை தேர்ந்தெடு</translation>
+        <translation type="unfinished">மொழி</translation>
     </message>
     <message>
         <source>Close</source>
@@ -665,7 +661,7 @@
     </message>
     <message>
         <source>Transaction</source>
-        <translation type="unfinished">பணம் பரிவர்த்தனை</translation>
+        <translation type="unfinished">பரிவர்த்தனை</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -681,7 +677,7 @@
     </message>
     <message>
         <source>Payment Date</source>
-        <translation type="unfinished">பணம் செலுத்திய​ தேதி</translation>
+        <translation type="unfinished">வரவு தேதி</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -689,11 +685,11 @@
     </message>
     <message>
         <source>Paid Amount</source>
-        <translation type="unfinished">செலுத்தப்பட்ட தொகை</translation>
+        <translation type="unfinished">வரவு</translation>
     </message>
     <message>
         <source>Pay Mode</source>
-        <translation type="unfinished">செலுத்திய முறை</translation>
+        <translation type="unfinished">வரவு முறை</translation>
     </message>
     <message>
         <source>Paid By</source>
@@ -701,15 +697,15 @@
     </message>
     <message>
         <source>Invoice No</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invoice Number</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>Customer Name</source>
@@ -728,7 +724,7 @@
     </message>
     <message>
         <source>Invoice No</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>Customer Name</source>
@@ -736,15 +732,15 @@
     </message>
     <message>
         <source>Bill Amount</source>
-        <translation type="unfinished">பில் தொகை</translation>
+        <translation type="obsolete">பில் தொகை</translation>
     </message>
     <message>
         <source>From Date</source>
-        <translation type="unfinished">தேதி முதல்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To Date</source>
-        <translation type="unfinished">தேதி வரை</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Paid By</source>
@@ -752,7 +748,11 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paid Amount</source>
+        <translation type="unfinished">வரவு</translation>
     </message>
 </context>
 <context>
@@ -767,15 +767,15 @@
     </message>
     <message>
         <source>Invoice No</source>
-        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+        <translation type="unfinished">பில் எண்</translation>
     </message>
     <message>
         <source>From Date</source>
-        <translation type="unfinished">தேதி முதல்</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To Date</source>
-        <translation type="unfinished">தேதி வரை</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Customer Name</source>
@@ -791,7 +791,7 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -551,6 +551,10 @@
         <source>Balance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Paid By</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -672,10 +676,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bill Amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -689,6 +689,10 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paid Amount</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
