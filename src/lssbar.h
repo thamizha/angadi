@@ -42,7 +42,7 @@ public:
     QTableView *tableView;
     QLineEdit *lineEditSearch;
     int indexOffset; // initialization of index offset and reset it to 0 used to move the selection  based on up/down key press
-    void settranslate();
+
 signals:
     void signalEdit(QModelIndex);
     void signalSearch(QString value);

@@ -58,7 +58,7 @@ signals:
 public slots:
 
 private:
-
+    void createSqliteTables();
 };
 
 #endif // CONNECTION_H

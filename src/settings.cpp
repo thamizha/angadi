@@ -40,41 +40,7 @@ Settings::Settings(QWidget *parent) :
     ui->comboBoxLanguage->addItem("தமிழ்");
     ui->comboBoxLanguage->addItem("English");
 
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-
-    if(settings.value("s_language","").toString() == "tamil_languag")
-        ui->comboBoxLanguage->setCurrentIndex(0);
-    if(settings.value("s_language","").toString() == "english_language")
-        ui->comboBoxLanguage->setCurrentIndex(1);
-
-    ui->lineEditAddress->setText(settings.value("s_address","").toString());
-    ui->lineEditComapanyName->setText(settings.value("s_companyName","").toString());
-    ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
-    ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
-
-
-    //    Language setup
-//    QString app_path;
-//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-//    QSettings settings(app_path,QSettings::NativeFormat);
-    QString content = settings.value("s_language","").toString();
-
-    if(content == "tamil_language"){
-        QTranslator translator;
-        translator.load("tamilLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-
-     }else{
-        QTranslator translator;
-        translator.load("englishLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-    }
+    setLanguage();
 }
 
 Settings::~Settings()
@@ -143,4 +109,42 @@ void Settings::on_pushButtonSave_clicked()
 void Settings::on_pushButtonClose_clicked()
 {
     this->hide();
+}
+
+void Settings::setLanguage()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+
+    if(settings.value("s_language","").toString() == "tamil_languag")
+        ui->comboBoxLanguage->setCurrentIndex(0);
+    if(settings.value("s_language","").toString() == "english_language")
+        ui->comboBoxLanguage->setCurrentIndex(1);
+
+    ui->lineEditAddress->setText(settings.value("s_address","").toString());
+    ui->lineEditComapanyName->setText(settings.value("s_companyName","").toString());
+    ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
+    ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
+
+    //    Language setup
+//    QString app_path;
+//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+//    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }

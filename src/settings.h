@@ -47,6 +47,7 @@ private slots:
 
 private:
     Ui::Settings *ui;
+    void setLanguage();
 };
 
 #endif // SETTINGS_H

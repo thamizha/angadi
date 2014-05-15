@@ -130,14 +130,6 @@
     <addaction name="actionUnpaid_bills_List"/>
     <addaction name="actionTransaction_Report"/>
    </widget>
-   <widget class="QMenu" name="menuUpdate">
-    <property name="title">
-     <string>Update</string>
-    </property>
-    <addaction name="actionUpdateItem"/>
-    <addaction name="actionUpdateCategory"/>
-    <addaction name="actionUpdateCustomer"/>
-   </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
      <string>About</string>
@@ -153,7 +145,6 @@
     <addaction name="separator"/>
    </widget>
    <addaction name="menuCreate"/>
-   <addaction name="menuUpdate"/>
    <addaction name="menuTransactions"/>
    <addaction name="menuReports"/>
    <addaction name="menuSettings"/>
@@ -219,6 +210,9 @@
    </property>
   </action>
   <action name="actionUpdateItem">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Item</string>
    </property>

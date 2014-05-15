@@ -65,6 +65,7 @@ private slots:
     void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
+    void setLanguage();
 };
 
 #endif // CategoryForm_H

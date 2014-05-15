@@ -82,25 +82,7 @@ CustomerForm::CustomerForm(QWidget *parent) :
     connect(ui->lineEditEmail,SIGNAL(editingFinished()),this,SLOT(emailValid()));
 
     setFieldMaxLength();
-
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-    QString content = settings.value("s_language","").toString();
-
-    if(content == "tamil_language"){
-        QTranslator translator;
-        translator.load("tamilLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-     }else{
-        QTranslator translator;
-        translator.load("englishLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-    }
+    setLanguage();
 }
 
 CustomerForm::~CustomerForm()
@@ -714,4 +696,26 @@ void CustomerForm::setAllValidationSuccess()
     ui->textEditNote->setProperty("validationError",false);
     ui->textEditNote->setProperty("validationSuccess",false);
     ui->textEditNote->setStyleSheet(styleSheet());
+}
+
+void CustomerForm::setLanguage()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }

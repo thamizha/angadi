@@ -92,6 +92,7 @@ private slots:
     void uninstallEventFilter();
     void setAllValidationSuccess();
     bool categoryValid();
+    void setLanguage();
 };
 
 #endif // PRODUCTFORM_H

@@ -32,12 +32,6 @@ PeriodWiseSalesForm::PeriodWiseSalesForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-//    QDate date = QDate::currentDate();
-//    ui->dateEditFrom->setDate(date);
-    //ui->dateEditFrom->setSelectedSection(QDateEdit::NoSection);
-    //ui->dateEditTo->setDate(date);
-    //ui->dateEditTo->setSelectedSection(QDateEdit::NoSection);
-
     fromFilter = "2014-01-01";
     toFilter = "2015-01-01";
     invoiceNoFilter = "";
@@ -72,6 +66,13 @@ PeriodWiseSalesForm::PeriodWiseSalesForm(QWidget *parent) :
 
     for (int i = 8; i<billProxy->columnCount(); ++i)
         ui->tableView->setColumnHidden(i,true);
+
+    QDate date = QDate::currentDate();
+    ui->dateEditFrom->setDate(date);
+    ui->dateEditFrom->setSelectedSection(QDateEdit::NoSection);
+    ui->dateEditTo->setDate(date);
+    ui->dateEditTo->setSelectedSection(QDateEdit::NoSection);
+
 }
 
 PeriodWiseSalesForm::~PeriodWiseSalesForm()

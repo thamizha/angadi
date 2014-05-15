@@ -44,6 +44,10 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Remove inactive menus
+    ui->actionDueBill->setVisible(false);
+    ui->actionViewBills->setVisible(false);
+
     timer = new QTimer;
 
     lssbar = new Lssbar;
@@ -62,17 +66,11 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     showRightDock(false);
     ui->rightDock->setWidget(lssbar);
 
-    ui->actionCreateCategory->setIcon(QIcon(":/images/toolbaricons/category.png"));
-    ui->actionCreateProduct->setIcon(QIcon(":/images/toolbaricons/products.gif"));
-    ui->actionCreateCustomer->setIcon(QIcon(":/images/toolbaricons/customer.png"));
-    ui->actionBillEntry->setIcon(QIcon(":/images/toolbaricons/bill.png"));
-    ui->actionTransactionEntry->setIcon(QIcon(":/images/toolbaricons/transaction.png"));
-
-    actionCategory = new QAction(QIcon(":/images/toolbaricons/category.png"), "&Category", this);
-    actionProduct = new QAction(QIcon(":/images/toolbaricons/products.gif"), "&Product", this);
-    actionCustomer = new QAction(QIcon(":/images/toolbaricons/customer.png"), "&Customer", this);
-    actionBillEntry = new QAction(QIcon(":/images/toolbaricons/bill.png"), "&Bill", this);
-    actionTransactionEntry = new QAction(QIcon(":/images/toolbaricons/transaction.png"), "&Transactions", this);
+    actionCategory = new QAction(QIcon(":/images/icons/category.png"), "&Category", this);
+    actionProduct = new QAction(QIcon(":/images/icons/products.gif"), "&Product", this);
+    actionCustomer = new QAction(QIcon(":/images/icons/customer.png"), "&Customer", this);
+    actionBillEntry = new QAction(QIcon(":/images/icons/bill.png"), "&Bill", this);
+    actionTransactionEntry = new QAction(QIcon(":/images/icons/transaction.png"), "&Transactions", this);
 
     QToolBar * toolBar= new QToolBar("Main Window Tool Bar");
     toolBar->addAction(actionCategory);
@@ -86,34 +84,8 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     setupProperties();
     setupConnections();
     setupModels();
-
-
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-    QString content = settings.value("s_language","").toString();
-
-    if(content == "tamil_language"){
-        QTranslator translator;
-        translator.load("tamilLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-
-        actionCategory->setText(AngadiMainWindow::tr("Category"));
-        actionProduct->setText(ProductForm::tr("Product"));
-        actionCustomer->setText(CustomerForm::tr("Customer"));
-        actionBillEntry->setText(BillForm::tr("Bill"));
-        actionTransactionEntry->setText(TransactionForm::tr("Transaction"));
-
-        languageFlag = "tamil";
-     }else{
-        QTranslator translator;
-        translator.load("englishLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-    }
+    setMenuIcons();
+    setLanguage();
 }
 
 AngadiMainWindow::~AngadiMainWindow()
@@ -993,5 +965,65 @@ void AngadiMainWindow::setReportValue(int &recNo, QString &paramName, QVariant &
     if (paramName == "Name") {
         if (record.value("name").toString().length() == 0) return;
         paramValue = record.value("name").toString();
+    }
+}
+
+void AngadiMainWindow::setMenuIcons()
+{
+//    create
+    ui->actionCreateCategory->setIcon(QIcon(":/images/icons/category.png"));
+    ui->actionCreateProduct->setIcon(QIcon(":/images/icons/products.gif"));
+    ui->actionCreateCustomer->setIcon(QIcon(":/images/icons/customer.png"));
+
+//    bill
+    ui->actionBillEntry->setIcon(QIcon(":/images/icons/bill.png"));
+    ui->actionTransactionEntry->setIcon(QIcon(":/images/icons/transaction.png"));
+
+//    reports
+    ui->actionPeriod_Wise_Sales->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+    ui->actionCategories_List->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+    ui->actionProduct_List->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+    ui->actionCustomers_List->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+    ui->actionUnpaid_bills_List->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+    ui->actionTransaction_Report->setIcon(QIcon(":/images/icons/Reports Icon.jpg"));
+
+//    settings
+    ui->actionPreferences->setIcon(QIcon(":/images/icons/settings.png"));
+    ui->actionBill_Settings->setIcon(QIcon(":/images/icons/settings.png"));
+
+//    about
+    ui->actionAbout_Angadi->setIcon(QIcon(":/images/icons/about.png"));
+
+//    exit
+    ui->actionExit->setIcon(QIcon(":/images/icons/exit.jpg"));
+}
+
+void AngadiMainWindow::setLanguage()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+        actionCategory->setText(AngadiMainWindow::tr("Category"));
+        actionProduct->setText(ProductForm::tr("Product"));
+        actionCustomer->setText(CustomerForm::tr("Customer"));
+        actionBillEntry->setText(BillForm::tr("Bill"));
+        actionTransactionEntry->setText(TransactionForm::tr("Transaction"));
+
+        languageFlag = "tamil";
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }

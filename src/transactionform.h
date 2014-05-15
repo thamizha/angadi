@@ -92,6 +92,7 @@ private slots:
     bool invoiceNoValid();
     bool amountValid();
     bool billStatus();
+    void setLanguage();
 };
 
 #endif // TRANSACTIONFORM_H
