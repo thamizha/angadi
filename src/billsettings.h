@@ -49,6 +49,7 @@ private slots:
 
 private:
     Ui::BillSettings *ui;
+    void setLanguage();
 };
 
 #endif // BILLSETTINGS_H

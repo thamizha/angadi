@@ -136,6 +136,8 @@ private slots:
     void openPeriodWiseSalesTab();
     void openPreference();
     void openBillSettings();
+    void setMenuIcons();
+    void setLanguage();
 };
 
 #endif // ANGADIMAINWINDOW_H

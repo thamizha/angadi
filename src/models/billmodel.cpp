@@ -25,15 +25,45 @@
 
 #include "billmodel.h"
 #include "connection.h"
+#include "billform.h"
+
+#include <QTranslator>
+#include <QSettings>
+#include <QApplication>
 
 BillModel::BillModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
+
+    //    Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+    QString lanInvoiceNo;
+    QString lanInvoiceDate;
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanInvoiceNo = BillForm::tr("Invoice No");
+        lanInvoiceDate = BillForm::tr("Invoice Date");
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanInvoiceNo = BillForm::tr("Invoice No");
+        lanInvoiceDate = BillForm::tr("Invoice Date");
+    }
+
+
     setTable("bill");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
 //    setRelation(3, QSqlRelation("customers", "id", "name"));
-    setHeaderData(fieldIndex("invoiceNo"), Qt::Horizontal,QObject::tr("Invoice No"));
-    setHeaderData(fieldIndex("invoiceDate"), Qt::Horizontal, QObject::tr("Invoice Date"));
+    setHeaderData(fieldIndex("invoiceNo"), Qt::Horizontal, lanInvoiceNo);
+    setHeaderData(fieldIndex("invoiceDate"), Qt::Horizontal, lanInvoiceDate);
     setFilter("bill.status = 'A'");
 //    relationModel(3)->setFilter("status = 'A'");
 //    setSort(fieldIndex("id"),Qt::AscendingOrder);

@@ -141,6 +141,7 @@ private slots:
     void on_pushButtonPrint_clicked();
     void calBalance();
     void setRowHeight();
+    void setLanguage();
 };
 
 #endif // BILLFORM_H

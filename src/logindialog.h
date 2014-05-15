@@ -25,6 +25,7 @@ private slots:
 
 private:
     Ui::LoginDialog *ui;
+    void setLanguage();
 };
 
 #endif // LOGINDIALOG_H

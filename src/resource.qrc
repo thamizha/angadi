@@ -1,9 +1,13 @@
 <RCC>
-    <qresource prefix="/images/toolbaricons">
+    <qresource prefix="/images/icons">
         <file>category.png</file>
         <file>products.gif</file>
         <file>customer.png</file>
         <file>bill.png</file>
         <file>transaction.png</file>
+        <file>exit.jpg</file>
+        <file>Reports Icon.jpg</file>
+        <file>about.png</file>
+        <file>settings.png</file>
     </qresource>
 </RCC>

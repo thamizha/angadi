@@ -25,15 +25,48 @@
 
 #include "transactionmodel.h"
 #include "../connection.h"
+#include "transactionform.h"
+
 #include <QDebug>
+#include <QTranslator>
+#include <QSettings>
+#include <QApplication>
 
 TransactionModel::TransactionModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
+
+    //    Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+    QString lanInvoiceNumber;
+    QString lanCustomerName;
+    QString lanPaidAmount;
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanInvoiceNumber = TransactionForm::tr("Invoice Number");
+        lanCustomerName = TransactionForm::tr("Customer Name");
+        lanPaidAmount = TransactionForm::tr("Paid Amount");
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanInvoiceNumber = TransactionForm::tr("Invoice Number");
+        lanCustomerName = TransactionForm::tr("Customer Name");
+        lanPaidAmount = TransactionForm::tr("Paid Amount");
+    }
+
     setTable("transactions");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setHeaderData(fieldIndex("bill_id"), Qt::Horizontal, QObject::tr("Invoice Number"));
-    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, QObject::tr("Customer Name"));
+    setHeaderData(fieldIndex("bill_id"), Qt::Horizontal, lanInvoiceNumber);
+    setHeaderData(fieldIndex("customer_id"), Qt::Horizontal, lanCustomerName);
+    setHeaderData(fieldIndex("paidAmount"), Qt::Horizontal, lanPaidAmount);
     setRelation(fieldIndex("bill_id"), QSqlRelation("bill", "id", "invoiceNo"));
     setRelation(fieldIndex("customer_id"), QSqlRelation("customers", "id", "name"));
 //    relationModel(1)->setFilter("paidStatus = 'U' and status = 'A'");

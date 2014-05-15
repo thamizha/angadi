@@ -25,17 +25,53 @@
 
 #include "billitemmodel.h"
 #include "../connection.h"
-
+#include "billform.h"
+#include <QTranslator>
+#include <QSettings>
+#include <QApplication>
 BillItemModel::BillItemModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
+    //    Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+    QString lanProductName;
+    QString lanUnit;
+    QString lanUnitPrice;
+    QString lanQuantity;
+    QString lanTotal;
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanProductName = BillForm::tr("Product Name");
+        lanUnit = BillForm::tr("Unit");
+        lanUnitPrice = BillForm::tr("Unit Price");
+        lanQuantity = BillForm::tr("Quantity");
+        lanTotal = BillForm::tr("Total");
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanProductName = BillForm::tr("Product Name");
+        lanUnit = BillForm::tr("Unit");
+        lanUnitPrice = BillForm::tr("Unit Price");
+        lanQuantity = BillForm::tr("Quantity");
+        lanTotal = BillForm::tr("Total");
+    }
+
+
     setTable("bill_item");
     setEditStrategy(QSqlTableModel::OnManualSubmit);
-    setHeaderData(fieldIndex("product_id"), Qt::Horizontal, QObject::tr("Product Name"));
-    setHeaderData(fieldIndex("unit"), Qt::Horizontal, QObject::tr("Unit"));
-    setHeaderData(fieldIndex("unitPrice"), Qt::Horizontal, QObject::tr("Unit Price"));
-    setHeaderData(fieldIndex("quantity"), Qt::Horizontal, QObject::tr("Quantity"));
-    setHeaderData(fieldIndex("total"), Qt::Horizontal, QObject::tr("Total"));
+    setHeaderData(fieldIndex("product_id"), Qt::Horizontal, lanProductName);
+    setHeaderData(fieldIndex("unit"), Qt::Horizontal, lanUnit);
+    setHeaderData(fieldIndex("unitPrice"), Qt::Horizontal, lanUnitPrice);
+    setHeaderData(fieldIndex("quantity"), Qt::Horizontal, lanQuantity);
+    setHeaderData(fieldIndex("total"), Qt::Horizontal, lanTotal);
 //    setRelation(fieldIndex("product_id"), QSqlRelation("products", "id", "name"));
 //    setHeaderData(fieldIndex("products_id"), Qt::Horizontal, QObject::tr("Product Name"));
 //    setFilter("bill.status = 'A'");

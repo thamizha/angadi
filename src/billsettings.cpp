@@ -39,36 +39,7 @@ BillSettings::BillSettings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-
-    ui->lineEditCity->setText(settings.value("billSetting_City","").toString());
-    ui->lineEditCompanyName->setText(settings.value("billSetting_CompanyName","").toString());
-    ui->lineEditMessage->setText(settings.value("billSetting_Message","").toString());
-    ui->lineEditPhoneNumber->setText(settings.value("billSetting_PhoneNumber","").toString());
-
-    //Language setup
-//    QString app_path;
-//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-//    QSettings settings(app_path,QSettings::NativeFormat);
-    QString content = settings.value("s_language","").toString();
-
-    if(content == "tamil_language"){
-        QTranslator translator;
-        translator.load("tamilLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-
-     }else{
-        QTranslator translator;
-        translator.load("englishLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-    }
-
+    setLanguage();
 }
 
 BillSettings::~BillSettings()
@@ -98,4 +69,37 @@ void BillSettings::on_pushButtonSave_clicked()
 void BillSettings::on_pushButtonClose_clicked()
 {
     this->hide();
+}
+
+void BillSettings::setLanguage()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+
+    ui->lineEditCity->setText(settings.value("billSetting_City","").toString());
+    ui->lineEditCompanyName->setText(settings.value("billSetting_CompanyName","").toString());
+    ui->lineEditMessage->setText(settings.value("billSetting_Message","").toString());
+    ui->lineEditPhoneNumber->setText(settings.value("billSetting_PhoneNumber","").toString());
+
+    //Language setup
+//    QString app_path;
+//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+//    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
