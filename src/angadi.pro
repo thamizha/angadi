@@ -67,7 +67,7 @@ HEADERS  += \
     unpaidbillreport.h \
     periodwisesalesform.h \
     qtrpt.h \
-    transactionreport.h
+    transactionreport.h \
 
 FORMS    += \
     angadimainwindow.ui \
@@ -106,3 +106,9 @@ OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 RCC_DIR = $$DESTDIR/.qrc
 UI_DIR = $$DESTDIR/.ui
+
+copydata.commands = $(COPY_DIR) $$PWD/.reports $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata

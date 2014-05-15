@@ -157,7 +157,7 @@ void AngadiMainWindow::setupConnections()
 void AngadiMainWindow::settamil()
 {
  QString app_path;
- app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+ app_path = QApplication::applicationDirPath() + QDir::separator() +"settings.ini";
  QSettings settings(app_path,QSettings::NativeFormat);
  QString s_string = "tamil_language";
  settings.setValue("s_language",s_string);
@@ -171,7 +171,7 @@ void AngadiMainWindow::settamil()
 void AngadiMainWindow::setenglish()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath()+ QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString s_string = "english_language";
     settings.setValue("s_language",s_string);
@@ -180,7 +180,7 @@ void AngadiMainWindow::setenglish()
 QString AngadiMainWindow::checkLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
     return(content);
@@ -864,7 +864,7 @@ void AngadiMainWindow::changeLssBarSource()
 
 void AngadiMainWindow::showCategoriesListReport()
 {
-    QString fileName = "./reports/categories_list.xml";
+    QString fileName = QCoreApplication::applicationDirPath() + QDir::separator() + ".reports" + QDir::separator() + "categories_list.xml";
     report = new QtRPT(this);
 //    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
 
@@ -896,7 +896,7 @@ void AngadiMainWindow::showCategoriesListReport()
 
 void AngadiMainWindow::showProductListReport()
 {
-    QString fileName = "./reports/product_list.xml";
+    QString fileName = QCoreApplication::applicationDirPath() + QDir::separator() + ".reports" + QDir::separator() + "product_list.xml";
     report = new QtRPT(this);
 //    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
 
@@ -928,7 +928,7 @@ void AngadiMainWindow::showProductListReport()
 
 void AngadiMainWindow::showCustomersListReport()
 {
-    QString fileName = "./reports/customers_list.xml";
+    QString fileName = QCoreApplication::applicationDirPath() + QDir::separator() + ".reports" + QDir::separator() + "customers_list.xml";
     report = new QtRPT(this);
 //    report->setBackgroundImage(QPixmap("./qt_background_portrait.png"));
 
@@ -1005,7 +1005,7 @@ void AngadiMainWindow::setMenuIcons()
 void AngadiMainWindow::setLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 

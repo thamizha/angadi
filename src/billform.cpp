@@ -134,7 +134,7 @@ void BillForm::settranslate()
 void BillForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 
@@ -1056,7 +1056,7 @@ void BillForm::calBalance()
 
 void BillForm::on_pushButtonPrint_clicked()
 {
-    QString fileName = "./reports/bill.xml";
+    QString fileName = QCoreApplication::applicationDirPath() + QDir::separator() + ".reports" + QDir::separator() + "bill.xml";
     report = new QtRPT(this);
 
 //    reportModel = new QSqlRelationalTableModel;
@@ -1091,6 +1091,18 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
 {
     Q_UNUSED(reportPage);
     QSqlQuery itemQuery;
+
+    QSettings settings(QApplication::applicationDirPath() + QDir::separator() + "settings.ini", QSettings::NativeFormat);
+    QString companyName = settings.value("s_companyName","").toString();
+    QString companyAddress = settings.value("s_address","").toString();
+    QString companyPhone = settings.value("s_phoneNumber","").toString();
+
+    if (paramName == "companyname")
+        paramValue = companyName;
+    if (paramName == "companyaddress")
+        paramValue = companyAddress;
+    if (paramName == "companyphone")
+        paramValue = companyPhone;
 
     QSqlRecord record = reportModel->record(recNo);
     if (paramName == "InvoiceNo")
@@ -1148,7 +1160,7 @@ void BillForm::setRowHeight()
 void BillForm::setLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 

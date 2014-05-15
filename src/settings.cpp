@@ -33,6 +33,7 @@
 #include <QProcess>
 #include <QTranslator>
 #include <QDialog>
+#include <QDir>
 
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
@@ -52,12 +53,10 @@ Settings::~Settings()
 
 void Settings::settingsModal()
 {
-    qDebug() << "Triggered";
     QDialog preferenceDialog(this);
     preferenceDialog.setModal(true);
 
     preferenceDialog.exec();
-//    preferenceDialog.show();
 }
 
 void Settings::settranslate()
@@ -68,54 +67,38 @@ void Settings::settranslate()
 
 void Settings::on_pushButtonSave_clicked()
 {
-    qDebug() << ui->comboBoxLanguage->currentText();
+    QString app_path, s_language;
 
-    QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, "Preference settings", "Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
-      if (reply == QMessageBox::Ok) \
-      {
-        QString s_language;
-        if(ui->comboBoxLanguage->currentText() == "தமிழ்")
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+
+    QString oldLanguage = settings.value("s_language","").toString();
+
+    settings.setValue("s_language",s_language);
+    settings.setValue("s_companyName",ui->lineEditComapanyName->text());
+    settings.setValue("s_address",ui->lineEditAddress->text());
+    settings.setValue("s_tinNumber",ui->lineEditTinNumber->text());
+    settings.setValue("s_phoneNumber",ui->lineEditPhoneNumber->text());
+
+    if(ui->comboBoxLanguage->currentText() == "தமிழ்")
         s_language = "tamil_language";
-        if(ui->comboBoxLanguage->currentText() == "English")
+    if(ui->comboBoxLanguage->currentText() == "English")
         s_language = "english_language";
 
-        qDebug() << s_language;
+    settings.setValue("s_language", s_language);
 
-        QString app_path;
-        app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-        QSettings settings(app_path,QSettings::NativeFormat);
-        settings.setValue("s_language",s_language);
-        settings.setValue("s_companyName",ui->lineEditComapanyName->text());
-        settings.setValue("s_address",ui->lineEditAddress->text());
-        settings.setValue("s_tinNumber",ui->lineEditTinNumber->text());
-        settings.setValue("s_phoneNumber",ui->lineEditPhoneNumber->text());
-
-
+    if(oldLanguage != s_language){
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Preference settings", "Preferences are saved Suceessfully! Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
+        if (reply == QMessageBox::Ok){
+            QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
+            exit(2);
+        }
+    }else{
         QMessageBox Msgbox;
         Msgbox.setText("Preferences are saved Suceessfully");
         Msgbox.exec();
-
-        QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
-        exit(2);
-
-      }
-      else
-      {
-          QString app_path;
-          app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-          QSettings settings(app_path,QSettings::NativeFormat);
-
-          if(settings.value("s_language","").toString() == "tamil_languag")
-              ui->comboBoxLanguage->setCurrentIndex(0);
-          if(settings.value("s_language","").toString() == "english_language")
-              ui->comboBoxLanguage->setCurrentIndex(1);
-
-          ui->lineEditAddress->setText(settings.value("s_address","").toString());
-          ui->lineEditComapanyName->setText(settings.value("s_companyName","").toString());
-          ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
-          ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
-      }
+    }
 }
 
 void Settings::on_pushButtonClose_clicked()
@@ -126,7 +109,7 @@ void Settings::on_pushButtonClose_clicked()
 void Settings::setLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
 
     if(settings.value("s_language","").toString() == "tamil_languag")
@@ -140,9 +123,6 @@ void Settings::setLanguage()
     ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
 
     //    Language setup
-//    QString app_path;
-//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-//    QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){

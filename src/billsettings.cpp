@@ -55,7 +55,7 @@ void BillSettings::settranslate()
 void BillSettings::on_pushButtonSave_clicked()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     settings.setValue("billSetting_CompanyName",ui->lineEditCompanyName->text());
     settings.setValue("billSetting_City",ui->lineEditCity->text());
@@ -74,7 +74,7 @@ void BillSettings::on_pushButtonClose_clicked()
 void BillSettings::setLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
 
     ui->lineEditCity->setText(settings.value("billSetting_City","").toString());
@@ -84,7 +84,7 @@ void BillSettings::setLanguage()
 
     //Language setup
 //    QString app_path;
-//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+//    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
 //    QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 

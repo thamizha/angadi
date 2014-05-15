@@ -40,7 +40,7 @@
 #include <QSqlRelationalDelegate>
 #include <QSqlRecord>
 #include <QSqlQuery>
-
+#include <QDir>
 
 namespace Ui {
 class TransactionForm;
