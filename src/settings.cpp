@@ -68,8 +68,6 @@ void Settings::settranslate()
 
 void Settings::on_pushButtonSave_clicked()
 {
-    qDebug() << ui->comboBoxLanguage->currentText();
-
     QMessageBox::StandardButton reply;
       reply = QMessageBox::question(this, "Preference settings", "Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
       if (reply == QMessageBox::Ok) \
@@ -80,7 +78,7 @@ void Settings::on_pushButtonSave_clicked()
         if(ui->comboBoxLanguage->currentText() == "English")
         s_language = "english_language";
 
-        qDebug() << s_language;
+//        qDebug() << s_language;
 
         QString app_path;
         app_path = QApplication::applicationDirPath()+"/settingsfile.ini";

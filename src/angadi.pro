@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     rightaligndelegate.cpp \
     unpaidbillreport.cpp \
     periodwisesalesform.cpp \
-    transactionreport.cpp
+    transactionreport.cpp \
+    about.cpp
     qtrpt.cpp
 
 HEADERS  += \
@@ -67,7 +68,8 @@ HEADERS  += \
     unpaidbillreport.h \
     periodwisesalesform.h \
     qtrpt.h \
-    transactionreport.h
+    transactionreport.h \
+    about.h
 
 FORMS    += \
     angadimainwindow.ui \
@@ -82,7 +84,8 @@ FORMS    += \
     settings.ui \
     billsettings.ui \
     unpaidbillreport.ui \
-    transactionreport.ui
+    transactionreport.ui \
+    about.ui
 
 RESOURCES += \
     resource.qrc

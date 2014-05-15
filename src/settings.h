@@ -20,7 +20,7 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  *****************************************************************************/
 
 #ifndef SETTINGS_H
