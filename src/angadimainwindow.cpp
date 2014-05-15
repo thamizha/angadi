@@ -141,6 +141,8 @@ void AngadiMainWindow::setupProperties()
     actionTransactionEntry->setProperty("tabName","transaction");
 
     ui->actionUnpaid_bills_List->setProperty("tabName","unpaidBillReport");
+    ui->actionPeriod_Wise_Sales->setProperty("tabName","periodWiseSales");
+    ui->actionTransaction_Report->setProperty("tabName","transactionReport");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -161,8 +163,9 @@ void AngadiMainWindow::setupConnections()
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->actionUnpaid_bills_List, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(ui->actionTransaction_Report, SIGNAL(triggered()), this, SLOT(openTab()));
+    connect(ui->actionPeriod_Wise_Sales,SIGNAL(triggered()),this, SLOT(openTab()));
 
-//    connect(ui->actionPeriod_Wise,SIGNAL(triggered()),this, SLOT(showPeriodWiseReport()));
     connect(ui->actionCategories_List,SIGNAL(triggered()),this, SLOT(showCategoriesListReport()));
     connect(ui->actionProduct_List,SIGNAL(triggered()),this, SLOT(showProductListReport()));
     connect(ui->actionCustomers_List,SIGNAL(triggered()),this, SLOT(showCustomersListReport()));
@@ -211,13 +214,11 @@ QString AngadiMainWindow::checkLanguage()
     return(content);
 }
 
-
 void AngadiMainWindow::openPreference()
 {
-//qDebug() << "triggered";
-//settings = new Settings(this);
-settings.show();
-
+    //qDebug() << "triggered";
+    //settings = new Settings(this);
+    settings.show();
 }
 
 void AngadiMainWindow::openBillSettings()
@@ -297,6 +298,12 @@ void AngadiMainWindow::openTab()
         showRightDock(true);
     }else if(tabName == "unpaidBillReport"){
         openUnpaidBillReportTab();
+        showRightDock(false);
+    }else if(tabName == "periodWiseSales"){
+        openPeriodWiseSalesTab();
+        showRightDock(false);
+    }else if(tabName == "transactionReport"){
+        openTransactionReportTab();
         showRightDock(false);
     }
 }
@@ -507,6 +514,34 @@ void AngadiMainWindow::openUnpaidBillReportTab()
     ui->mainTab->setCurrentWidget (unpaidBillReport);
 }
 
+void AngadiMainWindow::openPeriodWiseSalesTab()
+{
+    QString tabName = "periodWiseSales";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        periodWiseSalesForm = new PeriodWiseSalesForm;
+        periodWiseSalesForm->setProperty("name", tabName);
+        ui->mainTab->addTab(periodWiseSalesForm, "Period Wise Sales");
+    }
+    ui->mainTab->setCurrentWidget (periodWiseSalesForm);
+}
+
+void AngadiMainWindow::openTransactionReportTab()
+{
+    QString tabName = "transactionReport";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        transactionReport = new TransactionReport();
+        transactionReport->setProperty("name",tabName);
+        ui->mainTab->addTab(transactionReport, "Transaction Report");
+    }
+    ui->mainTab->setCurrentWidget (transactionReport);
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;
@@ -629,6 +664,8 @@ void AngadiMainWindow::onTabChanged(int index){
             lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
 
     }else if(tabName == "unpaidBillReport"){
+        showRightDock(false);
+    }else if(tabName == "transactionReport"){
         showRightDock(false);
     }
 }

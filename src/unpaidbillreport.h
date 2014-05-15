@@ -1,6 +1,9 @@
 #ifndef UNPAIDBILLREPORT_H
 #define UNPAIDBILLREPORT_H
 
+#include "rightaligndelegate.h"
+#include "timeeditdelegate.h"
+
 #include <QWidget>
 #include <QDateTime>
 #include <QDate>

@@ -16,6 +16,8 @@
 #include "settings.h"
 #include "billsettings.h"
 #include "unpaidbillreport.h"
+#include "periodwisesalesform.h"
+#include "transactionreport.h"
 
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
@@ -70,6 +72,8 @@ private:
     QHash<QString,BillForm*> *billTabs;
     TransactionForm *transactionForm;
     UnpaidBillReport *unpaidBillReport;
+    PeriodWiseSalesForm *periodWiseSalesForm;
+    TransactionReport *transactionReport;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -95,6 +99,7 @@ private:
     void openBillTab();
     void openTransactionTab();
     void openUnpaidBillReportTab();
+    void openTransactionReportTab();
 
     void onCustomerTabClosed();
     void onProductTabClosed();
@@ -128,6 +133,7 @@ private slots:
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
     void settamil();
     void setenglish();
+    void openPeriodWiseSalesTab();
     void openPreference();
     void openBillSettings();
 };

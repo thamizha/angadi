@@ -123,11 +123,12 @@
     <property name="title">
      <string>Reports</string>
     </property>
-    <addaction name="actionPeriod_Wise"/>
+    <addaction name="actionPeriod_Wise_Sales"/>
     <addaction name="actionCategories_List"/>
     <addaction name="actionProduct_List"/>
     <addaction name="actionCustomers_List"/>
     <addaction name="actionUnpaid_bills_List"/>
+    <addaction name="actionTransaction_Report"/>
    </widget>
    <widget class="QMenu" name="menuUpdate">
     <property name="title">
@@ -252,9 +253,9 @@
     <string>Home Page Settings</string>
    </property>
   </action>
-  <action name="actionPeriod_Wise">
+  <action name="actionPeriod_Wise_Sales">
    <property name="text">
-    <string>Period Wise</string>
+    <string>Period Wise Sales</string>
    </property>
   </action>
   <action name="actionViewBills">
@@ -300,6 +301,11 @@
   <action name="actionUnpaid_bills_List">
    <property name="text">
     <string>Unpaid bills List</string>
+   </property>
+  </action>
+  <action name="actionTransaction_Report">
+   <property name="text">
+    <string>Transaction Report</string>
    </property>
   </action>
  </widget>
