@@ -43,6 +43,18 @@ BillForm::BillForm(QWidget *parent) :
 
     modelFlag = 0;
 
+    ui->lineEditAvailable->setEnabled(false);
+    ui->lineEditBalance->setEnabled(false);
+    ui->lineEditChange->setEnabled(false);
+    ui->lineEditGrandTotal->setEnabled(false);
+    ui->lineEditLimit->setEnabled(false);
+    ui->lineEditRate->setEnabled(false);
+    ui->lineEditRoundOff->setEnabled(false);
+    ui->lineEditTooBePaid->setEnabled(false);
+    ui->lineEditTotal->setEnabled(false);
+    ui->lineEditUnit->setEnabled(false);
+    ui->lineEditUsed->setEnabled(false);
+
     formValidation = new FormValidation;
     billDataMapper = new QDataWidgetMapper;
     billDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -242,6 +254,7 @@ void BillForm::save(){
             clear();
         }
         setBillId();
+        setTransactionTableView();
     }else{
         msgBox.setInformativeText(errors);
         int ret = msgBox.exec();
@@ -296,6 +309,7 @@ void BillForm::clear()
     generateInvoiceNumber();
     modelFlag = 0;
     emit signalCustomerNameFocused();
+    resetDataMapper();
     setTransactionTableView();
 }
 
@@ -899,9 +913,10 @@ void BillForm::setTransactionTableView()
             bill_id = billRecord.value("id").toString();
             billBalance = billRecord.value("dueAmount").toString();
         }
+        qDebug() << bill_id;
         filter = "bill_id = "+bill_id;
-        transactionModel->select();
         transactionModel->setFilter(filter);
+        transactionModel->select();
         transactionModel->setSort(0,Qt::DescendingOrder);
         ui->tableViewCustomerBalance->setModel(transactionModel);
         ui->tableViewCustomerBalance->setColumnHidden(3,false);
@@ -930,6 +945,9 @@ void BillForm::setTransactionTableView()
         ui->lineEditBalance->setText(billBalance);
         ui->lineEditUsed->setText(QString::number(balance));
         ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toInt()-balance));
+    }else{
+        transactionModel->setFilter("bill_id = -1");
+        transactionModel->select();
     }
     setRowHeight();
 }
@@ -974,7 +992,6 @@ void BillForm::addTransaction()
             QSqlRecord billrecord = billModel->record(billDataMapper->currentIndex());
             bill_id = billrecord.value("id").toString();
         }
-
         QString given = 0;
         if(ui->lineEditTooBePaid->text().toInt() < ui->lineEditGiven->text().toInt())
             given = ui->lineEditTooBePaid->text();

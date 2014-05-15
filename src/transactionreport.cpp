@@ -7,9 +7,9 @@ TransactionReport::TransactionReport(QWidget *parent) :
     ui(new Ui::TransactionReport)
 {
     ui->setupUi(this);
-
-    fromFilter = QDate::currentDate().toString("yyyy-MM-dd");
-    toFilter = fromFilter;
+    qint64 subdays = -1;
+    fromFilter = QDate::currentDate().addDays(subdays).toString("yyyy-MM-dd");
+    toFilter = QDate::currentDate().toString("yyyy-MM-dd");
     paidAmountFilter = "";
     customerFilter = "";
     invoiceNoFilter = "";
@@ -24,9 +24,11 @@ TransactionReport::TransactionReport(QWidget *parent) :
     transactionModel->setRelation(2, QSqlRelation("customers", "id", "name"));
     transactionModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Invoice Number"));
     transactionModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Customer Name"));
+    transactionModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Paid Amount"));
+    transactionModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Paid Date"));
+    transactionModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Paid By"));
     transactionModel->setFilter(filter);
     transactionModel->select();
-    qDebug() << transactionModel->lastError();
 
     transactionProxy = new QSortFilterProxyModel();
     transactionProxy->setSourceModel(transactionModel);
@@ -43,11 +45,13 @@ TransactionReport::TransactionReport(QWidget *parent) :
     ui->tableView->setColumnWidth(3,217);
     ui->tableView->setColumnWidth(2,200);
     ui->tableView->setColumnWidth(5,200);
+    ui->tableView->setItemDelegateForColumn(3,new RightAlignDelegate);
+    ui->tableView->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
     ui->tableView->setColumnHidden(0,true);
     for (int i = 6; i<transactionProxy->columnCount(); ++i)
         ui->tableView->setColumnHidden(i,true);
-//    ui->dateEditFrom->setDate(QDate::currentDate());
-//    ui->dateEditTo->setDate(QDate::currentDate());
+    ui->dateEditFrom->setDate(QDate::currentDate().addDays(subdays));
+    ui->dateEditTo->setDate(QDate::currentDate());
     ui->lineEditTotalBalance->setEnabled(false);
 
 }
