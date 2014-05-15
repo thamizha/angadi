@@ -82,6 +82,7 @@ public:
     int productUpdateFlag;
     void productFormClearForSearch();
     void settranslate();
+    void setSaveButtonText(qint8);
 
 signals:
     void signalName(QString str);

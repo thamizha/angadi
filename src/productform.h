@@ -61,6 +61,7 @@ public:
     void setFieldMaxLength();
     void setComboSource();
     void settranslate();
+    void setSaveButtonText(qint8);
 signals:
     void signalName(QString str);
     void signalFromProductForm();

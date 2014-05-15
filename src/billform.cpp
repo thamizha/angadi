@@ -149,6 +149,32 @@ void BillForm::settranslate()
     ui->retranslateUi(this);
 }
 
+void BillForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        if(flag == 0)
+            ui->pushButtonSave->setText(BillForm::tr("Save"));
+        else
+            ui->pushButtonSave->setText(BillForm::tr("Update"));
+    }
+    else{
+        if(flag == 0)
+            ui->pushButtonSave->setText("Save");
+        else
+            ui->pushButtonSave->setText("Update");
+    }
+}
+
+
+
 void BillForm::save(){
     QDateTime datetime = QDateTime::currentDateTime();
     QDateTime invoiceDateTime = ui->dateEditInvoiceDate->dateTime();
@@ -303,7 +329,8 @@ void BillForm::clear()
         widget->setStyleSheet(styleSheet());
     }
     //uninstallEventFilter();
-    ui->pushButtonSave->setText("Save");
+    setSaveButtonText(0);
+//    ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);
     generateInvoiceNumber();

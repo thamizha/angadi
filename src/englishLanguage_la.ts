@@ -40,10 +40,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Item</source>
         <translation type="unfinished"></translation>
     </message>
@@ -115,6 +111,10 @@
         <source>Customers List</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unpaid bills List</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillForm</name>
@@ -179,10 +179,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Discount %</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Round Off</source>
         <translation type="unfinished"></translation>
     </message>
@@ -218,6 +214,45 @@
         <source>Bill</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Discount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BillSettings</name>
+    <message>
+        <source>Bill settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>City/Town</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Company name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CategoryForm</name>
@@ -247,6 +282,10 @@
     </message>
     <message>
         <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -352,6 +391,10 @@
         <source>Pincode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginDialog</name>
@@ -430,6 +473,10 @@
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -477,15 +524,61 @@
         <source>Customer Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Paid Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paid Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Settings</name>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tin Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Company Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimeEditDelegate</name>
+    <message>
+        <source>Date not set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TransactionForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -522,6 +615,53 @@
     </message>
     <message>
         <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnpaidBillReport</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invoice No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

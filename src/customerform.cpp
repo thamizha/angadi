@@ -114,6 +114,30 @@ void CustomerForm::settranslate()
     ui->retranslateUi(this);
 }
 
+void CustomerForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        if(flag == 0)
+            ui->pushButtonSave->setText(CustomerForm::tr("Save"));
+        else
+            ui->pushButtonSave->setText(CustomerForm::tr("Update"));
+    }
+    else{
+        if(flag == 0)
+            ui->pushButtonSave->setText("Save");
+        else
+            ui->pushButtonSave->setText("Update");
+    }
+}
+
 
 bool CustomerForm::contactPersonValid()
 {
@@ -359,7 +383,8 @@ void CustomerForm::clear()
         widget->setStyleSheet(styleSheet());
     }
     uninstallEventFilter();
-    ui->pushButtonSave->setText("Save");
+    setSaveButtonText(0);
+//    ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
 //    ui->pushButtonSave->setEnabled(false);
 }
@@ -548,7 +573,8 @@ void CustomerForm::setMapperIndex(QModelIndex index)
 {
     clear();
     dataMapper->setCurrentIndex(index.row());
-    this->ui->pushButtonSave->setText("Update");
+    setSaveButtonText(1);
+//    this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
