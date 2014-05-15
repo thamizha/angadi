@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>293</height>
+    <width>422</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
+     <x>20</x>
+     <y>20</y>
      <width>381</width>
      <height>211</height>
     </rect>
@@ -27,7 +27,7 @@
   <widget class="QLineEdit" name="lineEditPhoneNumber">
    <property name="geometry">
     <rect>
-     <x>167</x>
+     <x>160</x>
      <y>103</y>
      <width>220</width>
      <height>23</height>
@@ -37,7 +37,7 @@
   <widget class="QLineEdit" name="lineEditCompanyName">
    <property name="geometry">
     <rect>
-     <x>167</x>
+     <x>160</x>
      <y>43</y>
      <width>220</width>
      <height>23</height>
@@ -47,7 +47,7 @@
   <widget class="QLineEdit" name="lineEditCity">
    <property name="geometry">
     <rect>
-     <x>167</x>
+     <x>160</x>
      <y>73</y>
      <width>220</width>
      <height>23</height>
@@ -57,46 +57,55 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>47</x>
-     <y>133</y>
-     <width>110</width>
+     <x>28</x>
+     <y>137</y>
+     <width>120</width>
      <height>15</height>
     </rect>
    </property>
    <property name="text">
     <string>Message</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>47</x>
-     <y>73</y>
-     <width>110</width>
+     <x>28</x>
+     <y>77</y>
+     <width>120</width>
      <height>15</height>
     </rect>
    </property>
    <property name="text">
-    <string>City/Town</string>
+    <string>City</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>47</x>
-     <y>43</y>
-     <width>110</width>
-     <height>15</height>
+     <x>28</x>
+     <y>45</y>
+     <width>120</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>Company name</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButtonClose">
    <property name="geometry">
     <rect>
-     <x>197</x>
+     <x>230</x>
      <y>183</y>
      <width>81</width>
      <height>23</height>
@@ -109,7 +118,7 @@
   <widget class="QPushButton" name="pushButtonSave">
    <property name="geometry">
     <rect>
-     <x>87</x>
+     <x>120</x>
      <y>183</y>
      <width>81</width>
      <height>23</height>
@@ -122,7 +131,7 @@
   <widget class="QLineEdit" name="lineEditMessage">
    <property name="geometry">
     <rect>
-     <x>167</x>
+     <x>160</x>
      <y>133</y>
      <width>220</width>
      <height>23</height>
@@ -132,14 +141,17 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>47</x>
-     <y>103</y>
-     <width>110</width>
+     <x>28</x>
+     <y>107</y>
+     <width>120</width>
      <height>15</height>
     </rect>
    </property>
    <property name="text">
-    <string>Phone number</string>
+    <string>Phone</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
  </widget>

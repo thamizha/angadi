@@ -43,6 +43,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui(new Ui::AngadiMainWindow)
 {
     ui->setupUi(this);
+    QWidget::setWindowIcon(QIcon(":/images/icons/Artboard 1 1.png"));
 
     // Remove inactive menus
     ui->actionDueBill->setVisible(false);
@@ -188,18 +189,14 @@ QString AngadiMainWindow::checkLanguage()
 
 void AngadiMainWindow::openPreference()
 {
-    //qDebug() << "triggered";
-    //settings = new Settings(this);
-//    QDialog preferenceDialog(this);
-//    preferenceDialog.setModal(true);
-//    preferenceDialog.show();
-    settings.show();
-//    settings.settingsModal();
+    //settings.show();
+    settings.exec();
 }
 
 void AngadiMainWindow::openBillSettings()
 {
- billSettings.show();
+    //billSettings.show();
+    billSettings.exec();
 }
 
 void AngadiMainWindow::setupModels()

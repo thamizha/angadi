@@ -1093,9 +1093,10 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
     QSqlQuery itemQuery;
 
     QSettings settings(QApplication::applicationDirPath() + QDir::separator() + "settings.ini", QSettings::NativeFormat);
-    QString companyName = settings.value("s_companyName","").toString();
-    QString companyAddress = settings.value("s_address","").toString();
-    QString companyPhone = settings.value("s_phoneNumber","").toString();
+    QString companyName = settings.value("billSetting_CompanyName","").toString();
+    QString companyAddress = settings.value("billSetting_City","").toString();
+    QString companyPhone = settings.value("billSetting_PhoneNumber","").toString();
+    QString bottomMsg = settings.value("billSetting_Message","").toString();
 
     if (paramName == "companyname")
         paramValue = companyName;
@@ -1103,6 +1104,8 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
         paramValue = companyAddress;
     if (paramName == "companyphone")
         paramValue = companyPhone;
+    if (paramName == "bottommsg")
+        paramValue = bottomMsg;
 
     QSqlRecord record = reportModel->record(recNo);
     if (paramName == "InvoiceNo")
