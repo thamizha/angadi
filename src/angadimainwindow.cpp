@@ -43,7 +43,7 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     ui(new Ui::AngadiMainWindow)
 {
     ui->setupUi(this);
-    QWidget::setWindowIcon(QIcon(":/images/icons/Artboard 1 1.png"));
+    QWidget::setWindowIcon(QIcon(":/images/icons/app_icon.png"));
 
     // Remove inactive menus
     ui->actionDueBill->setVisible(false);
@@ -160,7 +160,7 @@ void AngadiMainWindow::settamil()
 {
  QString app_path;
  app_path = QApplication::applicationDirPath() + QDir::separator() +"settings.ini";
- QSettings settings(app_path,QSettings::NativeFormat);
+ QSettings settings(app_path,QSettings::IniFormat);
  QString s_string = "tamil_language";
  settings.setValue("s_language",s_string);
 // QString str_val = settings.value("s_language","").toString();
@@ -174,7 +174,7 @@ void AngadiMainWindow::setenglish()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath()+ QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString s_string = "english_language";
     settings.setValue("s_language",s_string);
 }
@@ -183,7 +183,7 @@ QString AngadiMainWindow::checkLanguage()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
     return(content);
 }
@@ -1004,7 +1004,7 @@ void AngadiMainWindow::setLanguage()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){

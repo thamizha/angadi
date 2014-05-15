@@ -69,7 +69,7 @@ void Settings::on_pushButtonSave_clicked()
 {
     QString app_path, s_language;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString oldLanguage = settings.value("s_language","").toString();
     settings.setValue("s_language",s_language);
     settings.setValue("s_companyName",ui->lineEditComapanyName->text());
@@ -107,7 +107,7 @@ void Settings::setLanguage()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
 
     if(settings.value("s_language","").toString() == "tamil_languag")
         ui->comboBoxLanguage->setCurrentIndex(0);

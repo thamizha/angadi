@@ -38,7 +38,7 @@ BillModel::BillModel(QObject *parent) :
     //    Language setup
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
     QString lanInvoiceNo;
     QString lanInvoiceDate;

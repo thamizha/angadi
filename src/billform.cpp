@@ -135,7 +135,7 @@ void BillForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else 
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){                               //tab language settings
@@ -1092,7 +1092,7 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
     Q_UNUSED(reportPage);
     QSqlQuery itemQuery;
 
-    QSettings settings(QApplication::applicationDirPath() + QDir::separator() + "settings.ini", QSettings::NativeFormat);
+    QSettings settings(QApplication::applicationDirPath() + QDir::separator() + "settings.ini", QSettings::IniFormat);
     QString companyName = settings.value("billSetting_CompanyName","").toString();
     QString companyAddress = settings.value("billSetting_City","").toString();
     QString companyPhone = settings.value("billSetting_PhoneNumber","").toString();
@@ -1164,7 +1164,7 @@ void BillForm::setLanguage()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){

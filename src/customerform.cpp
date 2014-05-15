@@ -100,7 +100,7 @@ void CustomerForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" e
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){                               //tab language settings
@@ -702,7 +702,7 @@ void CustomerForm::setLanguage()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
     QString content = settings.value("s_language","").toString();
 
     if(content == "tamil_language"){
