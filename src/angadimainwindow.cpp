@@ -37,7 +37,7 @@
 #include <QApplication>
 
 #include <QSettings>
-
+#include <QDialog>
 AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AngadiMainWindow)
@@ -190,7 +190,11 @@ void AngadiMainWindow::openPreference()
 {
     //qDebug() << "triggered";
     //settings = new Settings(this);
+//    QDialog preferenceDialog(this);
+//    preferenceDialog.setModal(true);
+//    preferenceDialog.show();
     settings.show();
+//    settings.settingsModal();
 }
 
 void AngadiMainWindow::openBillSettings()

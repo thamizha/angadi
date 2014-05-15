@@ -24,16 +24,45 @@
  *****************************************************************************/
 
 #include "categoriesmodel.h"
+#include "categoryform.h"
+#include <QTranslator>
+#include <QSettings>
+#include <QApplication>
 
 CategoriesModel::CategoriesModel(QObject *parent) :
     QSqlRelationalTableModel(parent)
 {
+
+    //    Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+    QString lanCode;
+    QString lanName;
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanCode = CategoryForm::tr("Code");
+        lanName = CategoryForm::tr("Name");
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        lanCode = CategoryForm::tr("Code");
+        lanName = CategoryForm::tr("Name");
+    }
+
+
     setTable("categories");
-    setHeaderData(fieldIndex("code"), Qt::Horizontal, QObject::tr("Code"));
-    setHeaderData(fieldIndex("name"), Qt::Horizontal, QObject::tr("Name"));
+    setHeaderData(fieldIndex("code"), Qt::Horizontal, lanCode);
+    setHeaderData(fieldIndex("name"), Qt::Horizontal, lanName);
     setFilter("status = 'A'");
     setSort(fieldIndex("name"),Qt::AscendingOrder);
-    select();
+    select(); 
 }
 
 CategoriesModel::~CategoriesModel()

@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Period Wise</source>
-        <translation type="unfinished">காலம் வைஸ்</translation>
+        <translation type="obsolete">காலம் வைஸ்</translation>
     </message>
     <message>
         <source>View Bills</source>
@@ -118,6 +118,14 @@
     <message>
         <source>Unpaid bills List</source>
         <translation type="unfinished">செலுத்தப்படாத பில்கள் பட்டியல்</translation>
+    </message>
+    <message>
+        <source>Period Wise Sales</source>
+        <translation type="unfinished">விற்பனை காலத்தின் வாரியாக</translation>
+    </message>
+    <message>
+        <source>Transaction Report</source>
+        <translation type="unfinished">பணம் பரிவர்த்தனை ரிப்போர்ட்</translation>
     </message>
 </context>
 <context>
@@ -230,6 +238,22 @@
         <source>Discount</source>
         <translation type="unfinished">தள்ளுபடி</translation>
     </message>
+    <message>
+        <source>Product Name</source>
+        <translation type="unfinished">விளைபொருள் பெயர்</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">அளவு</translation>
+    </message>
+    <message>
+        <source>Unit Price</source>
+        <translation type="unfinished">அலகு விலை</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">அளவு</translation>
+    </message>
 </context>
 <context>
     <name>BillSettings</name>
@@ -264,6 +288,17 @@
     <message>
         <source>Phone number</source>
         <translation type="unfinished">தொலைபேசி எண்</translation>
+    </message>
+</context>
+<context>
+    <name>CategoriesModel</name>
+    <message>
+        <source>Code</source>
+        <translation type="obsolete">குறியீடு</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="obsolete">பெயர்</translation>
     </message>
 </context>
 <context>
@@ -432,6 +467,25 @@
     </message>
 </context>
 <context>
+    <name>PeriodWiseSalesForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">படிவம்</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
+        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+    </message>
+</context>
+<context>
     <name>ProductForm</name>
     <message>
         <source>Form</source>
@@ -494,23 +548,23 @@
     <name>QObject</name>
     <message>
         <source>Product Name</source>
-        <translation type="unfinished">விளைபொருள் பெயர்</translation>
+        <translation type="obsolete">விளைபொருள் பெயர்</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished">அளவு</translation>
+        <translation type="obsolete">அளவு</translation>
     </message>
     <message>
         <source>Unit Price</source>
-        <translation type="unfinished">அலகு விலை</translation>
+        <translation type="obsolete">அலகு விலை</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished">அளவு</translation>
+        <translation type="obsolete">அளவு</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished">மொத்தம்</translation>
+        <translation type="obsolete">மொத்தம்</translation>
     </message>
     <message>
         <source>Invoice No</source>
@@ -518,15 +572,15 @@
     </message>
     <message>
         <source>Invoice Date</source>
-        <translation type="unfinished">விலைப்பட்டியல் தேதி</translation>
+        <translation type="obsolete">விலைப்பட்டியல் தேதி</translation>
     </message>
     <message>
         <source>Code</source>
-        <translation type="unfinished">குறியீடு</translation>
+        <translation type="obsolete">குறியீடு</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">பெயர்</translation>
+        <translation type="obsolete">பெயர்</translation>
     </message>
     <message>
         <source>Invoice Number</source>
@@ -543,6 +597,18 @@
     <message>
         <source>Paid Amount</source>
         <translation type="unfinished">செலுத்தப்பட்ட தொகை</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished">பில் தொகை</translation>
+    </message>
+    <message>
+        <source>Balance</source>
+        <translation type="unfinished">இருப்பு</translation>
     </message>
 </context>
 <context>
@@ -636,6 +702,53 @@
     <message>
         <source>Invoice No</source>
         <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
+        <translation type="unfinished">நாள்/மாதம்/வருடம்</translation>
+    </message>
+    <message>
+        <source>Invoice Number</source>
+        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished">வாடிக்கையாளர் பெயர்</translation>
+    </message>
+</context>
+<context>
+    <name>TransactionReport</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">படிவம்</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">மொத்தம்</translation>
+    </message>
+    <message>
+        <source>Invoice No</source>
+        <translation type="unfinished">விலைப்பட்டியல் எண்</translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished">வாடிக்கையாளர் பெயர்</translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished">பில் தொகை</translation>
+    </message>
+    <message>
+        <source>From Date</source>
+        <translation type="unfinished">தேதி முதல்</translation>
+    </message>
+    <message>
+        <source>To Date</source>
+        <translation type="unfinished">தேதி வரை</translation>
+    </message>
+    <message>
+        <source>Paid By</source>
+        <translation type="unfinished">செலுத்தியவர்</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
