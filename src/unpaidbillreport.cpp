@@ -42,8 +42,8 @@ UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
 //    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setVisible(true);
     ui->tableView->setColumnWidth(1,100);
-    ui->tableView->setColumnWidth(2,190);
-    ui->tableView->setColumnWidth(3,235);
+    ui->tableView->setColumnWidth(2,210);
+    ui->tableView->setColumnWidth(3,215);
     ui->tableView->setColumnWidth(6,200);
     ui->tableView->setColumnWidth(7,200);
     ui->tableView->setColumnHidden(0,true);

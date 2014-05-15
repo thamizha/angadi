@@ -149,6 +149,7 @@ void AngadiMainWindow::setupProperties()
 
     ui->actionUnpaid_bills_List->setProperty("tabName","unpaidBillReport");
     ui->actionPeriod_Wise_Sales->setProperty("tabName","periodWiseSales");
+    ui->actionTransaction_Report->setProperty("tabName","transactionReport");
 }
 
 void AngadiMainWindow::setupConnections()
@@ -169,7 +170,7 @@ void AngadiMainWindow::setupConnections()
     connect(actionTransactionEntry,SIGNAL(triggered()),this,SLOT(openTab()));
 
     connect(ui->actionUnpaid_bills_List, SIGNAL(triggered()), this, SLOT(openTab()));
-
+    connect(ui->actionTransaction_Report, SIGNAL(triggered()), this, SLOT(openTab()));
     connect(ui->actionPeriod_Wise_Sales,SIGNAL(triggered()),this, SLOT(openTab()));
 
     connect(ui->actionCategories_List,SIGNAL(triggered()),this, SLOT(showCategoriesListReport()));
@@ -307,6 +308,9 @@ void AngadiMainWindow::openTab()
         showRightDock(false);
     }else if(tabName == "periodWiseSales"){
         openPeriodWiseSalesTab();
+        showRightDock(false);
+    }else if(tabName == "transactionReport"){
+        openTransactionReportTab();
         showRightDock(false);
     }
 }
@@ -531,6 +535,20 @@ void AngadiMainWindow::openPeriodWiseSalesTab()
     ui->mainTab->setCurrentWidget (periodWiseSalesForm);
 }
 
+void AngadiMainWindow::openTransactionReportTab()
+{
+    QString tabName = "transactionReport";
+    currentTab = tabName;
+
+    bool found = tabLoadedStatus(tabName);
+    if(found == false){
+        transactionReport = new TransactionReport();
+        transactionReport->setProperty("name",tabName);
+        ui->mainTab->addTab(transactionReport, "Transaction Report");
+    }
+    ui->mainTab->setCurrentWidget (transactionReport);
+}
+
 bool AngadiMainWindow::tabLoadedStatus(QString tabName)
 {
     bool status = false;
@@ -653,6 +671,8 @@ void AngadiMainWindow::onTabChanged(int index){
             lssbar->lineEditSearch->setText(billTabCustomerSearchTerm);
 
     }else if(tabName == "unpaidBillReport"){
+        showRightDock(false);
+    }else if(tabName == "transactionReport"){
         showRightDock(false);
     }
 }

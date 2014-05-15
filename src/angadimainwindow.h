@@ -17,6 +17,7 @@
 #include "billsettings.h"
 #include "unpaidbillreport.h"
 #include "periodwisesalesform.h"
+#include "transactionreport.h"
 
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
@@ -72,6 +73,7 @@ private:
     TransactionForm *transactionForm;
     UnpaidBillReport *unpaidBillReport;
     PeriodWiseSalesForm *periodWiseSalesForm;
+    TransactionReport *transactionReport;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -97,6 +99,7 @@ private:
     void openBillTab();
     void openTransactionTab();
     void openUnpaidBillReportTab();
+    void openTransactionReportTab();
 
     void onCustomerTabClosed();
     void onProductTabClosed();

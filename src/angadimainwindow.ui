@@ -128,6 +128,7 @@
     <addaction name="actionProduct_List"/>
     <addaction name="actionCustomers_List"/>
     <addaction name="actionUnpaid_bills_List"/>
+    <addaction name="actionTransaction_Report"/>
    </widget>
    <widget class="QMenu" name="menuUpdate">
     <property name="title">
@@ -147,13 +148,6 @@
     <property name="title">
      <string>Settings</string>
     </property>
-    <widget class="QMenu" name="menuLanguage">
-     <property name="title">
-      <string>Language</string>
-     </property>
-     <addaction name="actionTamil"/>
-     <addaction name="actionEnglish"/>
-    </widget>
     <addaction name="actionPreferences"/>
     <addaction name="actionBill_Settings"/>
     <addaction name="separator"/>
@@ -307,6 +301,11 @@
   <action name="actionUnpaid_bills_List">
    <property name="text">
     <string>Unpaid bills List</string>
+   </property>
+  </action>
+  <action name="actionTransaction_Report">
+   <property name="text">
+    <string>Transaction Report</string>
    </property>
   </action>
  </widget>

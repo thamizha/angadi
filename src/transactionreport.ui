@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UnpaidBillReport</class>
- <widget class="QWidget" name="UnpaidBillReport">
+ <class>TransactionReport</class>
+ <widget class="QWidget" name="TransactionReport">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -137,6 +137,52 @@
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="label_5">
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Customer Name</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Bill Amount</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_3">
                <property name="minimumSize">
                 <size>
@@ -195,52 +241,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_5">
-               <property name="maximumSize">
-                <size>
-                 <width>250</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Customer Name</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_6">
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Bill Amount</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QLabel" name="label_7">
                <property name="maximumSize">
                 <size>
@@ -256,7 +256,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Balance</string>
+                <string>Paid By</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -278,31 +278,22 @@
               </widget>
              </item>
              <item>
-              <widget class="QDateEdit" name="dateEditFrom">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
+              <widget class="QLineEdit" name="lineEditCustomer">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="displayFormat">
-                <string>dd/MM/yyyy</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-               <property name="date">
-                <date>
-                 <year>2014</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditPaidAmount">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -336,27 +327,36 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditCustomer">
+              <widget class="QDateEdit" name="dateEditFrom">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
+                 <width>100</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="displayFormat">
+                <string>dd/MM/yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="date">
+                <date>
+                 <year>2014</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditTotal">
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditBalance">
+              <widget class="QLineEdit" name="lineEditPaidBy">
                <property name="maximumSize">
                 <size>
                  <width>200</width>
