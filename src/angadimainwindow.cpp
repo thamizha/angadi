@@ -152,6 +152,7 @@ void AngadiMainWindow::setupConnections()
 //    connect(ui->actionEnglish, SIGNAL(triggered()),this, SLOT(setenglish()));
     connect(ui->actionPreferences,SIGNAL(triggered()),this,SLOT(openPreference()));
     connect(ui->actionBill_Settings,SIGNAL(triggered()),this,SLOT(openBillSettings()));
+    connect(ui->actionAbout_Angadi,SIGNAL(triggered()),this,SLOT(openAboutAngadi()));
 }
 
 
@@ -1027,4 +1028,11 @@ void AngadiMainWindow::setLanguage()
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
     }
+}
+
+void AngadiMainWindow::openAboutAngadi()
+{
+
+    About *obj = new About();
+    obj->exec();
 }

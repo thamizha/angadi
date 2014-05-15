@@ -1,7 +1,7 @@
 /*****************************************************************************
- * billsettings.h
+ * about.cpp
  *
- * Created: 14/05/2014 by vijay
+ * Created: 15/05/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,34 +23,18 @@
  * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  *****************************************************************************/
 
-#ifndef BILLSETTINGS_H
-#define BILLSETTINGS_H
+#include "about.h"
+#include "ui_about.h"
 
-#include <QDialog>
-#include <QDir>
-
-namespace Ui {
-class BillSettings;
+About::About(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::About)
+{
+    ui->setupUi(this);
+    this->setStyleSheet("QWidget {background-image: url(:/images/icons/aboutAngadi.png) }");
 }
 
-class BillSettings : public QDialog
+About::~About()
 {
-    Q_OBJECT
-
-public:
-    explicit BillSettings(QWidget *parent = 0);
-    ~BillSettings();
-    void settranslate();
-
-
-private slots:
-    void on_pushButtonSave_clicked();
-
-    void on_pushButtonClose_clicked();
-
-private:
-    Ui::BillSettings *ui;
-    void setLanguage();
-};
-
-#endif // BILLSETTINGS_H
+    delete ui;
+}

@@ -1,7 +1,7 @@
 /*****************************************************************************
- * billsettings.h
+ * about.h
  *
- * Created: 14/05/2014 by vijay
+ * Created: 15/05/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -23,34 +23,25 @@
  * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  *****************************************************************************/
 
-#ifndef BILLSETTINGS_H
-#define BILLSETTINGS_H
+#ifndef ABOUT_H
+#define ABOUT_H
 
 #include <QDialog>
-#include <QDir>
 
 namespace Ui {
-class BillSettings;
+class About;
 }
 
-class BillSettings : public QDialog
+class About : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit BillSettings(QWidget *parent = 0);
-    ~BillSettings();
-    void settranslate();
-
-
-private slots:
-    void on_pushButtonSave_clicked();
-
-    void on_pushButtonClose_clicked();
+    explicit About(QWidget *parent = 0);
+    ~About();
 
 private:
-    Ui::BillSettings *ui;
-    void setLanguage();
+    Ui::About *ui;
 };
 
-#endif // BILLSETTINGS_H
+#endif // ABOUT_H

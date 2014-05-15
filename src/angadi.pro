@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     rightaligndelegate.cpp \
     unpaidbillreport.cpp \
     periodwisesalesform.cpp \
-    transactionreport.cpp
+    transactionreport.cpp \
+    about.cpp \
     qtrpt.cpp
 
 HEADERS  += \
@@ -68,6 +69,7 @@ HEADERS  += \
     periodwisesalesform.h \
     qtrpt.h \
     transactionreport.h \
+    about.h
 
 FORMS    += \
     angadimainwindow.ui \
@@ -82,7 +84,8 @@ FORMS    += \
     settings.ui \
     billsettings.ui \
     unpaidbillreport.ui \
-    transactionreport.ui
+    transactionreport.ui \
+    about.ui
 
 RESOURCES += \
     resource.qrc
@@ -112,3 +115,15 @@ first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
+
+copyFileTml.commands = $(COPY_FILE) $$PWD/tamilLanguage_la.qm $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copyFileTml
+export(first.depends)
+export(copyFileTml.commands)
+QMAKE_EXTRA_TARGETS += first copyFileTml
+
+copyFileEng.commands = $(COPY_FILE) $$PWD/englishLanguage_la.qm $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copyFileEng
+export(first.depends)
+export(copyFileTml.commands)
+QMAKE_EXTRA_TARGETS += first copyFileEng

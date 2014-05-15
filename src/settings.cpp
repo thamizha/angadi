@@ -68,38 +68,35 @@ void Settings::settranslate()
 void Settings::on_pushButtonSave_clicked()
 {
     QString app_path, s_language;
-
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
-
     QString oldLanguage = settings.value("s_language","").toString();
-
     settings.setValue("s_language",s_language);
     settings.setValue("s_companyName",ui->lineEditComapanyName->text());
     settings.setValue("s_address",ui->lineEditAddress->text());
     settings.setValue("s_tinNumber",ui->lineEditTinNumber->text());
     settings.setValue("s_phoneNumber",ui->lineEditPhoneNumber->text());
-
     if(ui->comboBoxLanguage->currentText() == "தமிழ்")
-        s_language = "tamil_language";
+         s_language = "tamil_language";
     if(ui->comboBoxLanguage->currentText() == "English")
-        s_language = "english_language";
-
+         s_language = "english_language";
     settings.setValue("s_language", s_language);
-
     if(oldLanguage != s_language){
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Preference settings", "Preferences are saved Suceessfully! Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
-        if (reply == QMessageBox::Ok){
-            QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
-            exit(2);
-        }
-    }else{
-        QMessageBox Msgbox;
-        Msgbox.setText("Preferences are saved Suceessfully");
-        Msgbox.exec();
+     QMessageBox::StandardButton reply;
+     reply = QMessageBox::question(this, "Preference settings", "Preferences are saved Suceessfully! Need to restart the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
+     if (reply == QMessageBox::Ok){
+         QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
+         exit(2);
+     }
+    }
+    else
+    {
+     QMessageBox Msgbox;
+     Msgbox.setText("Preferences are saved Suceessfully");
+     Msgbox.exec();
     }
 }
+
 
 void Settings::on_pushButtonClose_clicked()
 {

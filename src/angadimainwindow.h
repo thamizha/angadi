@@ -18,6 +18,7 @@
 #include "unpaidbillreport.h"
 #include "periodwisesalesform.h"
 #include "transactionreport.h"
+#include "about.h"
 
 #include "models/categoriesmodel.h"
 #include "models/productsmodel.h"
@@ -74,6 +75,7 @@ private:
     UnpaidBillReport *unpaidBillReport;
     PeriodWiseSalesForm *periodWiseSalesForm;
     TransactionReport *transactionReport;
+    About *about;
 
     CategoriesModel *categoriesModel;
     ProductsModel *productsModel;
@@ -138,6 +140,7 @@ private slots:
     void openBillSettings();
     void setMenuIcons();
     void setLanguage();
+    void openAboutAngadi();
 };
 
 #endif // ANGADIMAINWINDOW_H
