@@ -39,7 +39,7 @@ class Settings : public QDialog
 public:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
-
+    void settranslate();
 private slots:
     void on_pushButtonSave_clicked();
 

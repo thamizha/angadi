@@ -57,6 +57,8 @@ CategoryForm::CategoryForm(QWidget *parent) :
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 
     setFieldMaxLength();
+
+    //Language setup
     QString app_path;
     app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
@@ -88,27 +90,29 @@ void CategoryForm::settranslate()
     ui->retranslateUi(this);
 }
 
-//void CategoryForm::checkLanguage(qint8 flag)
-//{
-//    QString app_path;
-//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-//    QSettings settings(app_path,QSettings::NativeFormat);
-//    QString content = settings.value("s_language","").toString();
+void CategoryForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
 
-//    if(content == "tamil_language"){                               //tab language settings
-//        QTranslator translator;
-//        translator.load("tamilLanguage_la");
-//        QApplication::instance()->installTranslator(&translator);
-//        if(flag == 0)
-//            ui->pushButtonSave->setText(CategoryForm::tr("Save"));
-//        else
-//            ui->pushButtonSave->setText(CategoryForm::tr("Save"));
-//    }
-//    else{
-//        ui->pushButtonSave->setText("Save");
-//    }
-//    return(content);
-//}
+    if(content == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        if(flag == 0)
+            ui->pushButtonSave->setText(CategoryForm::tr("Save"));
+        else
+            ui->pushButtonSave->setText(CategoryForm::tr("Update"));
+    }
+    else{
+        if(flag == 0)
+            ui->pushButtonSave->setText("Save");
+        else
+            ui->pushButtonSave->setText("Update");
+    }
+}
 
 
 void CategoryForm::save()
@@ -205,7 +209,8 @@ void CategoryForm::clear()
         widget->setStyleSheet(styleSheet());
     }
     uninstallEventFilter();
-    ui->pushButtonSave->setText("Save");
+    setSaveButtonText(0);
+//    ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);
 }
@@ -312,7 +317,8 @@ void CategoryForm::setMapperIndex(QModelIndex index)
 {
     clear();
     dataMapper->setCurrentIndex(index.row());
-    this->ui->pushButtonSave->setText("Update");
+    setSaveButtonText(1);
+//    this->ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
     validCodeFlag = validNameFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);

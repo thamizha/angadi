@@ -43,6 +43,18 @@ BillForm::BillForm(QWidget *parent) :
 
     modelFlag = 0;
 
+    ui->lineEditAvailable->setEnabled(false);
+    ui->lineEditBalance->setEnabled(false);
+    ui->lineEditChange->setEnabled(false);
+    ui->lineEditGrandTotal->setEnabled(false);
+    ui->lineEditLimit->setEnabled(false);
+    ui->lineEditRate->setEnabled(false);
+    ui->lineEditRoundOff->setEnabled(false);
+    ui->lineEditTooBePaid->setEnabled(false);
+    ui->lineEditTotal->setEnabled(false);
+    ui->lineEditUnit->setEnabled(false);
+    ui->lineEditUsed->setEnabled(false);
+
     formValidation = new FormValidation;
     billDataMapper = new QDataWidgetMapper;
     billDataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -136,6 +148,32 @@ void BillForm::settranslate()
 {
     ui->retranslateUi(this);
 }
+
+void BillForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        if(flag == 0)
+            ui->pushButtonSave->setText(BillForm::tr("Save"));
+        else
+            ui->pushButtonSave->setText(BillForm::tr("Update"));
+    }
+    else{
+        if(flag == 0)
+            ui->pushButtonSave->setText("Save");
+        else
+            ui->pushButtonSave->setText("Update");
+    }
+}
+
+
 
 void BillForm::save(){
     QDateTime datetime = QDateTime::currentDateTime();
@@ -242,6 +280,7 @@ void BillForm::save(){
             clear();
         }
         setBillId();
+        setTransactionTableView();
     }else{
         msgBox.setInformativeText(errors);
         int ret = msgBox.exec();
@@ -290,12 +329,14 @@ void BillForm::clear()
         widget->setStyleSheet(styleSheet());
     }
     //uninstallEventFilter();
-    ui->pushButtonSave->setText("Save");
+    setSaveButtonText(0);
+//    ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
     //ui->pushButtonSave->setEnabled(false);
     generateInvoiceNumber();
     modelFlag = 0;
     emit signalCustomerNameFocused();
+    resetDataMapper();
     setTransactionTableView();
 }
 
@@ -899,9 +940,10 @@ void BillForm::setTransactionTableView()
             bill_id = billRecord.value("id").toString();
             billBalance = billRecord.value("dueAmount").toString();
         }
+        qDebug() << bill_id;
         filter = "bill_id = "+bill_id;
-        transactionModel->select();
         transactionModel->setFilter(filter);
+        transactionModel->select();
         transactionModel->setSort(0,Qt::DescendingOrder);
         ui->tableViewCustomerBalance->setModel(transactionModel);
         ui->tableViewCustomerBalance->setColumnHidden(3,false);
@@ -930,6 +972,9 @@ void BillForm::setTransactionTableView()
         ui->lineEditBalance->setText(billBalance);
         ui->lineEditUsed->setText(QString::number(balance));
         ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toInt()-balance));
+    }else{
+        transactionModel->setFilter("bill_id = -1");
+        transactionModel->select();
     }
     setRowHeight();
 }
@@ -974,7 +1019,6 @@ void BillForm::addTransaction()
             QSqlRecord billrecord = billModel->record(billDataMapper->currentIndex());
             bill_id = billrecord.value("id").toString();
         }
-
         QString given = 0;
         if(ui->lineEditTooBePaid->text().toInt() < ui->lineEditGiven->text().toInt())
             given = ui->lineEditTooBePaid->text();

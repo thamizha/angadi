@@ -26,7 +26,8 @@
 #include "transactionform.h"
 #include "ui_transactionform.h"
 #include <QSqlError>
-
+#include <QSettings>
+#include <QTranslator>
 TransactionForm::TransactionForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TransactionForm)
@@ -56,12 +57,64 @@ TransactionForm::TransactionForm(QWidget *parent) :
 
     generateDate();
     setFieldMaxLength();
+
+    //Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 TransactionForm::~TransactionForm()
 {
     delete ui;
 }
+
+void TransactionForm::settranslate()
+{
+    ui->retranslateUi(this);
+}
+
+void TransactionForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){                               //tab language settings
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+        QApplication::instance()->installTranslator(&translator);
+        if(flag == 0)
+            ui->pushButtonSave->setText(TransactionForm::tr("Save"));
+        else
+            ui->pushButtonSave->setText(TransactionForm::tr("Update"));
+    }
+    else{
+        if(flag == 0)
+            ui->pushButtonSave->setText("Save");
+        else
+            ui->pushButtonSave->setText("Update");
+    }
+}
+
+
 
 void TransactionForm::setFieldMaxLength()
 {
@@ -210,7 +263,8 @@ void TransactionForm::clear()
     }
     ui->comboBoxPayMode->setCurrentIndex(0);
     uninstallEventFilter();
-    ui->pushButtonSave->setText("Save");
+    setSaveButtonText(0);
+//    ui->pushButtonSave->setText("Save");
     ui->pushButtonDelete->setEnabled(false);
 
 }
@@ -233,7 +287,8 @@ void TransactionForm::setMapperIndex(QModelIndex index)
 {
     clear();
     dataMapper->setCurrentIndex(index.row());
-    ui->pushButtonSave->setText("Update");
+    setSaveButtonText(1);
+//    ui->pushButtonSave->setText("Update");
     ui->pushButtonDelete->setEnabled(true);
 }
 

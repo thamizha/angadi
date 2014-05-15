@@ -59,6 +59,7 @@ public:
     int validCodeFlag, validNameFlag, validEmailFlag, validCreditLimitFlag;
     void setFieldMaxLength();
     void settranslate();
+    void setSaveButtonText(qint8);
 
 signals:
     void signalName(QString str);
