@@ -40,7 +40,6 @@ SOURCES += main.cpp\
     periodwisesalesform.cpp \
     transactionreport.cpp \
     about.cpp \
-    qtrpt.cpp
 
 HEADERS  += \
     angadiapp.h \
