@@ -76,10 +76,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Period Wise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View Bills</source>
         <translation type="unfinished"></translation>
     </message>
@@ -113,6 +109,14 @@
     </message>
     <message>
         <source>Unpaid bills List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period Wise Sales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transaction Report</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -220,6 +224,22 @@
     </message>
     <message>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Product Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -420,6 +440,25 @@
     </message>
 </context>
 <context>
+    <name>PeriodWiseSalesForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProductForm</name>
     <message>
         <source>Form</source>
@@ -481,39 +520,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Product Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit Price</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invoice No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invoice Date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -530,6 +537,18 @@
     </message>
     <message>
         <source>Paid Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Balance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -623,6 +642,53 @@
     </message>
     <message>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invoice Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TransactionReport</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invoice No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paid By</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

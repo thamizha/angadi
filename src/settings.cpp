@@ -32,6 +32,8 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QTranslator>
+#include <QDialog>
+
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
@@ -80,6 +82,16 @@ Settings::Settings(QWidget *parent) :
 Settings::~Settings()
 {
     delete ui;
+}
+
+void Settings::settingsModal()
+{
+    qDebug() << "Triggered";
+    QDialog preferenceDialog(this);
+    preferenceDialog.setModal(true);
+
+    preferenceDialog.exec();
+//    preferenceDialog.show();
 }
 
 void Settings::settranslate()

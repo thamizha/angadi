@@ -40,6 +40,7 @@ public:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
     void settranslate();
+    void settingsModal();
 private slots:
     void on_pushButtonSave_clicked();
 
