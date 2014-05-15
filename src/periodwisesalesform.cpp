@@ -57,7 +57,7 @@ PeriodWiseSalesForm::PeriodWiseSalesForm(QWidget *parent) :
     ui->tableView->verticalHeader()->setVisible(true);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->resizeRowsToContents();
     ui->tableView->setColumnHidden(0,true);
     ui->tableView->setColumnHidden(4,true);
@@ -66,6 +66,11 @@ PeriodWiseSalesForm::PeriodWiseSalesForm(QWidget *parent) :
 
     for (int i = 8; i<billProxy->columnCount(); ++i)
         ui->tableView->setColumnHidden(i,true);
+
+    ui->tableView->setColumnWidth(1,205);
+    ui->tableView->setColumnWidth(2,209);
+    ui->tableView->setColumnWidth(3,325);
+    ui->tableView->setColumnWidth(6,200);
 
     QDate date = QDate::currentDate();
     ui->dateEditFrom->setDate(date);
