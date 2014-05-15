@@ -57,27 +57,7 @@ CategoryForm::CategoryForm(QWidget *parent) :
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 
     setFieldMaxLength();
-
-    //Language setup
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-    QString content = settings.value("s_language","").toString();
-
-    if(content == "tamil_language"){
-        QTranslator translator;
-        translator.load("tamilLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-
-     }else{
-        QTranslator translator;
-        translator.load("englishLanguage_la");
-    //  QApplication::installTranslator(&translator);
-        QApplication::instance()->installTranslator(&translator);
-        ui->retranslateUi(this);
-    }
+    setLanguage();
 }
 
 CategoryForm::~CategoryForm()
@@ -434,5 +414,29 @@ void CategoryForm::setAllValidationSuccess()
         widget->setProperty("validationError",false);
         widget->setProperty("validationSuccess",true);
         widget->setStyleSheet(styleSheet());
+    }
+}
+
+void CategoryForm::setLanguage()
+{
+    //Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }

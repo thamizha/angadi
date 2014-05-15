@@ -102,6 +102,7 @@ private slots:
     void resetDataMapper();
     void uninstallEventFilter();
     void setAllValidationSuccess();
+    void setLanguage();
 };
 
 #endif // CUSTOMERFORM_H

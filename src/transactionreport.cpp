@@ -7,6 +7,7 @@ TransactionReport::TransactionReport(QWidget *parent) :
     ui(new Ui::TransactionReport)
 {
     ui->setupUi(this);
+
     qint64 subdays = -1;
     fromFilter = QDate::currentDate().addDays(subdays).toString("yyyy-MM-dd");
     toFilter = QDate::currentDate().toString("yyyy-MM-dd");
@@ -15,7 +16,6 @@ TransactionReport::TransactionReport(QWidget *parent) :
     invoiceNoFilter = "";
     paidByFilter = "";
     filter = "transactions.status = 'A'";
-
 
     transactionModel = new QSqlRelationalTableModel();
     transactionModel->setTable("transactions");
@@ -48,8 +48,10 @@ TransactionReport::TransactionReport(QWidget *parent) :
     ui->tableView->setItemDelegateForColumn(3,new RightAlignDelegate);
     ui->tableView->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
     ui->tableView->setColumnHidden(0,true);
+
     for (int i = 6; i<transactionProxy->columnCount(); ++i)
         ui->tableView->setColumnHidden(i,true);
+
     ui->dateEditFrom->setDate(QDate::currentDate().addDays(subdays));
     ui->dateEditTo->setDate(QDate::currentDate());
     ui->lineEditTotalBalance->setEnabled(false);

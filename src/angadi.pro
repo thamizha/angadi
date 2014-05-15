@@ -97,7 +97,7 @@ OTHER_FILES += \
     angadicpp
 
 CONFIG(debug, debug|release) {
-    DESTDIR = Angadi-V0.5/debug
+    DESTDIR = Angadi-V0.5
 } else {
     DESTDIR = Angadi-V0.5
 }

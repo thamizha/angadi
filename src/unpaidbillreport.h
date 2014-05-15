@@ -49,6 +49,7 @@ private slots:
     void on_lineEditBalance_textChanged(const QString &arg1);
     void setModel();
     void calTotal();
+    void setLanguage();
 };
 
 #endif // UNPAIDBILLREPORT_H
