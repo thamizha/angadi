@@ -14,7 +14,7 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
-
+    void settranslate();
 signals:
     void loggedIn();
     void exitApp();

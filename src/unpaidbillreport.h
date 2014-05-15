@@ -22,6 +22,7 @@ class UnpaidBillReport : public QWidget
 public:
     explicit UnpaidBillReport(QWidget *parent = 0);
     ~UnpaidBillReport();
+    void settranslate();
 
 private:
     Ui::UnpaidBillReport *ui;

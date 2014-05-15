@@ -1,7 +1,8 @@
 #include "unpaidbillreport.h"
 #include "ui_unpaidbillreport.h"
 #include <QSqlError>
-
+#include <QTranslator>
+#include <QSettings>
 UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UnpaidBillReport)
@@ -42,6 +43,27 @@ UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
     for (int i = 8; i<billProxy->columnCount(); ++i)
         ui->tableView->setColumnHidden(i,true);
     calTotal();
+
+    //Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 UnpaidBillReport::~UnpaidBillReport()
@@ -49,6 +71,10 @@ UnpaidBillReport::~UnpaidBillReport()
     delete ui;
 }
 
+void UnpaidBillReport::settranslate()
+{
+    ui->retranslateUi(this);
+}
 
 void UnpaidBillReport::on_dateEditFrom_dateChanged(const QDate &date)
 {

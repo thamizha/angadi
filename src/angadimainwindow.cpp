@@ -107,13 +107,6 @@ AngadiMainWindow::AngadiMainWindow(QWidget *parent) :
         actionTransactionEntry->setText(TransactionForm::tr("Transaction"));
 
         languageFlag = "tamil";
-//        for(int i=0;i<ui->mainTab->count();i++)
-//        {
-//            if(ui->mainTab->widget(i)->property("Category").toString() == "Category")
-//                qDebug() << "yes";
-//        }
-
-
      }else{
         QTranslator translator;
         translator.load("englishLanguage_la");

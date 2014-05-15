@@ -60,6 +60,8 @@ public:
     void setMapperIndex(QModelIndex index);
     void setCodeFocus();
     void setNameFocus();
+    void settranslate();
+    void setSaveButtonText(qint8);
 
 signals:
     void signalName(QString);

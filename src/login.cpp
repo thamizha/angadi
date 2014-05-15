@@ -6,17 +6,45 @@
 #include <QSqlRecord>
 #include <QDebug>
 #include <QCryptographicHash>
+#include <QTranslator>
+#include <QSettings>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
+
+    //Language setup
+    QString app_path;
+    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 LoginDialog::~LoginDialog()
 {
     delete ui;
+}
+
+void LoginDialog::settranslate()
+{
+    ui->retranslateUi(this);
 }
 
 void LoginDialog::on_pushButtonEnter_clicked()

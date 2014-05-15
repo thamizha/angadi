@@ -20,7 +20,7 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  *****************************************************************************/
 
 #include "settings.h"
@@ -31,6 +31,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QProcess>
+#include <QTranslator>
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
@@ -53,6 +54,27 @@ Settings::Settings(QWidget *parent) :
     ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
     ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
 
+
+    //    Language setup
+//    QString app_path;
+//    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+//    QSettings settings(app_path,QSettings::NativeFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
 }
 
 Settings::~Settings()
@@ -60,14 +82,20 @@ Settings::~Settings()
     delete ui;
 }
 
+void Settings::settranslate()
+{
+    ui->retranslateUi(this);
+}
+
+
 void Settings::on_pushButtonSave_clicked()
 {
     qDebug() << ui->comboBoxLanguage->currentText();
 
-//    QMessageBox::StandardButton reply;
-//      reply = QMessageBox::question(this, "Preference settings", "Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
-//      if (reply == QMessageBox::Ok) \
-//      {
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "Preference settings", "Need to <b>restart</b> the application ? ",QMessageBox::Ok|QMessageBox::Cancel);
+      if (reply == QMessageBox::Ok) \
+      {
         QString s_language;
         if(ui->comboBoxLanguage->currentText() == "தமிழ்")
         s_language = "tamil_language";
@@ -85,26 +113,31 @@ void Settings::on_pushButtonSave_clicked()
         settings.setValue("s_tinNumber",ui->lineEditTinNumber->text());
         settings.setValue("s_phoneNumber",ui->lineEditPhoneNumber->text());
 
+
+        QMessageBox Msgbox;
+        Msgbox.setText("Preferences are saved Suceessfully");
+        Msgbox.exec();
+
         QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
         exit(2);
 
-//      }
-//      else
-//      {
-//          QString app_path;
-//          app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
-//          QSettings settings(app_path,QSettings::NativeFormat);
+      }
+      else
+      {
+          QString app_path;
+          app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+          QSettings settings(app_path,QSettings::NativeFormat);
 
-//          if(settings.value("s_language","").toString() == "tamil_languag")
-//              ui->comboBoxLanguage->setCurrentIndex(0);
-//          if(settings.value("s_language","").toString() == "english_language")
-//              ui->comboBoxLanguage->setCurrentIndex(1);
+          if(settings.value("s_language","").toString() == "tamil_languag")
+              ui->comboBoxLanguage->setCurrentIndex(0);
+          if(settings.value("s_language","").toString() == "english_language")
+              ui->comboBoxLanguage->setCurrentIndex(1);
 
-//          ui->lineEditAddress->setText(settings.value("s_address","").toString());
-//          ui->lineEditComapanyName->setText(settings.value("s_companyName","").toString());
-//          ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
-//          ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
-//      }
+          ui->lineEditAddress->setText(settings.value("s_address","").toString());
+          ui->lineEditComapanyName->setText(settings.value("s_companyName","").toString());
+          ui->lineEditPhoneNumber->setText(settings.value("s_phoneNumber","").toString());
+          ui->lineEditTinNumber->setText(settings.value("s_tinNumber","").toString());
+      }
 }
 
 void Settings::on_pushButtonClose_clicked()

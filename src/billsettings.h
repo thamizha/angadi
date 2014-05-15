@@ -39,6 +39,8 @@ class BillSettings : public QDialog
 public:
     explicit BillSettings(QWidget *parent = 0);
     ~BillSettings();
+    void settranslate();
+
 
 private slots:
     void on_pushButtonSave_clicked();
