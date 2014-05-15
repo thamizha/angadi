@@ -39,7 +39,7 @@ SOURCES += main.cpp\
     unpaidbillreport.cpp \
     periodwisesalesform.cpp \
     transactionreport.cpp \
-    about.cpp
+    about.cpp \
     qtrpt.cpp
 
 HEADERS  += \
@@ -109,3 +109,21 @@ OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 RCC_DIR = $$DESTDIR/.qrc
 UI_DIR = $$DESTDIR/.ui
+
+copydata.commands = $(COPY_DIR) $$PWD/.reports $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
+copyFileTml.commands = $(COPY_FILE) $$PWD/tamilLanguage_la.qm $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copyFileTml
+export(first.depends)
+export(copyFileTml.commands)
+QMAKE_EXTRA_TARGETS += first copyFileTml
+
+copyFileEng.commands = $(COPY_FILE) $$PWD/englishLanguage_la.qm $$OUT_PWD/Angadi-V0.5
+first.depends = $(first) copyFileEng
+export(first.depends)
+export(copyFileTml.commands)
+QMAKE_EXTRA_TARGETS += first copyFileEng

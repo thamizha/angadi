@@ -27,6 +27,8 @@
 #define SETTINGS_H
 
 #include <QDialog>
+#include <QApplication>
+#include <QWidget>
 
 namespace Ui {
 class Settings;

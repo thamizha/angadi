@@ -13,6 +13,7 @@
 #include <QSqlRelationalDelegate>
 #include <QSortFilterProxyModel>
 #include <QSqlRelationalTableModel>
+#include <QDir>
 
 namespace Ui {
 class UnpaidBillReport;

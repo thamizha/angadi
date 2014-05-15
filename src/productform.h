@@ -35,6 +35,7 @@
 #include <QDataWidgetMapper>
 #include <QDateTime>
 #include <QEvent>
+#include <QDir>
 
 namespace Ui {
 class ProductForm;

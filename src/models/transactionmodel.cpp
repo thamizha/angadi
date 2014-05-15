@@ -38,7 +38,7 @@ TransactionModel::TransactionModel(QObject *parent) :
 
     //    Language setup
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
     QString lanInvoiceNumber;

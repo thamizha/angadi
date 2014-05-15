@@ -99,7 +99,7 @@ void CustomerForm::settranslate()
 void CustomerForm::setSaveButtonText(qint8 flag)         //flag = 0 for "save" else "update"
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 
@@ -701,7 +701,7 @@ void CustomerForm::setAllValidationSuccess()
 void CustomerForm::setLanguage()
 {
     QString app_path;
-    app_path = QApplication::applicationDirPath()+"/settingsfile.ini";
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
     QString content = settings.value("s_language","").toString();
 
