@@ -1,7 +1,7 @@
 /*****************************************************************************
- * connection.h
+ * dbsettings.h
  *
- * Created: 18/04/2014 by selvam
+ * Created: 16/05/2014 by vijay
  *
  * Copyright 2014 ThamiZha!. All rights reserved.
  *
@@ -20,49 +20,34 @@
  * this file belongs to.
  *
  * Authors :
- *
+ * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  *****************************************************************************/
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
-#include "dbsettings.h"
+#ifndef DBSETTINGS_H
+#define DBSETTINGS_H
 
-#include <QObject>
-#include <QDateTime>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QSqlQuery>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QVariant>
-#include <QObject>
-#include <QHash>
-#include <QDateTime>
-#include <QList>
-#include <QMetaObject>
-#include <QMetaProperty>
-#include <QDebug>
-#include <QSqlError>
-#include <QtSql/QtSql>
 
-class Connection : public QObject
+#include <QDialog>
+
+namespace Ui {
+class DBSettings;
+}
+
+class DBSettings : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Connection(QObject *parent = 0);
-    QSqlDatabase db;
-    ~Connection();
-    DBSettings *dbsettings;
-    void checkDBOpen();
+    explicit DBSettings(QWidget *parent = 0);
+    ~DBSettings();
 
-signals:
+private slots:
+    void on_pushButtonSave_clicked();
 
-public slots:
+    void on_pushButtonClose_clicked();
 
 private:
-    void createSqliteTables();
-
+    Ui::DBSettings *ui;
 };
 
-#endif // CONNECTION_H
+#endif // DBSETTINGS_H

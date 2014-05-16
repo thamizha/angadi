@@ -30,34 +30,65 @@
 Connection::Connection(QObject *parent) :
     QObject(parent)
 {
+    DBSettings *dbsettings = new DBSettings();
+
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
+
+    QString hostName = settings.value("s_hostName","").toString();
+
+    if(hostName.length() <= 0)
+    {
+        qDebug() << "inside";
+        dbsettings->exec();
+    }
+
 //    Mysql
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(settings.value("s_hostName","").toString());
+//    db.setPort(settings.value("s_port","").toInt());
+//    db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
     db.setDatabaseName("angadi");
     db.setUserName(settings.value("s_userName","").toString());
     db.setPassword(settings.value("s_password","").toString());
+
+    qDebug() << settings.value("s_hostName","").toString();
+    qDebug() << settings.value("s_userName","").toString();
+    qDebug() << settings.value("s_password","").toString();
+
     bool status = db.open();
+    qDebug() << status;
     if(status)
+    {
+        qDebug() << "tablequry executed";
         createSqliteTables();
+    }
     else{
+        qDebug() << "tablequry NOT executed";
         QMessageBox msgBox;
-        msgBox.setText("No Database exists in your mysql server");
-        msgBox.setInformativeText("Please create the database in the name of angadi in your mysql server. Until then your records will not be stored.");
+        msgBox.setText("<B><u>Note:</u></B>");
+        msgBox.setInformativeText("Database exists in your mysql server. Create the database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         int ret = msgBox.exec();
         switch (ret) {
            case QMessageBox::Ok:
-
+               dbsettings->exec();
                break;
            default:
                // should never be reached
                break;
          }
 }
+
+if(!db.open())
+{
+    qDebug() << "Outer exit called";
+    exit(1);
+}
+
+
 ////    Sqlite
 //    if(!QFile::exists(QCoreApplication::applicationDirPath() + QDir::separator() + "angadi.sqlite")){
 //        createSqliteTables();
@@ -79,6 +110,8 @@ void Connection::createSqliteTables()
 //    db.open();
 
     //    bill table creation
+//            db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
+//            db.exec("Use angadi");
             db.exec("DROP TABLE IF EXISTS `bill`;"
                     "CREATE TABLE `bill` ("
                       "`id` int(11) NOT NULL AUTO_INCREMENT,"
@@ -196,3 +229,4 @@ void Connection::createSqliteTables()
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8;);");
 
 }
+
