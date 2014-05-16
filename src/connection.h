@@ -48,7 +48,8 @@
 class Connection : public QObject
 {
     Q_OBJECT
-
+    QString hostName, username, password;
+    qint8 port;
 public:
     explicit Connection(QObject *parent = 0);
     QSqlDatabase db;
@@ -62,7 +63,10 @@ public slots:
 
 private:
     void createSqliteTables();
-
+    bool checkConnectionParams();
+    void createAndOpenDb();
+    void closeDb();
+    bool openConnection(QString dbName);
 };
 
 #endif // CONNECTION_H

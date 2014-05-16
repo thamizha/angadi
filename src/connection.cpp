@@ -30,47 +30,66 @@
 Connection::Connection(QObject *parent) :
     QObject(parent)
 {
-    DBSettings *dbsettings = new DBSettings();
+    bool isDbParamsCorrect = checkConnectionParams();
 
-    QString app_path;
-    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
-
-    QString hostName = settings.value("s_hostName","").toString();
-    qint8 port = settings.value("s_port","").toInt();
-    QString username = settings.value("s_userName","").toString();
-    QString password = settings.value("s_password","").toString();
-
-    if(hostName.length() <= 0 && username.length() <= 0)
-        dbsettings->exec();
-
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(hostName);
-    db.setPort(port);
-    db.setDatabaseName("angadi");
-    db.setUserName(username);
-    db.setPassword(password);
-    //    db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
-
-    bool status = db.open();
-    if(status){
-        createSqliteTables();
-    }else{
-        QMessageBox msgBox;
-        msgBox.setText("<B><u>Note:</u></B>");
-        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        int ret = msgBox.exec();
-        switch (ret) {
-           case QMessageBox::Ok:
-               dbsettings->exec();
-               break;
-           default:
-               // should never be reached
-               break;
-         }
+    bool iStatus = false;
+    if(isDbParamsCorrect){
+        closeDb();
+        iStatus = openConnection("angadi");
     }
+
+    if(!iStatus){
+        closeDb();
+        createAndOpenDb();
+    }
+//    bool status = db.open();
+//    if(status){
+//    }else{
+//        QMessageBox msgBox;
+//        msgBox.setText("<B><u>Note:</u></B>");
+//        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
+//        msgBox.setStandardButtons(QMessageBox::Ok);
+//        msgBox.setDefaultButton(QMessageBox::Ok);
+//        int ret = msgBox.exec();
+//        switch (ret) {
+//           case QMessageBox::Ok:
+//               dbsettings->exec();
+//               break;
+//           default:
+//               // should never be reached
+//               break;
+//         }
+//    }
+
+//    db.close();
+
+//    db.setHostName(hostName);
+//    db.setPort(port);
+//    db.setDatabaseName("angadi");
+//    db.setUserName(username);
+//    db.setPassword(password);
+
+//    db.open();
+
+
+//    if(status){
+//        createSqliteTables();
+//    }else{
+//        QMessageBox msgBox;
+//        msgBox.setText("<B><u>Note:</u></B>");
+//        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
+//        msgBox.setStandardButtons(QMessageBox::Ok);
+//        msgBox.setDefaultButton(QMessageBox::Ok);
+//        int ret = msgBox.exec();
+//        switch (ret) {
+//           case QMessageBox::Ok:
+//               dbsettings->exec();
+//               break;
+//           default:
+//               // should never be reached
+//               break;
+//         }
+//    }
 
     if(!db.open())
         exit(1);
@@ -196,3 +215,71 @@ void Connection::createSqliteTables()
 
 }
 
+bool Connection::checkConnectionParams()
+{
+    DBSettings *dbsettings = new DBSettings();
+
+    QString app_path;
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
+    QSettings settings(app_path,QSettings::NativeFormat);
+
+    hostName = settings.value("s_hostName","").toString();
+    port = settings.value("s_port","").toInt();
+    username = settings.value("s_userName","").toString();
+    password = settings.value("s_password","").toString();
+
+    if(hostName.length() <= 0 || username.length() <= 0)
+        dbsettings->exec();
+
+    bool status = false;
+    if(openConnection(""))
+        status = true;
+    else
+        dbsettings->exec();
+
+    closeDb();
+
+    return status;
+}
+
+void Connection::createAndOpenDb()
+{
+    bool status = openConnection("");
+
+    QSqlQuery query;
+    if(status){
+        query.exec("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'angadi';");
+
+        if(!query.next())
+            db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
+
+        closeDb();
+
+        if(openConnection("angadi"))
+            createSqliteTables();
+    }
+}
+
+void Connection::closeDb()
+{
+    if(db.open())
+        db.close();
+}
+
+bool Connection::openConnection(QString dbName)
+{
+    closeDb();
+
+    if(dbName.length() <= 0)
+        db = QSqlDatabase::addDatabase("QMYSQL");
+
+    db.setHostName(hostName);
+    db.setPort(port);
+
+    if(dbName.length() > 0)
+        db.setDatabaseName(dbName);
+
+    db.setUserName(username);
+    db.setPassword(password);
+    return db.open();
+}
