@@ -40,6 +40,7 @@ SOURCES += main.cpp\
     periodwisesalesform.cpp \
     transactionreport.cpp \
     about.cpp \
+    dbsettings.cpp
 
 HEADERS  += \
     angadiapp.h \
@@ -68,7 +69,8 @@ HEADERS  += \
     periodwisesalesform.h \
     qtrpt.h \
     transactionreport.h \
-    about.h
+    about.h \
+    dbsettings.h
 
 FORMS    += \
     angadimainwindow.ui \
@@ -84,7 +86,8 @@ FORMS    += \
     billsettings.ui \
     unpaidbillreport.ui \
     transactionreport.ui \
-    about.ui
+    about.ui \
+    dbsettings.ui
 
 RESOURCES += \
     resource.qrc
