@@ -74,5 +74,5 @@ void DBSettings::on_pushButtonSave_clicked()
 
 void DBSettings::on_pushButtonClose_clicked()
 {
-    this->hide();
+    exit(0);
 }

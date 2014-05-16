@@ -41,6 +41,8 @@ public:
     explicit DBSettings(QWidget *parent = 0);
     ~DBSettings();
 
+signals:
+
 private slots:
     void on_pushButtonSave_clicked();
 

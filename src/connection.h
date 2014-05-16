@@ -67,6 +67,7 @@ private:
     void createAndOpenDb();
     void closeDb();
     bool openConnection(QString dbName);
+    bool checkMysqlUsername();
 };
 
 #endif // CONNECTION_H

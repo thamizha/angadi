@@ -30,18 +30,34 @@
 Connection::Connection(QObject *parent) :
     QObject(parent)
 {
+    dbsettings = new DBSettings();
+
     bool isDbParamsCorrect = checkConnectionParams();
 
-    bool iStatus = false;
+    qDebug() << isDbParamsCorrect;
+    bool isMysqlUsernameCorrect = false;
     if(isDbParamsCorrect){
-        closeDb();
+        isMysqlUsernameCorrect = checkMysqlUsername();
+    }
+
+    qDebug() << isMysqlUsernameCorrect;
+    bool iStatus = false;
+    if(isDbParamsCorrect && isMysqlUsernameCorrect){
         iStatus = openConnection("angadi");
+    }else{
+        QMessageBox msgBox;
+        msgBox.setText("<B><u>Note:</u></B>");
+        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        dbsettings->exec();
     }
 
     if(!iStatus){
-        closeDb();
         createAndOpenDb();
     }
+
 //    bool status = db.open();
 //    if(status){
 //    }else{
@@ -217,8 +233,6 @@ void Connection::createSqliteTables()
 
 bool Connection::checkConnectionParams()
 {
-    DBSettings *dbsettings = new DBSettings();
-
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::NativeFormat);
@@ -237,8 +251,6 @@ bool Connection::checkConnectionParams()
     else
         dbsettings->exec();
 
-    closeDb();
-
     return status;
 }
 
@@ -253,8 +265,6 @@ void Connection::createAndOpenDb()
         if(!query.next())
             db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
 
-        closeDb();
-
         if(openConnection("angadi"))
             createSqliteTables();
     }
@@ -262,17 +272,23 @@ void Connection::createAndOpenDb()
 
 void Connection::closeDb()
 {
-    if(db.open())
+//    if(db.open())
+//        db.close();
+    QString connection;
+    if(db.open()){
+        connection = db.connectionName();
         db.close();
+        db = QSqlDatabase();
+        db.removeDatabase(connection);
+    }
 }
 
 bool Connection::openConnection(QString dbName)
 {
     closeDb();
 
-    if(dbName.length() <= 0)
-        db = QSqlDatabase::addDatabase("QMYSQL");
-
+    //if(dbName.length() <= 0)
+    db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(hostName);
     db.setPort(port);
 
@@ -281,5 +297,21 @@ bool Connection::openConnection(QString dbName)
 
     db.setUserName(username);
     db.setPassword(password);
-    return db.open();
+    return db.open(username, password);
+}
+
+bool Connection::checkMysqlUsername()
+{
+    bool status = openConnection("");
+
+    bool lStatus = false;
+    QSqlQuery query;
+    if(status){
+        query.prepare("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = :username)");
+        query.bindValue(":username", username);
+        query.exec();
+        if(query.next())
+            lStatus = true;
+    }
+    return lStatus;
 }
