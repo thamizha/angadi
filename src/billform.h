@@ -52,6 +52,7 @@
 #include <QKeyEvent>
 #include <QSqlRelationalDelegate>
 #include <QPrinter>
+#include <QStringList>
 
 namespace Ui {
 class BillForm;
@@ -110,6 +111,9 @@ private:
     QPrinter *printer;
     QSqlTableModel *reportModel;
 
+    QStringList header;
+    int columnCount;
+
 private slots:
     void save();
     bool invoiceNoValid();
@@ -142,6 +146,13 @@ private slots:
     void calBalance();
     void setRowHeight();
     void setLanguage();
+    void setTableWidget();
+    QString getProductName(int id);
+    int getProductId(QString name);
+    void on_tableWidget_doubleClicked(const QModelIndex &index);
+    void searchCustomerCode();
+    void saveProductList(int bill_id);
+    void searchProductCode();
 };
 
 #endif // BILLFORM_H

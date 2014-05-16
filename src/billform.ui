@@ -122,16 +122,6 @@
            <bool>true</bool>
           </property>
          </widget>
-         <widget class="QTableView" name="tableViewProductList">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>91</y>
-            <width>781</width>
-            <height>230</height>
-           </rect>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="lineEditProductCode">
           <property name="geometry">
            <rect>
@@ -840,6 +830,22 @@ font: bold;</string>
            <bool>true</bool>
           </property>
          </widget>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>90</y>
+            <width>780</width>
+            <height>231</height>
+           </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>780</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
@@ -892,7 +898,6 @@ font: bold;</string>
   <tabstop>pushButtonClear</tabstop>
   <tabstop>pushButtonSave</tabstop>
   <tabstop>pushButtonDelete</tabstop>
-  <tabstop>tableViewProductList</tabstop>
   <tabstop>lineEditGrandTotal</tabstop>
   <tabstop>lineEditDiscount</tabstop>
   <tabstop>lineEditRoundOff</tabstop>
