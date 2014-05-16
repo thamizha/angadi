@@ -141,6 +141,14 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEditHostName</tabstop>
+  <tabstop>lineEditPort</tabstop>
+  <tabstop>lineEditUsername</tabstop>
+  <tabstop>lineEditPassword</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonClose</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

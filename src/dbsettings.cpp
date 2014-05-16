@@ -67,7 +67,7 @@ void DBSettings::on_pushButtonSave_clicked()
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Database settings", "Database settings are saved Suceessfully",QMessageBox::Ok|QMessageBox::Cancel);
 
-    qDebug() << "exit call";
+    //qDebug() << "exit call";
     QProcess::startDetached(QApplication::applicationFilePath());       //Restart the application
     exit(1);
 }
