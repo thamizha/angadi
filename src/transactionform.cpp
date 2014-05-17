@@ -171,7 +171,7 @@ void TransactionForm::save()
             transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("status")),"A");
 
             status = transactionModel->submitAll();
-            statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
+            statusMsg = "Transaction of invoice " + ui->lineEditInvoiceNo->text() + " saved successfully";
             emit signalStatusBar(statusMsg);
             emit signalUpdated();
         }else{
@@ -194,7 +194,7 @@ void TransactionForm::save()
 
             if(status == true){
                 status = transactionModel->submitAll();
-                statusMsg = ui->lineEditInvoiceNo->text() + " updated successfully";
+                statusMsg = "Transaction of invoice " + ui->lineEditInvoiceNo->text() + " updated successfully";
                 emit signalStatusBar(statusMsg);
             }
             emit signalUpdated();
@@ -300,20 +300,40 @@ void TransactionForm::on_pushButtonCancel_clicked()
 
 void TransactionForm::on_pushButtonDelete_clicked()
 {
+    QMessageBox msgBox;
+
     QSqlRecord record = transactionModel->record(dataMapper->currentIndex());
     statusMsg = ui->lineEditInvoiceNo->text() + " deleted successfully";
 
     QDateTime datetime = QDateTime::currentDateTime();
-    QChar t_status = 'D';
-    record.setValue("status", t_status);
-    record.setValue("modifiedDate", datetime);
-    transactionModel->setRecord(dataMapper->currentIndex(),record);
-    transactionModel->submitAll();
-    transactionModel->select();
 
-    emit signalStatusBar(statusMsg);
-    emit signalUpdated();
-    on_pushButtonCancel_clicked();
+    settings = new Settings;
+    msgBox.setWindowTitle(settings->getCompanyName());
+    QString msg = "Are you sure you want to delete this transaction?";
+    msgBox.setText(msg);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    QPixmap pix(":/images/icons/delete.png");
+    msgBox.setIconPixmap(pix);
+    int ret = msgBox.exec();
+    switch (ret) {
+        case QMessageBox::Yes:
+            statusMsg = "Transaction of invoice " + ui->lineEditInvoiceNo->text() + " deleted successfully";
+
+            record.setValue("status", "D");
+            record.setValue("modifiedDate", datetime);
+            transactionModel->setRecord(dataMapper->currentIndex(),record);
+            transactionModel->submitAll();
+            transactionModel->select();
+
+            emit signalStatusBar(statusMsg);
+            emit signalUpdated();
+            on_pushButtonCancel_clicked();
+            break;
+        default:
+            // should never be reached
+            break;
+    }
 }
 
 void TransactionForm::onNameChanged(QString str)

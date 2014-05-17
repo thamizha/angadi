@@ -43,6 +43,8 @@ public:
     ~Settings();
     void settranslate();
     void settingsModal();
+    QString getCompanyName();
+
 private slots:
     void on_pushButtonSave_clicked();
 

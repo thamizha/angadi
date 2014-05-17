@@ -68,7 +68,7 @@ void BillSettings::on_pushButtonSave_clicked()
 
 void BillSettings::on_pushButtonClose_clicked()
 {
-    this->hide();
+    this->close();
 }
 
 void BillSettings::setLanguage()

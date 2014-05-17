@@ -251,7 +251,7 @@ void BillForm::save(){
             }
             transactionModel->submitAll();
             transactionModel->select();
-            statusMsg = ui->lineEditInvoiceNo->text() + " saved successfully";
+            statusMsg = "Invoice " + ui->lineEditInvoiceNo->text() + " saved successfully";
             emit signalStatusBar(statusMsg);
             clear();
         }
@@ -556,18 +556,37 @@ void BillForm::on_pushButtonClear_clicked()
 
 void BillForm::on_pushButtonDelete_clicked()
 {
+    QMessageBox msgBox;
+
     QSqlRecord record = billModel->record(billDataMapper->currentIndex());
     QDateTime datetime = QDateTime::currentDateTime();
 
-    record.setValue("status", "D");
-    record.setValue("modifiedDate", datetime);
-    billModel->setRecord(billDataMapper->currentIndex(), record);
-    billModel->submitAll();
-    billModel->select();
-    on_pushButtonClear_clicked();
+    settings = new Settings;
+    msgBox.setWindowTitle(settings->getCompanyName());
+    QString msg = "Are you sure you want to delete this bill?";
+    msgBox.setText(msg);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    QPixmap pix(":/images/icons/delete.png");
+    msgBox.setIconPixmap(pix);
+    int ret = msgBox.exec();
+    switch (ret) {
+        case QMessageBox::Yes:
+            statusMsg = "Invoice " + ui->lineEditInvoiceNo->text() + " deleted successfully";
 
-    statusMsg = ui->lineEditInvoiceNo->text() + " deleted successfully";
-    emit signalStatusBar(statusMsg);
+            record.setValue("status", "D");
+            record.setValue("modifiedDate", datetime);
+            billModel->setRecord(billDataMapper->currentIndex(), record);
+            billModel->submitAll();
+            billModel->select();
+
+            emit signalStatusBar(statusMsg);
+            on_pushButtonClear_clicked();
+            break;
+        default:
+            // should never be reached
+            break;
+     }
 }
 
 QDateTime BillForm::modifiedDate() const

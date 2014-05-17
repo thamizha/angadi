@@ -421,6 +421,7 @@ void AngadiMainWindow::openBillTab()
 
     connect(billTabs->value(tabName),SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billTabs->value(tabName),SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
+    connect(billTabs->value(tabName),SIGNAL(signalStatusBar(QString)),this,SLOT(setStatusBarText(QString)));
     connect(billTabs->value(tabName),SIGNAL(signalCustomerNameFocused()),this,SLOT(changeLssBarSource()));
 
     setupModels();
@@ -1033,6 +1034,6 @@ void AngadiMainWindow::setLanguage()
 void AngadiMainWindow::openAboutAngadi()
 {
 
-    About *obj = new About();
-    obj->exec();
+    about = new About();
+    about->exec();
 }

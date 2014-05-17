@@ -1,6 +1,4 @@
 #include "angadiapp.h"
-#include "logindialog.h"
-#include "angadimainwindow.h"
 #include <connection.h>
 
 #include <QDebug>
