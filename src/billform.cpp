@@ -209,7 +209,7 @@ void BillForm::save(){
         billModel->setData(billModel->index(row,billModel->fieldIndex("discount")),ui->lineEditDiscount->text());
         billModel->setData(billModel->index(row,billModel->fieldIndex("totalAmount")),ui->lineEditTooBePaid->text());
 
-        if(ui->lineEditBalance->text().toInt() == 0)
+        if(ui->lineEditBalance->text().toDouble() == 0.00)
             billModel->setData(billModel->index(row,billModel->fieldIndex("paidStatus")),"P");
         else
             billModel->setData(billModel->index(row,billModel->fieldIndex("paidStatus")),"U");
@@ -526,6 +526,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         setTransactionTableView();
         ui->pushButtonDelete->setEnabled(true);
         setTableWidget();
+        calBalance();
     }
     convertDoubleAll();
 }
@@ -782,7 +783,7 @@ void BillForm::productFormClearForSearch()
 void BillForm::updateToBeGiven()
 {
     double grandTotal = 0, discount = 0, tax = 0, roundOff = 0;
-    int toBePaid;
+    double toBePaid;
     grandTotal = ui->lineEditGrandTotal->text().toDouble();
     discount =grandTotal-ui->lineEditDiscount->text().toDouble()*grandTotal/100;
     tax = discount+ui->lineEditTax->text().toDouble()*discount/100;
@@ -799,6 +800,7 @@ void BillForm::updateToBeGiven()
     }
     if(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble() > 0)
         ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble(),'f',2));
+    calBalance();
 }
 
 void BillForm::setTransactionTableView()
@@ -833,7 +835,7 @@ void BillForm::setTransactionTableView()
         ui->tableViewCustomerBalance->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
         ui->tableViewCustomerBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-        int balance = 0;
+        double balance = 0;
         customerName = ui->lineEditCustomerName->text();
         customerQuery.prepare("Select id from customers where name = :customer_name");
         customerQuery.bindValue(":customer_name", customerName);
@@ -844,11 +846,11 @@ void BillForm::setTransactionTableView()
         customerPaid.bindValue(":customerId",customerName);
         customerPaid.exec();
         while(customerPaid.next())
-            balance = balance+customerPaid.value(7).toInt();
+            balance = balance+customerPaid.value(7).toDouble();
 
         ui->lineEditBalance->setText(billBalance);
         ui->lineEditUsed->setText(QString::number(balance));
-        ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toInt()-balance));
+        ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toDouble()-balance));
     }else{
         transactionModel->setFilter("bill_id = -1");
         transactionModel->select();
@@ -873,7 +875,7 @@ void BillForm::addTransaction()
     msgBox.setDefaultButton(QMessageBox::Ok);
 
     if(transactionModel->rowCount() > 0)
-        if(ui->lineEditBalance->text().toInt() == 0)
+        if(ui->lineEditBalance->text().toDouble() == 0)
         {
             validError =1;
             errors.append("\n This bill is already settled. There is no credit in this bill.");
@@ -889,7 +891,7 @@ void BillForm::addTransaction()
             bill_id = billrecord.value("id").toString();
         }
         QString given = 0;
-        if(ui->lineEditTooBePaid->text().toInt() < ui->lineEditGiven->text().toInt())
+        if(ui->lineEditTooBePaid->text().toDouble() < ui->lineEditGiven->text().toDouble())
             given = ui->lineEditTooBePaid->text();
         else
             given = ui->lineEditGiven->text();
@@ -905,10 +907,10 @@ void BillForm::addTransaction()
         transactionModel->setData(transactionModel->index(row,transactionModel->fieldIndex("status")),"A");
         transactionModel->submit();
         QSqlRecord transactionRecord;
-        int balance = 0;
+        double balance = 0;
         for(int i=0; i< transactionModel->rowCount(); ++i){
             transactionRecord = transactionModel->record(i);
-            balance = balance+transactionRecord.value(3).toInt();
+            balance = balance+transactionRecord.value(3).toDouble();
         }
         ui->lineEditGiven->setText(given);
         calBalance();
@@ -929,17 +931,16 @@ void BillForm::addTransaction()
 
 void BillForm::calBalance()
 {
-    int paid = 0, balance =0;
+    double paid = 0, balance =0;
     QSqlRecord transactionRecord;
     for(int i=0; i< transactionModel->rowCount(); ++i){
         transactionRecord = transactionModel->record(i);
-        paid = paid+transactionRecord.value(3).toInt();
+        paid = paid+transactionRecord.value(3).toDouble();
     }
-    balance = ui->lineEditTooBePaid->text().toInt()-paid;
+    balance = ui->lineEditTooBePaid->text().toDouble()-paid;
     if (balance < 0)
         balance = 0;
-    ui->lineEditBalance->setText(QString::number(balance));
-    convertDoubleAll();
+    ui->lineEditBalance->setText(QString::number(balance,'f',2));
 }
 
 void BillForm::on_pushButtonPrint_clicked()
@@ -1268,7 +1269,6 @@ void BillForm::convertDoubleAll()
     ui->lineEditBalance->setText(formValidation->convertDouble(ui->lineEditBalance->text()));
     ui->lineEditChange->setText(formValidation->convertDouble(ui->lineEditChange->text()));
     ui->lineEditDiscount->setText(formValidation->convertDouble(ui->lineEditDiscount->text()));
-    ui->lineEditGiven->setText(formValidation->convertDouble(ui->lineEditGiven->text()));
     ui->lineEditGrandTotal->setText(formValidation->convertDouble(ui->lineEditGrandTotal->text()));
     ui->lineEditLimit->setText(formValidation->convertDouble(ui->lineEditLimit->text()));
 //    ui->lineEditQty->setText(QString::number(ui->lineEditQty->text().toDouble(),'f',3));
