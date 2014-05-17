@@ -1128,11 +1128,16 @@ void BillForm::addProductItem()
         errors.append("\nThe Product field may be empty or not in our store");
     }
 
-    if(!formValidation->isDouble(ui->lineEditQty->text()))
-        if(ui->lineEditQty->text().toDouble() < 0.005){
+    if(!formValidation->isDouble(ui->lineEditQty->text())){
             validError = 1;
-            errors.append("\n\nThe quantity field may be empty or its very low to sale");
+            errors.append("\n\nThe quantity field may be empty or not a number.");
         }
+
+    if(ui->lineEditQty->text().toDouble() < 0.005){
+                validError = 1;
+                errors.append("\n\nThe quantity field is very low to sale");
+            }
+
     if(validError == 0){
         int row;
         if(productUpdateFlag == 0){
@@ -1299,7 +1304,28 @@ void BillForm::convertDoubleAll()
 
 void BillForm::defaultProductList()
 {
-    header << "Product Name" << "Qunatity" << "Rate" << "Unit" << "Total" << "Product Id";
+
+    QString app_path;
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
+    QSettings settings(app_path,QSettings::IniFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        header << BillForm::tr("Product Name") << BillForm::tr("Quantity") << BillForm::tr("Unit Price") << BillForm::tr("Unit") << BillForm::tr("Total") << BillForm::tr("Product Id");
+     }else{
+        QTranslator translator;
+        translator.load("englishLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        header << "Product Name" << "Quantity" << "Rate" << "Unit" << "Total" << "Product Id";
+    }
+
+
+
     columnCount = 6;
 
     ui->tableWidget->setColumnCount(columnCount);

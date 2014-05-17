@@ -96,11 +96,11 @@
     </message>
     <message>
         <source>Bill Transactions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">பில் பரிவர்த்தனைகள்</translation>
     </message>
     <message>
         <source>Product List</source>
-        <translation type="unfinished">பொருட்கள்</translation>
+        <translation type="unfinished">பொருள்</translation>
     </message>
     <message>
         <source>Tamil</source>
@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>Period Wise Sales</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">விற்பனை அறிக்கை</translation>
     </message>
     <message>
         <source>Transaction Report</source>
@@ -254,7 +254,15 @@
         <translation type="unfinished">அளவு</translation>
     </message>
     <message>
+        <source>Rate</source>
+        <translation type="obsolete">விலை</translation>
+    </message>
+    <message>
         <source>Are you sure you want to delete this bill?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Product Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -840,6 +848,10 @@
 <context>
     <name>UnpaidBillReport</name>
     <message>
+        <source>UnPaid Bill Report</source>
+        <translation type="unfinished">கடன் பில் அறிக்கை</translation>
+    </message>
+    <message>
         <source>Form</source>
         <translation type="unfinished">படிவம்</translation>
     </message>
@@ -858,6 +870,10 @@
     <message>
         <source>To Date</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished">தேதி</translation>
     </message>
     <message>
         <source>Customer Name</source>

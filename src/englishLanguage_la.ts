@@ -249,6 +249,10 @@
         <source>Are you sure you want to delete this bill?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Product Id</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillSettings</name>
@@ -802,6 +806,14 @@
     </message>
     <message>
         <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UnPaid Bill Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

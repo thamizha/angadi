@@ -24,11 +24,32 @@ UnpaidBillReport::UnpaidBillReport(QWidget *parent) :
     billModel->setTable("bill");
     billModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     billModel->setRelation(3, QSqlRelation("customers", "id", "name"));
-    billModel->setHeaderData(1, Qt::Horizontal,QObject::tr("Invoice No"));
-    billModel->setHeaderData(2, Qt::Horizontal,QObject::tr("Date"));
-    billModel->setHeaderData(3, Qt::Horizontal,QObject::tr("Customer Name"));
-    billModel->setHeaderData(6, Qt::Horizontal,QObject::tr("Bill Amount"));
-    billModel->setHeaderData(7, Qt::Horizontal,QObject::tr("Balance"));
+
+    QString app_path;
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
+    QSettings settings(app_path,QSettings::IniFormat);
+    QString content = settings.value("s_language","").toString();
+
+    if(content == "tamil_language"){
+        QTranslator translator;
+        translator.load("tamilLanguage_la");
+    //  QApplication::installTranslator(&translator);
+        QApplication::instance()->installTranslator(&translator);
+        billModel->setHeaderData(1, Qt::Horizontal,UnpaidBillReport::tr("Invoice No"));
+        billModel->setHeaderData(2, Qt::Horizontal,UnpaidBillReport::tr("Date"));
+        billModel->setHeaderData(3, Qt::Horizontal,UnpaidBillReport::tr("Customer Name"));
+        billModel->setHeaderData(6, Qt::Horizontal,UnpaidBillReport::tr("Bill Amount"));
+        billModel->setHeaderData(7, Qt::Horizontal,UnpaidBillReport::tr("Balance"));
+
+     }else{
+        billModel->setHeaderData(1, Qt::Horizontal,QObject::tr("Invoice No"));
+        billModel->setHeaderData(2, Qt::Horizontal,QObject::tr("Date"));
+        billModel->setHeaderData(3, Qt::Horizontal,QObject::tr("Customer Name"));
+        billModel->setHeaderData(6, Qt::Horizontal,QObject::tr("Bill Amount"));
+        billModel->setHeaderData(7, Qt::Horizontal,QObject::tr("Balance"));
+    }
+
+
     filter = "paidStatus = 'U'";
     billModel->setFilter(filter);
     billModel->select();

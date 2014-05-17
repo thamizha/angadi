@@ -84,9 +84,9 @@
          <widget class="QLabel" name="label">
           <property name="geometry">
            <rect>
-            <x>776</x>
+            <x>690</x>
             <y>480</y>
-            <width>51</width>
+            <width>140</width>
             <height>21</height>
            </rect>
           </property>
@@ -99,6 +99,9 @@
           </property>
           <property name="text">
            <string>Total</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
          <widget class="QWidget" name="layoutWidget">

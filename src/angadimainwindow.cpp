@@ -451,7 +451,17 @@ void AngadiMainWindow::openUnpaidBillReportTab()
     if(found == false){
         unpaidBillReport = new UnpaidBillReport();
         unpaidBillReport->setProperty("name", tabName);
-        ui->mainTab->addTab(unpaidBillReport, "UnPaid Bill Report");
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(unpaidBillReport, UnpaidBillReport::tr("UnPaid Bill Report"));
+        }
+        else{
+            ui->mainTab->addTab(unpaidBillReport, "UnPaid Bill Report");
+        }
+
     }
     ui->mainTab->setCurrentWidget (unpaidBillReport);
 }
@@ -465,7 +475,16 @@ void AngadiMainWindow::openPeriodWiseSalesTab()
     if(found == false){
         periodWiseSalesForm = new PeriodWiseSalesForm;
         periodWiseSalesForm->setProperty("name", tabName);
-        ui->mainTab->addTab(periodWiseSalesForm, "Period Wise Sales");
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(periodWiseSalesForm, AngadiMainWindow::tr("Period Wise Sales"));
+        }
+        else{
+            ui->mainTab->addTab(periodWiseSalesForm, "Period Wise Sales");
+        }
     }
     ui->mainTab->setCurrentWidget (periodWiseSalesForm);
 }
@@ -479,7 +498,17 @@ void AngadiMainWindow::openTransactionReportTab()
     if(found == false){
         transactionReport = new TransactionReport();
         transactionReport->setProperty("name",tabName);
-        ui->mainTab->addTab(transactionReport, "Transaction Report");
+
+        if(checkLanguage() == "tamil_language"){                               //tab language settings
+            QTranslator translator;
+            translator.load("tamilLanguage_la");
+            QApplication::instance()->installTranslator(&translator);
+            ui->mainTab->addTab(transactionReport, AngadiMainWindow::tr("Transaction Report"));
+        }
+        else{
+            ui->mainTab->addTab(transactionReport, "Transaction Report");
+        }
+
     }
     ui->mainTab->setCurrentWidget (transactionReport);
 }
