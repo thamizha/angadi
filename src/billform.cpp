@@ -55,20 +55,7 @@ BillForm::BillForm(QWidget *parent) :
     ui->lineEditUnit->setEnabled(false);
     ui->lineEditUsed->setEnabled(false);
 
-    header << "Product Name" << "Qunatity" << "Rate" << "Unit" << "Total" << "Product Id";
-    columnCount = 6;
-
-    ui->tableWidget->setColumnCount(columnCount);
-    ui->tableWidget->setHorizontalHeaderLabels(header);
-    ui->tableWidget->setColumnWidth(0,415);
-    ui->tableWidget->setColumnWidth(1,87);
-    ui->tableWidget->setColumnWidth(2,87);
-    ui->tableWidget->setColumnWidth(3,87);
-    ui->tableWidget->setColumnHidden(5,true);
-
-    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    defaultProductList();
 
     formValidation = new FormValidation;
     billDataMapper = new QDataWidgetMapper;
@@ -256,7 +243,7 @@ void BillForm::save(){
             clear();
         }
         setBillId();
-        ui->tableWidget->clear();
+        defaultProductList();
         setTransactionTableView();
     }else{
         msgBox.setInformativeText(errors);
@@ -312,6 +299,8 @@ void BillForm::clear()
     emit signalCustomerNameFocused();
     resetDataMapper();
     setTransactionTableView();
+    convertDoubleAll();
+    setTableWidget();
 }
 
 void BillForm::setModel(BillModel *model1, BillItemModel *model2 ,ProductsModel *model3, CustomersModel *model4)
@@ -538,6 +527,7 @@ void BillForm::setMapperIndex(QModelIndex index)
         ui->pushButtonDelete->setEnabled(true);
         setTableWidget();
     }
+    convertDoubleAll();
 }
 
 void BillForm::search(QString value)
@@ -721,13 +711,14 @@ void BillForm::generateInvoiceNumber()
         invoiceNo = QString::number(maxInvoiceNo);
     }
     ui->lineEditInvoiceNo->setText(invoiceNo);
+    convertDoubleAll();
 }
 
 void BillForm::setProductTotal()
 {
     double qty = ui->lineEditQty->text().toDouble();
     double rate = ui->lineEditRate->text().toDouble();
-    QString productTotal = QString::number(qty*rate);
+    QString productTotal = QString::number(qty*rate,'f',2);
     ui->lineEditTotal->setText(productTotal);
 }
 
@@ -793,6 +784,7 @@ void BillForm::reverseRelation()
         billItemModel->setRecord(i, itemRecord);
     }
     billItemModel->submit();
+    convertDoubleAll();
 }
 
 void BillForm::productFormClearForSearch()
@@ -816,20 +808,22 @@ void BillForm::updateToBeGiven()
     toBePaid = qRound(tax);
     roundOff = toBePaid-tax;
     if(roundOff >= 0){
-        ui->lineEditTooBePaid->setText(QString::number(toBePaid));
-        ui->lineEditRoundOff->setText(QString::number(roundOff));
+        ui->lineEditTooBePaid->setText(QString::number(toBePaid,'f',2));
+        ui->lineEditRoundOff->setText(QString::number(roundOff,'f',2));
     }else{
         toBePaid = toBePaid+1;
         roundOff = 1+roundOff;
-        ui->lineEditTooBePaid->setText(QString::number(toBePaid));
-        ui->lineEditRoundOff->setText(QString::number(roundOff));
+        ui->lineEditTooBePaid->setText(QString::number(toBePaid,'f',2));
+        ui->lineEditRoundOff->setText(QString::number(roundOff,'f',2));
     }
     if(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble() > 0)
-        ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble()));
+        ui->lineEditChange->setText(QString::number(ui->lineEditGiven->text().toDouble()-ui->lineEditTooBePaid->text().toDouble(),'f',2));
 }
 
 void BillForm::setTransactionTableView()
 {
+    ui->tableWidget->clear();
+
     if(ui->lineEditCustomerName->text().size() > 1){
         QString customerName, filter;
         QSqlQuery customerQuery,customerPaid;
@@ -879,6 +873,7 @@ void BillForm::setTransactionTableView()
         transactionModel->select();
     }
     setRowHeight();
+    convertDoubleAll();
 }
 
 void BillForm::addTransaction()
@@ -963,6 +958,7 @@ void BillForm::calBalance()
     if (balance < 0)
         balance = 0;
     ui->lineEditBalance->setText(QString::number(balance));
+    convertDoubleAll();
 }
 
 void BillForm::on_pushButtonPrint_clicked()
@@ -1089,6 +1085,7 @@ void BillForm::setLanguage()
 
 void BillForm::setTableWidget()
 {
+    defaultProductList();
     QString bill_id = "-1";
     QSqlRecord record;
     if(billDataMapper->currentIndex() >= 0)
@@ -1102,10 +1099,10 @@ void BillForm::setTableWidget()
     for(int i =0 ; i<billItemModel->rowCount(); ++i){
         record = billItemModel->record(i);
         ui->tableWidget->setItem(i,0,new QTableWidgetItem(getProductName(record.value(2).toInt())));
-        ui->tableWidget->setItem(i,1,new QTableWidgetItem(record.value(5).toString()));
-        ui->tableWidget->setItem(i,2,new QTableWidgetItem(record.value(4).toString()));
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::number(record.value(5).toDouble(),'f',3)));
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(formValidation->convertDouble(record.value(4).toString())));
         ui->tableWidget->setItem(i,3,new QTableWidgetItem(record.value(3).toString()));
-        ui->tableWidget->setItem(i,4,new QTableWidgetItem(record.value(6).toString()));
+        ui->tableWidget->setItem(i,4,new QTableWidgetItem(formValidation->convertDouble(record.value(6).toString())));
         ui->tableWidget->setItem(i,5,new QTableWidgetItem(QString::number(i)));
     }
 }
@@ -1152,7 +1149,6 @@ void BillForm::addProductItem()
         ui->tableWidget->setItem(row,2,new QTableWidgetItem(ui->lineEditRate->text()));
         ui->tableWidget->setItem(row,3,new QTableWidgetItem(ui->lineEditUnit->text()));
         ui->tableWidget->setItem(row,4,new QTableWidgetItem(ui->lineEditTotal->text()));
-
         productFormClear();
         setGrandTotal();
     }
@@ -1213,8 +1209,8 @@ void BillForm::setGrandTotal()
     double grandTotal = 0.00;
     int rowCount = ui->tableWidget->rowCount();
     for (int i=0; i < rowCount; ++i)
-        grandTotal = grandTotal + ui->tableWidget->item(i,4)->text().toInt();
-    ui->lineEditGrandTotal->setText(QString::number(grandTotal));
+        grandTotal = grandTotal + ui->tableWidget->item(i,4)->text().toDouble();
+    ui->lineEditGrandTotal->setText(QString::number(grandTotal,'f',2));
     updateToBeGiven();
 }
 
@@ -1239,6 +1235,7 @@ void BillForm::searchCustomerCode()
         ui->lineEditLimit->setText(query.value(4).toString());
         setTransactionTableView();
     }
+    convertDoubleAll();
 }
 
 void BillForm::searchProductCode()
@@ -1253,6 +1250,7 @@ void BillForm::searchProductCode()
         ui->lineEditRate->setText(query.value(6).toString());
         ui->lineEditUnit->setText(query.value(3).toString());
     }
+    convertDoubleAll();
 }
 
 void BillForm::saveProductList(int bill_id)
@@ -1281,4 +1279,44 @@ void BillForm::saveProductList(int bill_id)
         }
         billItemModel->submit();
     }
+}
+
+void BillForm::convertDoubleAll()
+{
+    ui->lineEditAvailable->setText(formValidation->convertDouble(ui->lineEditAvailable->text()));
+    ui->lineEditBalance->setText(formValidation->convertDouble(ui->lineEditBalance->text()));
+    ui->lineEditChange->setText(formValidation->convertDouble(ui->lineEditChange->text()));
+    ui->lineEditDiscount->setText(formValidation->convertDouble(ui->lineEditDiscount->text()));
+    ui->lineEditGiven->setText(formValidation->convertDouble(ui->lineEditGiven->text()));
+    ui->lineEditGrandTotal->setText(formValidation->convertDouble(ui->lineEditGrandTotal->text()));
+    ui->lineEditLimit->setText(formValidation->convertDouble(ui->lineEditLimit->text()));
+//    ui->lineEditQty->setText(QString::number(ui->lineEditQty->text().toDouble(),'f',3));
+    ui->lineEditRate->setText(formValidation->convertDouble(ui->lineEditRate->text()));
+    ui->lineEditTax->setText(formValidation->convertDouble(ui->lineEditTax->text()));
+    ui->lineEditTooBePaid->setText(formValidation->convertDouble(ui->lineEditTooBePaid->text()));
+    ui->lineEditUsed->setText(formValidation->convertDouble(ui->lineEditUsed->text()));
+    ui->lineEditTotal->setText(formValidation->convertDouble(ui->lineEditTotal->text()));
+}
+
+void BillForm::defaultProductList()
+{
+    header << "Product Name" << "Qunatity" << "Rate" << "Unit" << "Total" << "Product Id";
+    columnCount = 6;
+
+    ui->tableWidget->setColumnCount(columnCount);
+    ui->tableWidget->setHorizontalHeaderLabels(header);
+    ui->tableWidget->setColumnWidth(0,415);
+    ui->tableWidget->setColumnWidth(1,87);
+    ui->tableWidget->setColumnWidth(2,87);
+    ui->tableWidget->setColumnWidth(3,87);
+    ui->tableWidget->setColumnWidth(4,88);
+    ui->tableWidget->setColumnHidden(5,true);
+
+    ui->tableWidget->setItemDelegateForColumn(1,new RightAlignDelegate());
+    ui->tableWidget->setItemDelegateForColumn(2,new RightAlignDelegate());
+    ui->tableWidget->setItemDelegateForColumn(4,new RightAlignDelegate());
+
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 }

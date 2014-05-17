@@ -82,3 +82,9 @@ bool FormValidation::isRecordFound(QString table, QString column, QString value)
     }
     return status;
 }
+
+QString FormValidation::convertDouble(QString value)
+{
+    double number = value.toDouble();
+    return QString::number(number,'f',2);
+}

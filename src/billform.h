@@ -155,6 +155,8 @@ private slots:
     void searchCustomerCode();
     void saveProductList(int bill_id);
     void searchProductCode();
+    void convertDoubleAll();
+    void defaultProductList();
 };
 
 #endif // BILLFORM_H

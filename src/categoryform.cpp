@@ -56,6 +56,8 @@ CategoryForm::CategoryForm(QWidget *parent) :
     connect(ui->lineEditCode,SIGNAL(editingFinished()),this,SLOT(codeValid()));
     connect(ui->lineEditName,SIGNAL(editingFinished()),this,SLOT(nameValid()));
 
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),this,SLOT(categoryCodeSearch()));
+
     setFieldMaxLength();
     setLanguage();
 }
@@ -456,5 +458,20 @@ void CategoryForm::setLanguage()
     //  QApplication::installTranslator(&translator);
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
+    }
+}
+
+void CategoryForm::categoryCodeSearch()
+{
+    QSqlRecord record;
+    QModelIndex index;
+    int flag = 0;
+    for(int i=0; i<categoriesModel->rowCount()&&flag==0; i++){
+        record = categoriesModel->record(i);
+        if(record.value("code")== ui->lineEditCode->text()){
+            index = categoriesModel->index(i,0);
+            setMapperIndex(index);
+            flag =1;
+        }
     }
 }

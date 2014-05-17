@@ -81,6 +81,8 @@ CustomerForm::CustomerForm(QWidget *parent) :
     connect(ui->lineEditWebsite,SIGNAL(editingFinished()),this,SLOT(WebsiteValid()));
     connect(ui->lineEditEmail,SIGNAL(editingFinished()),this,SLOT(emailValid()));
 
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),this,SLOT(customerCodeSearch()));
+
     setFieldMaxLength();
     setLanguage();
 }
@@ -471,6 +473,7 @@ bool CustomerForm::creditLimitValid()
     ui->lineEditCreditLimit->installEventFilter(this);
     if(ui->lineEditCreditLimit->text().length() > 0){
         if(formValidation->isDouble(ui->lineEditCreditLimit->text())){
+            ui->lineEditCreditLimit->setText(formValidation->convertDouble(ui->lineEditCreditLimit->text()));
             status = true;
             ui->lineEditCreditLimit->setProperty("validationError",false);
             ui->lineEditCreditLimit->setProperty("validationSuccess",true);
@@ -561,6 +564,7 @@ void CustomerForm::setMapperIndex(QModelIndex index)
     validCodeFlag = validNameFlag = validCreditLimitFlag = validEmailFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
 //    setAllValidationSuccess();
+    ui->lineEditCreditLimit->setText(formValidation->convertDouble(ui->lineEditCreditLimit->text()));
 }
 
 void CustomerForm::search(QString value)
@@ -735,5 +739,20 @@ void CustomerForm::setLanguage()
     //  QApplication::installTranslator(&translator);
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
+    }
+}
+
+void CustomerForm::customerCodeSearch()
+{
+    QSqlRecord record;
+    QModelIndex index;
+    int flag = 0;
+    for(int i=0; i<customersModel->rowCount()&&flag==0; i++){
+        record = customersModel->record(i);
+        if(record.value("code")== ui->lineEditCode->text()){
+            index = customersModel->index(i,0);
+            setMapperIndex(index);
+            flag =1;
+        }
     }
 }

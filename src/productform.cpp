@@ -22,6 +22,7 @@
  * Authors :
  * Vijay @ Dhanasekaran <vijay.kuruntham.gmail.com>
  * Selvam <vjpselvam@gmail.com>
+ * D.Mohan Raj <mohanraj.hunk@live.com>
  *****************************************************************************/
 
 #include "productform.h"
@@ -75,6 +76,8 @@ ProductForm::ProductForm(QWidget *parent) :
     connect(ui->lineEditMrp,SIGNAL(editingFinished()),SLOT(mrpValid()));
     connect(ui->lineEditSalePrice,SIGNAL(editingFinished()),SLOT(salePriceValid()));
     connect(ui->lineEditWholeSalePrice,SIGNAL(editingFinished()),SLOT(wholeSalePriceValid()));
+
+    connect(ui->lineEditCode,SIGNAL(returnPressed()),SLOT(productCodeSearch()));
 
     setFieldMaxLength();
     setLanguage();
@@ -376,6 +379,7 @@ bool ProductForm::mrpValid(){
     ui->lineEditMrp->installEventFilter(this);
     if(ui->lineEditMrp->text().length() > 0){
         if(formValidation->isDouble(ui->lineEditMrp->text())){
+            ui->lineEditMrp->setText(formValidation->convertDouble(ui->lineEditMrp->text()));
             ui->lineEditMrp->setProperty("validationError",false);
             ui->lineEditMrp->setProperty("validationSuccess",true);
             ui->lineEditMrp->setStyleSheet(styleSheet());
@@ -408,6 +412,7 @@ bool ProductForm::salePriceValid(){
     ui->lineEditSalePrice->installEventFilter(this);
     if(ui->lineEditSalePrice->text().length() > 0){
         if(formValidation->isDouble(ui->lineEditSalePrice->text())){
+            ui->lineEditSalePrice->setText(formValidation->convertDouble(ui->lineEditSalePrice->text()));
             if(ui->lineEditSalePrice->text().toDouble() <= ui->lineEditMrp->text().toDouble()){
                 ui->lineEditSalePrice->setProperty("validationError",false);
                 ui->lineEditSalePrice->setProperty("validationSuccess",true);
@@ -449,6 +454,7 @@ bool ProductForm::wholeSalePriceValid(){
     ui->lineEditWholeSalePrice->installEventFilter(this);
     if(ui->lineEditWholeSalePrice->text().length() > 0){
         if(formValidation->isDouble(ui->lineEditWholeSalePrice->text())){
+            ui->lineEditWholeSalePrice->setText(formValidation->convertDouble(ui->lineEditWholeSalePrice->text()));
             if(ui->lineEditWholeSalePrice->text().toDouble() <= ui->lineEditSalePrice->text().toDouble()){
                 ui->lineEditWholeSalePrice->setProperty("validationError",false);
                 ui->lineEditWholeSalePrice->setProperty("validationSuccess",true);
@@ -516,6 +522,7 @@ void ProductForm::setMapperIndex(QModelIndex index)
     validCodeFlag = validNameFlag = 1;
 //    ui->pushButtonSave->setEnabled(false);
 //    setAllValidationSuccess();
+    convertDoubleAll();
 }
 
 void ProductForm::search(QString value)
@@ -716,5 +723,27 @@ void ProductForm::setLanguage()
     //  QApplication::installTranslator(&translator);
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
+    }
+}
+
+void ProductForm::convertDoubleAll()
+{
+    ui->lineEditMrp->setText(formValidation->convertDouble(ui->lineEditMrp->text()));
+    ui->lineEditSalePrice->setText(formValidation->convertDouble(ui->lineEditSalePrice->text()));
+    ui->lineEditWholeSalePrice->setText(formValidation->convertDouble(ui->lineEditWholeSalePrice->text()));
+}
+
+void ProductForm::productCodeSearch()
+{
+    QSqlRecord record;
+    QModelIndex index;
+    int flag = 0;
+    for(int i=0; i<productsModel->rowCount()&&flag==0; i++){
+        record = productsModel->record(i);
+        if(record.value("code")== ui->lineEditCode->text()){
+            index = productsModel->index(i,0);
+            setMapperIndex(index);
+            flag =1;
+        }
     }
 }
