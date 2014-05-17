@@ -854,7 +854,7 @@ void BillForm::setTransactionTableView()
         ui->tableViewCustomerBalance->setItemDelegateForColumn(4,new TimeEditDelegate("dd/MM/yyyy"));
         ui->tableViewCustomerBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-        double balance = 0;
+        double balance = 0.00;
         customerName = ui->lineEditCustomerName->text();
         customerQuery.prepare("Select id from customers where name = :customer_name and status='A'");
         customerQuery.bindValue(":customer_name", customerName);
@@ -869,7 +869,7 @@ void BillForm::setTransactionTableView()
 
         ui->lineEditBalance->setText(billBalance);
         ui->lineEditUsed->setText(QString::number(balance));
-        ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toDouble()-balance));
+        ui->lineEditAvailable->setText(QString::number(ui->lineEditLimit->text().toDouble() - balance, 'f', 2));
     }else{
         transactionModel->setFilter("bill_id = -1");
         transactionModel->select();
