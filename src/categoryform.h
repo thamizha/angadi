@@ -67,6 +67,7 @@ private slots:
     void uninstallEventFilter();
     void setAllValidationSuccess();
     void setLanguage();
+    void categoryCodeSearch();
 };
 
 #endif // CategoryForm_H

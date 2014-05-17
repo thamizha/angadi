@@ -94,6 +94,8 @@ private slots:
     void setAllValidationSuccess();
     bool categoryValid();
     void setLanguage();
+    void convertDoubleAll();
+    void productCodeSearch();
 };
 
 #endif // PRODUCTFORM_H

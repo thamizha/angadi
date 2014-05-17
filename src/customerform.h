@@ -104,6 +104,7 @@ private slots:
     void uninstallEventFilter();
     void setAllValidationSuccess();
     void setLanguage();
+    void customerCodeSearch();
 };
 
 #endif // CUSTOMERFORM_H
