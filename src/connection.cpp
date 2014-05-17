@@ -109,7 +109,7 @@ void Connection::createSqliteTables()
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 //        default category
-        db.exec("INSERT INTO `categories` (`code`, `name`, `status`) VALUES ('0', 'GENERAL', 'A');");
+        db.exec("INSERT INTO `categories` (`code`, `name`, `status`) VALUES ('1001', 'GENERAL', 'A');");
 
 //    customers table creation
     db.exec("CREATE TABLE IF NOT EXISTS `customers` ("
@@ -141,7 +141,7 @@ void Connection::createSqliteTables()
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 //    default customer
-    db.exec("INSERT INTO `customers` (`code`, `name`, `type`, `creditLimit`, `gender`, `status`) VALUES ('0', 'GENERAL', 'Retailer', '0', 'Male', 'A');");
+    db.exec("INSERT INTO `customers` (`code`, `name`, `type`, `creditLimit`, `gender`, `status`) VALUES ('1001', 'GENERAL', 'Retailer', '0', 'Male', 'A');");
 
 //    products table creation
     db.exec("CREATE TABLE IF NOT EXISTS `products` ("

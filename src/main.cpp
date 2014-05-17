@@ -16,15 +16,15 @@ int main(int argc, char *argv[])
 //        a.installTranslator(&translator);
 //    }
 
-    QPixmap pix(":/images/icons/about_splash.png");
+    /*QPixmap pix(":/images/icons/about_splash.png");
     QSplashScreen splash(pix);
     splash.show();
 
     QTime dieTime= QTime::currentTime().addSecs(3);
     while( QTime::currentTime() < dieTime )
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        QCoreApplication::processEvents(QEventLoop::AllEvents,50);
 
-    splash.hide();
+    splash.hide();*/
     a.start();
 
     return a.exec();
