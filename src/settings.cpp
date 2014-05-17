@@ -110,9 +110,9 @@ void Settings::setLanguage()
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
     QSettings settings(app_path,QSettings::IniFormat);
 
-    if(settings.value("s_language","").toString() == "tamil_languag")
-        ui->comboBoxLanguage->setCurrentIndex(0);
     if(settings.value("s_language","").toString() == "english_language")
+        ui->comboBoxLanguage->setCurrentIndex(0);
+    if(settings.value("s_language","").toString() == "tamil_language")
         ui->comboBoxLanguage->setCurrentIndex(1);
 
     ui->lineEditAddress->setText(settings.value("s_address","").toString());

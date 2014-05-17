@@ -133,8 +133,6 @@ private slots:
     void showCategoriesListReport();
     void showCustomersListReport();
     void setReportValue(int &recNo, QString &paramName, QVariant &paramValue, int reportPage);
-    void settamil();
-    void setenglish();
     void openPeriodWiseSalesTab();
     void openPreference();
     void openBillSettings();

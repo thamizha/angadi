@@ -99,10 +99,10 @@ void AngadiMainWindow::setupProperties()
     //Set dynamic properties
     //TODO : Move the properties as ENUM insted of string
     ui->actionCreateCategory->setProperty("tabName","category");
-    actionCategory->setProperty("tabName","category");
+    actionCategory->setProperty("tabName",tr("category"));
 
     ui->actionCreateProduct->setProperty("tabName","product");
-    actionProduct->setProperty("tabName","product");
+    actionProduct->setProperty("tabName",tr("product"));
 
     ui->actionCreateCustomer->setProperty("tabName","customer");
     actionCustomer->setProperty("tabName","customer");
@@ -148,35 +148,9 @@ void AngadiMainWindow::setupConnections()
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApp()));
 
-//    connect(ui->actionTamil, SIGNAL(triggered()),this, SLOT(settamil()));
-//    connect(ui->actionEnglish, SIGNAL(triggered()),this, SLOT(setenglish()));
     connect(ui->actionPreferences,SIGNAL(triggered()),this,SLOT(openPreference()));
     connect(ui->actionBill_Settings,SIGNAL(triggered()),this,SLOT(openBillSettings()));
     connect(ui->actionAbout_Angadi,SIGNAL(triggered()),this,SLOT(openAboutAngadi()));
-}
-
-
-void AngadiMainWindow::settamil()
-{
- QString app_path;
- app_path = QApplication::applicationDirPath() + QDir::separator() +"settings.ini";
- QSettings settings(app_path,QSettings::IniFormat);
- QString s_string = "tamil_language";
- settings.setValue("s_language",s_string);
-// QString str_val = settings.value("s_language","").toString();
-
-// qDebug() <<QApplication::applicationDirPath();
-// qDebug() <<app_path;
-// qDebug() << str_val;
-}
-
-void AngadiMainWindow::setenglish()
-{
-    QString app_path;
-    app_path = QApplication::applicationDirPath()+ QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::IniFormat);
-    QString s_string = "english_language";
-    settings.setValue("s_language",s_string);
 }
 
 QString AngadiMainWindow::checkLanguage()
@@ -292,7 +266,6 @@ void AngadiMainWindow::openCategoryTab()
         categoryForm = new CategoryForm();
         categoryForm->setProperty("name", tabName);
 
-
         if(checkLanguage() == "tamil_language"){                               //tab language settings
             QTranslator translator;
             translator.load("tamilLanguage_la");
@@ -339,8 +312,6 @@ void AngadiMainWindow::openProductTab()
         else{
             ui->mainTab->addTab(productForm, "Product");
         }
-
-
 
         lssbar->lineEditSearch->setText("");
 
@@ -407,7 +378,6 @@ void AngadiMainWindow::openBillTab()
     billTabs->insert(tabName,new BillForm());
     billTabs->value(tabName)->setProperty("name",tabName);
 
-
     if(checkLanguage() == "tamil_language"){                               //tab language settings
         QTranslator translator;
         translator.load("tamilLanguage_la");
@@ -417,7 +387,6 @@ void AngadiMainWindow::openBillTab()
     else{
         ui->mainTab->addTab(billTabs->value(tabName),"Bill");
     }
-
 
     connect(billTabs->value(tabName),SIGNAL(signalName(QString)),this,SLOT(setSearchTerm(QString)));
     connect(billTabs->value(tabName),SIGNAL(signalFromBillForm()),lssbar,SLOT(setSearchFocus()));
@@ -446,7 +415,6 @@ void AngadiMainWindow::openTransactionTab()
         transactionForm = new TransactionForm();
         transactionForm->setProperty("name", tabName);
 
-
         if(checkLanguage() == "tamil_language"){                               //tab language settings
             QTranslator translator;
             translator.load("tamilLanguage_la");
@@ -456,7 +424,6 @@ void AngadiMainWindow::openTransactionTab()
         else{
             ui->mainTab->addTab(transactionForm, "Transaction");
         }
-
 
         lssbar->lineEditSearch->setText("");
 
