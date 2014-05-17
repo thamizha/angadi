@@ -824,8 +824,6 @@ void BillForm::updateToBeGiven()
 
 void BillForm::setTransactionTableView()
 {
-    ui->tableWidget->clear();
-
     if(ui->lineEditCustomerName->text().size() > 1){
         QString customerName, filter;
         QSqlQuery customerQuery,customerPaid;
@@ -934,7 +932,7 @@ void BillForm::addTransaction()
             transactionRecord = transactionModel->record(i);
             balance = balance+transactionRecord.value(3).toDouble();
         }
-        ui->lineEditGiven->setText(given);
+        ui->lineEditGiven->setText(formValidation->convertDouble(given));
         calBalance();
     }else{
         msgBox.setInformativeText(errors);
@@ -1115,7 +1113,6 @@ void BillForm::addProductItem()
 {
     // Initialization of local variables
     int validError = 0;
-    double qty = 0.000;
     QString errors = "";
 
     // Initialization of message box
