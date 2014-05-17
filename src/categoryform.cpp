@@ -327,7 +327,7 @@ void CategoryForm::on_pushButtonDelete_clicked()
 
     QSqlQueryModel model;
     QSqlQuery query;
-    query.prepare("Select * from products where category_id = :category_id");
+    query.prepare("Select * from products where category_id = :category_id and status = 'A'");
     query.bindValue(":category_id", record.value("id").toInt());
     query.exec();
     model.setQuery(query);
