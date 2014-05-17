@@ -34,20 +34,19 @@ Connection::Connection(QObject *parent) :
 
     bool isDbParamsCorrect = checkConnectionParams();
 
-    qDebug() << isDbParamsCorrect;
     bool isMysqlUsernameCorrect = false;
     if(isDbParamsCorrect){
         isMysqlUsernameCorrect = checkMysqlUsername();
     }
 
-    qDebug() << isMysqlUsernameCorrect;
     bool iStatus = false;
     if(isDbParamsCorrect && isMysqlUsernameCorrect){
         iStatus = openConnection("angadi");
     }else{
         QMessageBox msgBox;
         msgBox.setText("<B><u>Note:</u></B>");
-        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
+        //msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
+        msgBox.setInformativeText("Given mysql server credentials may be incorrect. Please ensure that hostname, username, and password are valid, Until then you cannot use our application.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -57,55 +56,6 @@ Connection::Connection(QObject *parent) :
     if(!iStatus){
         createAndOpenDb();
     }
-
-//    bool status = db.open();
-//    if(status){
-//    }else{
-//        QMessageBox msgBox;
-//        msgBox.setText("<B><u>Note:</u></B>");
-//        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
-//        msgBox.setStandardButtons(QMessageBox::Ok);
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        int ret = msgBox.exec();
-//        switch (ret) {
-//           case QMessageBox::Ok:
-//               dbsettings->exec();
-//               break;
-//           default:
-//               // should never be reached
-//               break;
-//         }
-//    }
-
-//    db.close();
-
-//    db.setHostName(hostName);
-//    db.setPort(port);
-//    db.setDatabaseName("angadi");
-//    db.setUserName(username);
-//    db.setPassword(password);
-
-//    db.open();
-
-
-//    if(status){
-//        createSqliteTables();
-//    }else{
-//        QMessageBox msgBox;
-//        msgBox.setText("<B><u>Note:</u></B>");
-//        msgBox.setInformativeText("Database not exists in your mysql server. Create a database in the name of <B>angadi</b> in your mysql server, Until then you cannot use our application.");
-//        msgBox.setStandardButtons(QMessageBox::Ok);
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        int ret = msgBox.exec();
-//        switch (ret) {
-//           case QMessageBox::Ok:
-//               dbsettings->exec();
-//               break;
-//           default:
-//               // should never be reached
-//               break;
-//         }
-//    }
 
     if(!db.open())
         exit(1);
@@ -118,8 +68,6 @@ Connection::~Connection()
 void Connection::createSqliteTables()
 {
 //    bill table creation
-//    db.exec("CREATE SCHEMA `angadi` DEFAULT CHARACTER SET utf8 ;");
-//    db.exec("Use angadi");
     db.exec("CREATE TABLE IF NOT EXISTS `bill` ("
               "`id` int(11) NOT NULL AUTO_INCREMENT,"
               "`invoiceNo` int(11) NOT NULL,"
@@ -137,6 +85,7 @@ void Connection::createSqliteTables()
              "PRIMARY KEY (`id`)"
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    bill_item table creation
     db.exec("CREATE TABLE IF NOT EXISTS `bill_item` ("
           "`id` int(11) NOT NULL AUTO_INCREMENT,"
           "`bill_id` int(11) NOT NULL,"
@@ -148,6 +97,7 @@ void Connection::createSqliteTables()
          "PRIMARY KEY (`id`)"
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    categories table creation
     db.exec("CREATE TABLE IF NOT EXISTS `categories` ("
           "`id` int(11) NOT NULL AUTO_INCREMENT,"
           "`code` varchar(100) NOT NULL,"
@@ -156,8 +106,9 @@ void Connection::createSqliteTables()
           "`createdDate` datetime DEFAULT NULL,"
           "`modifiedDate` datetime DEFAULT NULL,"
           "PRIMARY KEY (`id`)"
-        ") ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;");
+        ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    customers table creation
     db.exec("CREATE TABLE IF NOT EXISTS `customers` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`code` varchar(100) NOT NULL,"
@@ -184,8 +135,9 @@ void Connection::createSqliteTables()
             "`modifiedDate` varchar(45) DEFAULT NULL,"
             "`modifiedBy` int(11) DEFAULT NULL,"
             "PRIMARY KEY (`id`)"
-            ") ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;");
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    products table creation
     db.exec("CREATE TABLE IF NOT EXISTS `products` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`code` varchar(100) NOT NULL,"
@@ -200,8 +152,9 @@ void Connection::createSqliteTables()
             "`modifiedDate` datetime DEFAULT NULL,"
             "`modifiedBy` int(11) DEFAULT NULL,"
             "PRIMARY KEY (`id`)"
-            ") ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;");
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    transactions table creation
     db.exec("CREATE TABLE IF NOT EXISTS `transactions` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`bill_id` int(11) NOT NULL,"
@@ -217,6 +170,7 @@ void Connection::createSqliteTables()
             "PRIMARY KEY (`id`)"
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    users table creation
     db.exec("CREATE TABLE IF NOT EXISTS `users` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`username` varchar(100) NOT NULL,"
@@ -235,7 +189,7 @@ bool Connection::checkConnectionParams()
 {
     QString app_path;
     app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
-    QSettings settings(app_path,QSettings::NativeFormat);
+    QSettings settings(app_path,QSettings::IniFormat);
 
     hostName = settings.value("s_hostName","").toString();
     port = settings.value("s_port","").toInt();
@@ -272,8 +226,6 @@ void Connection::createAndOpenDb()
 
 void Connection::closeDb()
 {
-//    if(db.open())
-//        db.close();
     QString connection;
     if(db.open()){
         connection = db.connectionName();
@@ -287,10 +239,11 @@ bool Connection::openConnection(QString dbName)
 {
     closeDb();
 
-    //if(dbName.length() <= 0)
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(hostName);
-    db.setPort(port);
+
+    if(port > 0)
+        db.setPort(port);
 
     if(dbName.length() > 0)
         db.setDatabaseName(dbName);
