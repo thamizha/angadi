@@ -550,7 +550,7 @@ void ProductForm::on_pushButtonDelete_clicked()
 
     settings = new Settings;
     msgBox.setWindowTitle(settings->getCompanyName());
-    QString msg = "Are you sure you want to delete this product?";
+    QString msg = ProductForm::tr("Are you sure you want to delete this product?");
     msgBox.setText(msg);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Ok);

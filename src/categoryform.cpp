@@ -337,9 +337,10 @@ void CategoryForm::on_pushButtonDelete_clicked()
     if(model.rowCount() == 0){
         QDateTime datetime = QDateTime::currentDateTime();
 
+        setLanguage();
         settings = new Settings;
         msgBox.setWindowTitle(settings->getCompanyName());
-        QString msg = "Are you sure you want to delete this category?";
+        QString msg = CategoryForm::tr("Are you sure you want to delete this category?");
         msgBox.setText(msg);
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -348,7 +349,7 @@ void CategoryForm::on_pushButtonDelete_clicked()
         int ret = msgBox.exec();
         switch (ret) {
            case QMessageBox::Yes:
-                statusMsg = ui->lineEditName->text() + " deleted successfully";
+                statusMsg = ui->lineEditName->text() + CategoryForm::tr(" deleted successfully");
 
                 record.setValue("status", "D");
                 record.setValue("modifiedDate", datetime);

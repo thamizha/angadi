@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>About</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AngadiMainWindow</name>
     <message>
         <source>Angadi</source>
@@ -25,10 +32,6 @@
     </message>
     <message>
         <source>Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -242,6 +245,10 @@
         <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this bill?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillSettings</name>
@@ -251,10 +258,6 @@
     </message>
     <message>
         <source>Message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>City/Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -270,7 +273,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phone number</source>
+        <source>City</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -306,6 +313,14 @@
     </message>
     <message>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this category?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> deleted successfully</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -415,6 +430,37 @@
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this customer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DBSettings</name>
+    <message>
+        <source>Database settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host name &amp; Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginDialog</name>
@@ -446,15 +492,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>From</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dd/MM/yyyy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invoice No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -514,6 +576,10 @@
     </message>
     <message>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this product?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -654,6 +720,10 @@
     </message>
     <message>
         <source>Customer Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this transaction?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

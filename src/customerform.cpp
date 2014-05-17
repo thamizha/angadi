@@ -593,7 +593,7 @@ void CustomerForm::on_pushButtonDelete_clicked()
 
     settings = new Settings;
     msgBox.setWindowTitle(settings->getCompanyName());
-    QString msg = "Are you sure you want to delete this customer?";
+    QString msg = CustomerForm::tr("Are you sure you want to delete this customer?");
     msgBox.setText(msg);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Ok);

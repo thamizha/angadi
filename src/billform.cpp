@@ -198,7 +198,7 @@ void BillForm::save(){
 
         QSqlQuery customerQuery;
         int customer_id;
-        customerQuery.prepare("Select id from customers where name = :customer_name");
+        customerQuery.prepare("Select id from customers where name = :customer_name and status='A'");
         customerQuery.bindValue(":customer_name", ui->lineEditCustomerName->text());
         customerQuery.exec();
         while(customerQuery.next())
@@ -553,7 +553,7 @@ void BillForm::on_pushButtonDelete_clicked()
 
     settings = new Settings;
     msgBox.setWindowTitle(settings->getCompanyName());
-    QString msg = "Are you sure you want to delete this bill?";
+    QString msg = BillForm::tr("Are you sure you want to delete this bill?");
     msgBox.setText(msg);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Ok);
@@ -695,7 +695,7 @@ void BillForm::generateInvoiceNumber()
 
     QSqlQueryModel model;
     QSqlQuery query;
-    query.prepare("Select * from bill");
+    query.prepare("Select * from bill where status='A'");
     query.exec();
     model.setQuery(query);
 
@@ -703,7 +703,7 @@ void BillForm::generateInvoiceNumber()
     if(model.rowCount() == 0){
         invoiceNo = "1";
     }else{
-        query.prepare("Select max(invoiceNo) from bill");
+        query.prepare("Select max(invoiceNo) from bill where status='A'");
         query.exec();
         model.setQuery(query);
 
@@ -757,7 +757,7 @@ void BillForm::productFormClear()
 void BillForm::reverseRelation()
 {
     QSqlQuery customerQuery;
-    customerQuery.prepare("Select * from customers where id = :customerId");
+    customerQuery.prepare("Select * from customers where id = :customerId and status='A'");
     customerQuery.bindValue(":customerId", ui->lineEditCustomerName->text());
     customerQuery.exec();
     while(customerQuery.next()){
@@ -773,7 +773,7 @@ void BillForm::reverseRelation()
         itemRecord = billItemModel->record(i);
 
         productName = itemRecord.value("product_id").toString();
-        itemQuery.prepare("Select name from products where id = :product_name");
+        itemQuery.prepare("Select name from products where id = :product_name and status='A'");
         itemQuery.bindValue(":product_name", productName);
         itemQuery.exec();
         itemQuery.value(0);
@@ -854,7 +854,7 @@ void BillForm::setTransactionTableView()
 
         int balance = 0;
         customerName = ui->lineEditCustomerName->text();
-        customerQuery.prepare("Select id from customers where name = :customer_name");
+        customerQuery.prepare("Select id from customers where name = :customer_name and status='A'");
         customerQuery.bindValue(":customer_name", customerName);
         customerQuery.exec();
         while(customerQuery.next())
@@ -1036,7 +1036,7 @@ void BillForm::setReportValue(int &recNo, QString &paramName, QVariant &paramVal
     if (paramName == "ProductName") {
         if (record.value("product_id").toString().length() == 0) return;
         QString productCode = record.value("product_id").toString();
-        itemQuery.prepare("Select name from products where id = :product_name");
+        itemQuery.prepare("Select name from products where id = :product_name and status='A'");
         itemQuery.bindValue(":product_name", productCode);
         itemQuery.exec();
         while(itemQuery.next())
@@ -1171,7 +1171,7 @@ QString BillForm::getProductName(int id)
 {
     QSqlQuery query;
     QString name = "";
-    query.prepare("select name from products where id = :id");
+    query.prepare("select name from products where id = :id and status='A'");
     query.bindValue(":id",id);
     query.exec();
     while(query.next())
@@ -1183,7 +1183,7 @@ int BillForm::getProductId(QString name)
 {
     QSqlQuery query;
     int id = -1;
-    query.prepare("select id from products where name = :name");
+    query.prepare("select id from products where name = :name and status='A'");
     query.bindValue(":name",name);
     query.exec();
     while(query.next())
@@ -1217,7 +1217,7 @@ void BillForm::setGrandTotal()
 void BillForm::searchCustomerCode()
 {
     QSqlQuery query;
-    query.prepare("select * from customers where code = :code");
+    query.prepare("select * from customers where code = :code and status='A'");
     query.bindValue(":code",ui->lineEditCustomerCode->text());
     query.exec();
     while(query.next()){
@@ -1241,7 +1241,7 @@ void BillForm::searchCustomerCode()
 void BillForm::searchProductCode()
 {
     QSqlQuery query;
-    query.prepare("select * from products where code = :code");
+    query.prepare("select * from products where code = :code and status='A'");
     query.bindValue(":code",ui->lineEditProductCode->text());
     query.exec();
     while(query.next()){

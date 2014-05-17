@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>About</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AngadiMainWindow</name>
     <message>
         <source>Angadi</source>
@@ -29,7 +36,7 @@
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">புதுப்பி</translation>
+        <translation type="obsolete">புதுப்பி</translation>
     </message>
     <message>
         <source>About</source>
@@ -246,6 +253,10 @@
         <source>Quantity</source>
         <translation type="unfinished">அளவு</translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this bill?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BillSettings</name>
@@ -259,7 +270,7 @@
     </message>
     <message>
         <source>City/Town</source>
-        <translation type="unfinished">நகரம்</translation>
+        <translation type="obsolete">நகரம்</translation>
     </message>
     <message>
         <source>Company name</source>
@@ -279,7 +290,15 @@
     </message>
     <message>
         <source>Phone number</source>
-        <translation type="unfinished">தொலைபேசி எண்</translation>
+        <translation type="obsolete">தொலைபேசி எண்</translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation type="unfinished">நகரம்</translation>
+    </message>
+    <message>
+        <source>Phone</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -326,6 +345,14 @@
     <message>
         <source>Clear</source>
         <translation type="unfinished">அழி</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this category?</source>
+        <translation type="unfinished">இந்த வகையை நீக்கவா?</translation>
+    </message>
+    <message>
+        <source> deleted successfully</source>
+        <translation type="unfinished"> வெற்றிகரமாக நீக்கப்பட்டது</translation>
     </message>
 </context>
 <context>
@@ -434,6 +461,37 @@
         <source>Pincode</source>
         <translation type="unfinished">பின் கோடு</translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this customer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DBSettings</name>
+    <message>
+        <source>Database settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host name &amp; Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">கடவுச்சொல்</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">சேமி</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">மூடு</translation>
+    </message>
 </context>
 <context>
     <name>LoginDialog</name>
@@ -465,16 +523,32 @@
         <translation type="unfinished">படிவம்</translation>
     </message>
     <message>
-        <source>From</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dd/MM/yyyy</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">மொத்தம்</translation>
+    </message>
+    <message>
+        <source>Invoice No</source>
+        <translation type="unfinished">பில் எண்</translation>
+    </message>
+    <message>
+        <source>From Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customer Name</source>
+        <translation type="unfinished">வாடிக்கையாளர் பெயர்</translation>
+    </message>
+    <message>
+        <source>Bill Amount</source>
+        <translation type="unfinished">பில் தொகை</translation>
     </message>
 </context>
 <context>
@@ -534,6 +608,10 @@
     <message>
         <source>Clear</source>
         <translation type="unfinished">அழி</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this product?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -710,6 +788,10 @@
     <message>
         <source>Customer Name</source>
         <translation type="unfinished">வாடிக்கையாளர் பெயர்</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this transaction?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

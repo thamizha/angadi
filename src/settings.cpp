@@ -41,8 +41,8 @@ Settings::Settings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->comboBoxLanguage->addItem("தமிழ்");
     ui->comboBoxLanguage->addItem("English");
+    ui->comboBoxLanguage->addItem("தமிழ்");
 
     setLanguage();
 }
