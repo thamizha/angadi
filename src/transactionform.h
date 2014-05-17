@@ -29,6 +29,7 @@
 #include "models/formvalidation.h"
 #include "models/transactionmodel.h"
 #include "models/billmodel.h"
+#include "settings.h"
 
 #include <QWidget>
 #include <QDataWidgetMapper>
@@ -76,6 +77,7 @@ private:
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
     BillModel *billModel;
+    Settings *settings;
 
 private slots:
     void generateDate();

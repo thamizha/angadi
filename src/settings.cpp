@@ -40,8 +40,9 @@ Settings::Settings(QWidget *parent) :
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
-    ui->comboBoxLanguage->addItem("தமிழ்");
+
     ui->comboBoxLanguage->addItem("English");
+    ui->comboBoxLanguage->addItem("தமிழ்");
 
     setLanguage();
 }
@@ -100,7 +101,7 @@ void Settings::on_pushButtonSave_clicked()
 
 void Settings::on_pushButtonClose_clicked()
 {
-    this->hide();
+    this->close();
 }
 
 void Settings::setLanguage()
@@ -136,4 +137,13 @@ void Settings::setLanguage()
         QApplication::instance()->installTranslator(&translator);
         ui->retranslateUi(this);
     }
+}
+
+QString Settings::getCompanyName()
+{
+    QString app_path;
+    app_path = QApplication::applicationDirPath() + QDir::separator() + "settings.ini";
+    QSettings settings(app_path,QSettings::IniFormat);
+
+    return settings.value("s_companyName","").toString();
 }

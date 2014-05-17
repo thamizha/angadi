@@ -323,6 +323,8 @@ void CategoryForm::on_pushButtonCancel_clicked()
 
 void CategoryForm::on_pushButtonDelete_clicked()
 {
+    QMessageBox msgBox;
+
     QSqlRecord record = categoriesModel->record(dataMapper->currentIndex());
 
     QSqlQueryModel model;
@@ -333,19 +335,36 @@ void CategoryForm::on_pushButtonDelete_clicked()
     model.setQuery(query);
 
     if(model.rowCount() == 0){
-        statusMsg = ui->lineEditName->text() + " deleted successfully";
-
         QDateTime datetime = QDateTime::currentDateTime();
 
-        record.setValue("status", "D");
-        record.setValue("modifiedDate", datetime);
-        categoriesModel->setRecord(dataMapper->currentIndex(), record);
-        categoriesModel->submit();
-        categoriesModel->select();
-        emit signalUpdated();
-        on_pushButtonCancel_clicked();
+        setLanguage();
+        settings = new Settings;
+        msgBox.setWindowTitle(settings->getCompanyName());
+        QString msg = CategoryForm::tr("Are you sure you want to delete this category?");
+        msgBox.setText(msg);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        QPixmap pix(":/images/icons/delete.png");
+        msgBox.setIconPixmap(pix);
+        int ret = msgBox.exec();
+        switch (ret) {
+           case QMessageBox::Yes:
+                statusMsg = ui->lineEditName->text() + CategoryForm::tr(" deleted successfully");
+
+                record.setValue("status", "D");
+                record.setValue("modifiedDate", datetime);
+                categoriesModel->setRecord(dataMapper->currentIndex(), record);
+                categoriesModel->submit();
+                categoriesModel->select();
+
+                emit signalUpdated();
+                on_pushButtonCancel_clicked();
+                break;
+            default:
+                // should never be reached
+                break;
+         }
     }else{
-        QMessageBox msgBox;
         msgBox.setText("Products found under this category. Cannot delete!!!");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);

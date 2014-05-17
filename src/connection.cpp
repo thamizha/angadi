@@ -73,10 +73,10 @@ void Connection::createSqliteTables()
               "`invoiceNo` int(11) NOT NULL,"
               "`invoiceDate` datetime NOT NULL,"
               "`customer_id` int(11) DEFAULT NULL,"
-              "`actualAmount` double NOT NULL DEFAULT '0',"
-              "`discount` double NOT NULL DEFAULT '0',"
-              "`totalAmount` double NOT NULL DEFAULT '0',"
-              "`dueAmount` double NOT NULL DEFAULT '0',"
+              "`actualAmount` double(11,2) NOT NULL DEFAULT '0.00',"
+              "`discount` double(11,2) NOT NULL DEFAULT '0.00',"
+              "`totalAmount` double(11,2) NOT NULL DEFAULT '0.00',"
+              "`dueAmount` double(11,2) NOT NULL DEFAULT '0.00',"
               "`paidStatus` enum('P','U') NOT NULL COMMENT 'P => Paid; U => Unpaid',"
               "`status` enum('A','I','D') NOT NULL DEFAULT 'A' COMMENT 'A => Active; I => Inactive; D => Deleted',"
               "`createdDate` datetime DEFAULT NULL,"
@@ -91,9 +91,9 @@ void Connection::createSqliteTables()
           "`bill_id` int(11) NOT NULL,"
           "`product_id` int(11) NOT NULL,"
           "`unit` varchar(45) NOT NULL,"
-          "`unitPrice` double NOT NULL DEFAULT '0',"
-          "`quantity` double NOT NULL DEFAULT '0',"
-          "`total` double NOT NULL DEFAULT '0',"
+          "`unitPrice` double(11,2) NOT NULL DEFAULT '0.00',"
+          "`quantity` double(11,2) NOT NULL DEFAULT '0.00',"
+          "`total` double(11,2) NOT NULL DEFAULT '0.00',"
          "PRIMARY KEY (`id`)"
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
@@ -108,13 +108,16 @@ void Connection::createSqliteTables()
           "PRIMARY KEY (`id`)"
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//        default category
+        db.exec("INSERT INTO `categories` (`code`, `name`, `status`) VALUES ('0', 'GENERAL', 'A');");
+
 //    customers table creation
     db.exec("CREATE TABLE IF NOT EXISTS `customers` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`code` varchar(100) NOT NULL,"
             "`name` varchar(200) NOT NULL,"
             "`type` varchar(45) NOT NULL,"
-            "`creditLimit` double NOT NULL,"
+            "`creditLimit` double(11,2) NOT NULL DEFAULT '0.00',"
             "`gender` varchar(45) DEFAULT NULL,"
             "`contactPerson` varchar(200) DEFAULT NULL,"
             "`address1` varchar(255) DEFAULT NULL,"
@@ -137,6 +140,9 @@ void Connection::createSqliteTables()
             "PRIMARY KEY (`id`)"
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
+//    default customer
+    db.exec("INSERT INTO `customers` (`code`, `name`, `type`, `creditLimit`, `gender`, `status`) VALUES ('0', 'GENERAL', 'Retailer', '0', 'Male', 'A');");
+
 //    products table creation
     db.exec("CREATE TABLE IF NOT EXISTS `products` ("
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
@@ -144,9 +150,9 @@ void Connection::createSqliteTables()
             "`name` varchar(200) NOT NULL,"
             "`unit` varchar(100) NOT NULL,"
             "`category_id` int(11) NOT NULL,"
-            "`mrp` double NOT NULL,"
-            "`sprice` double NOT NULL,"
-            "`wholeSalePrice` double NOT NULL,"
+            "`mrp` double(11,2) NOT NULL DEFAULT '0.00',"
+            "`sprice` double(11,2) NOT NULL DEFAULT '0.00',"
+            "`wholeSalePrice` double(11,2) NOT NULL DEFAULT '0.00',"
             "`status` enum('A','I','D') NOT NULL DEFAULT 'A' COMMENT 'A => Active; I => Inactive; D => Deleted',"
             "`createdDate` datetime DEFAULT NULL,"
             "`modifiedDate` datetime DEFAULT NULL,"
@@ -159,7 +165,7 @@ void Connection::createSqliteTables()
             "`id` int(11) NOT NULL AUTO_INCREMENT,"
             "`bill_id` int(11) NOT NULL,"
             "`customer_id` int(11) NOT NULL,"
-            "`paidAmount` double NOT NULL DEFAULT '0',"
+            "`paidAmount` double(11,2) NOT NULL DEFAULT '0.00',"
             "`paidOn` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',"
             "`paidBy` varchar(150) DEFAULT NULL,"
             "`mode` varchar(45) NOT NULL,"

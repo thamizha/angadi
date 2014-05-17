@@ -12,5 +12,6 @@
         <file>about_splash.png</file>
         <file>aboutAngadi.png</file>
         <file>app_icon.png</file>
+        <file>delete.png</file>
     </qresource>
 </RCC>

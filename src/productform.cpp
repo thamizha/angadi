@@ -541,20 +541,40 @@ void ProductForm::on_pushButtonCancel_clicked()
 
 void ProductForm::on_pushButtonDelete_clicked()
 {
+    QMessageBox msgBox;
+
     QSqlRecord record = productsModel->record(dataMapper->currentIndex());
     statusMsg = ui->lineEditName->text() + " deleted successfully";
 
     QDateTime datetime = QDateTime::currentDateTime();
-    QChar t_status = 'D';
-    record.setValue("status", t_status);
-    record.setValue("modifiedDate", datetime);
-    productsModel->setRecord(dataMapper->currentIndex(),record);
-    productsModel->submitAll();
-    productsModel->select();
 
-    emit signalStatusBar(statusMsg);
-    emit signalUpdated();
-    on_pushButtonCancel_clicked();
+    settings = new Settings;
+    msgBox.setWindowTitle(settings->getCompanyName());
+    QString msg = ProductForm::tr("Are you sure you want to delete this product?");
+    msgBox.setText(msg);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    QPixmap pix(":/images/icons/delete.png");
+    msgBox.setIconPixmap(pix);
+    int ret = msgBox.exec();
+    switch (ret) {
+       case QMessageBox::Yes:
+            statusMsg = ui->lineEditName->text() + " deleted successfully";
+
+            record.setValue("status", "D");
+            record.setValue("modifiedDate", datetime);
+            productsModel->setRecord(dataMapper->currentIndex(),record);
+            productsModel->submitAll();
+            productsModel->select();
+
+            emit signalStatusBar(statusMsg);
+            emit signalUpdated();
+            on_pushButtonCancel_clicked();
+            break;
+        default:
+            // should never be reached
+            break;
+     }
 }
 
 QDateTime ProductForm::modifiedDate() const

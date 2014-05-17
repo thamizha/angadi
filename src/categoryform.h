@@ -3,6 +3,7 @@
 
 #include "models/formvalidation.h"
 #include "models/categoriesmodel.h"
+#include "settings.h"
 
 #include <QWidget>
 #include <QValidator>
@@ -52,6 +53,7 @@ private:
     QDataWidgetMapper *dataMapper;
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
+    Settings *settings;
 
 private slots:
     void save();

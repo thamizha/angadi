@@ -28,6 +28,8 @@
 
 #include "models/formvalidation.h"
 #include "models/customersmodel.h"
+#include "settings.h"
+
 #include <QWidget>
 #include <QValidator>
 #include <QIntValidator>
@@ -74,6 +76,7 @@ private:
     QDataWidgetMapper *dataMapper;
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
+    Settings *settings;
 
 private slots:
     void save();

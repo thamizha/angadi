@@ -33,8 +33,9 @@
 #include "models/productsmodel.h"
 #include "models/formvalidation.h"
 #include "models/transactionmodel.h"
-#include "rightaligndelegate.h"
 
+#include "rightaligndelegate.h"
+#include "settings.h"
 #include "qtrpt.h"
 
 #include <QWidget>
@@ -106,6 +107,7 @@ private:
 
     QDateTime m_modifiedDate;
     FormValidation *formValidation;
+    Settings *settings;
 
     QtRPT *report;
     QPrinter *printer;

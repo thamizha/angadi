@@ -584,21 +584,39 @@ void CustomerForm::on_pushButtonCancel_clicked()
 
 void CustomerForm::on_pushButtonDelete_clicked()
 {
+    QMessageBox msgBox;
+
     QSqlRecord record = customersModel->record(dataMapper->currentIndex());
     statusMsg = ui->lineEditName->text() + " deleted successfully";
 
     QDateTime datetime = QDateTime::currentDateTime();
-    QChar t_status = 'D';
-    record.setValue("status", t_status);
-    record.setValue("modifiedDate", datetime);
-    customersModel->setRecord(dataMapper->currentIndex(), record);
-    customersModel->submitAll();
-    customersModel->select();
-    emit signalUpdated();
 
-    emit signalStatusBar(statusMsg);
+    settings = new Settings;
+    msgBox.setWindowTitle(settings->getCompanyName());
+    QString msg = CustomerForm::tr("Are you sure you want to delete this customer?");
+    msgBox.setText(msg);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    QPixmap pix(":/images/icons/delete.png");
+    msgBox.setIconPixmap(pix);
+    int ret = msgBox.exec();
+    switch (ret) {
+       case QMessageBox::Yes:
+            record.setValue("status", "D");
+            record.setValue("modifiedDate", datetime);
+            customersModel->setRecord(dataMapper->currentIndex(), record);
+            customersModel->submitAll();
+            customersModel->select();
+            emit signalUpdated();
 
-    on_pushButtonCancel_clicked();
+            emit signalStatusBar(statusMsg);
+
+            on_pushButtonCancel_clicked();
+            break;
+        default:
+            // should never be reached
+            break;
+     }
 }
 
 QDateTime CustomerForm::modifiedDate()
