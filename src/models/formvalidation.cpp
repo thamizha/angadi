@@ -55,7 +55,7 @@ bool FormValidation::isDouble(QString value)
     int pos = 0;
     bool status = false;
     QDoubleValidator *isDoubleValid = new QDoubleValidator(this);
-    isDoubleValid->setRange(0.00, 1000000.00, 2);
+    isDoubleValid->setRange(0.000, 1000000.000, 3);
     qint8 state = isDoubleValid->validate(value,pos);
     if(state == 2)
         status = true;

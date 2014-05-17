@@ -892,7 +892,10 @@ void BillForm::addTransaction()
     msgBox.setInformativeText("");
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
-
+    if(!formValidation->isDouble(ui->lineEditGiven->text())){
+        validError = 1;
+        errors.append("\n The amount given is not in number please select correct amount.");
+    }
     if(transactionModel->rowCount() > 0)
         if(ui->lineEditBalance->text().toDouble() == 0)
         {
@@ -1122,18 +1125,17 @@ void BillForm::addProductItem()
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
 
-    qty = ui->lineEditQty->text().toDouble();
-
     // validate code field
     if(!productNameValid()){
         validError = 1;
         errors.append("\nThe Product field may be empty or not in our store");
     }
 
-    if(qty < 0.005){
-        validError = 1;
-        errors.append("\n\nThe quantity field may be empty or its very low to sale");
-    }
+    if(!formValidation->isDouble(ui->lineEditQty->text()))
+        if(ui->lineEditQty->text().toDouble() < 0.005){
+            validError = 1;
+            errors.append("\n\nThe quantity field may be empty or its very low to sale");
+        }
     if(validError == 0){
         int row;
         if(productUpdateFlag == 0){

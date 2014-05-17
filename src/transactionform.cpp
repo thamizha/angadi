@@ -127,13 +127,13 @@ void TransactionForm::save()
     // validate code field
     if(!TransactionForm::invoiceNoValid()){
         validError = 1;
-        errors.append("\nThe Invoice No field may be empty or already exist");
+        errors.append("\nThe Invoice No field may be empty or invalid or may be settled already.");
     }
 
     // Validate Name field
     if(!TransactionForm::amountValid()){
         validError = 1;
-        errors.append("\nThe Paid amount field may be empty or already exist");
+        errors.append("\nThe Paid amount field may be empty or this invoice need not to be settled already.");
     }
 
     // save the form if there is no errors
@@ -418,7 +418,7 @@ bool TransactionForm::amountValid()
     QString flashMsg = "";
     ui->lineEditPaidAmount->installEventFilter(this);
     if(ui->lineEditPaidAmount->text().length() > 0){
-        if(invoiceNoValid()){
+        if(invoiceNoValid() && formValidation->isDouble(ui->lineEditPaidAmount->text())){
             ui->lineEditPaidAmount->setProperty("validationError",false);
             ui->lineEditPaidAmount->setProperty("validationSuccess",true);
             ui->lineEditPaidAmount->setStyleSheet(styleSheet());
