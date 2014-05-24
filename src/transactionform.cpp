@@ -445,13 +445,41 @@ bool TransactionForm::billStatus()
 {
     int invoiceNo = ui->lineEditInvoiceNo->text().toInt();
     int balance, toBePaid;
-    QSqlQuery billQuery;
+
+    // Mysql
+    /*QSqlQuery billQuery;
     billQuery.prepare("Select * from bill where invoiceNo = :invoiceNo and status = 'A' and paidStatus = 'U'" );
     billQuery.bindValue(":invoiceNo", invoiceNo);
     billQuery.exec();
     if(billQuery.size() == 0)
         return false;
     else{
+        while(billQuery.next()){
+            balance = billQuery.value(7).toInt();
+        }
+        toBePaid = balance - ui->lineEditPaidAmount->text().toInt();
+        if(toBePaid >= 0)
+            return true;
+    }
+    return false;*/
+
+    // Sqlite
+    int numRows = 0;
+    QSqlQuery billQuery;
+    billQuery.prepare("Select count(*) from bill where invoiceNo = :invoiceNo and status = 'A' and paidStatus = 'U'" );
+    billQuery.bindValue(":invoiceNo", invoiceNo);
+    billQuery.exec();
+    if(billQuery.next()){
+        numRows = billQuery.value(0).toInt();
+    }else{
+        numRows = 0;
+    }
+    if(numRows == 0)
+        return false;
+    else{
+        billQuery.prepare("Select * from bill where invoiceNo = :invoiceNo and status = 'A' and paidStatus = 'U'" );
+        billQuery.bindValue(":invoiceNo", invoiceNo);
+        billQuery.exec();
         while(billQuery.next()){
             balance = billQuery.value(7).toInt();
         }

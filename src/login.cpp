@@ -18,7 +18,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 
     setLanguage();
 
-    QString admin = "admin";
+    /*QString admin = "admin";
     QCryptographicHash hash(QCryptographicHash::Md5);
     hash.addData(admin.toUtf8());
 
@@ -32,7 +32,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
                       "VALUES ('admin', :password, '', '', '', 'A');");
         query.bindValue(":password", hash.result().toHex());
         query.exec();
-    }
+    }*/
 }
 
 LoginDialog::~LoginDialog()

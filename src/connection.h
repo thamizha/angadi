@@ -25,7 +25,7 @@
 
 #ifndef CONNECTION_H
 #define CONNECTION_H
-#include "dbsettings.h"
+//#include "dbsettings.h"
 
 #include <QObject>
 #include <QDateTime>
@@ -54,20 +54,19 @@ public:
     explicit Connection(QObject *parent = 0);
     QSqlDatabase db;
     ~Connection();
-    DBSettings *dbsettings;
-    void checkDBOpen();
-
+//    DBSettings *dbsettings;
+//    void checkDBOpen();
 signals:
 
 public slots:
 
 private:
     void createSqliteTables();
-    bool checkConnectionParams();
+    /*bool checkConnectionParams();
     void createAndOpenDb();
     void closeDb();
     bool openConnection(QString dbName);
-    bool checkMysqlUsername();
+    bool checkMysqlUsername();*/
 };
 
 #endif // CONNECTION_H

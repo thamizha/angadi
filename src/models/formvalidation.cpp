@@ -32,7 +32,8 @@ bool FormValidation::emailValid(QString value)
     return status;
 }
 
-int FormValidation::uniqueValid(QString id, QString value, QString table ,QString column)
+// Mysql
+/*int FormValidation::uniqueValid(QString id, QString value, QString table ,QString column)
 {
     int size;
     QSqlQuery query;
@@ -48,6 +49,29 @@ int FormValidation::uniqueValid(QString id, QString value, QString table ,QStrin
     query.exec(queryText);
     size = query.size();
     return size;
+}*/
+
+// Sqlite
+int FormValidation::uniqueValid(QString id, QString value, QString table ,QString column)
+{
+    int numRows = 0;
+    QSqlQuery query;
+    QString queryText;
+    queryText = "SELECT COUNT (*) FROM ";
+    queryText.append(table);
+    queryText.append(" WHERE ");
+    queryText.append("UPPER(" + column + ")");
+    queryText.append(" ='");
+    queryText.append("UPPER(" + value + ")");
+    queryText.append(" AND status = 'A' AND id !=");
+    queryText.append(id);
+    query.exec(queryText);
+    if(query.next()){
+        numRows = query.value(0).toInt();
+    }else{
+        numRows = 0;
+    }
+    return numRows;
 }
 
 bool FormValidation::isDouble(QString value)
@@ -62,7 +86,8 @@ bool FormValidation::isDouble(QString value)
     return status;
 }
 
-bool FormValidation::isRecordFound(QString table, QString column, QString value)
+// Mysql
+/*bool FormValidation::isRecordFound(QString table, QString column, QString value)
 {
     bool status = false;
     int size;
@@ -78,6 +103,33 @@ bool FormValidation::isRecordFound(QString table, QString column, QString value)
     query.exec(queryText);
     size = query.size();
     if(size > 0){
+        status = true;
+    }
+    return status;
+}*/
+
+// Sqlite
+bool FormValidation::isRecordFound(QString table, QString column, QString value)
+{
+    bool status = false;
+    int numRows = 0;
+    QSqlQuery query;
+    QString queryText;
+    queryText = "SELECT COUNT (*) FROM ";
+    queryText.append(table);
+    queryText.append(" WHERE ");
+    queryText.append(column);
+    queryText.append(" like '%");
+    queryText.append(value);
+    queryText.append("%' COLLATE NOCASE ");
+    queryText.append(" AND status = 'A'");
+    query.exec(queryText);
+    if(query.next()){
+        numRows = query.value(0).toInt();
+    }else{
+        numRows = 0;
+    }
+    if(numRows > 0){
         status = true;
     }
     return status;
