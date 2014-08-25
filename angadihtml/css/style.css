@@ -1,0 +1,24 @@
+.content{
+	margin:50px;
+	height:10px;
+}
+
+.border{
+	border:1px solid #CCCCCC;
+	padding-top: 15px;
+}
+
+.bodRight{
+	border-right:1px solid #CCCCCC;
+}
+
+.productSection{
+	height:350px;
+	overflow:auto;
+	background-color: #FDFDFD;
+	border:1px solid #CCCCCC;
+}
+
+.totalSection{
+	font-size: 24px;
+}

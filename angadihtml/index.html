@@ -8,6 +8,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +18,145 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="row content">
+    	<!-- BillTab -->
+    	<div class="col-md-10 border">
+			<form class="form-horizontal">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="custCode" class="col-sm-6 control-label">Customer Code</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="custCode" placeholder="" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="custName" class="col-sm-6 control-label">Customer Name</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="custName" placeholder="" >
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="custAdd" class="col-sm-3 control-label">Customer Address</label>
+							<div class="col-sm-9">
+								<textarea id="custAdd" class="form-control" rows="3"> </textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="invDate" class="col-sm-6 control-label">Invoice Date</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="invDate" placeholder="" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="invNo" class="col-sm-6 control-label">Invoice No</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="invNo" placeholder="" >
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="row">
+						<div class="table-responsive productSection">
+							<table class="table table-bordered">
+								<tr>
+									<th>#</th>
+									<th>Product Name</th>
+									<th>Rate</th>
+									<th>Qty</th>
+									<th>Unit</th>
+									<th>Total</th>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>Masala</td>
+									<td>50.00</td>
+									<td>2</td>
+									<td>Kg</td>
+									<td>100.00</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Maggie</td>
+									<td>10.00</td>
+									<td>5</td>
+									<td>Kg</td>
+									<td>50.00</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>Nuts</td>
+									<td>100.00</td>
+									<td>1.5</td>
+									<td>Kg</td>
+									<td>150.00</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="row totalSection">
+						<div class="col-lg-offset-8 col-lg-2">Total</div>
+						<div class="col-lg-2">300.00</div>
+					</div>
+					<form class="form-horizontal">
+						<div class="row">
+							<div class="col-lg-1">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodCode" placeholder="Code">
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodName" placeholder="Enter Prod Name">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodRate" placeholder="">
+								</div>
+							</div>
+							<div class="col-lg-1">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodQty" placeholder="">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodUnit" placeholder="">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<input type="text" class="form-control" id="prodTotal" placeholder="">
+								</div>
+							</div>
+						</div>
+					</form>	
+				</div>
+				<div class="col-lg-3">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="tax" class="col-sm-6 control-label">Tax</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="tax" placeholder="" >
+							</div>
+						</div>
+					</form>		
+				</div>
+			</div>
+    	</div>
+    	<!-- Sidebar -->
+    	<div class="col-md-2 border">
+    		
+    	</div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
