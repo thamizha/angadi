@@ -1,6 +1,10 @@
+body{
+	height:100%;
+}
+
 .content{
-	margin:50px;
-	height:10px;
+	margin:50px 10px 0px 10px;
+	height:100%;
 }
 
 .border{
@@ -13,12 +17,104 @@
 }
 
 .productSection{
-	height:350px;
+	position:relative;
+	height:0;
 	overflow:auto;
 	background-color: #FDFDFD;
-	border:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+}
+
+.productTabel{
+	position:absolute;
+    height:100%;
 }
 
 .totalSection{
 	font-size: 24px;
 }
+
+.topLine{
+	border-top:1px solid #CCCCCC;
+	margin-bottom:15px;
+}
+
+.actions{
+	margin-left:20px;
+}
+
+.actionRow {
+	border-top:1px solid #CCCCCC;
+	padding:25px 0px;
+}
+
+.box{
+	border: 1px solid #CCCCCC;
+	margin-bottom:15px;
+}
+
+.boxHeading{
+	padding:10px;
+	margin-bottom:10px;
+	font-size: 18px;
+	font-weight:bold;
+	background-color: #CCCCCC;
+	color:#FFFFFF;
+	text-align: center;
+}
+
+/*Dynamic height setting for product tabel starts*/
+@media all and (min-height: 400px) {
+	.productSection {
+		padding-bottom: 30%;
+    }
+}
+
+@media all and (min-height: 600px) {
+	.productSection {
+		padding-bottom: 40%;
+    }
+}
+
+@media screen and (min-height: 650px) {
+	.productSection {
+		padding-bottom: 43%;
+    }
+}
+
+@media screen and (min-height: 800px) {
+	.productSection {
+		padding-bottom: 50%;
+    }
+}
+
+@media screen and (min-height: 900px) {
+	.productSection {
+		padding-bottom: 55%;
+    }
+}
+
+@media screen and (min-height: 1100px) {
+	.productSection {
+		padding-bottom: 55%;
+    }
+}
+
+@media screen and (min-height: 1300px) {
+	.productSection {
+		padding-bottom: 58%;
+    }
+}
+
+@media screen and (min-height: 1600px) {
+	.productSection {
+		padding-bottom: 60%;
+    }
+}
+
+@media screen and (min-height: 2000px) {
+	.productSection {
+		padding-bottom: 65%;
+    }
+}
+/*Dynamic height setting for product tabel ends*/
